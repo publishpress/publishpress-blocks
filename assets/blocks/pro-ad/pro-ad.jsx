@@ -17,6 +17,7 @@ import {
     PanelBody,
     SelectControl,
     ToggleControl,
+    CheckboxControl,
     RangeControl,
     Notice
 } from './shared/index.jsx';
