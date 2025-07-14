@@ -423,28 +423,39 @@ export function AdvTimezoneControl(props) {
         <Fragment>
             { applyFilters( 'advgb.timezoneControl',
                 <Fragment>
-                    <div style={{ marginTop: 10, marginBottom: 30 }}>
-                        <div style={{ marginBottom: 6 }}>
+                    <div className="advgb-promo-overlay-area">
+                        <div className="advgb-blur">
                             { label }
-                            <span style={{ float: 'right', marginRight: 5 }}>
-                                <Icon icon="lock" />
-                                <a href="https://publishpress.com/links/blocks"
-                                    class="advgb-pro-ad-btn"
-                                    target="_blank">
-                                    { __( 'Upgrade to Pro', 'advanced-gutenberg' ) }
-                                </a>
-                            </span>
+                            <SelectControl
+                                value={ defaultTimezone }
+                                options={ [ {
+                                        label: defaultTimezone,
+                                        value: defaultTimezone
+                                    }
+                                ] }
+                                disabled={ true }
+                            />
                         </div>
-                        <SelectControl
-                            value={ defaultTimezone }
-                            options={ [ {
-                                    label: defaultTimezone,
-                                    value: defaultTimezone
-                                }
-                            ] }
-                            disabled={ true }
-                        />
+                        <div class="advgb-pro-overlay-wrap">
+                            <div class="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                <span class="advgb-promo-icon">
+                                    <i class="dashicons dashicons dashicons-lock block-promo-button"></i>
+                                </span>
+                                <span class="tooltip-text">
+                                    <p>
+                                        {__('PublishPress Blocks Pro supports Timezone configuration.', 'advanced-gutenberg')}
+                                    </p>
+                                    <p>
+                                        <a class="clickable" href="https://publishpress.com/links/blocks" target="_blank">
+                                            { __( 'Upgrade to Pro', 'advanced-gutenberg' ) }
+                                        </a>
+                                    </p>
+                                    <i></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+                    <></>
                 </Fragment>,
                 props
             ) }

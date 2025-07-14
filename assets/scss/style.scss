@@ -814,7 +814,8 @@ li.block-config-item .block-icon svg {
     fill: currentColor;
 }
 
-li.block-config-item .block-config-button {
+li.block-config-item .block-config-button,
+li.block-config-item .block-promo-button {
     line-height: 30px;
     float: right;
     font-size: 25px;
@@ -913,6 +914,48 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked + .slider:before
     transform: translateX(14px);
 }
 
+.advgb-blur {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.advgb-promo-icon i.dashicons {
+  color: #FCB223;
+}
+
+.advgb-promo-switch-icon i {
+  width: auto;
+  text-align: revert;
+  cursor: pointer;
+  color: #FCB223;
+  font-size: 33px;
+}
+
+.advgb-tooltips .tooltip-text {
+  background-color: #655897 !important;
+  text-align: center !important;
+}
+
+.advgb-tooltips .tooltip-text i::after {
+  background-color: #655897 !important;
+}
+
+.advgb-tooltips .tooltip-text a {
+  font-size: 17px !important;
+  background: #FCB223;
+  color: #000 !important;
+  font-weight: normal;
+  text-decoration: none !important;
+  padding: 9px 12px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: 1px solid #fca871;
+  break-inside: avoid;
+  white-space: nowrap;
+}
+
 .category-block.collapsed .blocks-list {
     display: none;
 }
@@ -986,7 +1029,8 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked + .slider:before
     margin-left: 30px;
 }
 
-.rtl li.block-config-item .block-config-button {
+.rtl li.block-config-item .block-config-button,
+.rtl li.block-config-item .block-promo-button {
     float: left;
 }
 
