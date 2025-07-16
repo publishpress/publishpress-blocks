@@ -585,13 +585,13 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
                                                     />
                                                 </div>
                                                 <div className="advgb-pro-overlay-wrap">
-                                                    <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                                    <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                                         <span className="advgb-promo-icon">
                                                             <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                                         </span>
                                                         <span className="tooltip-text">
                                                             <p>
-                                                                {__('PublishPress Blocks Pro add Icon support to button block.', 'advanced-gutenberg')}
+                                                                {__('PublishPress Blocks Pro supports icons in buttons.', 'advanced-gutenberg')}
                                                             </p>
                                                             <p>
                                                                 <a className="clickable" href="https://publishpress.com/links/blocks-menu" target="_blank">

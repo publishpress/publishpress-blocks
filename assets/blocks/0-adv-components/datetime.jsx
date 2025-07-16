@@ -437,7 +437,7 @@ export function AdvTimezoneControl(props) {
                             />
                         </div>
                         <div class="advgb-pro-overlay-wrap">
-                            <div class="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                            <div class="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                 <span class="advgb-promo-icon">
                                     <i class="dashicons dashicons dashicons-lock block-promo-button"></i>
                                 </span>

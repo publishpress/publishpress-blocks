@@ -840,13 +840,13 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                                         </div>
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro supports advanced filter that limit Post to selected Post IDs or Searched Posts.', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports filters for content.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href="https://publishpress.com/links/blocks-menu" target="_blank">
@@ -1187,13 +1187,13 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                                         />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro allows you to set post content order and decide the position of Title, Image, Info and Text.', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports reordering the items in the display.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href="https://publishpress.com/links/blocks-menu" target="_blank">

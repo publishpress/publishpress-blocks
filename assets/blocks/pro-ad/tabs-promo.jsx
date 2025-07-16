@@ -40,13 +40,13 @@ addFilter('editor.BlockEdit', 'advgb/advTabsPro', function (BlockEdit) {
                                         </Notice>
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro add Theme Preset supports.', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports several pre-built designs for tabs.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href={PROMO_LINK} target="_blank">
@@ -106,13 +106,13 @@ addFilter('editor.BlockEdit', 'advgb/advTabsPro', function (BlockEdit) {
                                         />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro add Google Fonts support.', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports Google Fonts in tabs.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href={PROMO_LINK} target="_blank">

@@ -26,13 +26,13 @@ addFilter('editor.BlockEdit', 'advgb/testimonialPro', function (BlockEdit) {
                                     />
                                 </div>
                                 <div className="advgb-pro-overlay-wrap">
-                                    <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                    <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                         <span className="advgb-promo-icon">
                                             <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                         </span>
                                         <span className="tooltip-text">
                                             <p>
-                                                {__('PublishPress Blocks Pro supports Text alignment for Testimonial block.', 'advanced-gutenberg')}
+                                                {__('PublishPress Blocks Pro supports text alignment for testimonials.', 'advanced-gutenberg')}
                                             </p>
                                             <p>
                                                 <a className="clickable" href={PROMO_LINK} target="_blank">
@@ -75,13 +75,13 @@ addFilter('editor.BlockEdit', 'advgb/testimonialPro', function (BlockEdit) {
                                         />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro add Custom name, position and description size for Testimonial block.', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports custom sizes for names, job positions, and descriptions.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href={PROMO_LINK} target="_blank">

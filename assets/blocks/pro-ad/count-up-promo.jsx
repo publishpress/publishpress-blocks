@@ -26,7 +26,7 @@ addFilter('editor.BlockEdit', 'advgb/countUpPro', function (BlockEdit) {
                                     />
                                 </div>
                                 <div className="advgb-pro-overlay-wrap">
-                                    <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                    <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                         <span className="advgb-promo-icon">
                                             <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                         </span>
@@ -67,7 +67,7 @@ addFilter('editor.BlockEdit', 'advgb/countUpPro', function (BlockEdit) {
                                         />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>

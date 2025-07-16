@@ -17,7 +17,7 @@ addFilter('editor.BlockEdit', 'advgb/listPro', function (BlockEdit) {
                 {props.isSelected && props.name === 'advgb/list' && (
                     <Fragment>
                         <InspectorControls>
-                            <PanelBody title={__('Colors', 'advanced-gutenberg')} initialOpen={true} className="advgb-pro-icon">
+                            <PanelBody title={__('Colors', 'advanced-gutenberg')} initialOpen={false} className="advgb-pro-icon">
                                 <div className="advgb-promo-overlay-area">
                                     <div className="advgb-blur">
                                         <AdvColorControl
@@ -26,13 +26,13 @@ addFilter('editor.BlockEdit', 'advgb/listPro', function (BlockEdit) {
                                         />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro supports Custom color for text.', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports custom colors for the list text.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href={PROMO_LINK} target="_blank">

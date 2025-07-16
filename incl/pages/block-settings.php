@@ -119,8 +119,8 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                 $isProPromo = false;
                 if ($free_version && isset($block['isPro']) && $block['isPro'] ===  true) {
                     $blur_class = 'advgb-blur';
-                    $additional_attr = 'data-toggle="tooltip" data-placement="top"';
-                    $additional_class = 'advgb-tooltips pp-tooltips-library click';
+                    $additional_attr = 'data-toggle="ppbtooltip" data-placement="top"';
+                    $additional_class = 'advgb-tooltips ppb-tooltips-library click';
                     $isProPromo = true;
                 }
                 ?>

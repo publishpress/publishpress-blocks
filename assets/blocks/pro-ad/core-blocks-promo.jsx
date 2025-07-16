@@ -18,7 +18,7 @@ addFilter('editor.BlockEdit', 'advgb/coreBlocks', function (BlockEdit) {
                 <BlockEdit key="block-edit-fonts" {...props} />
                 {props.isSelected && CORE_SUPPORTED_BLOCKS.includes(props.name) &&
                     <InspectorControls>
-                        <PanelBody title={__('Font Settings', 'advanced-gutenberg')} initialOpen={true} className="advgb-pro-icon">
+                        <PanelBody title={__('Font Settings', 'advanced-gutenberg')} initialOpen={false} className="advgb-pro-icon">
                             <div className="advgb-promo-overlay-area">
                                 <div className="advgb-blur">
                                     <SelectControl
@@ -50,7 +50,7 @@ addFilter('editor.BlockEdit', 'advgb/coreBlocks', function (BlockEdit) {
                                     />
                                 </div>
                                 <div className="advgb-pro-overlay-wrap">
-                                    <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                    <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                         <span className="advgb-promo-icon">
                                             <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                         </span>

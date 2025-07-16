@@ -333,8 +333,8 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
 
             var isProPromo = promo_blocks.some(promoBlock => promoBlock.name === block.name);
             var blur_class = isProPromo ? 'advgb-blur' : '';
-            var additional_attr = isProPromo ? 'data-toggle="tooltip" data-placement="top"' : '';
-            var additional_class = isProPromo ? 'advgb-tooltips pp-tooltips-library click' : '';
+            var additional_attr = isProPromo ? 'data-toggle="ppbtooltip" data-placement="top"' : '';
+            var additional_class = isProPromo ? 'advgb-tooltips ppb-tooltips-library click' : '';
 
             if (!isProPromo) {
                 list_blocks_names.push(block.name);
@@ -624,8 +624,8 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
 
             var isProPromo = promo_blocks.some(promoBlock => promoBlock.name === block.name);
             var blur_class = isProPromo ? 'advgb-blur' : '';
-            var additional_attr = isProPromo ? 'data-toggle="tooltip" data-placement="top"' : '';
-            var additional_class = isProPromo ? 'advgb-tooltips pp-tooltips-library click' : '';
+            var additional_attr = isProPromo ? 'data-toggle="ppbtooltip" data-placement="top"' : '';
+            var additional_class = isProPromo ? 'advgb-tooltips ppb-tooltips-library click' : '';
 
             if (!isProPromo) {
                 list_blocks_names.push(block.name);

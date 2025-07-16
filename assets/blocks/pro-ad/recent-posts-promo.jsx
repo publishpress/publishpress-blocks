@@ -37,13 +37,13 @@ const recentPostsProSidebar = createHigherOrderComponent((BlockEdit) => {
                                         />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro supports Autoplay Speed control for Slider View', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports autoplay speed control for the slider view.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href={PROMO_LINK} target="_blank">
@@ -78,13 +78,13 @@ const recentPostsProSidebar = createHigherOrderComponent((BlockEdit) => {
                                             <RecentPostsEditTitle />
                                         </div>
                                         <div className="advgb-pro-overlay-wrap">
-                                            <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                            <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                                 <span className="advgb-promo-icon">
                                                     <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                                 </span>
                                                 <span className="tooltip-text">
                                                     <p>
-                                                        {__('PublishPress Blocks Pro add Title Google Fonts support and color configuration.', 'advanced-gutenberg')}
+                                                        {__('PublishPress Blocks Pro supports multiple style options for the content display.', 'advanced-gutenberg')}
                                                     </p>
                                                     <p>
                                                         <a className="clickable" href={PROMO_LINK} target="_blank">
@@ -164,13 +164,13 @@ const recentPostsProSidebar = createHigherOrderComponent((BlockEdit) => {
                                             />
                                         </div>
                                         <div className="advgb-pro-overlay-wrap">
-                                            <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                            <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                                 <span className="advgb-promo-icon">
                                                     <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                                 </span>
                                                 <span className="tooltip-text">
                                                     <p>
-                                                        {__('PublishPress Blocks Pro supports custom image configuration', 'advanced-gutenberg')}
+                                                        {__('PublishPress Blocks Pro supports custom image options.', 'advanced-gutenberg')}
                                                     </p>
                                                     <p>
                                                         <a className="clickable" href={PROMO_LINK} target="_blank">
@@ -195,13 +195,13 @@ const recentPostsProSidebar = createHigherOrderComponent((BlockEdit) => {
                                         />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro supports custom color for info links.', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports multiple style options for the info display.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href={PROMO_LINK} target="_blank">
@@ -247,13 +247,13 @@ const recentPostsProSidebar = createHigherOrderComponent((BlockEdit) => {
                                         />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro supports taxonomies color configuration.', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports multiple style options for the taxonomy display.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href={PROMO_LINK} target="_blank">
@@ -278,13 +278,13 @@ const recentPostsProSidebar = createHigherOrderComponent((BlockEdit) => {
                                         />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro supports custom content color configuration', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports multiple style options for the content display.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href={PROMO_LINK} target="_blank">
@@ -338,13 +338,13 @@ const recentPostsProSidebar = createHigherOrderComponent((BlockEdit) => {
                                             />
                                         </div>
                                         <div className="advgb-pro-overlay-wrap">
-                                            <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                            <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                                 <span className="advgb-promo-icon">
                                                     <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                                 </span>
                                                 <span className="tooltip-text">
                                                     <p>
-                                                        {__('PublishPress Blocks Pro supports Read more link customization', 'advanced-gutenberg')}
+                                                        {__('PublishPress Blocks Pro supports multiple style options for the read more display.', 'advanced-gutenberg')}
                                                     </p>
                                                     <p>
                                                         <a className="clickable" href={PROMO_LINK} target="_blank">

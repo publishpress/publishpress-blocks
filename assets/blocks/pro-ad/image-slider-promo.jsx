@@ -20,7 +20,7 @@ addFilter('editor.BlockEdit', 'advgb/imagesSliderPro', function (BlockEdit) {
                 {props.isSelected && props.name === 'advgb/images-slider' && (
                     <Fragment>
                         <InspectorControls>
-                            <PanelBody title={__('Autoplay', 'advanced-gutenberg')} initialOpen={true} className="advgb-pro-icon">
+                            <PanelBody title={__('Autoplay', 'advanced-gutenberg')} initialOpen={false} className="advgb-pro-icon">
                                 <div className="advgb-promo-overlay-area">
                                     <div className="advgb-blur">
                                         <ToggleControl
@@ -36,13 +36,13 @@ addFilter('editor.BlockEdit', 'advgb/imagesSliderPro', function (BlockEdit) {
                                         />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro add Autoplay and speed support.', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports AutoPlay and custom speed for slides.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href={PROMO_LINK} target="_blank">
@@ -81,13 +81,13 @@ addFilter('editor.BlockEdit', 'advgb/imagesSliderPro', function (BlockEdit) {
                                             />
                                         </div>
                                         <div className="advgb-pro-overlay-wrap">
-                                            <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                            <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                                 <span className="advgb-promo-icon">
                                                     <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                                 </span>
                                                 <span className="tooltip-text">
                                                     <p>
-                                                        {__('PublishPress Blocks Pro supports Changing of title HTML tag for Images Slider block.', 'advanced-gutenberg')}
+                                                        {__('PublishPress Blocks Pro supports multiple style options for slide titles.', 'advanced-gutenberg')}
                                                     </p>
                                                     <p>
                                                         <a className="clickable" href={PROMO_LINK} target="_blank">
@@ -122,13 +122,13 @@ addFilter('editor.BlockEdit', 'advgb/imagesSliderPro', function (BlockEdit) {
                                         <AdvFontControl />
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
-                                        <div className="advgb-pro-overlay-text advgb-tooltips pp-tooltips-library click" data-toggle="tooltip" data-placement="top">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                             <span className="advgb-promo-icon">
                                                 <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
-                                                    {__('PublishPress Blocks Pro supports Changing of text HTML tag for Images Slider block.', 'advanced-gutenberg')}
+                                                    {__('PublishPress Blocks Pro supports multiple style options for slide text.', 'advanced-gutenberg')}
                                                 </p>
                                                 <p>
                                                     <a className="clickable" href={PROMO_LINK} target="_blank">

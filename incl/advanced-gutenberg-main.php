@@ -2269,14 +2269,14 @@ if (! class_exists('AdvancedGutenbergMain')) {
         {
 
             wp_enqueue_style(
-                'pp-tooltips-css',
+                'ppb-tooltips-css',
                 ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/css/tooltip.min.css',
                 [],
                 ADVANCED_GUTENBERG_VERSION
             );
 
             wp_enqueue_script(
-                'pp-tooltips-js',
+                'ppb-tooltips-js',
                 ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/js/tooltip.min.js',
                 [],
                 ADVANCED_GUTENBERG_VERSION,
