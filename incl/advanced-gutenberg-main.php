@@ -530,7 +530,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             'advgbProAdI18n',
                             [
                                 'promoLink' => ADVANCED_GUTENBERG_UPGRADE_LINK,
-                                'upgradeText'   => __( 'Upgrade to Pro', 'advanced-gutenberg' )
+                                'upgradeText'   => __( 'Upgrade to Pro', 'advanced-gutenberg' ),
+                                'proText'   => __( 'Pro', 'advanced-gutenberg' )
                             ]
                         );
                     }
@@ -2314,6 +2315,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 [
                     'promoLink' => ADVANCED_GUTENBERG_UPGRADE_LINK,
                     'upgradeText'   => __( 'Upgrade to Pro', 'advanced-gutenberg' ),
+                    'proText'   => __( 'Pro', 'advanced-gutenberg' ),
                     'promoBlocks' => $promoBlocks
                 ]
             );

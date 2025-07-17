@@ -39,8 +39,8 @@ addFilter('editor.BlockEdit', 'advgb/advAccordionsPro', function (BlockEdit) {
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
                                         <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
-                                            <span className="advgb-promo-icon">
-                                                <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
+                                            <span className="advgb-promo-text">
+                                                {__('Pro', 'advanced-gutenberg')}
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>
@@ -88,8 +88,8 @@ addFilter('editor.BlockEdit', 'advgb/advAccordionsPro', function (BlockEdit) {
                                     </div>
                                     <div className="advgb-pro-overlay-wrap">
                                         <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
-                                            <span className="advgb-promo-icon">
-                                                <i className="dashicons dashicons dashicons-lock block-promo-button"></i>
+                                            <span className="advgb-promo-text">
+                                                {__('Pro', 'advanced-gutenberg')}
                                             </span>
                                             <span className="tooltip-text">
                                                 <p>

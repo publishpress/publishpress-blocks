@@ -371,12 +371,9 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             blockHTML +=        '<span class="block-title">'+ block.title +'</span>';
             blockHTML +=    '</label>';
             if (isProPromo) {
-                blockHTML +=    '<div class="advgb-switch-button">';
-                blockHTML +=        '<label class="switch">';
-                blockHTML +=    '<span class="advgb-promo-switch-icon">';
-                blockHTML +=        '<i class="dashicons dashicons-lock block-promo-button"';
-                blockHTML +=            'data-block="' + block.name + '"';
-                blockHTML +=        '></i>';
+                blockHTML +=    '<div class="advgb-switch-button promo-area">';
+                blockHTML +=    '<span class="advgb-promo-text">';
+                blockHTML +=        advgbMainI18n.proText;
                 blockHTML +=    '</span>';
                 blockHTML +=    '<span class="tooltip-text">';
                 blockHTML +=        '<p>' + block.title + ' - ' + (block.description || '') + '</p>';
@@ -387,7 +384,6 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
                 blockHTML +=        '</p>';
                 blockHTML +=        '<i></i>';
                 blockHTML +=    '</span>';
-                blockHTML +=        '</label>';
                 blockHTML +=    '</div>';
             } else {
                 blockHTML +=    '<div class="advgb-switch-button">';
@@ -663,12 +659,9 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
             blockHTML +=    '</label>';
 
             if (isProPromo) {
-                blockHTML +=    '<div class="advgb-switch-button">';
-                blockHTML +=        '<label class="switch">';
-                blockHTML +=    '<span class="advgb-promo-switch-icon">';
-                blockHTML +=        '<i class="dashicons dashicons-lock block-promo-button"';
-                blockHTML +=            'data-block="' + block.name + '"';
-                blockHTML +=        '></i>';
+                blockHTML +=    '<div class="advgb-switch-button promo-area">';
+                blockHTML +=    '<span class="advgb-promo-text">';
+                blockHTML +=        advgbMainI18n.proText
                 blockHTML +=    '</span>';
                 blockHTML +=    '<span class="tooltip-text">';
                 blockHTML +=        '<p>' + block.title + ' - ' + (block.description || '') + '</p>';
@@ -679,7 +672,6 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
                 blockHTML +=        '</p>';
                 blockHTML +=        '<i></i>';
                 blockHTML +=    '</span>';
-                blockHTML +=        '</label>';
                 blockHTML +=    '</div>';
             } else {
                 blockHTML +=    '<div class="advgb-switch-button">';

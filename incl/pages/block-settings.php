@@ -130,11 +130,8 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                 </span>
                 <span class="block-title  <?php echo esc_attr($blur_class); ?>"><?php echo esc_html(__($block['title'], 'advanced-gutenberg')); ?></span>
                 <?php if ($isProPromo) : ?>
-                    <span class="advgb-promo-icon">
-                        <i class="dashicons dashicons dashicons-lock block-promo-button"
-                        title="<?php esc_attr_e('Upgrade to Pro', 'advanced-gutenberg') ?>"
-                        data-block="<?php echo esc_attr($block['name']); ?>"
-                        ></i>
+                    <span class="advgb-promo-text">
+                        <?php esc_html_e('Pro', 'advanced-gutenberg') ?>
                     </span>
                     <span class="tooltip-text">
                         <p><?php echo esc_html($block['title']); ?> - <?php echo esc_html($block['description']); ?></p>
