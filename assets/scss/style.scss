@@ -1,6 +1,11 @@
 @import "variables";
 @import "mixins";
 
+.pp-version-notice-bold-purple-button a {
+  color: #000000;
+  text-decoration: none;
+}
+
 .inline-button-wrapper {
     float: right;
 }
@@ -937,19 +942,17 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked + .slider:before
   gap: 4px;
   background-color: #ffb200;
   color: #000 !important;
-  padding: 3px 8px;
-  font-size: 10px;
-  font-weight: 600;
+  padding: 9px 12px;
+  font-weight: bold;
   width: 100%;
 }
 
 .advgb-promo-text {
   background-color: #ffb200;
   color: #000;
-  padding: 3px 8px;
   border-radius: 4px;
-  font-size: 10px;
-  font-weight: 600;
+  padding: 9px 12px;
+  font-weight: bold;
   float: right;
   margin-right: 10px;
 }
