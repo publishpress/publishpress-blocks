@@ -509,6 +509,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                     // Pro Ads in some blocks for free version
                     if (! defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
+
+                        $this->enqueueToolTipsAssets();
+
                         wp_enqueue_script(
                             'advgb_pro_ad_js',
                             ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/pro-ad.js',
@@ -521,6 +524,15 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/pro-ad.css',
                             [],
                             ADVANCED_GUTENBERG_VERSION
+                        );
+                        wp_localize_script(
+                            'advgb_pro_ad_js',
+                            'advgbProAdI18n',
+                            [
+                                'promoLink' => ADVANCED_GUTENBERG_UPGRADE_LINK,
+                                'upgradeText'   => __( 'Upgrade to Pro', 'advanced-gutenberg' ),
+                                'proText'   => __( 'Pro', 'advanced-gutenberg' )
+                            ]
                         );
                     }
                 }
@@ -979,7 +991,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         $settings['advanced-gutenberg'] = [
                             'parent' => 'advgb_main',
                             'label'  => __('Upgrade to Pro', 'advanced-gutenberg'),
-                            'link'   => 'https://publishpress.com/links/blocks-menu',
+                            'link'   => ADVANCED_GUTENBERG_UPGRADE_LINK,
                         ];
 
                         return $settings;
@@ -2254,6 +2266,32 @@ if (! class_exists('AdvancedGutenbergMain')) {
          * @return void
          * @since 3.0.0
          */
+        public function enqueueToolTipsAssets()
+        {
+
+            wp_enqueue_style(
+                'ppb-tooltips-css',
+                ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/css/tooltip.min.css',
+                [],
+                ADVANCED_GUTENBERG_VERSION
+            );
+
+            wp_enqueue_script(
+                'ppb-tooltips-js',
+                ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/js/tooltip.min.js',
+                [],
+                ADVANCED_GUTENBERG_VERSION,
+                true
+            );
+
+        }
+
+        /**
+         * Load common JS and CSS for admin pages
+         *
+         * @return void
+         * @since 3.0.0
+         */
         public function commonAdminPagesAssets()
         {
             wp_enqueue_script('advgb_main_js');
@@ -2261,9 +2299,26 @@ if (! class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_script('minicolors_js');
             wp_enqueue_script('qtip_js');
 
+            $this->enqueueToolTipsAssets();
+
             wp_enqueue_style('advgb_admin_styles');
             wp_enqueue_style('advgb_qtip_style');
             wp_enqueue_style('minicolors_css');
+
+            $promoBlocks = [];
+            if (!defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
+                $promoBlocks = PublishPress\Blocks\Utilities::getProBlocks();
+            }
+            wp_localize_script(
+                'advgb_main_js',
+                'advgbMainI18n',
+                [
+                    'promoLink' => ADVANCED_GUTENBERG_UPGRADE_LINK,
+                    'upgradeText'   => __( 'Upgrade to Pro', 'advanced-gutenberg' ),
+                    'proText'   => __( 'Pro', 'advanced-gutenberg' ),
+                    'promoBlocks' => $promoBlocks
+                ]
+            );
         }
 
         /**
@@ -3387,25 +3442,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 ADVANCED_GUTENBERG_VERSION
             );
 
-            wp_enqueue_style(
-                'pp-tooltips-css',
-                ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/css/tooltip.min.css',
-                [],
-                ADVANCED_GUTENBERG_VERSION
-            );
-
             wp_enqueue_script(
                 'advgb_block_usage',
                 ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/block-usage.js',
                 ['wp-element', 'wp-components', 'wp-api-fetch', 'wp-i18n'],
-                ADVANCED_GUTENBERG_VERSION,
-                true
-            );
-
-            wp_enqueue_script(
-                'pp-tooltips-js',
-                ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/js/tooltip.min.js',
-                [],
                 ADVANCED_GUTENBERG_VERSION,
                 true
             );

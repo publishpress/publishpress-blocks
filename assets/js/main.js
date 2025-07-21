@@ -171,6 +171,7 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         var allCategories = wp.blocks.getCategories();
         var listBlocks = [];
         var nonce = '';
+        var promo_blocks = advgbMainI18n.promoBlocks;
 
         // Get blocks saved in advgb_blocks_list option to include the ones that are missing in allBlocks.
         // e.g. blocks registered only via PHP
@@ -269,6 +270,17 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             return block;
         });
 
+        if (promo_blocks && promo_blocks.length > 0) {
+            promo_blocks.forEach(function (block) {
+                listBlocks.push(block);
+            });
+            listBlocks.sort(function (a, b) {
+                if (a.title < b.title) return -1;
+                if (a.title > b.title) return 1;
+                return 0;
+            });
+        }
+
         if (typeof updateListNonce !== 'undefined') {
             nonce = updateListNonce.nonce;
         } else {
@@ -319,11 +331,18 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
                 return;
             }
 
-            list_blocks_names.push(block.name);
+            var isProPromo = promo_blocks.some(promoBlock => promoBlock.name === block.name);
+            var blur_class = isProPromo ? 'advgb-blur' : '';
+            var additional_attr = isProPromo ? 'data-toggle="ppbtooltip" data-placement="top"' : '';
+            var additional_class = isProPromo ? 'advgb-tooltips ppb-tooltips-library click' : '';
+
+            if (!isProPromo) {
+                list_blocks_names.push(block.name);
+            }
 
             var blockHTML = '';
-            blockHTML += '<li class="block-item advgb-settings-option ' + (force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'block-item-readonly' : 'block-item-editable' ) + '" data-type="'+ block.name +'">';
-            blockHTML +=    '<label for="'+ block.name +'" class="advgb-setting-label">';
+            blockHTML += '<li class="block-item advgb-settings-option ' + additional_class + ' ' + (force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'block-item-readonly' : 'block-item-editable') + '" data-type="'+ block.name +'" ' + additional_attr + '>';
+            blockHTML +=    '<label for="'+ block.name +'" class="advgb-setting-label ' + blur_class + '">';
             blockHTML +=        '<span class="block-icon"';
             if (block.iconColor) {
                 blockHTML += ' style="color:'+ block.iconColor +'"';
@@ -351,12 +370,30 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             blockHTML +=        '</span>';
             blockHTML +=        '<span class="block-title">'+ block.title +'</span>';
             blockHTML +=    '</label>';
-            blockHTML +=    '<div class="advgb-switch-button">';
-            blockHTML +=        '<label class="switch">';
-            blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'" '+checked+' ' + ( force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'onclick="return false;"' : '' ) + '/>';
-            blockHTML +=            '<span class="slider"></span>';
-            blockHTML +=        '</label>';
-            blockHTML +=    '</div>';
+            if (isProPromo) {
+                blockHTML +=    '<div class="advgb-switch-button promo-area">';
+                blockHTML +=    '<span class="advgb-promo-text">';
+                blockHTML +=        advgbMainI18n.proText;
+                blockHTML +=    '</span>';
+                blockHTML +=    '<span class="tooltip-text">';
+                blockHTML +=        '<p>' + block.title + ' - ' + (block.description || '') + '</p>';
+                blockHTML +=        '<p>';
+                blockHTML +=            '<a class="clickable" href="' + advgbMainI18n.promoLink + '" target="_blank">';
+                blockHTML +=                advgbMainI18n.upgradeText;
+                blockHTML +=            '</a>';
+                blockHTML +=        '</p>';
+                blockHTML +=        '<i></i>';
+                blockHTML +=    '</span>';
+                blockHTML +=    '</div>';
+            } else {
+                blockHTML +=    '<div class="advgb-switch-button">';
+                blockHTML +=        '<label class="switch">';
+                blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'" '+checked+' ' + ( force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'onclick="return false;"' : '' ) + '/>';
+                blockHTML +=            '<span class="slider"></span>';
+                blockHTML +=        '</label>';
+                blockHTML +=    '</div>';
+            }
+
             blockHTML += '</li>';
 
             var categoryBlock = $('.category-block[data-category="'+ block.category +'"]');
@@ -452,6 +489,7 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
         var allCategories = wp.blocks.getCategories();
         var listBlocks = [];
         var nonce = '';
+        var promo_blocks = advgbMainI18n.promoBlocks;
 
         // Get blocks saved in advgb_blocks_list option to include the ones that are missing in allBlocks.
         // e.g. blocks registered only via PHP
@@ -532,6 +570,17 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
             return block;
         });
 
+        if (promo_blocks && promo_blocks.length > 0) {
+            promo_blocks.forEach(function (block) {
+                listBlocks.push(block);
+            });
+            listBlocks.sort(function (a, b) {
+                if (a.title < b.title) return -1;
+                if (a.title > b.title) return 1;
+                return 0;
+            });
+        }
+
         if (typeof updateListNonce !== 'undefined') {
             nonce = updateListNonce.nonce;
         } else {
@@ -569,11 +618,18 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
                 return;
             }
 
-            list_blocks_names.push(block.name);
+            var isProPromo = promo_blocks.some(promoBlock => promoBlock.name === block.name);
+            var blur_class = isProPromo ? 'advgb-blur' : '';
+            var additional_attr = isProPromo ? 'data-toggle="ppbtooltip" data-placement="top"' : '';
+            var additional_class = isProPromo ? 'advgb-tooltips ppb-tooltips-library click' : '';
+
+            if (!isProPromo) {
+                list_blocks_names.push(block.name);
+            }
 
             var blockHTML = '';
-            blockHTML += '<li class="block-item advgb-settings-option ' + (force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'block-item-readonly' : 'block-item-editable' ) + '" data-type="'+ block.name +'">';
-            blockHTML +=    '<label for="'+ block.name +'" class="advgb-setting-label">';
+            blockHTML += '<li class="block-item advgb-settings-option ' + additional_class + ' ' + (force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'block-item-readonly' : 'block-item-editable') + '" data-type="'+ block.name +'" ' + additional_attr + '>';
+            blockHTML +=    '<label for="'+ block.name +'" class="advgb-setting-label ' + blur_class + '">';
             blockHTML +=        '<span class="block-icon"';
             if (block.iconColor) {
                 blockHTML += ' style="color:'+ block.iconColor +'"';
@@ -601,12 +657,30 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
             blockHTML +=        '</span>';
             blockHTML +=        '<span class="block-title">'+ block.title +'</span>';
             blockHTML +=    '</label>';
-            blockHTML +=    '<div class="advgb-switch-button">';
-            blockHTML +=        '<label class="switch">';
-            blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'" '+checked+' ' + ( force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'onclick="return false;"' : '' ) + '/>';
-            blockHTML +=            '<span class="slider"></span>';
-            blockHTML +=        '</label>';
-            blockHTML +=    '</div>';
+
+            if (isProPromo) {
+                blockHTML +=    '<div class="advgb-switch-button promo-area">';
+                blockHTML +=    '<span class="advgb-promo-text">';
+                blockHTML +=        advgbMainI18n.proText
+                blockHTML +=    '</span>';
+                blockHTML +=    '<span class="tooltip-text">';
+                blockHTML +=        '<p>' + block.title + ' - ' + (block.description || '') + '</p>';
+                blockHTML +=        '<p>';
+                blockHTML +=            '<a class="clickable" href="' + advgbMainI18n.promoLink + '" target="_blank">';
+                blockHTML +=                advgbMainI18n.upgradeText;
+                blockHTML +=            '</a>';
+                blockHTML +=        '</p>';
+                blockHTML +=        '<i></i>';
+                blockHTML +=    '</span>';
+                blockHTML +=    '</div>';
+            } else {
+                blockHTML +=    '<div class="advgb-switch-button">';
+                blockHTML +=        '<label class="switch">';
+                blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'" '+checked+' ' + ( force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'onclick="return false;"' : '' ) + '/>';
+                blockHTML +=            '<span class="slider"></span>';
+                blockHTML +=        '</label>';
+                blockHTML +=    '</div>';
+            }
             blockHTML += '</li>';
 
             var categoryBlock = $('.category-block[data-category="'+ block.category +'"]');

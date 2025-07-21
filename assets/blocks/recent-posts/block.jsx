@@ -758,7 +758,7 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                         </div>
                         </Fragment>
                     </PanelBody>
-                    { this.isPro() && (
+                    { this.isPro() ? (
                         <Fragment>
                             <PanelBody title={ __( 'Advanced Filters', 'advanced-gutenberg' ) } className="advgb-pro-icon">
                                 <label className="components-base-control__label">
@@ -805,6 +805,61 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                                     </div>
                                 </div>
                             </PanelBody>
+                            <></>
+                        </Fragment>
+                    ) : (
+                        <Fragment>
+                            <PanelBody title={__('Advanced Filters', 'advanced-gutenberg')} className="advgb-pro-icon">
+                                <div className="advgb-promo-overlay-area">
+                                    <div className="advgb-blur">
+                                        <label className="components-base-control__label">
+                                            {__('Display these posts only', 'advanced-gutenberg')}
+                                        </label>
+
+                                        <div className="advgb-include-posts-tabs">
+                                            <div className="advgb-tab-buttons">
+                                                <button
+                                                    className={`advgb-tab-button active`}
+                                                >
+                                                    {__('Search Posts', 'advanced-gutenberg')}
+                                                </button>
+                                                <button
+                                                    className={`advgb-tab-button`}
+                                                >
+                                                    {__('Enter Post IDs', 'advanced-gutenberg')}
+                                                </button>
+                                            </div>
+
+                                            <div className="advgb-tab-content">
+                                                <FormTokenField
+                                                    multiple
+                                                    maxSuggestions={10}
+                                                    placeholder={__('Search by title', 'advanced-gutenberg')}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="advgb-pro-overlay-wrap">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
+                                            <span className="advgb-promo-text">
+                                                {__('Pro', 'advanced-gutenberg')}
+                                            </span>
+                                            <span className="tooltip-text">
+                                                <p>
+                                                    {__('PublishPress Blocks Pro supports filters for content.', 'advanced-gutenberg')}
+                                                </p>
+                                                <p>
+                                                    <a className="clickable" href="https://publishpress.com/links/blocks-menu" target="_blank">
+                                                        {__('Upgrade to Pro', 'advanced-gutenberg')}
+                                                    </a>
+                                                </p>
+                                                <i></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </PanelBody>
+                            <></>
                         </Fragment>
                     ) }
                     <PanelBody title={ __( 'Display Settings', 'advanced-gutenberg' ) }>
@@ -1106,7 +1161,7 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                             onChange={ ( value ) => setAttributes( { textBeforeReadmore: value } ) }
                         />
                     </PanelBody>
-                    { this.isPro() && (
+                    { this.isPro() ? (
                         <Fragment>
                             <PanelBody title={ __( 'Reorder Sections', 'advanced-gutenberg' ) } initialOpen={ false } className="advgb-pro-icon">
                                 <SelectControl
@@ -1117,6 +1172,41 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                                     onChange={ (value) => setAttributes( { orderSections: value } ) }
                                 />
                             </PanelBody>
+                            <></>
+                        </Fragment>
+                    ) : (
+                        <Fragment>
+                            <PanelBody title={__('Reorder Sections', 'advanced-gutenberg')} initialOpen={false} className="advgb-pro-icon">
+                                <div className="advgb-promo-overlay-area">
+                                    <div className="advgb-blur">
+                                        <SelectControl
+                                            label={__('Sections order', 'advanced-gutenberg')}
+                                            help={__('When the image in desktop floats next to the content, or is displayed as background, the image order is ignored. Also the image order in mobile can be ignored for some views.', 'advanced-gutenberg')}
+                                            value=""
+                                            options={ORDER_SECTIONS}
+                                        />
+                                    </div>
+                                    <div className="advgb-pro-overlay-wrap">
+                                        <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
+                                            <span className="advgb-promo-text">
+                                                {__('Pro', 'advanced-gutenberg')}
+                                            </span>
+                                            <span className="tooltip-text">
+                                                <p>
+                                                    {__('PublishPress Blocks Pro supports reordering the items in the display.', 'advanced-gutenberg')}
+                                                </p>
+                                                <p>
+                                                    <a className="clickable" href="https://publishpress.com/links/blocks-menu" target="_blank">
+                                                        {__('Upgrade to Pro', 'advanced-gutenberg')}
+                                                    </a>
+                                                </p>
+                                                <i></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </PanelBody>
+                            <></>
                         </Fragment>
                     ) }
                 </InspectorControls>

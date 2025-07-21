@@ -1,7 +1,7 @@
-import {AdvColorControl} from "../0-adv-components/components.jsx";
-import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
+import { AdvColorControl } from "../0-adv-components/components.jsx";
+import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
 
-(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
@@ -20,14 +20,14 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
         let values = [
             attributes.noreferrer ? 'noreferrer' : '',
             attributes.nofollow ? 'nofollow' : ''
-        ].filter( Boolean ).join(' ');
+        ].filter(Boolean).join(' ');
 
         return values;
     }
 
     class AdvButton extends Component {
         constructor() {
-            super( ...arguments );
+            super(...arguments);
             this.state = {
                 showPopup: false,
                 iconSelected: '',
@@ -58,7 +58,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 }
 
                 // Finally set changed attribute to true, so we don't modify anything again
-                setAttributes( { changed: true } );
+                setAttributes({ changed: true });
             }
         }
 
@@ -66,17 +66,17 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             const { setAttributes } = this.props;
 
             // Reset attributes when Pro is not available
-            if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
-                setAttributes( {
+            if (advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1') {
+                setAttributes({
                     noreferrer: true,
                     nofollow: false
-                } );
+                });
             }
         }
 
         componentDidUpdate() {
-            const {iconSelected, selectedIcon, iconThemeSelected, selectedIconTheme} = this.state;
-            const {setAttributes, clientId} = this.props;
+            const { iconSelected, selectedIcon, iconThemeSelected, selectedIconTheme } = this.state;
+            const { setAttributes, clientId } = this.props;
 
             // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
             if (!this.state.isBlockIdSet) {
@@ -84,7 +84,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 this.setState({ isBlockIdSet: true });
             }
 
-            if(selectedIcon) {
+            if (selectedIcon) {
 
                 this.setState({
                     selectedIcon: false
@@ -95,7 +95,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 });
             }
 
-            if(selectedIconTheme) {
+            if (selectedIconTheme) {
                 this.setState({
                     selectedIconTheme: false
                 });
@@ -106,11 +106,11 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
         }
 
         togglePopup() {
-            const {showPopup} = this.state;
+            const { showPopup } = this.state;
 
-            this.setState( {
+            this.setState({
                 showPopup: !showPopup
-            } );
+            });
         }
 
         handleIcon(iconValue) {
@@ -129,15 +129,15 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
 
         render() {
             const listBorderStyles = [
-                { label: __( 'None', 'advanced-gutenberg' ), value: 'none' },
-                { label: __( 'Solid', 'advanced-gutenberg' ), value: 'solid' },
-                { label: __( 'Dotted', 'advanced-gutenberg' ), value: 'dotted' },
-                { label: __( 'Dashed', 'advanced-gutenberg' ), value: 'dashed' },
-                { label: __( 'Double', 'advanced-gutenberg' ), value: 'double' },
-                { label: __( 'Groove', 'advanced-gutenberg' ), value: 'groove' },
-                { label: __( 'Ridge', 'advanced-gutenberg' ), value: 'ridge' },
-                { label: __( 'Inset', 'advanced-gutenberg' ), value: 'inset' },
-                { label: __( 'Outset', 'advanced-gutenberg' ), value: 'outset' },
+                { label: __('None', 'advanced-gutenberg'), value: 'none' },
+                { label: __('Solid', 'advanced-gutenberg'), value: 'solid' },
+                { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' },
+                { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' },
+                { label: __('Double', 'advanced-gutenberg'), value: 'double' },
+                { label: __('Groove', 'advanced-gutenberg'), value: 'groove' },
+                { label: __('Ridge', 'advanced-gutenberg'), value: 'ridge' },
+                { label: __('Inset', 'advanced-gutenberg'), value: 'inset' },
+                { label: __('Outset', 'advanced-gutenberg'), value: 'outset' },
             ];
             const {
                 attributes,
@@ -146,7 +146,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 className,
                 clientId: blockID,
             } = this.props;
-            const {showPopup} = this.state;
+            const { showPopup } = this.state;
             const {
                 id, align, url, urlOpenNewTab, title, text, bgColor, textColor, textSize,
                 marginTop, marginRight, marginBottom, marginLeft,
@@ -157,24 +157,24 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 noreferrer, nofollow, isPreview
             } = attributes;
 
-            const isStyleSquared        = className.indexOf('-squared') > -1;
-            const isStyleOutlined       = className.indexOf('-outlined') > -1;
+            const isStyleSquared = className.indexOf('-squared') > -1;
+            const isStyleOutlined = className.indexOf('-outlined') > -1;
             const isStyleSquaredOutline = className.indexOf('-squared-outline') > -1;
             const hoverColorSettings = [
                 {
-                    label: __( 'Background Color', 'advanced-gutenberg' ),
+                    label: __('Background Color', 'advanced-gutenberg'),
                     value: hoverBgColor,
-                    onChange: ( value ) => setAttributes( { hoverBgColor: value === undefined ? '#2196f3' : value } ),
+                    onChange: (value) => setAttributes({ hoverBgColor: value === undefined ? '#2196f3' : value }),
                 },
                 {
-                    label: __( 'Text Color', 'advanced-gutenberg' ),
+                    label: __('Text Color', 'advanced-gutenberg'),
                     value: hoverTextColor,
-                    onChange: ( value ) => setAttributes( { hoverTextColor: value === undefined ? '#fff' : value } ),
+                    onChange: (value) => setAttributes({ hoverTextColor: value === undefined ? '#fff' : value }),
                 },
                 {
-                    label: __( 'Shadow Color', 'advanced-gutenberg' ),
+                    label: __('Shadow Color', 'advanced-gutenberg'),
                     value: hoverShadowColor,
-                    onChange: ( value ) => setAttributes( { hoverShadowColor: value === undefined ? '#ccc' : value } ),
+                    onChange: (value) => setAttributes({ hoverShadowColor: value === undefined ? '#ccc' : value }),
                 },
             ];
 
@@ -193,35 +193,35 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             const iconClass = [
                 'material-icons',
                 iconTheme !== '' && `-${iconTheme}`
-            ].filter( Boolean ).join('');
+            ].filter(Boolean).join('');
 
             return (
                 isPreview ?
-                    <img alt={__('Advanced Button', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
+                    <img alt={__('Advanced Button', 'advanced-gutenberg')} width='100%' src={previewImageData} />
                     :
                     <Fragment>
-                    <span className={`${className} align${align}`}
-                          style={ { display: 'inline-block' } }
-                    >
-                        <span className={ `wp-block-advgb-button_link ${id}` } rel={ advgb_relAttribute(attributes) }>
-                            { iconDisplay && (
-                                <i className={iconClass}>
-                                    {icon}
-                                </i>
-                            ) }
-                            <RichText
-                                tagName="span"
-                                placeholder={ __( 'Add text…', 'advanced-gutenberg' ) }
-                                value={ text }
-                                onChange={ ( value ) => setAttributes( { text: value } ) }
-                                allowedFormats={ [ 'core/bold', 'core/italic', 'core/strikethrough' ] }
-                                isSelected={ isSelected }
-                                keepPlaceholderOnFocus
-                            />
+                        <span className={`${className} align${align}`}
+                            style={{ display: 'inline-block' }}
+                        >
+                            <span className={`wp-block-advgb-button_link ${id}`} rel={advgb_relAttribute(attributes)}>
+                                {iconDisplay && (
+                                    <i className={iconClass}>
+                                        {icon}
+                                    </i>
+                                )}
+                                <RichText
+                                    tagName="span"
+                                    placeholder={__('Add text…', 'advanced-gutenberg')}
+                                    value={text}
+                                    onChange={(value) => setAttributes({ text: value })}
+                                    allowedFormats={['core/bold', 'core/italic', 'core/strikethrough']}
+                                    isSelected={isSelected}
+                                    keepPlaceholderOnFocus
+                                />
+                            </span>
                         </span>
-                    </span>
-                    <style>
-                        {`.${id} {
+                        <style>
+                            {`.${id} {
                         font-size: ${textSize}px;
                         color: ${textColor} !important;
                         background-color: ${bgColor} !important;
@@ -237,317 +237,388 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                         background-color: ${hoverBgColor} !important;
                         box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
                         transition: all ${transitionSpeed}s ease;
-                        opacity: ${hoverOpacity/100}
+                        opacity: ${hoverOpacity / 100}
                     }
                     .${id} i {
                         font-size: ${iconSize}px;
                         float: ${iconPosition};
                     }`}
-                    { iconColor && (
-                        `.${id} i {
+                            {iconColor && (
+                                `.${id} i {
                             color: ${iconColor};
                         }`
-                    ) }
-                    { iconPosition === 'left' && (
-                        `.${id} i {
+                            )}
+                            {iconPosition === 'left' && (
+                                `.${id} i {
                             margin-right: ${iconSpacing}px;
                         }`
-                    ) }
-                    { iconPosition === 'right' && (
-                        `.${id} i {
+                            )}
+                            {iconPosition === 'right' && (
+                                `.${id} i {
                             margin-left: ${iconSpacing}px;
                         }`
-                    ) }
-                    { advgbBlocks.advgb_pro !== '1' && (
-                        `.${id} i {
+                            )}
+                            {advgbBlocks.advgb_pro !== '1' && (
+                                `.${id} i {
                             display: none !important;
                         }`
-                    ) }
-                    </style>
-                    {
-                        showPopup ?
-                            <IconListPopupHook
-                                content='iconpopup'
-                                closePopup={ () => {
-                                    if(showPopup) {
-                                        this.togglePopup();
-                                    }
-                                }
-                                }
-                                onSelectIcon={ this.handleIcon }
-                                onSelectIconTheme={ this.handleIconTheme }
-                                selectedIcon={icon}
-                                selectedIconTheme={iconTheme}
-                            />
-                            :
-                            null
-                    }
-                    <InspectorControls>
-                        <PanelBody title={ __( 'Button link', 'advanced-gutenberg' ) }>
-                            <BaseControl
-                                label={ [
-                                    __( 'Link URL', 'advanced-gutenberg' ),
-                                    (url && <a href={ url || '#' } key="link_url" target="_blank" style={ { float: 'right' } }>
-                                        { __( 'Preview', 'advanced-gutenberg' ) }
-                                    </a>)
-                                ] }
-                            >
-                                <URLInput
-                                    value={url}
-                                    onChange={ (value) => setAttributes( { url: value } ) }
-                                    autoFocus={false}
-                                    isFullWidth
-                                    hasBorder
-                                />
-                            </BaseControl>
-                            <ToggleControl
-                                label={ __( 'Open in new tab', 'advanced-gutenberg' ) }
-                                checked={ !!urlOpenNewTab }
-                                onChange={ () => setAttributes( { urlOpenNewTab: !attributes.urlOpenNewTab } ) }
-                            />
-                        </PanelBody>
-                        <PanelBody title={ __( 'Text/Color', 'advanced-gutenberg' ) }>
-                            <RangeControl
-                                label={ __( 'Text size', 'advanced-gutenberg' ) }
-                                value={ textSize || '' }
-                                onChange={ ( size ) => setAttributes( { textSize: size } ) }
-                                min={ 10 }
-                                max={ 100 }
-                                beforeIcon="editor-textcolor"
-                                allowReset
-                            />
-                            {!isStyleOutlined && (
-                                <AdvColorControl
-                                    label={ __('Background Color', 'advanced-gutenberg') }
-                                    value={ bgColor }
-                                    onChange={ (value) => setAttributes( { bgColor: value } ) }
-                                />
                             )}
-                            <AdvColorControl
-                                label={ __('Text Color', 'advanced-gutenberg') }
-                                value={ textColor }
-                                onChange={ (value) => setAttributes( { textColor: value } ) }
-                            />
-                        </PanelBody>
-                        <PanelBody title={ __( 'Border', 'advanced-gutenberg' ) } initialOpen={ false } >
-                            {!isStyleSquared && (
-                                <RangeControl
-                                    label={ __( 'Border radius', 'advanced-gutenberg' ) }
-                                    value={ borderRadius || '' }
-                                    onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
-                                    min={ 0 }
-                                    max={ 100 }
+                        </style>
+                        {
+                            showPopup ?
+                                <IconListPopupHook
+                                    content='iconpopup'
+                                    closePopup={() => {
+                                        if (showPopup) {
+                                            this.togglePopup();
+                                        }
+                                    }
+                                    }
+                                    onSelectIcon={this.handleIcon}
+                                    onSelectIconTheme={this.handleIconTheme}
+                                    selectedIcon={icon}
+                                    selectedIconTheme={iconTheme}
                                 />
-                            ) }
-                            <SelectControl
-                                label={ __( 'Border style', 'advanced-gutenberg' ) }
-                                value={ borderStyle }
-                                options={ listBorderStyles }
-                                onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
-                            />
-                            {borderStyle !== 'none' && (
-                                <Fragment>
-                                    <PanelColorSettings
-                                        title={ __( 'Border Color', 'advanced-gutenberg' ) }
-                                        initialOpen={ false }
-                                        colorSettings={ [
-                                            {
-                                                label: __( 'Border Color', 'advanced-gutenberg' ),
-                                                value: borderColor,
-                                                onChange: ( value ) => setAttributes( { borderColor: value === undefined ? '#2196f3' : value } ),
-                                            },
-                                        ] }
+                                :
+                                null
+                        }
+                        <InspectorControls>
+                            <PanelBody title={__('Button link', 'advanced-gutenberg')}>
+                                <BaseControl
+                                    label={[
+                                        __('Link URL', 'advanced-gutenberg'),
+                                        (url && <a href={url || '#'} key="link_url" target="_blank" style={{ float: 'right' }}>
+                                            {__('Preview', 'advanced-gutenberg')}
+                                        </a>)
+                                    ]}
+                                >
+                                    <URLInput
+                                        value={url}
+                                        onChange={(value) => setAttributes({ url: value })}
+                                        autoFocus={false}
+                                        isFullWidth
+                                        hasBorder
                                     />
-                                    <RangeControl
-                                        label={ __( 'Border width', 'advanced-gutenberg' ) }
-                                        value={ borderWidth || '' }
-                                        onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
-                                        min={ 0 }
-                                        max={ 100 }
-                                    />
-                                </Fragment>
-                            ) }
-                        </PanelBody>
-                        <PanelBody title={ __( 'Margin', 'advanced-gutenberg' ) } initialOpen={ false } >
-                            <RangeControl
-                                label={ __( 'Margin top', 'advanced-gutenberg' ) }
-                                value={ marginTop || '' }
-                                onChange={ ( value ) => setAttributes( { marginTop: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
-                            <RangeControl
-                                label={ __( 'Margin right', 'advanced-gutenberg' ) }
-                                value={ marginRight || '' }
-                                onChange={ ( value ) => setAttributes( { marginRight: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
-                            <RangeControl
-                                label={ __( 'Margin bottom', 'advanced-gutenberg' ) }
-                                value={ marginBottom || '' }
-                                onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
-                            <RangeControl
-                                label={ __( 'Margin left', 'advanced-gutenberg' ) }
-                                value={ marginLeft || '' }
-                                onChange={ ( value ) => setAttributes( { marginLeft: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
-                        </PanelBody>
-                        <PanelBody title={ __( 'Padding', 'advanced-gutenberg' ) } initialOpen={ false } >
-                            <RangeControl
-                                label={ __( 'Padding top', 'advanced-gutenberg' ) }
-                                value={ paddingTop || '' }
-                                onChange={ ( value ) => setAttributes( { paddingTop: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
-                            <RangeControl
-                                label={ __( 'Padding right', 'advanced-gutenberg' ) }
-                                value={ paddingRight || '' }
-                                onChange={ ( value ) => setAttributes( { paddingRight: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
-                            <RangeControl
-                                label={ __( 'Padding bottom', 'advanced-gutenberg' ) }
-                                value={ paddingBottom || '' }
-                                onChange={ ( value ) => setAttributes( { paddingBottom: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
-                            <RangeControl
-                                label={ __( 'Padding left', 'advanced-gutenberg' ) }
-                                value={ paddingLeft || '' }
-                                onChange={ ( value ) => setAttributes( { paddingLeft: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
-                        </PanelBody>
-                        <PanelBody title={ __( 'Hover', 'advanced-gutenberg' ) } initialOpen={ false } >
-                            <PanelColorSettings
-                                title={ __( 'Color Settings', 'advanced-gutenberg' ) }
-                                initialOpen={ false }
-                                colorSettings={ hoverColorSettings }
-                            />
-                            <PanelBody title={ __( 'Shadow', 'advanced-gutenberg' ) } initialOpen={ false }  >
-                                <RangeControl
-                                    label={ __('Opacity (%)', 'advanced-gutenberg') }
-                                    value={ hoverOpacity }
-                                    onChange={ ( value ) => setAttributes( { hoverOpacity: value } ) }
-                                    min={ 0 }
-                                    max={ 100 }
-                                />
-                                <RangeControl
-                                    label={ __('Transition speed (ms)', 'advanced-gutenberg') }
-                                    value={ transitionSpeed || '' }
-                                    onChange={ ( value ) => setAttributes( { transitionSpeed: value } ) }
-                                    min={ 0 }
-                                    max={ 3000 }
-                                />
-                                <RangeControl
-                                    label={ __( 'Shadow H offset', 'advanced-gutenberg' ) }
-                                    value={ hoverShadowH || '' }
-                                    onChange={ ( value ) => setAttributes( { hoverShadowH: value } ) }
-                                    min={ -50 }
-                                    max={ 50 }
-                                />
-                                <RangeControl
-                                    label={ __( 'Shadow V offset', 'advanced-gutenberg' ) }
-                                    value={ hoverShadowV || '' }
-                                    onChange={ ( value ) => setAttributes( { hoverShadowV: value } ) }
-                                    min={ -50 }
-                                    max={ 50 }
-                                />
-                                <RangeControl
-                                    label={ __( 'Shadow blur', 'advanced-gutenberg' ) }
-                                    value={ hoverShadowBlur || '' }
-                                    onChange={ ( value ) => setAttributes( { hoverShadowBlur: value } ) }
-                                    min={ 0 }
-                                    max={ 50 }
-                                />
-                                <RangeControl
-                                    label={ __( 'Shadow spread', 'advanced-gutenberg' ) }
-                                    value={ hoverShadowSpread || '' }
-                                    onChange={ ( value ) => setAttributes( { hoverShadowSpread: value } ) }
-                                    min={ 0 }
-                                    max={ 50 }
+                                </BaseControl>
+                                <ToggleControl
+                                    label={__('Open in new tab', 'advanced-gutenberg')}
+                                    checked={!!urlOpenNewTab}
+                                    onChange={() => setAttributes({ urlOpenNewTab: !attributes.urlOpenNewTab })}
                                 />
                             </PanelBody>
-                        </PanelBody>
-                        {advgbBlocks.advgb_pro === '1' && (
-                            <Fragment>
-                                <PanelBody title={ __( 'Icon', 'advanced-gutenberg' ) } initialOpen={ false } className="advgb-pro-icon">
-                                    <ToggleControl
-                                        label={ __( 'Display icon', 'advanced-gutenberg' ) }
-                                        checked={ iconDisplay }
-                                        onChange={ () => setAttributes( { iconDisplay: !iconDisplay } ) }
-                                        className="advgb-child-toggle"
+                            <PanelBody title={__('Text/Color', 'advanced-gutenberg')}>
+                                <RangeControl
+                                    label={__('Text size', 'advanced-gutenberg')}
+                                    value={textSize || ''}
+                                    onChange={(size) => setAttributes({ textSize: size })}
+                                    min={10}
+                                    max={100}
+                                    beforeIcon="editor-textcolor"
+                                    allowReset
+                                />
+                                {!isStyleOutlined && (
+                                    <AdvColorControl
+                                        label={__('Background Color', 'advanced-gutenberg')}
+                                        value={bgColor}
+                                        onChange={(value) => setAttributes({ bgColor: value })}
                                     />
-                                    { iconDisplay && (
-                                        <Fragment>
-                                            <BaseControl
-                                                label={ __( 'Icon Library (Material Icon)', 'advanced-gutenberg' )}
-                                            >
-                                                <Button
-                                                    className="button button-large advgb-browse-icon-btn"
-                                                    onClick={ () => {
-                                                        if(!showPopup) {
-                                                            this.togglePopup();
-                                                        }
-                                                    } }
-                                                >
-                                                    { __( 'Icon Selection', 'advanced-gutenberg' ) }
-                                                </Button>
-                                            </BaseControl>
-                                            <RangeControl
-                                                label={ __( 'Icon Size (px)', 'advanced-gutenberg' ) }
-                                                value={iconSize}
-                                                min={1}
-                                                max={200}
-                                                onChange={( value ) => setAttributes( { iconSize: value } )}
-                                            />
-                                            <AdvColorControl
-                                                label={ __( 'Icon Color', 'advanced-gutenberg' ) }
-                                                value={ iconColor }
-                                                onChange={ (value) => setAttributes( {iconColor: value} ) }
-                                            />
-                                            <SelectControl
-                                                label={ __( 'Icon Position', 'advanced-gutenberg' ) }
-                                                value={iconPosition}
-                                                options={[
-                                                    { label: __( 'Left', 'advanced-gutenberg' ), value: 'left' },
-                                                    { label: __( 'Right', 'advanced-gutenberg' ), value: 'right' },
-                                                ]}
-                                                onChange={ ( value ) => setAttributes( { iconPosition: value } ) }
-                                            />
-                                            <RangeControl
-                                                label={ __( 'Icon Spacing (px)', 'advanced-gutenberg' ) }
-                                                value={iconSpacing}
-                                                min={0}
-                                                max={100}
-                                                help={ __( 'Spacing between icon and text', 'advanced-gutenberg' ) }
-                                                onChange={( value ) => setAttributes( { iconSpacing: value } )}
-                                            />
-                                        </Fragment>
-                                    ) }
+                                )}
+                                <AdvColorControl
+                                    label={__('Text Color', 'advanced-gutenberg')}
+                                    value={textColor}
+                                    onChange={(value) => setAttributes({ textColor: value })}
+                                />
+                            </PanelBody>
+                            <PanelBody title={__('Border', 'advanced-gutenberg')} initialOpen={false} >
+                                {!isStyleSquared && (
+                                    <RangeControl
+                                        label={__('Border radius', 'advanced-gutenberg')}
+                                        value={borderRadius || ''}
+                                        onChange={(value) => setAttributes({ borderRadius: value })}
+                                        min={0}
+                                        max={100}
+                                    />
+                                )}
+                                <SelectControl
+                                    label={__('Border style', 'advanced-gutenberg')}
+                                    value={borderStyle}
+                                    options={listBorderStyles}
+                                    onChange={(value) => setAttributes({ borderStyle: value })}
+                                />
+                                {borderStyle !== 'none' && (
+                                    <Fragment>
+                                        <PanelColorSettings
+                                            title={__('Border Color', 'advanced-gutenberg')}
+                                            initialOpen={false}
+                                            colorSettings={[
+                                                {
+                                                    label: __('Border Color', 'advanced-gutenberg'),
+                                                    value: borderColor,
+                                                    onChange: (value) => setAttributes({ borderColor: value === undefined ? '#2196f3' : value }),
+                                                },
+                                            ]}
+                                        />
+                                        <RangeControl
+                                            label={__('Border width', 'advanced-gutenberg')}
+                                            value={borderWidth || ''}
+                                            onChange={(value) => setAttributes({ borderWidth: value })}
+                                            min={0}
+                                            max={100}
+                                        />
+                                    </Fragment>
+                                )}
+                            </PanelBody>
+                            <PanelBody title={__('Margin', 'advanced-gutenberg')} initialOpen={false} >
+                                <RangeControl
+                                    label={__('Margin top', 'advanced-gutenberg')}
+                                    value={marginTop || ''}
+                                    onChange={(value) => setAttributes({ marginTop: value })}
+                                    min={0}
+                                    max={100}
+                                />
+                                <RangeControl
+                                    label={__('Margin right', 'advanced-gutenberg')}
+                                    value={marginRight || ''}
+                                    onChange={(value) => setAttributes({ marginRight: value })}
+                                    min={0}
+                                    max={100}
+                                />
+                                <RangeControl
+                                    label={__('Margin bottom', 'advanced-gutenberg')}
+                                    value={marginBottom || ''}
+                                    onChange={(value) => setAttributes({ marginBottom: value })}
+                                    min={0}
+                                    max={100}
+                                />
+                                <RangeControl
+                                    label={__('Margin left', 'advanced-gutenberg')}
+                                    value={marginLeft || ''}
+                                    onChange={(value) => setAttributes({ marginLeft: value })}
+                                    min={0}
+                                    max={100}
+                                />
+                            </PanelBody>
+                            <PanelBody title={__('Padding', 'advanced-gutenberg')} initialOpen={false} >
+                                <RangeControl
+                                    label={__('Padding top', 'advanced-gutenberg')}
+                                    value={paddingTop || ''}
+                                    onChange={(value) => setAttributes({ paddingTop: value })}
+                                    min={0}
+                                    max={100}
+                                />
+                                <RangeControl
+                                    label={__('Padding right', 'advanced-gutenberg')}
+                                    value={paddingRight || ''}
+                                    onChange={(value) => setAttributes({ paddingRight: value })}
+                                    min={0}
+                                    max={100}
+                                />
+                                <RangeControl
+                                    label={__('Padding bottom', 'advanced-gutenberg')}
+                                    value={paddingBottom || ''}
+                                    onChange={(value) => setAttributes({ paddingBottom: value })}
+                                    min={0}
+                                    max={100}
+                                />
+                                <RangeControl
+                                    label={__('Padding left', 'advanced-gutenberg')}
+                                    value={paddingLeft || ''}
+                                    onChange={(value) => setAttributes({ paddingLeft: value })}
+                                    min={0}
+                                    max={100}
+                                />
+                            </PanelBody>
+                            <PanelBody title={__('Hover', 'advanced-gutenberg')} initialOpen={false} >
+                                <PanelColorSettings
+                                    title={__('Color Settings', 'advanced-gutenberg')}
+                                    initialOpen={false}
+                                    colorSettings={hoverColorSettings}
+                                />
+                                <PanelBody title={__('Shadow', 'advanced-gutenberg')} initialOpen={false}  >
+                                    <RangeControl
+                                        label={__('Opacity (%)', 'advanced-gutenberg')}
+                                        value={hoverOpacity}
+                                        onChange={(value) => setAttributes({ hoverOpacity: value })}
+                                        min={0}
+                                        max={100}
+                                    />
+                                    <RangeControl
+                                        label={__('Transition speed (ms)', 'advanced-gutenberg')}
+                                        value={transitionSpeed || ''}
+                                        onChange={(value) => setAttributes({ transitionSpeed: value })}
+                                        min={0}
+                                        max={3000}
+                                    />
+                                    <RangeControl
+                                        label={__('Shadow H offset', 'advanced-gutenberg')}
+                                        value={hoverShadowH || ''}
+                                        onChange={(value) => setAttributes({ hoverShadowH: value })}
+                                        min={-50}
+                                        max={50}
+                                    />
+                                    <RangeControl
+                                        label={__('Shadow V offset', 'advanced-gutenberg')}
+                                        value={hoverShadowV || ''}
+                                        onChange={(value) => setAttributes({ hoverShadowV: value })}
+                                        min={-50}
+                                        max={50}
+                                    />
+                                    <RangeControl
+                                        label={__('Shadow blur', 'advanced-gutenberg')}
+                                        value={hoverShadowBlur || ''}
+                                        onChange={(value) => setAttributes({ hoverShadowBlur: value })}
+                                        min={0}
+                                        max={50}
+                                    />
+                                    <RangeControl
+                                        label={__('Shadow spread', 'advanced-gutenberg')}
+                                        value={hoverShadowSpread || ''}
+                                        onChange={(value) => setAttributes({ hoverShadowSpread: value })}
+                                        min={0}
+                                        max={50}
+                                    />
                                 </PanelBody>
-                            </Fragment>
-                        ) }
-                    </InspectorControls>
-                </Fragment>
+                            </PanelBody>
+                            {advgbBlocks.advgb_pro === '1' ? (
+                                <Fragment>
+                                    <PanelBody title={__('Icon', 'advanced-gutenberg')} initialOpen={false} className="advgb-pro-icon">
+                                        <ToggleControl
+                                            label={__('Display icon', 'advanced-gutenberg')}
+                                            checked={iconDisplay}
+                                            onChange={() => setAttributes({ iconDisplay: !iconDisplay })}
+                                            className="advgb-child-toggle"
+                                        />
+                                        {iconDisplay && (
+                                            <Fragment>
+                                                <BaseControl
+                                                    label={__('Icon Library (Material Icon)', 'advanced-gutenberg')}
+                                                >
+                                                    <Button
+                                                        className="button button-large advgb-browse-icon-btn"
+                                                        onClick={() => {
+                                                            if (!showPopup) {
+                                                                this.togglePopup();
+                                                            }
+                                                        }}
+                                                    >
+                                                        {__('Icon Selection', 'advanced-gutenberg')}
+                                                    </Button>
+                                                </BaseControl>
+                                                <RangeControl
+                                                    label={__('Icon Size (px)', 'advanced-gutenberg')}
+                                                    value={iconSize}
+                                                    min={1}
+                                                    max={200}
+                                                    onChange={(value) => setAttributes({ iconSize: value })}
+                                                />
+                                                <AdvColorControl
+                                                    label={__('Icon Color', 'advanced-gutenberg')}
+                                                    value={iconColor}
+                                                    onChange={(value) => setAttributes({ iconColor: value })}
+                                                />
+                                                <SelectControl
+                                                    label={__('Icon Position', 'advanced-gutenberg')}
+                                                    value={iconPosition}
+                                                    options={[
+                                                        { label: __('Left', 'advanced-gutenberg'), value: 'left' },
+                                                        { label: __('Right', 'advanced-gutenberg'), value: 'right' },
+                                                    ]}
+                                                    onChange={(value) => setAttributes({ iconPosition: value })}
+                                                />
+                                                <RangeControl
+                                                    label={__('Icon Spacing (px)', 'advanced-gutenberg')}
+                                                    value={iconSpacing}
+                                                    min={0}
+                                                    max={100}
+                                                    help={__('Spacing between icon and text', 'advanced-gutenberg')}
+                                                    onChange={(value) => setAttributes({ iconSpacing: value })}
+                                                />
+                                            </Fragment>
+                                        )}
+                                    </PanelBody>
+                                    <></>
+                                </Fragment>
+                            ) : (
+                                <Fragment>
+                                    <PanelBody title={__('Icon', 'advanced-gutenberg')} initialOpen={false} className="advgb-pro-icon">
+                                        <Fragment>
+                                            <div className="advgb-promo-overlay-area">
+                                                <div className="advgb-blur">
+                                                    <ToggleControl
+                                                        label={__('Display icon', 'advanced-gutenberg')}
+                                                        checked={iconDisplay}
+                                                        className="advgb-child-toggle"
+                                                    />
+                                                    <BaseControl
+                                                        label={__('Icon Library (Material Icon)', 'advanced-gutenberg')}
+                                                    >
+                                                        <Button
+                                                            className="button button-large advgb-browse-icon-btn"
+                                                        >
+                                                            {__('Icon Selection', 'advanced-gutenberg')}
+                                                        </Button>
+                                                    </BaseControl>
+                                                    <RangeControl
+                                                        label={__('Icon Size (px)', 'advanced-gutenberg')}
+                                                        value={iconSize}
+                                                        min={1}
+                                                        max={200}
+                                                    />
+                                                    <AdvColorControl
+                                                        label={__('Icon Color', 'advanced-gutenberg')}
+                                                        value={iconColor}
+                                                    />
+                                                    <SelectControl
+                                                        label={__('Icon Position', 'advanced-gutenberg')}
+                                                        value={iconPosition}
+                                                        options={[
+                                                            { label: __('Left', 'advanced-gutenberg'), value: 'left' },
+                                                            { label: __('Right', 'advanced-gutenberg'), value: 'right' },
+                                                        ]}
+                                                    />
+                                                    <RangeControl
+                                                        label={__('Icon Spacing (px)', 'advanced-gutenberg')}
+                                                        value={iconSpacing}
+                                                        min={0}
+                                                        max={100}
+                                                        help={__('Spacing between icon and text', 'advanced-gutenberg')}
+                                                    />
+                                                </div>
+                                                <div className="advgb-pro-overlay-wrap">
+                                                    <div className="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
+                                                        <span className="advgb-promo-text">
+                                                            {__('Pro', 'advanced-gutenberg')}
+                                                        </span>
+                                                        <span className="tooltip-text">
+                                                            <p>
+                                                                {__('PublishPress Blocks Pro supports icons in buttons.', 'advanced-gutenberg')}
+                                                            </p>
+                                                            <p>
+                                                                <a className="clickable" href="https://publishpress.com/links/blocks-menu" target="_blank">
+                                                                    {__('Upgrade to Pro', 'advanced-gutenberg')}
+                                                                </a>
+                                                            </p>
+                                                            <i></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <></>
+                                        </Fragment>
+                                    </PanelBody>
+                                    <></>
+                                </Fragment>
+                            )}
+                        </InspectorControls>
+                    </Fragment>
             )
         }
     }
 
     const buttonBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
-            <path fill="none" d="M0 0h24v24H0V0z"/>
-            <path d="M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z"/>
+            <path fill="none" d="M0 0h24v24H0V0z" />
+            <path d="M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z" />
         </svg>
     );
     const blockAttrs = {
@@ -708,15 +779,15 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
         },
     };
 
-    registerBlockType( 'advgb/button', {
-        title: __( 'Button - PublishPress', 'advanced-gutenberg' ),
-        description: __( 'Button block with more options and styles.', 'advanced-gutenberg' ),
+    registerBlockType('advgb/button', {
+        title: __('Button - PublishPress', 'advanced-gutenberg'),
+        description: __('Button block with more options and styles.', 'advanced-gutenberg'),
         icon: {
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'button', 'advanced-gutenberg' ), __( 'advanced button', 'advanced-gutenberg' ), __( 'link', 'advanced-gutenberg' ) ],
+        keywords: [__('button', 'advanced-gutenberg'), __('advanced button', 'advanced-gutenberg'), __('link', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {
@@ -727,40 +798,40 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             from: [
                 {
                     type: 'block',
-                    blocks: [ 'core/button' ],
-                    transform: ( attributes ) => {
-                        return createBlock( 'advgb/button', {
+                    blocks: ['core/button'],
+                    transform: (attributes) => {
+                        return createBlock('advgb/button', {
                             ...attributes,
                             bgColor: attributes.color,
-                        } )
+                        })
                     }
                 }
             ],
             to: [
                 {
                     type: 'block',
-                    blocks: [ 'core/button' ],
-                    transform: ( attributes ) => {
-                        return createBlock( 'core/button', {
+                    blocks: ['core/button'],
+                    transform: (attributes) => {
+                        return createBlock('core/button', {
                             ...attributes,
                             color: attributes.bgColor,
-                        } )
+                        })
                     }
                 }
             ]
         },
         styles: [
-            { name: 'default', label: __( 'Default', 'advanced-gutenberg' ), isDefault: true },
-            { name: 'outlined', label: __( 'Outlined', 'advanced-gutenberg' ) },
-            { name: 'squared', label: __( 'Squared', 'advanced-gutenberg' ) },
-            { name: 'squared-outline', label: __( 'Squared Outline', 'advanced-gutenberg' ) },
+            { name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true },
+            { name: 'outlined', label: __('Outlined', 'advanced-gutenberg') },
+            { name: 'squared', label: __('Squared', 'advanced-gutenberg') },
+            { name: 'squared-outline', label: __('Squared Outline', 'advanced-gutenberg') },
         ],
         supports: {
             anchor: true,
             align: ['right', 'left', 'center', 'full'],
         },
         edit: AdvButton,
-        save: function ( { attributes } ) {
+        save: function ({ attributes }) {
             const {
                 id,
                 align,
@@ -782,35 +853,35 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             const iconClass = [
                 'material-icons',
                 iconTheme !== '' && `-${iconTheme}`
-            ].filter( Boolean ).join('');
+            ].filter(Boolean).join('');
 
 
             return (
-                <div className={ `align${align}` }>
-                    <a className={ `wp-block-advgb-button_link ${id}` }
-                        href={ url || '#' }
-                        title={ title }
-                        target={ !urlOpenNewTab ? '_self' : '_blank' }
-                        rel={ 'noopener ' + advgb_relAttribute(attributes) }>
-                        { iconDisplay && (
+                <div className={`align${align}`}>
+                    <a className={`wp-block-advgb-button_link ${id}`}
+                        href={url || '#'}
+                        title={title}
+                        target={!urlOpenNewTab ? '_self' : '_blank'}
+                        rel={'noopener ' + advgb_relAttribute(attributes)}>
+                        {iconDisplay && (
                             <i className={iconClass}>
                                 {icon}
                             </i>
-                        ) }
+                        )}
                         <RichText.Content
-                        tagName="span"
-                        value={ text }
+                            tagName="span"
+                            value={text}
                         />
                     </a>
                 </div>
             );
         },
-        getEditWrapperProps( attributes ) {
+        getEditWrapperProps(attributes) {
             const { align } = attributes;
             const props = { 'data-resized': true };
 
-            if ( 'left' === align || 'right' === align || 'center' === align ) {
-                props[ 'data-align' ] = align;
+            if ('left' === align || 'right' === align || 'center' === align) {
+                props['data-align'] = align;
             }
 
             return props;
@@ -829,7 +900,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                     anchor: true,
                     align: ['right', 'left', 'center', 'full'],
                 },
-                save: function ( { attributes } ) {
+                save: function ({ attributes }) {
                     const {
                         id,
                         align,
@@ -844,14 +915,14 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                     } = attributes;
 
                     return (
-                        <div className={ `align${align}` }>
+                        <div className={`align${align}`}>
                             <RichText.Content
                                 tagName="a"
-                                className={ `wp-block-advgb-button_link ${id}` }
-                                href={ url || '#' }
-                                title={ title }
-                                target={ !urlOpenNewTab ? '_self' : '_blank' }
-                                value={ text }
+                                className={`wp-block-advgb-button_link ${id}`}
+                                href={url || '#'}
+                                title={title}
+                                target={!urlOpenNewTab ? '_self' : '_blank'}
+                                value={text}
                                 rel="noopener noreferrer"
                             />
                         </div>
@@ -866,14 +937,14 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                         default: 0.2,
                     }
                 },
-                migrate: function( attributes ) {
+                migrate: function (attributes) {
                     const transitionSpeed = attributes.transitionSpeed * 1000;
                     return {
                         ...attributes,
                         transitionSpeed,
                     }
                 },
-                save: function ( { attributes } ) {
+                save: function ({ attributes }) {
                     const {
                         id,
                         align,
@@ -884,14 +955,14 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                     } = attributes;
 
                     return (
-                        <div className={ `align${align}` }>
+                        <div className={`align${align}`}>
                             <RichText.Content
                                 tagName="a"
-                                className={ `wp-block-advgb-button_link ${id}` }
-                                href={ url || '#' }
-                                title={ title }
-                                target={ !urlOpenNewTab ? '_self' : '_blank' }
-                                value={ text }
+                                className={`wp-block-advgb-button_link ${id}`}
+                                href={url || '#'}
+                                title={title}
+                                target={!urlOpenNewTab ? '_self' : '_blank'}
+                                value={text}
                                 rel="noopener noreferrer"
                             />
                         </div>
@@ -899,5 +970,5 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 },
             },
         ],
-    } );
-})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
