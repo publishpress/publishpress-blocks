@@ -1,6 +1,11 @@
 @import "variables";
 @import "mixins";
 
+.pp-version-notice-bold-purple-button a {
+  color: #000000;
+  text-decoration: none;
+}
+
 .inline-button-wrapper {
     float: right;
 }
@@ -814,7 +819,8 @@ li.block-config-item .block-icon svg {
     fill: currentColor;
 }
 
-li.block-config-item .block-config-button {
+li.block-config-item .block-config-button,
+li.block-config-item .block-promo-button {
     line-height: 30px;
     float: right;
     font-size: 25px;
@@ -913,6 +919,74 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked + .slider:before
     transform: translateX(14px);
 }
 
+.advgb-blur {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.advgb-pro-overlay-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  pointer-events: auto;
+  text-decoration: none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: 1px solid #fca871;
+  break-inside: avoid;
+  white-space: nowrap;
+  gap: 4px;
+  background-color: #ffb200;
+  color: #000 !important;
+  padding: 9px 12px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.advgb-promo-text {
+  background-color: #ffb200;
+  color: #000;
+  border-radius: 4px;
+  padding: 9px 12px;
+  font-weight: bold;
+  float: right;
+  margin-right: 10px;
+}
+
+.advgb-switch-button.promo-area {
+  line-height: normal;
+  margin-top: 15px;
+}
+
+.advgb-tooltips .tooltip-text {
+  background-color: #655897 !important;
+  text-align: center !important;
+}
+
+.advgb-tooltips .tooltip-text i::after {
+  background-color: #655897 !important;
+}
+
+.advgb-tooltips .tooltip-text a {
+  font-size: 17px !important;
+  background: #FCB223;
+  color: #000 !important;
+  font-weight: normal;
+  text-decoration: none !important;
+  padding: 9px 12px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: 1px solid #fca871;
+  break-inside: avoid;
+  white-space: nowrap;
+}
+
 .category-block.collapsed .blocks-list {
     display: none;
 }
@@ -986,7 +1060,8 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked + .slider:before
     margin-left: 30px;
 }
 
-.rtl li.block-config-item .block-config-button {
+.rtl li.block-config-item .block-config-button,
+.rtl li.block-config-item .block-promo-button {
     float: left;
 }
 

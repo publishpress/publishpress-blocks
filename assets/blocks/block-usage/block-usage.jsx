@@ -783,7 +783,7 @@
                 {data.lastScanDate && (
                     <div className="pp-blocks-usage-last-scan">
                         <span>{__('Last scan:', 'advanced-gutenberg')} {new Date(data.lastScanDate).toLocaleString()}</span>
-                        <div className="pp-tooltips-library" data-toggle="tooltip" data-placement="left">
+                        <div className="ppb-tooltips-library" data-toggle="ppbtooltip" data-placement="left">
                             {!loadingClearAll &&
                                 <span className="dashicons dashicons-editor-help" style={{ verticalAlign: 'middle', lineHeight: 'inherit' }}></span>
                             }

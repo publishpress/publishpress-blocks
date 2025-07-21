@@ -9,9 +9,7 @@ defined('ABSPATH') || die;
         </h1>
     </header>
     <div class="wrap">
-        <div class="pp-columns-wrapper<?php echo ( ! defined('ADVANCED_GUTENBERG_PRO_LOADED')
-            ? ' pp-enable-sidebar'
-            : '' ) ?>"
+        <div class="pp-columns-wrapper"
         >
             <div class="pp-column-left">
                 <div>
@@ -94,39 +92,6 @@ defined('ABSPATH') || die;
                     ?>
                 </div>
             </div><!-- .pp-column-left -->
-
-            <?php if (! defined('ADVANCED_GUTENBERG_PRO_LOADED')) : ?>
-                <div class="pp-column-right">
-                    <?php
-                    $banners = new PublishPress\WordPressBanners\BannersMain();
-                    $banners->pp_display_banner(
-                        '',
-                        __('PublishPress Blocks Pro', 'advanced-gutenberg'),
-                        [
-                            __('Priority, personal support', 'advanced-gutenberg'),
-                            __('Pro features for Accordion block', 'advanced-gutenberg'),
-                            __('Pro features for Tabs block', 'advanced-gutenberg'),
-                            __('Pro features for Content Display block', 'advanced-gutenberg'),
-                            __('Pro features for Images Slider block', 'advanced-gutenberg'),
-                            __('Pro features for Button block', 'advanced-gutenberg'),
-                            __('Pro features for List block', 'advanced-gutenberg'),
-                            __('Pro features for Count Up block', 'advanced-gutenberg'),
-                            __('Pro features for Testimonial block', 'advanced-gutenberg'),
-                            __('Pro features for Advanced Image block', 'advanced-gutenberg'),
-                            __('Google Fonts support', 'advanced-gutenberg'),
-                            __('Countdown block', 'advanced-gutenberg'),
-                            __('Pricing Table block', 'advanced-gutenberg'),
-                            __('Feature List block', 'advanced-gutenberg'),
-                            __('Remove PublishPress ads and branding', 'advanced-gutenberg')
-                        ],
-                        'https://publishpress.com/links/blocks-banner',
-                        __('Upgrade to Pro', 'advanced-gutenberg'),
-                        '',
-                        'button pp-button-yellow'
-                    );
-                    ?>
-                </div><!-- .pp-column-right -->
-            <?php endif; ?>
 
         </div>
     </div>
