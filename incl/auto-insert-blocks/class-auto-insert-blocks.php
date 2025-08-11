@@ -608,7 +608,7 @@ class AdvancedGutenbergAutoInsertBlocks
         }
 
         // Save position settings
-        $position = isset($form['advgb_position']) ? sanitize_text_field($_POST['advgb_position']) : 'beginning';
+        $position = isset($_POST['advgb_position']) ? sanitize_text_field($_POST['advgb_position']) : 'beginning';
         if (! $this->proActive && ! in_array($position, ['beginning', 'end'])) {
             $position = 'beginning';
         }
