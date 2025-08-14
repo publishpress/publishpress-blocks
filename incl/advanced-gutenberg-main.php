@@ -219,6 +219,14 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     add_filter('widget_block_content', array( $this, 'addFrontendWidgetAssets' ), 9);
                 }
             }
+
+            if ( Utilities::settingIsEnabled( 'auto_insert_blocks' ) ) {
+                require_once plugin_dir_path(dirname(__FILE__)) . 'incl/auto-insert-blocks/class-auto-insert-blocks.php';
+                require_once plugin_dir_path(dirname(__FILE__)) . 'incl/auto-insert-blocks/class-auto-insert-metaboxes.php';
+
+                new AdvancedGutenbergAutoInsertBlocks();
+                new AdvancedGutenbergAutoInsertMetaboxes();
+            }
         }
 
         /**
@@ -510,7 +518,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     // Pro Ads in some blocks for free version
                     if (! defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
 
-                        $this->enqueueToolTipsAssets();
+                        self::enqueueToolTipsAssets();
 
                         wp_enqueue_script(
                             'advgb_pro_ad_js',
@@ -2114,10 +2122,17 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     'enabled'  => Utilities::settingIsEnabled('reusable_blocks')
                 ],
                 [
+                'slug'     => 'edit.php?post_type=advgb_insert_block',
+                'title'    => esc_html__( 'Auto Insert Blocks', 'advanced-gutenberg' ),
+                'callback' => '',
+                'order'    => 8,
+                'enabled'  => Utilities::settingIsEnabled( 'auto_insert_blocks' )
+                ],
+                [
                     'slug'     => 'advgb_settings',
                     'title'    => esc_html__('Settings', 'advanced-gutenberg'),
                     'callback' => 'loadSettingsPage',
-                    'order'    => 8,
+                    'order'    => 9,
                     'enabled'  => true
                 ]
             ];
@@ -2266,7 +2281,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
          * @return void
          * @since 3.0.0
          */
-        public function enqueueToolTipsAssets()
+        public static function enqueueToolTipsAssets()
         {
 
             wp_enqueue_style(
@@ -2292,14 +2307,14 @@ if (! class_exists('AdvancedGutenbergMain')) {
          * @return void
          * @since 3.0.0
          */
-        public function commonAdminPagesAssets()
+        public static function commonAdminPagesAssets()
         {
             wp_enqueue_script('advgb_main_js');
             wp_enqueue_script('advgb_settings_js');
             wp_enqueue_script('minicolors_js');
             wp_enqueue_script('qtip_js');
 
-            $this->enqueueToolTipsAssets();
+            self::enqueueToolTipsAssets();
 
             wp_enqueue_style('advgb_admin_styles');
             wp_enqueue_style('advgb_qtip_style');
@@ -2333,7 +2348,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            $this->commonAdminPagesAssets();
+            self::commonAdminPagesAssets();
 
             wp_localize_script(
                 'advgb_main_js',
@@ -2359,7 +2374,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            $this->commonAdminPagesAssets();
+            self::commonAdminPagesAssets();
             $this->loadPage('settings');
         }
 
@@ -2390,7 +2405,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            $this->commonAdminPagesAssets();
+            self::commonAdminPagesAssets();
 
             /* Access current user blocks and saved blocks to build 2 javascript objects.
              * 'advgbCUserRole' object for current user role from form dropdown
@@ -2436,7 +2451,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            $this->commonAdminPagesAssets();
+            self::commonAdminPagesAssets();
 
             /* Access current user blocks and saved blocks to build 2 javascript objects.
              * 'advgbCUserRole' object for current user role from form dropdown
@@ -2480,7 +2495,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            $this->commonAdminPagesAssets();
+            self::commonAdminPagesAssets();
 
             // Output blocks through javascript
             PublishPress\Blocks\Controls::adminData();
@@ -2514,7 +2529,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            $this->commonAdminPagesAssets();
+            self::commonAdminPagesAssets();
             $this->loadPage('block-settings');
         }
 
@@ -2530,7 +2545,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            $this->commonAdminPagesAssets();
+            self::commonAdminPagesAssets();
             $this->loadPage('email-form');
         }
 
@@ -2570,7 +2585,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_style('codemirror_css');
             wp_enqueue_style('codemirror_hint_style');
 
-            $this->commonAdminPagesAssets();
+            self::commonAdminPagesAssets();
             $this->loadPage('custom-styles');
         }
 
