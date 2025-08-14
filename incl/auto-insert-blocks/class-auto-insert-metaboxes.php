@@ -98,7 +98,8 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                     <?php endif; ?>
                     <select name="advgb_block_id" id="advgb_block_id" class="advgb-editor-aib-select2 regular-text" required>
                         <option value=""><?php _e( 'Select a reusable block...', 'advanced-gutenberg' ); ?></option>
-                        <?php foreach ( $reusable_blocks as $block ) : ?>
+                        <?php
+                        foreach ( $reusable_blocks as $block ) : ?>
                             <option value="<?php echo esc_attr( $block['id'] ); ?>" <?php selected( $block_id, $block['id'] ); ?>>
                                 <?php echo esc_html( $block['title'] ); ?>
                             </option>
@@ -438,32 +439,75 @@ class AdvancedGutenbergAutoInsertMetaboxes {
             </tr>
 
             <tr>
-                <th class="<?php echo esc_attr($pro_class); ?>"><label for="advgb_post_ids"><?php _e('Specific Post IDs', 'advanced-gutenberg'); ?></label></th>
+                <th class="<?php echo esc_attr($pro_class); ?>"><label><?php _e('Post IDs', 'advanced-gutenberg'); ?></label></th>
                 <td class="advgb-promo-overlay-area">
-                    <input type="text" name="advgb_post_ids" id="advgb_post_ids"
-                        value="<?php echo esc_attr(implode(',', $post_ids)); ?>" class="<?php echo esc_attr($pro_class); ?> regular-text">
-                    <p class="<?php echo esc_attr($pro_class); ?> description">
-                        <?php _e('Comma-separated list of post IDs to include (e.g., 123,456,789).', 'advanced-gutenberg'); ?>
-                    </p>
-                     <?php if (!$this->proActive) : ?>
+                    <div class="post-ids-tabs <?php echo esc_attr($pro_class); ?>">
+                        <ul class="nav-tab-wrapper">
+                            <li><a href="#tab-include-posts" class="nav-tab nav-tab-active"><?php _e('Include', 'advanced-gutenberg'); ?></a></li>
+                            <li><a href="#tab-exclude-posts" class="nav-tab"><?php _e('Exclude', 'advanced-gutenberg'); ?></a></li>
+                        </ul>
+
+                        <div id="tab-include-posts" class="tab-content active">
+                            <p class="description"><?php _e('Search and select posts to include, or enter IDs.', 'advanced-gutenberg'); ?></p>
+                            <div class="post-ids-search-container">
+                                <select class="advg-insert-post-select2 include-posts"
+                                    data-placeholder="<?php echo esc_attr__('Search posts...', 'advanced-gutenberg'); ?>"
+                                    multiple="multiple"
+                                    style="width: 100%;">
+                                    <?php
+                                    if (!empty($post_ids)) {
+                                        foreach ($post_ids as $post_id) {
+                                            $post = get_post($post_id);
+                                            if ($post) {
+                                                echo '<option value="' . esc_attr($post->ID) . '" selected>' . esc_html($post->post_title) . '</option>';
+                                            }
+                                        }
+                                    } ?>
+                                </select>
+                                <input type="hidden" name="advgb_post_ids" id="advgb_post_ids" value="<?php echo esc_attr(implode(',', $post_ids)); ?>">
+                            </div>
+                            <div class="advgb-or-separator">
+                                <span><?php _e('OR', 'advanced-gutenberg'); ?></span>
+                            </div>
+                            <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" placeholder="<?php esc_attr_e('Enter comma-separated list of post IDs to include (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $post_ids)); ?>">
+                        </div>
+
+                        <div id="tab-exclude-posts" class="tab-content">
+                            <p class="description"><?php _e('Search and select posts to exclude, or enter post IDs.', 'advanced-gutenberg'); ?></p>
+                            <div class="post-ids-search-container">
+                                <select class="advg-insert-post-select2 exclude-posts"
+                                    data-placeholder="<?php echo esc_attr__('Search posts...', 'advanced-gutenberg'); ?>"
+                                    multiple="multiple"
+                                    style="width: 100%;">
+                                    <?php
+                                    if (!empty($exclude_post_ids)) {
+                                        foreach ($exclude_post_ids as $post_id) {
+                                            $post = get_post($post_id);
+                                            if ($post) {
+                                                echo '<option value="' . esc_attr($post->ID) . '" selected>' . esc_html($post->post_title) . '</option>';
+                                            }
+                                        }
+                                    } ?>
+                                </select>
+                                <input type="hidden" name="advgb_exclude_post_ids" id="advgb_exclude_post_ids" value="<?php echo esc_attr(implode(',', $exclude_post_ids)); ?>">
+                            </div>
+                            <div class="advgb-or-separator">
+                                <span><?php _e('OR', 'advanced-gutenberg'); ?></span>
+                            </div>
+                            <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" placeholder="<?php esc_attr_e('Enter comma-separated post IDs to exclude (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $exclude_post_ids)); ?>">
+                        </div>
+                    </div>
+
+                    <?php if (!$this->proActive) : ?>
                         <a class="advgb-pro-link" href="<?php echo esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK); ?>" target="_blank">
                             <div class="advgb-pro-small-overlay-text">
-                                    <span class="dashicons dashicons-lock"></span> <?php _e('Pro feature', 'advanced-gutenberg'); ?>
+                                <span class="dashicons dashicons-lock"></span> <?php _e('Pro feature', 'advanced-gutenberg'); ?>
                             </div>
                         </a>
                     <?php endif; ?>
                 </td>
             </tr>
 
-            <tr>
-                <th class="<?php echo esc_attr($pro_class); ?>"><label for="advgb_exclude_post_ids"><?php _e('Exclude Post IDs', 'advanced-gutenberg'); ?></label></th>
-                <td>
-                    <input type="text" name="advgb_exclude_post_ids" id="advgb_exclude_post_ids"
-                        value="<?php echo esc_attr(implode(',', $exclude_post_ids)); ?>" class="<?php echo esc_attr($pro_class); ?> regular-text">
-                    <p class="<?php echo esc_attr($pro_class); ?> description"><?php _e('Comma-separated list of post IDs to exclude (e.g., 123,456,789).', 'advanced-gutenberg'); ?>
-                    </p>
-                </td>
-            </tr>
         </table>
         <?php
     }
