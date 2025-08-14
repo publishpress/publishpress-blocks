@@ -37,6 +37,7 @@ class AdvancedGutenbergAutoInsertBlocks
         add_action('wp_ajax_advgb_search_taxonomy_terms', [$this, 'searchTaxonomyTerms']);
         add_action('wp_ajax_advgb_insert_search_author', [$this, 'searchUsers']);
         add_action('wp_ajax_advgb_insert_search_block', [$this, 'searchBlocks']);
+        add_action('wp_ajax_advgb_insert_search_posts', [$this, 'searchPosts']);
 
         // Column hooks
         add_filter('manage_advgb_insert_block_posts_columns', [$this, 'addAutoInsertColumns']);
@@ -735,6 +736,43 @@ class AdvancedGutenbergAutoInsertBlocks
                     ];
                 }
             }
+        }
+
+        wp_send_json_success($results);
+    }
+
+    /**
+     * AJAX endpoint for searching posts
+     */
+    public function searchPosts()
+    {
+        check_ajax_referer('advgb_auto_insert_nonce', 'nonce');
+
+        if (!current_user_can('administrator')) {
+            wp_die('Unauthorized');
+        }
+
+        $search = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
+        $post_types = isset($_GET['post_types']) ? array_map('sanitize_text_field', $_GET['post_types']) : ['post'];
+
+        $args = [
+            'post_type' => $post_types,
+            'post_status' => 'publish',
+            'posts_per_page' => 20,
+            's' => $search
+        ];
+
+        $posts = get_posts($args);
+
+        $results = [];
+        foreach ($posts as $post) {
+            $post_type_obj = get_post_type_object($post->post_type);
+            $post_type_label = $post_type_obj ? $post_type_obj->labels->singular_name : $post->post_type;
+
+            $results[] = [
+                'id' => $post->ID,
+                'text' => $post->post_title . ' (' . $post_type_label . ' #' . $post->ID . ')'
+            ];
         }
 
         wp_send_json_success($results);

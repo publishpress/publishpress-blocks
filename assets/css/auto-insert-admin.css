@@ -90,3 +90,97 @@
 .advgb-pro-required {
     color: #b32d2e !important;
 }
+
+/* Post IDs Tabs */
+.post-ids-tabs {
+    margin-top: 10px;
+    border: 1px solid #8c8f94;
+}
+
+.post-ids-tabs .nav-tab-wrapper {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.post-ids-tabs .nav-tab-wrapper li {
+    flex: 1;
+    margin: 0;
+}
+
+.post-ids-tabs .nav-tab {
+    display: inline-block;
+    width: -webkit-fill-available;
+    border: #7e8993 solid 1px;
+    border-bottom: none;
+    position: relative;
+    z-index: 1;
+    padding: 5px 10px;
+    background: #fff;
+    margin: 0 0 0 -1px;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none;
+    border-radius: 0;
+}
+
+.post-ids-tabs .nav-tab-active {
+    border-color: #00d084;
+    background: #00d084;
+    color: #fff;
+    font-weight: bold;
+}
+
+.post-ids-tabs .nav-tab-active:focus,
+.post-ids-tabs .nav-tab-active:focus:active {
+    outline: none;
+    box-shadow: none;
+}
+
+.post-ids-tabs .tab-content {
+    display: none;
+    padding: 10px 5px;
+}
+
+.post-ids-tabs .tab-content.active {
+    display: block;
+}
+
+.post-ids-search-container {
+    margin-bottom: 10px;
+}
+
+.post-ids-manual-input {
+    margin-top: 5px;
+}
+
+/* OR Separator */
+.advgb-or-separator {
+    position: relative;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.advgb-or-separator::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #ddd;
+    z-index: 1;
+}
+
+.advgb-or-separator span {
+    position: relative;
+    display: inline-block;
+    padding: 0 10px;
+    background-color: #f9f9f9;
+    color: #555;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    z-index: 2;
+}
