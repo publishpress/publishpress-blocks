@@ -98,8 +98,7 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                     <?php endif; ?>
                     <select name="advgb_block_id" id="advgb_block_id" class="advgb-editor-aib-select2 regular-text" required>
                         <option value=""><?php _e( 'Select a reusable block...', 'advanced-gutenberg' ); ?></option>
-                        <?php
-                        foreach ( $reusable_blocks as $block ) : ?>
+                        <?php foreach ( $reusable_blocks as $block ) : ?>
                             <option value="<?php echo esc_attr( $block['id'] ); ?>" <?php selected( $block_id, $block['id'] ); ?>>
                                 <?php echo esc_html( $block['title'] ); ?>
                             </option>
