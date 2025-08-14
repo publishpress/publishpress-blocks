@@ -220,6 +220,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
+            add_filter('register_post_type_args', [$this, 'filterWpBlockPostTypeArgs'], 10, 2);
+            add_filter('register_taxonomy_args', [$this, 'filterWpBlockCategoryArgs'], 10, 3);
+
             if ( Utilities::settingIsEnabled( 'auto_insert_blocks' ) ) {
                 require_once plugin_dir_path(dirname(__FILE__)) . 'incl/auto-insert-blocks/class-auto-insert-blocks.php';
                 require_once plugin_dir_path(dirname(__FILE__)) . 'incl/auto-insert-blocks/class-auto-insert-metaboxes.php';
@@ -2116,7 +2119,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 ],
                 [
                     'slug'     => 'edit.php?post_type=wp_block',
-                    'title'    => esc_html__('Synced Patterns', 'advanced-gutenberg'),
+                    'title'    => esc_html__('Reusable Blocks', 'advanced-gutenberg'),
                     'callback' => '',
                     'order'    => 7,
                     'enabled'  => Utilities::settingIsEnabled('reusable_blocks')
@@ -6075,5 +6078,72 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             return $links;
         }
+
+        /**
+        * Filter wp_block post type arguments to change labels
+        *
+        * @param array $args Post type arguments
+        * @param string $post_type Post type name
+        * @return array Modified arguments
+        */
+        public function filterWpBlockPostTypeArgs($args, $post_type) {
+            if ($post_type === 'wp_block') {
+                // Override the labels to use "Reusable Blocks" terminology
+                $args['labels'] = array_merge($args['labels'], [
+                    'name'                  => __('Reusable Blocks', 'advanced-gutenberg'),
+                    'singular_name'         => __('Reusable Block', 'advanced-gutenberg'),
+                    'menu_name'             => __('Reusable Blocks', 'advanced-gutenberg'),
+                    'all_items'             => __('All Reusable Blocks', 'advanced-gutenberg'),
+                    'add_new'               => __('Add New', 'advanced-gutenberg'),
+                    'add_new_item'          => __('Add New Reusable Block', 'advanced-gutenberg'),
+                    'edit_item'             => __('Edit Reusable Block', 'advanced-gutenberg'),
+                    'new_item'              => __('New Reusable Block', 'advanced-gutenberg'),
+                    'view_item'             => __('View Reusable Block', 'advanced-gutenberg'),
+                    'view_items'            => __('View Reusable Blocks', 'advanced-gutenberg'),
+                    'search_items'          => __('Search Reusable Blocks', 'advanced-gutenberg'),
+                    'not_found'             => __('No reusable blocks found.', 'advanced-gutenberg'),
+                    'not_found_in_trash'    => __('No reusable blocks found in Trash.', 'advanced-gutenberg'),
+                    'parent_item_colon'     => __('Parent Reusable Block:', 'advanced-gutenberg'),
+                    'archives'              => __('Reusable Block Archives', 'advanced-gutenberg'),
+                ]);
+            }
+
+            return $args;
+        }
+
+        /**
+        * Filter wp_block_category taxonomy arguments
+        *
+        * @param array $args Taxonomy arguments
+        * @param string $taxonomy Taxonomy name
+        * @param array $object_type Object types
+        * @return array Modified arguments
+        */
+        public function filterWpBlockCategoryArgs($args, $taxonomy, $object_type) {
+            if ($taxonomy === 'wp_pattern_category') {
+                $args['labels'] = array_merge($args['labels'], [
+                    'name'                       => __('Reusable Block Categories', 'advanced-gutenberg'),
+                    'singular_name'              => __('Reusable Block Category', 'advanced-gutenberg'),
+                    'menu_name'                  => __('Block Categories', 'advanced-gutenberg'),
+                    'all_items'                  => __('All Block Categories', 'advanced-gutenberg'),
+                    'edit_item'                  => __('Edit Block Category', 'advanced-gutenberg'),
+                    'view_item'                  => __('View Block Category', 'advanced-gutenberg'),
+                    'update_item'                => __('Update Block Category', 'advanced-gutenberg'),
+                    'add_new_item'               => __('Add New Block Category', 'advanced-gutenberg'),
+                    'new_item_name'              => __('New Block Category Name', 'advanced-gutenberg'),
+                    'parent_item'                => __('Parent Block Category', 'advanced-gutenberg'),
+                    'parent_item_colon'          => __('Parent Block Category:', 'advanced-gutenberg'),
+                    'search_items'               => __('Search Block Categories', 'advanced-gutenberg'),
+                    'popular_items'              => __('Popular Block Categories', 'advanced-gutenberg'),
+                    'separate_items_with_commas' => __('Separate block categories with commas', 'advanced-gutenberg'),
+                    'add_or_remove_items'        => __('Add or remove block categories', 'advanced-gutenberg'),
+                    'choose_from_most_used'      => __('Choose from the most used block categories', 'advanced-gutenberg'),
+                    'not_found'                  => __('No block categories found.', 'advanced-gutenberg'),
+                ]);
+            }
+
+            return $args;
+        }
+
     }
 }
