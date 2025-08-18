@@ -23,113 +23,6 @@ if (! class_exists('AdvancedGutenbergMain')) {
          * @var string  All blocks
          */
         public static $default_active_blocks = 'all';
-
-        /**
-         * Default custom styles
-         *
-         * @var array   Default custom styles for first install
-         */
-        public static $default_custom_styles = array(
-            0 => array(
-                'id'            => 1,
-                'title'         => 'Blue message',
-                'name'          => 'blue-message',
-                'identifyColor' => '#3399ff',
-                'css'           => 'background: none repeat scroll 0 0 #3399ff;
-    color: #ffffff;
-    text-shadow: none;
-    font-size: 16px;
-    line-height: 24px;
-    padding: 10px;'
-            ),
-            1 => array(
-                'id'            => 2,
-                'title'         => 'Green message',
-                'name'          => 'green-message',
-                'identifyColor' => '#8cc14c',
-                'css'           => 'background: none repeat scroll 0 0 #8cc14c;
-    color: #ffffff;
-    text-shadow: none;
-    font-size: 16px;
-    line-height: 24px;
-    padding: 10px;'
-            ),
-            2 => array(
-                'id'            => 3,
-                'title'         => 'Orange message',
-                'name'          => 'orange-message',
-                'identifyColor' => '#faa732',
-                'css'           => 'background: none repeat scroll 0 0 #faa732;
-    color: #ffffff;
-    text-shadow: none;
-    font-size: 16px;
-    line-height: 24px;
-    padding: 10px;'
-            ),
-            3 => array(
-                'id'            => 4,
-                'title'         => 'Red message',
-                'name'          => 'red-message',
-                'identifyColor' => '#da4d31',
-                'css'           => 'background: none repeat scroll 0 0 #da4d31;
-    color: #ffffff;
-    text-shadow: none;
-    font-size: 16px;
-    line-height: 24px;
-    padding: 10px;'
-            ),
-            4 => array(
-                'id'            => 5,
-                'title'         => 'Grey message',
-                'name'          => 'grey-message',
-                'identifyColor' => '#53555c',
-                'css'           => 'background: none repeat scroll 0 0 #53555c;
-    color: #ffffff;
-    text-shadow: none;
-    font-size: 16px;
-    line-height: 24px;
-    padding: 10px;'
-            ),
-            5 => array(
-                'id'            => 6,
-                'title'         => 'Left block',
-                'name'          => 'left-block',
-                'identifyColor' => '#ff00ff',
-                'css'           => 'background: none repeat scroll 0 0px, radial-gradient(ellipse at center center, #ffffff 0%, #f2f2f2 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
-    color: #8b8e97;
-    padding: 10px;
-    margin: 10px;
-    float: left;'
-            ),
-            6 => array(
-                'id'            => 7,
-                'title'         => 'Right block',
-                'name'          => 'right-block',
-                'identifyColor' => '#00ddff',
-                'css'           => 'background: none repeat scroll 0 0px, radial-gradient(ellipse at center center, #ffffff 0%, #f2f2f2 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
-    color: #8b8e97;
-    padding: 10px;
-    margin: 10px;
-    float: right;'
-            ),
-            7 => array(
-                'id'            => 8,
-                'title'         => 'Blockquotes',
-                'name'          => 'blockquotes',
-                'identifyColor' => '#cccccc',
-                'css'           => 'background: none;
-    border-left: 5px solid #f1f1f1;
-    color: #8B8E97;
-    font-size: 16px;
-    font-style: italic;
-    line-height: 22px;
-    padding-left: 15px;
-    padding: 10px;
-    width: 60%;
-    float: left;'
-            )
-        );
-
         /**
          * Store original editor settings value, before we modify it to allow/hide blocks based on user roles
          *
@@ -203,7 +96,6 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                 // Ajax
                 add_action('wp_ajax_advgb_update_blocks_list', array( $this, 'updateBlocksList' ));
-                add_action('wp_ajax_advgb_custom_styles_ajax', array( $this, 'customStylesAjax' ));
                 add_action('wp_ajax_advgb_block_config_save', array( $this, 'saveBlockConfig' ));
                 add_action('wp_ajax_advgb_feature_save', [ $this, 'saveFeature' ]);
                 add_action('wp_ajax_pp_blocks-usage_scan_batch', [ $this, 'scan_block_usage' ]);
@@ -222,6 +114,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             add_filter('register_post_type_args', [$this, 'filterWpBlockPostTypeArgs'], 10, 2);
             add_filter('register_taxonomy_args', [$this, 'filterWpBlockCategoryArgs'], 10, 3);
+
+            if ( Utilities::settingIsEnabled( 'enable_custom_styles' ) ) {
+                require_once plugin_dir_path(dirname(__FILE__)) . 'incl/block-styles/block-styles.php';
+                new AdvancedGutenbergBlockStyles();
+            }
 
             if ( Utilities::settingIsEnabled( 'auto_insert_blocks' ) ) {
                 require_once plugin_dir_path(dirname(__FILE__)) . 'incl/auto-insert-blocks/class-auto-insert-blocks.php';
@@ -1205,136 +1102,6 @@ if (! class_exists('AdvancedGutenbergMain')) {
             ], 200);
         }
 
-        /**
-         * Ajax for custom styles
-         *
-         * @return boolean,void     Return false if failure, echo json on success
-         */
-        public function customStylesAjax()
-        {
-            // Check users permissions
-            if (! current_user_can('activate_plugins')) {
-                wp_send_json(__('No permission!', 'advanced-gutenberg'), 403);
-
-                return false;
-            }
-            $regex = '/^[a-zA-Z0-9_\-]+$/';
-
-            if (! wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_cstyles_nonce')) {
-                wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
-            }
-
-            $check_exist = get_option('advgb_custom_styles');
-            if ($check_exist === false) {
-                update_option('advgb_custom_styles', $this::$default_custom_styles, false);
-            }
-
-            $custom_style_data = get_option('advgb_custom_styles');
-            $task              = isset($_POST['task']) ? sanitize_text_field($_POST['task']) : '';
-            if ($task === '') {
-                return false;
-            } elseif ($task === 'new') {
-                $new_style_id    = end($custom_style_data);
-                $new_style_id    = $new_style_id['id'] + 1;
-                $new_style_array = array(
-                    'id'            => $new_style_id,
-                    'title'         => __('Style title', 'advanced-gutenberg') . ' ' . $new_style_id,
-                    'name'          => 'new-class-' . rand(0, 99) . $new_style_id . rand(0, 99),
-                    'css'           => '',
-                    'identifyColor' => '#000000'
-                );
-                array_push($custom_style_data, $new_style_array);
-                update_option('advgb_custom_styles', $custom_style_data, false);
-                wp_send_json($new_style_array);
-            } elseif ($task === 'delete') {
-                $custom_style_data_delete = get_option('advgb_custom_styles');
-                $style_id                 = (int) $_POST['id'];
-                $new_style_deleted_array  = array();
-                $done                     = false;
-                foreach ($custom_style_data_delete as $data) {
-                    if ($data['id'] === $style_id) {
-                        $done = true;
-                        continue;
-                    }
-                    array_push($new_style_deleted_array, $data);
-                }
-                update_option('advgb_custom_styles', $new_style_deleted_array, false);
-                if ($done) {
-                    wp_send_json(array( 'id' => $style_id ), 200);
-                }
-            } elseif ($task === 'copy') {
-                $data_saved             = get_option('advgb_custom_styles');
-                $style_id               = (int) $_POST['id'];
-                $new_style_copied_array = get_option('advgb_custom_styles');
-                $copied_styles          = array();
-                $new_id                 = end($new_style_copied_array);
-                foreach ($data_saved as $data) {
-                    if ($data['id'] === $style_id) {
-                        $copied_styles = array(
-                            'id'            => $new_id['id'] + 1,
-                            'title'         => sanitize_text_field($data['title']) . ' ' . __(
-                                'copy',
-                                'advanced-gutenberg'
-                            ),
-                            'name'          => sanitize_text_field($data['name']) . '-' . rand(0, 999),
-                            'css'           => wp_strip_all_tags($data['css']),
-                            'identifyColor' => sanitize_hex_color($data['identifyColor']),
-                        );
-
-                        array_push($new_style_copied_array, $copied_styles);
-                    }
-                }
-                update_option('advgb_custom_styles', $new_style_copied_array, false);
-                wp_send_json($copied_styles);
-            } elseif ($task === 'preview') {
-                $style_id        = (int) $_POST['id'];
-                $data_saved      = get_option('advgb_custom_styles');
-                $get_style_array = array();
-                foreach ($data_saved as $data) {
-                    if ($data['id'] === $style_id) {
-                        foreach ($data as $key => $value) {
-                            $data[ $key ] = esc_html($value);
-                        }
-                        $get_style_array = $data;
-                    }
-                }
-                if (! empty($get_style_array)) {
-                    wp_send_json($get_style_array);
-                } else {
-                    wp_send_json(false, 404);
-                }
-            } elseif ($task === 'style_save') {
-                $style_id           = (int) $_POST['id'];
-                $new_styletitle     = sanitize_text_field($_POST['title']);
-                $new_classname      = sanitize_text_field($_POST['name']);
-                $new_identify_color = sanitize_hex_color($_POST['mycolor']);
-                $new_css            = wp_strip_all_tags($_POST['mycss']);
-                // Validate new name
-                if (! preg_match($regex, $new_classname)) {
-                    wp_send_json(
-                        'Please use valid characters for a CSS classname! As example: hyphen or underscore instead of empty spaces.',
-                        403
-                    );
-
-                    return false;
-                }
-                $data_saved     = get_option('advgb_custom_styles');
-                $new_data_array = array();
-                foreach ($data_saved as $data) {
-                    if ($data['id'] === $style_id) {
-                        $data['title']         = $new_styletitle;
-                        $data['name']          = $new_classname;
-                        $data['css']           = $new_css;
-                        $data['identifyColor'] = $new_identify_color;
-                    }
-                    array_push($new_data_array, $data);
-                }
-                update_option('advgb_custom_styles', $new_data_array, false);
-            } else {
-                wp_send_json(null, 404);
-            }
-        }
-
         public function scan_block_usage()
         {
             check_ajax_referer('block_usage_nonce', 'nonce');
@@ -1858,6 +1625,12 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 wp_register_style(
                     'slick_theme_style',
                     ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/slick-theme.css',
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
+                );
+                wp_register_style(
+                    'advgb_custom_styles_css',
+                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/custom-styles.css',
                     [],
                     ADVANCED_GUTENBERG_VERSION
                 );
@@ -2585,6 +2358,15 @@ if (! class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_script('codemirror_hint_css');
             wp_enqueue_script('advgb_custom_styles_js');
 
+            wp_localize_script(
+                'advgb_custom_styles_js',
+                'advgbCustomStyles',
+                [
+                    'isProActive' => Utilities::isProActive(),
+                ]
+            );
+
+            wp_enqueue_style( 'advgb_custom_styles_css' );
             wp_enqueue_style('codemirror_css');
             wp_enqueue_style('codemirror_hint_style');
 
@@ -3211,40 +2993,6 @@ if (! class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Redirect after saving custom styles page data
-         * Name is build in registerMainMenu() > $function_name
-         *
-         * @return boolean true on success, false on failure
-         * @since 3.0.0
-         */
-        public function advgb_custom_styles_save_page()
-        {
-            if (! current_user_can('activate_plugins')) {
-                return false;
-            }
-
-            if (isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                if (
-                    ! wp_verify_nonce(
-                        sanitize_key($_POST['advgb_cstyles_nonce_field']),
-                        'advgb_cstyles_nonce'
-                    )
-                ) {
-                    return false;
-                }
-
-                if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(
-                        admin_url('admin.php?page=advgb_custom_styles&save=success')
-                    );
-                    exit;
-                }
-            }
-
-            return true;
-        }
-
-        /**
          * Load Block Styles in <head> in frontend
          *
          * @return void
@@ -3272,7 +3020,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     // @TODO Check if the class is in use in the post and widgets
                     //if (strpos($content, $styles['name']) !== false) {
                     $css .= '.' . $styles['name'] . " {\n";
-                    $css .= $styles['css'] . "\n} \n";
+                    $css .= AdvancedGutenbergBlockStyles::css_array_to_string($styles['css']) . "\n} \n";
                     //}
                 }
 
@@ -3295,7 +3043,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 $content = '';
                 foreach ($custom_styles as $styles) {
                     $content .= '.block-editor-writing-flow .' . esc_html($styles['name']) . " {\n";
-                    $content .= $styles['css'] . "\n} \n";
+                    $content .= AdvancedGutenbergBlockStyles::css_array_to_string($styles['css']) . "\n} \n";
                 }
 
                 echo '<style type="text/css">' . strip_tags($content) . '</style>';
