@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, olatechpro
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
 Tested up to: 6.8
-Stable tag: 3.3.4
+Stable tag: 3.4.0
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -275,6 +275,16 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Block Styles: You create custom CSS styles for blocks and make them available to end users.
 
 == Changelog ==
+
+= 3.4.0 - 19 August 2025 =
+  * Feature: Add Advanced Custom Styles/Editor UI for Block Styles - [Pro feature], #775
+  * Feature: Add Automatically insert blocks feature, #1525
+  * Update: Allow user to change Date Format on Content Display Block - [Pro feature], #1559
+  * Update: Allow user to set or remove separator for the items in info section of Content Display Block - [Pro feature], #1561
+  * Update: Allow user to reorder Content Display Block Info Section(Author, Date, Comments) - [Pro feature], #1560
+  * Update: Make the Content Display Block "Posted on" and "Updated on" date prefixes text editable - [Pro feature], #1562
+  * Update: Rename "Synced Patterns" to "Reusable Blocks", #1555
+  * Fixed: Sanitize Map Block title and description, #1566
 
 = 3.3.4 - 21 July 2025 =
   * Update: Improved pro banner for blocks, #1544
