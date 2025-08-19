@@ -88,23 +88,24 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                 <td>
                     <?php if ( empty( $reusable_blocks ) ) : ?>
                         <div class="no-reusable-blocks-message">
-                            <p style="color: red;">
+                            <p>
                                 <?php _e( 'You do not have any reusable blocks.', 'advanced-gutenberg' ); ?>
                                 <a class="advgb-pro-link" target="_blank" href="<?php echo admin_url( 'edit.php?post_type=wp_block' ); ?>">
                                     <?php _e( 'Click here to add new reusable block', 'advanced-gutenberg' ); ?>
                                 </a>
                             </p>
                         </div>
+                        <select style="display: none;" name="advgb_block_id" id="advgb_block_id" required></select>
+                    <?php else : ?>
+                        <select name="advgb_block_id" id="advgb_block_id" class="advgb-editor-aib-select2 regular-text" required>
+                            <option value=""><?php _e( 'Select a reusable block...', 'advanced-gutenberg' ); ?></option>
+                            <?php foreach ( $reusable_blocks as $block ) : ?>
+                                <option value="<?php echo esc_attr( $block['id'] ); ?>" <?php selected( $block_id, $block['id'] ); ?>>
+                                    <?php echo esc_html( $block['title'] ); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     <?php endif; ?>
-                    <select name="advgb_block_id" id="advgb_block_id" class="advgb-editor-aib-select2 regular-text" required>
-                        <option value=""><?php _e( 'Select a reusable block...', 'advanced-gutenberg' ); ?></option>
-                        <?php foreach ( $reusable_blocks as $block ) : ?>
-                            <option value="<?php echo esc_attr( $block['id'] ); ?>" <?php selected( $block_id, $block['id'] ); ?>>
-                                <?php echo esc_html( $block['title'] ); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                    <p class="description"><?php _e('Choose which reusable block to insert.', 'advanced-gutenberg'); ?></p>
                 </td>
             </tr>
         </table>
@@ -357,6 +358,9 @@ class AdvancedGutenbergAutoInsertMetaboxes {
             <tr>
                 <th class="<?php echo esc_attr($pro_class); ?>"><label><?php _e('Authors', 'advanced-gutenberg'); ?></label></th>
                 <td class="advgb-promo-overlay-area">
+                    <p class="<?php echo esc_attr($pro_class); ?> description">
+                        <?php _e('Only target posts from specific authors.', 'advanced-gutenberg'); ?>
+                    </p>
                     <div class="user-group <?php echo esc_attr($pro_class); ?>">
                         <select name="advgb_authors[]" class="advg-insert-author-select2"
                             data-placeholder="<?php echo esc_attr__('Search author...', 'advanced-gutenberg'); ?>"
@@ -381,9 +385,6 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                             } ?>
                         </select>
                     </div>
-                    <p class="<?php echo esc_attr($pro_class); ?> description">
-                        <?php _e('Only target posts from specific authors.', 'advanced-gutenberg'); ?>
-                    </p>
                      <?php if (!$this->proActive) : ?>
                         <a class="advgb-pro-link" href="<?php echo esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK); ?>" target="_blank">
                             <div class="advgb-pro-small-overlay-text">
@@ -429,25 +430,19 @@ class AdvancedGutenbergAutoInsertMetaboxes {
             <tr>
                 <th class="<?php echo esc_attr($pro_class); ?>"><label for="advgb_post_years"><?php _e('Post Created in Years', 'advanced-gutenberg'); ?></label></th>
                 <td>
-                    <input type="text" name="advgb_post_years" id="advgb_post_years"
-                        value="<?php echo esc_attr(implode(',', $post_years)); ?>" class="<?php echo esc_attr($pro_class); ?> regular-text">
                     <p class="<?php echo esc_attr($pro_class); ?> description">
                         <?php _e('Comma-separated list of years (e.g., 2023,2024,2025).', 'advanced-gutenberg'); ?>
                     </p>
+                    <input type="text" name="advgb_post_years" id="advgb_post_years"
+                        value="<?php echo esc_attr(implode(',', $post_years)); ?>" class="<?php echo esc_attr($pro_class); ?> regular-text">
                 </td>
             </tr>
 
             <tr>
-                <th class="<?php echo esc_attr($pro_class); ?>"><label><?php _e('Post IDs', 'advanced-gutenberg'); ?></label></th>
+                <th class="<?php echo esc_attr($pro_class); ?>"><label><?php _e('Target Posts', 'advanced-gutenberg'); ?></label></th>
                 <td class="advgb-promo-overlay-area">
-                    <div class="post-ids-tabs <?php echo esc_attr($pro_class); ?>">
-                        <ul class="nav-tab-wrapper">
-                            <li><a href="#tab-include-posts" class="nav-tab nav-tab-active"><?php _e('Include', 'advanced-gutenberg'); ?></a></li>
-                            <li><a href="#tab-exclude-posts" class="nav-tab"><?php _e('Exclude', 'advanced-gutenberg'); ?></a></li>
-                        </ul>
-
-                        <div id="tab-include-posts" class="tab-content active">
-                            <p class="description"><?php _e('Search and select posts to include, or enter IDs.', 'advanced-gutenberg'); ?></p>
+                    <div class="post-search-wrap <?php echo esc_attr($pro_class); ?>">
+                            <p class="description"><?php _e('Search and select posts or enter their IDs to limit this rules to specific posts.', 'advanced-gutenberg'); ?></p>
                             <div class="post-ids-search-container">
                                 <select class="advg-insert-post-select2 include-posts"
                                     data-placeholder="<?php echo esc_attr__('Search posts...', 'advanced-gutenberg'); ?>"
@@ -469,10 +464,22 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                                 <span><?php _e('OR', 'advanced-gutenberg'); ?></span>
                             </div>
                             <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" placeholder="<?php esc_attr_e('Enter comma-separated list of post IDs to include (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $post_ids)); ?>">
-                        </div>
+                    </div>
+                    <?php if (!$this->proActive) : ?>
+                        <a class="advgb-pro-link" href="<?php echo esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK); ?>" target="_blank">
+                            <div class="advgb-pro-small-overlay-text">
+                                <span class="dashicons dashicons-lock"></span> <?php _e('Pro feature', 'advanced-gutenberg'); ?>
+                            </div>
+                        </a>
+                    <?php endif; ?>
+                </td>
+            </tr>
 
-                        <div id="tab-exclude-posts" class="tab-content">
-                            <p class="description"><?php _e('Search and select posts to exclude, or enter post IDs.', 'advanced-gutenberg'); ?></p>
+            <tr>
+                <th class="<?php echo esc_attr($pro_class); ?>"><label><?php _e('Exclude Posts', 'advanced-gutenberg'); ?></label></th>
+                <td class="advgb-promo-overlay-area">
+                    <div class="post-search-wrap <?php echo esc_attr($pro_class); ?>">
+                            <p class="description"><?php _e('Search and select posts or enter their IDs to exclude them from auto insert.', 'advanced-gutenberg'); ?></p>
                             <div class="post-ids-search-container">
                                 <select class="advg-insert-post-select2 exclude-posts"
                                     data-placeholder="<?php echo esc_attr__('Search posts...', 'advanced-gutenberg'); ?>"
@@ -494,7 +501,6 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                                 <span><?php _e('OR', 'advanced-gutenberg'); ?></span>
                             </div>
                             <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" placeholder="<?php esc_attr_e('Enter comma-separated post IDs to exclude (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $exclude_post_ids)); ?>">
-                        </div>
                     </div>
 
                     <?php if (!$this->proActive) : ?>
@@ -542,7 +548,7 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                 <td>
                     <input type="number" name="advgb_priority" id="advgb_priority" value="<?php echo esc_attr($priority); ?>"
                         min="1" class="small-text">
-                    <p class="description"><?php _e('Lower numbers run first.', 'advanced-gutenberg'); ?></p>
+                    <p class="description"><?php _e('This option decides which rule runs first if you have multiple rules targeting the same position in a post. For example, 9 will run before 10.', 'advanced-gutenberg'); ?></p>
                 </td>
             </tr>
         </table>

@@ -478,6 +478,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
+                $custom_styles_data   = get_option('advgb_custom_styles');
+                wp_localize_script('advgb_custom_styles_script', 'advgbBlocksCustomStyles', array(
+                    'customStyles' => ! $custom_styles_data ? array() : $custom_styles_data,
+                ));
             }
 
             // Only load post-sidebar.js in post type 'post' and 'page'

@@ -190,7 +190,7 @@ class AdvancedGutenbergBlockStyles
     private function initHooks()
     {
         add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
-        add_action('blocks_page_advgb_custom_styles', array($this, 'advgb_custom_styles_save_page'));
+        add_action('admin_notices', array($this, 'advgb_custom_styles_save_page'));
     }
 
 
@@ -204,7 +204,7 @@ class AdvancedGutenbergBlockStyles
     public function advgb_custom_styles_save_page()
     {
         if (!current_user_can('activate_plugins')) {
-            return false;
+            return;
         }
 
         if (isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
@@ -214,18 +214,12 @@ class AdvancedGutenbergBlockStyles
                     'advgb_cstyles_nonce'
                 )
             ) {
-                return false;
+                return;
             }
-
-            if (isset($_REQUEST['_wp_http_referer'])) {
-                wp_safe_redirect(
-                    admin_url('admin.php?page=advgb_custom_styles&save=success')
-                );
-                exit;
-            }
+            echo '<div id="message" class="updated fade">';
+            echo '<p>' . esc_html__('Your styles have been saved!', 'advanced-gutenberg') . '</p>';
+            echo '</div>';
         }
-
-        return true;
     }
 
     /**
@@ -382,7 +376,7 @@ class AdvancedGutenbergBlockStyles
      */
     public static function css_array_to_string($css_array)
     {
-        if (! is_array($css_array)) {
+        if (!is_array($css_array)) {
             return $css_array;
         }
 
@@ -446,7 +440,7 @@ class AdvancedGutenbergBlockStyles
         $proActive = Utilities::isProActive();
 
         $additional_class = '';
-        if (! $proActive) {
+        if (!$proActive) {
             $additional_class = 'advgb-blur';
 
             if (isset($field_config['aliases'])) {
@@ -464,7 +458,7 @@ class AdvancedGutenbergBlockStyles
 
         $html = '';
         if ($field['type'] !== 'promo') {
-            $html = '<div class="control-group '. esc_attr($additional_class) .'">';
+            $html = '<div class="control-group ' . esc_attr($additional_class) . '">';
             $html .= '<label>' . esc_html($field['label']) . '</label>';
         }
 
@@ -537,8 +531,8 @@ class AdvancedGutenbergBlockStyles
 
             case 'promo':
                 $html .= '<div class="advgb-pro-small-overlay-text">
-                            <a class="advgb-pro-link" href="' . esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK) .'" target="_blank">
-                                <span class="dashicons dashicons-lock"></span> '. __('Pro feature', 'advanced-gutenberg') .'
+                            <a class="advgb-pro-link" href="' . esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK) . '" target="_blank">
+                                <span class="dashicons dashicons-lock"></span> ' . __('Pro feature', 'advanced-gutenberg') . '
                             </a>
                         </div>
                         ';

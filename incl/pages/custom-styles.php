@@ -4,12 +4,6 @@ defined('ABSPATH') || die;
 $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
 ?>
 <div class="publishpress-admin wrap">
-    <?php if (isset($_GET['save'])) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-        <div id="message" class="updated fade">
-            <p><?php esc_html_e('Your styles have been saved!', 'advanced-gutenberg'); ?></p>
-        </div>
-    <?php endif; ?>
-
     <header>
         <h1 class="wp-heading-inline">
             <?php esc_html_e('Block Styles', 'advanced-gutenberg'); ?>
