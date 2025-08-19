@@ -7,6 +7,29 @@
     const { PanelBody, TextControl, TextareaControl, RangeControl, SelectControl, ToggleControl, BaseControl, Button, Placeholder, Spinner } = wpComponents;
 
     let mapWillUpdate = null;
+
+	const sanitizeMapText = (text, preserveLineBreaks = false) => {
+        if (!text) return '';
+
+        const div = document.createElement('div');
+        div.textContent = text;
+        let sanitized = div.innerHTML;
+
+        if (preserveLineBreaks) {
+            sanitized = sanitized.replace(/\n/g, '<br>');
+        }
+
+        return sanitized;
+    };
+
+    const escapeAttribute = (text) => {
+        return sanitizeMapText(text)
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    };
+
     const mapBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22" className="dashicon">
             <path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>
@@ -1048,11 +1071,12 @@
             const { mapID, lat, lng, zoom, markerTitle, markerIcon, markerDesc, mapStyle, mapStyleCustom, infoWindowDefaultShown } = this.props.attributes;
             const location = { lat: parseFloat(lat), lng: parseFloat(lng) };
             const that = this;
-            const formattedDesc = markerDesc.replace(/\n/g, '<br/>');
             let map = currentMap;
             let marker = currentMarker;
             let infoWindow = currentInfo;
             let customStyleParsed = '';
+            const formattedDesc = sanitizeMapText(markerDesc.replace(/\n/g, '<br/>'));
+            const sanitizedTitle = sanitizeMapText(markerTitle);
 
             if (mapStyle === 'custom') {
                 try {
@@ -1079,7 +1103,7 @@
             if (!infoWindow) {
                 infoWindow = new google.maps.InfoWindow( {
                     content: `<div class="advgbmap-wrapper">
-                    <h3 class="advgbmap-title">${markerTitle}</h3>
+                    <h3 class="advgbmap-title">${sanitizedTitle}</h3>
                     <p class="advgbmap-desc">${formattedDesc || ''}</p>
                 </div>`,
                     maxWidth: 500,
@@ -1089,7 +1113,7 @@
 
             infoWindow.setContent(
                 `<div class="advgbmap-wrapper">
-                <h3 class="advgbmap-title">${markerTitle}</h3>
+                <h3 class="advgbmap-title">${sanitizedTitle}</h3>
                 <p class="advgbmap-desc">${formattedDesc || ''}</p>
             </div>`
             );
