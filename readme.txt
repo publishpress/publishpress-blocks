@@ -276,7 +276,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.4.0 - 19 August 2025 =
+= 3.4.0 - 20 August 2025 =
   * Feature: Add Advanced Custom Styles/Editor UI for Block Styles - [Pro feature], #775
   * Feature: Add Automatically insert blocks feature, #1525
   * Update: Allow user to change Date Format on Content Display Block - [Pro feature], #1559
