@@ -182,7 +182,7 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                             </a>
                            <?php
                             printf(
-                                __('Selected option requires pro version to work. Kindly select one of the general options or %1$sUpgrade to Pro%2$s', 'advanced-gutenberg'),
+                                __('The selected option requires the Pro version. Please select one of the general options or %1$sUpgrade to Pro%2$s.', 'advanced-gutenberg'),
                                 '<a href="'. esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK) .'" target="_blank">',
                                 '</a>'
                             );
