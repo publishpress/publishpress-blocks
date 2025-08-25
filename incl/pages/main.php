@@ -68,10 +68,19 @@ defined('ABSPATH') || die;
                         ],
                         [
                             'name' => 'reusable_blocks',
-                            'title' => __('Synced Patterns', 'advanced-gutenberg'),
+                            'title' => __('Reusable Blocks', 'advanced-gutenberg'),
                             'description' => __(
-                                'This feature enables a submenu to manage your Synced Patterns.',
+                                'This feature enables a submenu to manage your Reusable Blocks.',
                                 'advanced-gutenberg'
+                            ),
+                            'default' => 1,
+                            'access' => true
+                        ],
+                        [
+                            'name' => 'auto_insert_blocks',
+                            'title' => __( 'Auto Insert Blocks', 'advanced-gutenberg' ),
+                            'description' => __(
+                                'Automatically insert reusable blocks into posts based on position, categories, tags, and other criteria.', 'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => true

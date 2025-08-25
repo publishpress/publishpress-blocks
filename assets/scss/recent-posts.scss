@@ -862,6 +862,10 @@
   }
 }
 
+.advgb-recent-posts-block.advgb-no-datetime-separator .advgb-post-datetime:not(:first-child):before {
+  display: none;
+}
+
 @media screen and (min-width: 769px) and (max-width: 1087px) {
 
   .advgb-recent-posts-block {

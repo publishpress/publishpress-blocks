@@ -84,6 +84,12 @@
                                 newState
                             );
                         break;
+                        case 'auto_insert_blocks':
+                            advgbDynamicSubmenu(
+                                'advgb_auto_insert',
+                                newState
+                            );
+                        break;
                     }
 
                     statusMsgNotification = advgbTimerStatus();

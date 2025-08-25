@@ -38,8 +38,8 @@
     } );
 
     // Add option to return to default style
-    if (typeof advgbBlocks.customStyles !== 'undefined' && advgbBlocks.customStyles) {
-        advgbBlocks.customStyles.unshift( {
+    if (typeof advgbBlocksCustomStyles.customStyles !== 'undefined' && advgbBlocksCustomStyles.customStyles) {
+        advgbBlocksCustomStyles.customStyles.unshift( {
             id: 0,
             label: __( 'Select a block style', 'advanced-gutenberg' ),
             value: '',
@@ -73,14 +73,14 @@
                             ] }
                             help={__( 'This option let you add custom style for the current block', 'advanced-gutenberg' )}
                             value={props.attributes.customStyle}
-                            options={advgbBlocks.customStyles.map( ( cstyle, index ) => {
-                                if (cstyle.title) advgbBlocks.customStyles[ index ].label = cstyle.title;
-                                if (cstyle.name) advgbBlocks.customStyles[ index ].value = cstyle.name;
+                            options={advgbBlocksCustomStyles.customStyles.map( ( cstyle, index ) => {
+                                if (cstyle.title) advgbBlocksCustomStyles.customStyles[ index ].label = cstyle.title;
+                                if (cstyle.name) advgbBlocksCustomStyles.customStyles[ index ].value = cstyle.name;
 
                                 return cstyle;
                             } )}
                             onChange={( cstyle ) => {
-                                const { identifyColor } = advgbBlocks.customStyles.filter( ( style ) => style.value === cstyle )[0];
+                                const { identifyColor } = advgbBlocksCustomStyles.customStyles.filter( ( style ) => style.value === cstyle )[0];
                                 props.setAttributes( {
                                     customStyle: cstyle,
                                     identifyColor: identifyColor,

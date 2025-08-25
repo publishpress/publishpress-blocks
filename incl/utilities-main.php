@@ -77,5 +77,12 @@ if (! class_exists('\\PublishPress\\Blocks\\Utilities')) {
 
             return $pro_blocks_details;
         }
+
+        public static function isProActive() {
+
+            $proActive = defined('ADVANCED_GUTENBERG_PRO_LOADED');
+
+            return $proActive;
+        }
     }
 }
