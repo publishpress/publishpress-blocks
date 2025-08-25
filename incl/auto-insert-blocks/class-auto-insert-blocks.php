@@ -42,6 +42,7 @@ class AdvancedGutenbergAutoInsertBlocks
         // Column hooks
         add_filter('manage_advgb_insert_block_posts_columns', [$this, 'addAutoInsertColumns']);
         add_action('manage_advgb_insert_block_posts_custom_column', [$this, 'populateAutoInsertColumns'], 10, 2);
+        add_action('admin_head-edit.php', [$this, 'remove_quick_edit_row']);
 
         // Scripts and styles
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminAssets']);
@@ -610,14 +611,14 @@ class AdvancedGutenbergAutoInsertBlocks
 
         // Save position settings
         $position = isset($_POST['advgb_position']) ? sanitize_text_field($_POST['advgb_position']) : 'beginning';
-        if (! $this->proActive && ! in_array($position, ['beginning', 'end'])) {
+        if (!$this->proActive && !in_array($position, ['beginning', 'end'])) {
             $position = 'beginning';
         }
         update_post_meta($post_id, '_advgb_position', $position);
 
         // Save targeting options
         $post_types = isset($_POST['advgb_post_types']) ? array_map('sanitize_text_field', $_POST['advgb_post_types']) : ['post'];
-        if (! $this->proActive) {
+        if (!$this->proActive) {
             $post_types = ['post'];
         }
         update_post_meta($post_id, '_advgb_post_types', $post_types);
@@ -625,7 +626,7 @@ class AdvancedGutenbergAutoInsertBlocks
         $taxonomies = isset($_POST['advgb_taxonomies']) ? $_POST['advgb_taxonomies'] : [];
         $sanitized_taxonomies = [];
         foreach ($taxonomies as $taxonomy => $terms) {
-            if (! $this->proActive && ! in_array($taxonomy, ['category', 'post_tag'])) {
+            if (!$this->proActive && !in_array($taxonomy, ['category', 'post_tag'])) {
                 continue;
             }
             $sanitized_taxonomies[sanitize_text_field($taxonomy)] = array_map('intval', $terms);
@@ -776,5 +777,22 @@ class AdvancedGutenbergAutoInsertBlocks
         }
 
         wp_send_json_success($results);
+    }
+
+    /**
+     * Remove quick edit option.
+     */
+    public function remove_quick_edit_row()
+    {
+        $post_type = (!empty($_GET['post_type'])) ? sanitize_text_field($_GET['post_type']) : '';
+        if ($post_type == 'advgb_insert_block'):
+            ?>
+            <script type="text/javascript">
+                jQuery(document).ready(function ($) {
+                    $('span.inline').remove();
+                });
+            </script>
+            <?php
+        endif;
     }
 }

@@ -80,7 +80,7 @@ defined('ABSPATH') || die;
                             'name' => 'auto_insert_blocks',
                             'title' => __( 'Auto Insert Blocks', 'advanced-gutenberg' ),
                             'description' => __(
-                                'Automatically insert reusable blocks into posts based on position, categories, tags, and other criteria. Manage rules through the Auto Insert Blocks menu.', 'advanced-gutenberg'
+                                'Automatically insert reusable blocks into posts based on position, categories, tags, and other criteria.', 'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => true

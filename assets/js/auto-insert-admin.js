@@ -118,7 +118,7 @@
         }).on('change', function() {
             var ids = $(this).val() ? $(this).val().join(',') : '';
             $('#advgb_post_ids').val(ids);
-            $(this).closest('.tab-content').find('.post-ids-manual-input').val(ids);
+            $(this).closest('.post-search-wrap').find('.post-ids-manual-input').val(ids);
         });
 
         // exclude post select2
@@ -150,22 +150,13 @@
         }).on('change', function() {
             var ids = $(this).val() ? $(this).val().join(',') : '';
             $('#advgb_exclude_post_ids').val(ids);
-            $(this).closest('.tab-content').find('.post-ids-manual-input').val(ids);
-        });
-
-        // Tab switching
-        $('.post-ids-tabs .nav-tab').on('click', function(e) {
-            e.preventDefault();
-            var tab = $(this).attr('href');
-            $(this).closest('.post-ids-tabs').find('.nav-tab-active').removeClass('nav-tab-active')
-            $(this).addClass('nav-tab-active');
-            $(tab).addClass('active').siblings('.tab-content').removeClass('active');
+            $(this).closest('.post-search-wrap').find('.post-ids-manual-input').val(ids);
         });
 
         // posts manual input handling
         $('.post-ids-manual-input').on('change', function() {
             var manualIds = $(this).val();
-            var tabContent = $(this).closest('.tab-content');
+            var tabContent = $(this).closest('.post-search-wrap');
             var select2 = tabContent.find('.advg-insert-post-select2');
             var hiddenField = tabContent.attr('id') === 'tab-include-posts' ? $('#advgb_post_ids') : $('#advgb_exclude_post_ids');
 
