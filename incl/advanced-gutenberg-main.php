@@ -415,6 +415,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         true
                     );
 
+					wp_set_script_translations( 'advgb_blocks', 'advanced-gutenberg' );
+
                     // Pro Ads in some blocks for free version
                     if (! defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
 
