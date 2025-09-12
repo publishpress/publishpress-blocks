@@ -30,6 +30,11 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                 && $block['blockName']
             ) {
                 $controls = $block['attrs']['advgbBlockControls'];
+
+                if (isset($controls['presets']) && !empty($controls['presets']['enabled'])) {
+                    return self::checkPresetControls($block_content, $block, $controls['presets']);
+                }
+
                 $show_block = true;
 
                 // Cache device type detection for performance
@@ -64,6 +69,74 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             }
 
             return $block_content;
+        }
+
+        private static function checkPresetControls($block_content, $block, $preset_config)
+        {
+            $presets = self::getPresets();
+            $selected_presets = $preset_config['selected'] ?? [];
+            $logic = $preset_config['logic'] ?? 'any';
+
+            $preset_matches = 0;
+
+            foreach ($selected_presets as $preset_id) {
+                if (isset($presets[$preset_id])) {
+                    if (self::evaluatePreset($presets[$preset_id], $block)) {
+                        $preset_matches++;
+                    }
+                }
+            }
+
+            $show_block = false;
+            if ($logic === 'any') {
+                $show_block = $preset_matches > 0;
+            } else {
+                $show_block = $preset_matches === count($selected_presets);
+            }
+
+            return $show_block ? $block_content : '';
+        }
+
+        private static function evaluatePreset($preset, $block)
+        {
+            $control_sets = $preset['controlSets'] ?? [];
+
+            // OR logic between control sets
+            foreach ($control_sets as $control_set) {
+                if (self::evaluateControlSet($control_set, $block)) {
+                    return true; // If any control set matches, preset matches
+                }
+            }
+
+            return false;
+        }
+
+        private static function evaluateControlSet($control_set, $block)
+        {
+            $rules = $control_set['rules'] ?? [];
+
+            // AND logic within control set
+            foreach ($rules as $rule) {
+                if (!self::evaluateRule($rule, $block)) {
+                    return false; // If any rule fails, control set fails
+                }
+            }
+
+            return true; // All rules passed
+        }
+
+        private static function evaluateRule($rule, $block)
+        {
+            $rule_type = $rule['type'] ?? '';
+
+            $mock_control = [
+                'control' => $rule_type,
+                'enabled' => true
+            ];
+
+            $mock_control = array_merge($mock_control, $rule);
+
+            return self::displayBlock($block, $rule_type, 0);
         }
 
         /**
@@ -364,6 +437,34 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     return $min_ok && $max_ok;
                     break;
 
+                case 'browser_device':
+                    return self::checkBrowserDevice($block, $block['attrs']['advgbBlockControls'][$key]);
+                    break;
+
+                case 'operating_system':
+                    return self::checkOperatingSystem($block, $block['attrs']['advgbBlockControls'][$key]);
+                    break;
+
+                case 'cookie':
+                    return self::checkCookie($block, $block['attrs']['advgbBlockControls'][$key]);
+                    break;
+
+                case 'user_meta':
+                    return self::checkUserMeta($block, $block['attrs']['advgbBlockControls'][$key]);
+                    break;
+
+                case 'post_meta':
+                    return self::checkPostMeta($block, $block['attrs']['advgbBlockControls'][$key]);
+                    break;
+
+                case 'query_string':
+                    return self::checkQueryString($block, $block['attrs']['advgbBlockControls'][$key]);
+                    break;
+
+                case 'capabilities':
+                    return self::checkCapabilities($block, $block['attrs']['advgbBlockControls'][$key]);
+                    break;
+
                 // Archive control
                 case 'archive':
                     $bControl = $block['attrs']['advgbBlockControls'][$key];
@@ -438,11 +539,54 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             return true;
         }
 
+        public static function getBrowserType()
+        {
+            static $browser_type = null;
+            if ($browser_type === null) {
+                $dd = new DeviceDetector($_SERVER['HTTP_USER_AGENT']);
+                $dd->parse();
+                $browser_type = strtolower($dd->getClient('name'));
+            }
+            return $browser_type;
+        }
+
+        public static function getOperatingSystem()
+        {
+            static $os_type = null;
+            if ($os_type === null) {
+                $dd = new DeviceDetector($_SERVER['HTTP_USER_AGENT']);
+                $dd->parse();
+                $os_type = strtolower($dd->getOs('name'));
+            }
+            return $os_type;
+        }
+
         /**
          * Get device type
          *
          * @return string
          */
+        public static function getDeviceType()
+        {
+            static $device_type = null;
+            if ($device_type === null) {
+                $dd = new DeviceDetector($_SERVER['HTTP_USER_AGENT']);
+                $dd->parse();
+
+                if ($dd->isBot()) {
+                    $device_type = 'robot';
+                } elseif ($dd->isMobile()) {
+                    $device_type = 'mobile';
+                } elseif ($dd->isTablet()) {
+                    $device_type = 'tablet';
+                } else {
+                    $device_type = 'desktop';
+                }
+            }
+            return $device_type;
+        }
+
+        /*
         public static function getDeviceType()
         {
 
@@ -480,7 +624,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                 // Fallback to basic detection if DeviceDetector fails
                 return self::basicDeviceDetection();
             }
-        }
+        }*/
 
         /**
          * Basic device detection fallback function
@@ -505,6 +649,180 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             }
 
             return 'desktop';
+        }
+
+        public static function checkBrowserDevice($block, $control_data)
+        {
+            $browser = self::getBrowserType();
+            $browsers = isset($control_data['browsers']) ? $control_data['browsers'] : [];
+            $approach = isset($control_data['approach']) ? $control_data['approach'] : 'include';
+
+            $match = in_array($browser, $browsers);
+            return ($approach === 'include') ? $match : !$match;
+        }
+
+        public static function checkOperatingSystem($block, $control_data)
+        {
+            $os = self::getOperatingSystem();
+            $systems = isset($control_data['systems']) ? $control_data['systems'] : [];
+            $approach = isset($control_data['approach']) ? $control_data['approach'] : 'include';
+
+            $match = in_array($os, $systems);
+            return ($approach === 'include') ? $match : !$match;
+        }
+
+        public static function checkCookie($block, $control_data)
+        {
+            $cookie_name = isset($control_data['name']) ? $control_data['name'] : '';
+            $condition = isset($control_data['condition']) ? $control_data['condition'] : '=';
+            $value = isset($control_data['value']) ? $control_data['value'] : '';
+            $approach = isset($control_data['approach']) ? $control_data['approach'] : 'include';
+
+            if (empty($cookie_name)) return false;
+
+            $cookie_value = isset($_COOKIE[$cookie_name]) ? $_COOKIE[$cookie_name] : null;
+            $match = self::evaluateCondition($cookie_value, $condition, $value);
+
+            return ($approach === 'include') ? $match : !$match;
+        }
+
+        public static function checkUserMeta($block, $control_data)
+        {
+            if (!is_user_logged_in()) return false;
+
+            $meta_key = isset($control_data['key']) ? $control_data['key'] : '';
+            $condition = isset($control_data['condition']) ? $control_data['condition'] : '=';
+            $value = isset($control_data['value']) ? $control_data['value'] : '';
+            $approach = isset($control_data['approach']) ? $control_data['approach'] : 'include';
+
+            if (empty($meta_key)) return false;
+
+            $meta_value = get_user_meta(get_current_user_id(), $meta_key, true);
+            $match = self::evaluateCondition($meta_value, $condition, $value);
+
+            return ($approach === 'include') ? $match : !$match;
+        }
+
+        public static function checkPostMeta($block, $control_data)
+        {
+            global $post;
+            if (!$post) return false;
+
+            $meta_key = isset($control_data['key']) ? $control_data['key'] : '';
+            $condition = isset($control_data['condition']) ? $control_data['condition'] : '=';
+            $value = isset($control_data['value']) ? $control_data['value'] : '';
+            $approach = isset($control_data['approach']) ? $control_data['approach'] : 'include';
+
+            if (empty($meta_key)) return false;
+
+            $meta_value = get_post_meta($post->ID, $meta_key, true);
+            $match = self::evaluateCondition($meta_value, $condition, $value);
+
+            return ($approach === 'include') ? $match : !$match;
+        }
+
+        public static function checkQueryString($block, $control_data)
+        {
+            $query_strings = isset($control_data['queries']) ? $control_data['queries'] : [];
+            $logic = isset($control_data['logic']) ? $control_data['logic'] : 'all';
+            $approach = isset($control_data['approach']) ? $control_data['approach'] : 'include';
+
+            if (empty($query_strings)) return false;
+
+            $matches = 0;
+            foreach ($query_strings as $query) {
+                if (isset($_GET[$query])) {
+                    $matches++;
+                }
+            }
+
+            $result = false;
+            if ($logic === 'all') {
+                $result = $matches === count($query_strings);
+            } else { // 'any'
+                $result = $matches > 0;
+            }
+
+            return ($approach === 'include') ? $result : !$result;
+        }
+
+        public static function checkCapabilities($block, $control_data)
+        {
+            if (! is_user_logged_in()) {
+                 return false;
+            }
+
+            $capabilities = isset($control_data['capabilities']) ? $control_data['capabilities'] : [];
+            $approach = isset($control_data['approach']) ? $control_data['approach'] : 'include';
+
+            if (empty($capabilities)) {
+                return false;
+            }
+
+            $has_capability = false;
+            foreach ($capabilities as $cap) {
+                if (current_user_can($cap)) {
+                    $has_capability = true;
+                    break;
+                }
+            }
+
+            return ($approach === 'include') ? $has_capability : !$has_capability;
+        }
+
+
+        private static function evaluateCondition($actual, $condition, $expected)
+        {
+            switch ($condition) {
+                case '=':
+                    return $actual == $expected;
+                case '!=':
+                    return $actual != $expected;
+                case '<':
+                    return $actual < $expected;
+                case '>':
+                    return $actual > $expected;
+                case '<=':
+                    return $actual <= $expected;
+                case '>=':
+                    return $actual >= $expected;
+                case 'contains':
+                    return strpos($actual, $expected) !== false;
+                case 'beginsWith':
+                    return strpos($actual, $expected) === 0;
+                case 'endsWith':
+                    return substr($actual, -strlen($expected)) === $expected;
+                case 'doesNotContain':
+                    return strpos($actual, $expected) === false;
+                case 'doesNotBeginWith':
+                    return strpos($actual, $expected) !== 0;
+                case 'doesNotEndWith':
+                    return substr($actual, -strlen($expected)) !== $expected;
+                case 'null':
+                    return is_null($actual) || $actual === '';
+                case 'notNull':
+                    return !is_null($actual) && $actual !== '';
+                case 'in':
+                    $values = explode(',', $expected);
+                    return in_array($actual, array_map('trim', $values));
+                case 'notIn':
+                    $values = explode(',', $expected);
+                    return !in_array($actual, array_map('trim', $values));
+                case 'between':
+                    $values = explode(',', $expected);
+                    if (count($values) === 2) {
+                        return $actual >= trim($values[0]) && $actual <= trim($values[1]);
+                    }
+                    return false;
+                case 'notBetween':
+                    $values = explode(',', $expected);
+                    if (count($values) === 2) {
+                        return !($actual >= trim($values[0]) && $actual <= trim($values[1]));
+                    }
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /**
@@ -806,6 +1124,14 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                 $advgb_block_controls['controls']['device_width'] = isset($_POST['device_width_control']) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['archive'] = isset($_POST['archive_control']) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['page'] = isset($_POST['page_control']) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['browser_device'] = isset($_POST['browser_device_control']) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['operating_system'] = isset($_POST['operating_system_control']) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['cookie'] = isset($_POST['cookie_control']) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['user_meta'] = isset($_POST['user_meta_control']) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['post_meta'] = isset($_POST['post_meta_control']) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['query_string'] = isset($_POST['query_string_control']) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['capabilities'] = isset($_POST['capabilities_control']) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['presets'] = isset($_POST['presets_control']) ? (bool) 1 : (bool) 0;
 
                 update_option('advgb_block_controls', $advgb_block_controls, false);
 
@@ -903,7 +1229,15 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                 'device_type',
                 'device_width',
                 'archive',
-                'page'
+                'page',
+                'browser_device',
+                'operating_system',
+                'cookie',
+                'user_meta',
+                'post_meta',
+                'query_string',
+                'capabilities',
+                'presets'
             ];
 
             if ($block_controls) {
@@ -919,6 +1253,34 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             }
 
             return $result;
+        }
+
+        public static function getPresets()
+        {
+            $presets = (array) get_option('advgb_block_control_presets', []);
+
+            $formatted_presets = [];
+            foreach ($presets as $id => $preset) {
+                $formatted_presets[] = array_merge($preset, ['id' => $id]);
+            }
+
+            return $formatted_presets;
+        }
+
+        public static function savePreset($preset_data)
+        {
+            $presets = self::getPresets();
+            $preset_id = $preset_data['id'] ?? uniqid('preset_');
+            $presets[$preset_id] = $preset_data;
+            update_option('advgb_block_control_presets', $presets);
+            return $preset_id;
+        }
+
+        public static function deletePreset($preset_id)
+        {
+            $presets = self::getPresets();
+            unset($presets[$preset_id]);
+            update_option('advgb_block_control_presets', $presets);
         }
 
         /**
@@ -1051,10 +1413,42 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     'controls' => self::getControlsArray(),
                     'user_roles' => self::getUserRoles(),
                     'taxonomies' => self::getTaxonomies(),
-                    'page' => self::getPages()
+                    'page' => self::getPages(),
+                    'capabilities' => self::getAllCapabilities(),
+                    'presets' => []// let localize array only for load
                 ]
             );
         }
+
+        public static function getAllCapabilities()
+        {
+            global $wp_roles;
+
+            if ( empty( $wp_roles->roles ) || ! is_array( $wp_roles->roles ) ) {
+                return [];
+            }
+
+            $capability_arrays = array_map(
+                function ($role) {
+                    return ! empty( $role['capabilities'] ) && is_array( $role['capabilities'] )
+                        ? array_keys( $role['capabilities'] )
+                        : [];
+                },
+                $wp_roles->roles
+            );
+
+            $capability_arrays = array_values( array_filter( $capability_arrays ) );
+
+            if ( empty( $capability_arrays ) ) {
+                return [];
+            }
+
+            $merged = call_user_func_array( 'array_merge', $capability_arrays );
+
+            return array_values( array_unique( $merged ) );
+        }
+
+
 
         /**
          * Block controls support for these blocks is not available
@@ -1087,10 +1481,27 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
         public static function editorAssets($wp_editor_dep)
         {
             if (Utilities::settingIsEnabled('block_controls')) {
+
+                wp_enqueue_style(
+                    'advgb-preset-manager',
+                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/block-controls-preset-manager.css',
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
+                );
+
+                wp_enqueue_script(
+                    'advgb_preset_data_manager',
+                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/block-controls/preset-data-manager.js',
+                    ['wp-element'],
+                    ADVANCED_GUTENBERG_VERSION,
+                    false
+                );
+
                 wp_enqueue_script(
                     'advgb_block_controls',
                     ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/block-controls.js',
                     [
+                        'advgb_preset_data_manager',
                         'wp-blocks',
                         'wp-i18n',
                         'wp-element',
@@ -1099,6 +1510,14 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                         'wp-plugins',
                         'wp-compose'
                     ],
+                    ADVANCED_GUTENBERG_VERSION,
+                    true
+                );
+
+                wp_enqueue_script(
+                    'advgb-preset-manager',
+                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/preset-manager.js',
+                    ['advgb_preset_data_manager', 'wp-components', 'wp-element', 'wp-i18n', 'wp-api-fetch'],
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );

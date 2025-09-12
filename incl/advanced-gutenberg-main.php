@@ -4,6 +4,8 @@ use PublishPress\Blocks\Utilities;
 
 defined('ABSPATH') || die;
 
+require_once plugin_dir_path(dirname(__FILE__)) . 'incl/rest-api/presets.php';
+
 /**
  * Main class of Gutenberg Advanced
  */
@@ -62,6 +64,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             add_action('wp_ajax_nopriv_advgb_lores_validate', array( $this, 'validateLoresForm' ));
 
             if (is_admin()) {
+
                 add_action('admin_footer', array( $this, 'initBlocksList' ));
                 add_action('admin_menu', array( $this, 'registerMainMenu' ));
                 add_action('admin_menu', array( $this, 'registerBlockConfigPage' ));
@@ -2274,6 +2277,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     )
                 );
             }
+
+            self::commonAdminPagesAssets();
 
             self::commonAdminPagesAssets();
 
