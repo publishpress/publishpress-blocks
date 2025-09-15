@@ -2,8 +2,6 @@
 // Admin page for preset management
 ?>
 <div class="wrap">
-    <h1><?php _e('Block Control Presets', 'advanced-gutenberg'); ?></h1>
-
     <div class="advgb-admin-presets-container">
         <div id="advgb-admin-preset-manager">
             <div class="advgb-preset-loading-container">

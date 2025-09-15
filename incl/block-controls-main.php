@@ -1359,7 +1359,13 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     [
                         'controls' => self::getControlsArray(),
                         'active_blocks' => $block_controls['active_blocks'],
-                        'inactive_blocks' => $block_controls['inactive_blocks']
+                        'inactive_blocks' => $block_controls['inactive_blocks'],
+
+                        'user_roles' => self::getUserRoles(),
+                        'taxonomies' => self::getTaxonomies(),
+                        'page' => self::getPages(),
+                        'capabilities' => self::getAllCapabilities(),
+                        'presets' => self::getPresets()
                     ]
                 );
             } else {
@@ -1370,7 +1376,13 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     [
                         'controls' => self::getControlsArray(),
                         'active_blocks' => [],
-                        'inactive_blocks' => []
+                        'inactive_blocks' => [],
+
+                        'user_roles' => self::getUserRoles(),
+                        'taxonomies' => self::getTaxonomies(),
+                        'page' => self::getPages(),
+                        'capabilities' => self::getAllCapabilities(),
+                        'presets' => self::getPresets()
                     ]
                 );
             }
@@ -1415,7 +1427,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     'taxonomies' => self::getTaxonomies(),
                     'page' => self::getPages(),
                     'capabilities' => self::getAllCapabilities(),
-                    'presets' => []// let localize array only for load
+                    'presets' => self::getPresets()
                 ]
             );
         }
@@ -1482,6 +1494,8 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
         {
             if (Utilities::settingIsEnabled('block_controls')) {
 
+                wp_enqueue_style('wp-components');
+
                 wp_enqueue_style(
                     'advgb-preset-manager',
                     ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/block-controls-preset-manager.css',
@@ -1492,7 +1506,14 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                 wp_enqueue_script(
                     'advgb_preset_data_manager',
                     ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/block-controls/preset-data-manager.js',
-                    ['wp-element'],
+                    [
+                        'wp-blocks',
+                        'wp-i18n',
+                        'wp-element',
+                        'wp-data',
+                        'wp-plugins',
+                        'wp-compose'
+                    ],
                     ADVANCED_GUTENBERG_VERSION,
                     false
                 );

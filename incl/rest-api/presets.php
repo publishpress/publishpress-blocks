@@ -118,6 +118,7 @@ class Presets
         }
 
         unset($presets[$preset_id]);
+
         update_option('advgb_block_control_presets', $presets);
 
         return rest_ensure_response([

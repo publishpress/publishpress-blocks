@@ -2213,7 +2213,7 @@ import {
             renderPresetModal() {
                 return (
                     <Modal
-                        title={__('Block Control Presets', 'advanced-gutenberg')}
+                        title=""
                         onRequestClose={() => this.setState({ showPresetModal: false })}
                         className="advgb-preset-modal"
                         isDismissible={true}

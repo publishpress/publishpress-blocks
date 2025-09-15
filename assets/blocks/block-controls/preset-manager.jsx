@@ -539,13 +539,16 @@ import {
                 { value: 'schedule', label: __('Schedule', 'advanced-gutenberg') },
                 { value: 'user_role', label: __('User Roles', 'advanced-gutenberg') },
                 { value: 'device_type', label: __('Device Type', 'advanced-gutenberg') },
+                { value: 'device_width', label: __('Device Width', 'advanced-gutenberg') },
                 { value: 'browser_device', label: __('Browser & Device', 'advanced-gutenberg') },
                 { value: 'operating_system', label: __('Operating System', 'advanced-gutenberg') },
                 { value: 'cookie', label: __('Cookie', 'advanced-gutenberg') },
                 { value: 'user_meta', label: __('User Meta', 'advanced-gutenberg') },
                 { value: 'post_meta', label: __('Post Meta', 'advanced-gutenberg') },
                 { value: 'query_string', label: __('Query String', 'advanced-gutenberg') },
-                { value: 'capabilities', label: __('Capabilities', 'advanced-gutenberg') }
+                { value: 'capabilities', label: __('Capabilities', 'advanced-gutenberg') },
+                { value: 'archive', label: __('Archive', 'advanced-gutenberg') },
+                { value: 'page', label: __('Page', 'advanced-gutenberg') }
             ];
         }
 
@@ -647,11 +650,8 @@ import {
                             >
                                 <div className="advgb-preset-content">
                                     <span className="advgb-preset-title" title={preset.title}>{preset.title}</span>
-                                    <span className="advgb-preset-date">
-                                        {preset.modified ? this.formatDate(preset.modified) : __('Never modified', 'advanced-gutenberg')}
-                                    </span>
                                 </div>
-                                <div className="advgb-preset-actions">
+                                <div className="advgb-preset-list-actions">
                                     <Button
                                         isSmall
                                         icon="edit"
@@ -659,16 +659,6 @@ import {
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             this.editPreset(preset);
-                                        }}
-                                    />
-                                    <Button
-                                        isSmall
-                                        isDestructive
-                                        icon="trash"
-                                        label={__('Delete', 'advanced-gutenberg')}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            this.deletePreset(preset.id);
                                         }}
                                     />
                                 </div>
@@ -688,7 +678,6 @@ import {
                 <div className="advgb-preset-form">
                     <div className="advgb-preset-header">
                         <div className="advgb-preset-title-section">
-                            <h2>{__('Preset Settings', 'advanced-gutenberg')}</h2>
                             <TextControl
                                 label={__('Preset Title', 'advanced-gutenberg')}
                                 value={currentPreset.title || ''}
@@ -732,6 +721,19 @@ import {
                     </div>
 
                     <div className="advgb-preset-actions">
+                         {currentPreset.id && (
+                           <Button
+                                className="advgb-delete-preset-btn is-destructive-outline"
+                                icon="trash"
+                                label={__('Delete Preset', 'advanced-gutenberg')}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    this.deletePreset(currentPreset.id);
+                                    }}
+                            >
+                                {__('Delete Preset', 'advanced-gutenberg')}
+                            </Button>
+                        )}
                         <Button
                             isPrimary
                             onClick={() => this.savePreset(this.state.currentPreset)}
@@ -819,7 +821,7 @@ import {
                         <Button
                             isSmall
                             isDestructive
-                            icon="no"
+                            icon="trash"
                             label={__('Remove Rule', 'advanced-gutenberg')}
                             onClick={() => this.removeRuleFromSet(setIndex, ruleIndex)}
                         />
@@ -942,11 +944,7 @@ import {
                 { label: 'does not begin with', value: 'doesNotBeginWith' },
                 { label: 'does not end with', value: 'doesNotEndWith' },
                 { label: 'is null', value: 'null' },
-                { label: 'is not null', value: 'notNull' },
-                { label: 'in', value: 'in' },
-                { label: 'not in', value: 'notIn' },
-                { label: 'between', value: 'between' },
-                { label: 'not between', value: 'notBetween' }
+                { label: 'is not null', value: 'notNull' }
             ];
         }
 
@@ -1561,7 +1559,6 @@ import {
                     )}
                     <div className="advgb-preset-sidebar">
                         <div className="advgb-preset-sidebar-header">
-                            <h3>{__('Presets', 'advanced-gutenberg')}</h3>
                             {hasPresets && !hasActiveForm && (
                                 <Button
                                     isPrimary

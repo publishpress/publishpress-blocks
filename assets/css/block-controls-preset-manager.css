@@ -8,8 +8,10 @@
     --advgb-bg-primary: #ffffff;
     --advgb-bg-secondary: #f8fafc;
     --advgb-bg-tertiary: #f1f5f9;
+    --advgb-bg-alternative: #f5f3ff;
     --advgb-border-color: #e2e8f0;
     --advgb-border-light: #f1f5f9;
+    --advgb-border-alternative: #ede9fe;
     --advgb-text-primary: #1e293b;
     --advgb-text-secondary: #64748b;
     --advgb-text-muted: #94a3b8;
@@ -318,6 +320,10 @@
     max-height: 700px;
 }
 
+.advgb-preset-modal .advgb-presets-list {
+    padding-left: 10px;
+}
+
 .advgb-preset-item {
     padding: 16px 24px;
     border-bottom: 1px solid var(--advgb-border-light);
@@ -350,14 +356,15 @@
 }
 
 .advgb-preset-title {
-    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-weight: 500;
     color: var(--advgb-text-primary);
     font-size: 14px;
     margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .advgb-preset-date {
@@ -478,8 +485,8 @@
 
 .advgb-control-set-header {
     padding: 20px 24px;
-    background: var(--advgb-bg-tertiary);
-    border-bottom: 1px solid var(--advgb-border-light);
+    background: var(--advgb-bg-alternative);
+    border-bottom: 1px solid var(--advgb-border-alternative);
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -602,6 +609,10 @@
     color: var(--advgb-text-muted);
 }
 
+.advgb-preset-modal .advgb-empty-presets-message {
+    padding-left: 0;
+}
+
 .advgb-empty-icon {
     font-size: 48px;
     margin-bottom: 16px;
@@ -668,6 +679,21 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+.advgb-preset-actions .components-button.advgb-delete-preset-btn {
+    margin-right: auto;
+}
+
+.advgb-delete-preset-btn.is-destructive-outline {
+    color: #dc2626;
+    border: 1px solid #dc2626;
+    background: transparent;
+}
+
+.advgb-delete-preset-btn.is-destructive-outline:hover {
+    background: #fee2e2;
+    color: #b91c1c;
 }
 
 .advgb-preset-manager .components-button.is-primary,
