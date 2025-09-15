@@ -1438,6 +1438,11 @@ import {
             }
 
             renderCustomControls(advgbBlockControls) {
+                var query_string = currentControlKey(advgbBlockControls, 'query_string', 'queries');
+                const queriesValue = Array.isArray(query_string)
+                    ? query_string.join('\n')
+                    : (query_string || '');
+
                 return (
                     <Fragment>
 
@@ -1695,7 +1700,7 @@ import {
                         {isControlEnabled(advgb_block_controls_vars.controls.browser_device) && (
                             <Fragment>
                                 <ToggleControl
-                                    label={__('Browser & Device', 'advanced-gutenberg')}
+                                    label={__('Browser', 'advanced-gutenberg')}
                                     help={currentControlKey(advgbBlockControls, 'browser_device', 'enabled')
                                         ? __('Choose which browsers can see this block.', 'advanced-gutenberg')
                                         : ''
@@ -1923,10 +1928,9 @@ import {
                                         <TextareaControl
                                             label={__('Query Parameters', 'advanced-gutenberg')}
                                             help={__('Enter query parameter names, one per line', 'advanced-gutenberg')}
-                                            value={currentControlKey(advgbBlockControls, 'query_string', 'queries')?.join('\n') || ''}
+                                            value={queriesValue}
                                             onChange={(value) => {
-                                                const queries = value.split('\n').map(q => q.trim()).filter(q => q.length > 0);
-                                                this.changeControlKey('query_string', 'queries', queries);
+                                                this.changeControlKey('query_string', 'queries', value);
                                             }}
                                             placeholder={__('utm_source\nutm_medium\nref', 'advanced-gutenberg')}
                                         />

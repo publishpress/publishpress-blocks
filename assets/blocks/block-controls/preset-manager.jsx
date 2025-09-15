@@ -210,10 +210,9 @@ import {
 
                     this.setState({
                         presets: response.presets,
+                        lastAction: 'installed',
                         loading: false
                     });
-
-                    this.showSuccessMessage(__('Sample presets created successfully!', 'advanced-gutenberg'));
                 }
             } catch (error) {
                 console.error('Failed to create sample presets:', error);
@@ -381,14 +380,6 @@ import {
             }
         }
 
-        showSuccessMessage(message) {
-            setTimeout(() => {
-                if (window.AdvGBPresetData && window.AdvGBPresetData.advgbTimerStatus) {
-                    window.AdvGBPresetData.advgbTimerStatus(message, 'success');
-                }
-            }, 300);
-        }
-
         async deletePreset(presetId) {
             if (!confirm(__('Are you sure you want to delete this preset?', 'advanced-gutenberg'))) {
                 return;
@@ -515,6 +506,8 @@ import {
                     return { ...baseRule, roles: [], approach: 'include' };
                 case 'device_type':
                     return { ...baseRule, devices: [] };
+                case 'device_width':
+                    return { ...baseRule, min_width: '', max_width: '' };
                 case 'browser_device':
                     return { ...baseRule, browsers: [], approach: 'include' };
                 case 'operating_system':
@@ -529,6 +522,10 @@ import {
                     return { ...baseRule, queries: [], logic: 'all', approach: 'include' };
                 case 'capabilities':
                     return { ...baseRule, capabilities: [], approach: 'include' };
+                case 'archive':
+                    return { ...baseRule, taxonomies: [], approach: 'exclude' };
+                case 'page':
+                    return { ...baseRule, pages: [], approach: 'exclude' };
                 default:
                     return baseRule;
             }
@@ -540,7 +537,7 @@ import {
                 { value: 'user_role', label: __('User Roles', 'advanced-gutenberg') },
                 { value: 'device_type', label: __('Device Type', 'advanced-gutenberg') },
                 { value: 'device_width', label: __('Device Width', 'advanced-gutenberg') },
-                { value: 'browser_device', label: __('Browser & Device', 'advanced-gutenberg') },
+                { value: 'browser_device', label: __('Browser', 'advanced-gutenberg') },
                 { value: 'operating_system', label: __('Operating System', 'advanced-gutenberg') },
                 { value: 'cookie', label: __('Cookie', 'advanced-gutenberg') },
                 { value: 'user_meta', label: __('User Meta', 'advanced-gutenberg') },
@@ -1285,15 +1282,17 @@ import {
         }
 
         renderQueryStringConfig(rule, setIndex, ruleIndex) {
+            const queriesValue = Array.isArray(rule.queries)
+                ? rule.queries.join('\n')
+                : (rule.queries || '');
             return (
                 <Fragment>
                     <TextareaControl
                         label={__('Query Parameters', 'advanced-gutenberg')}
                         help={__('Enter query parameter names, one per line', 'advanced-gutenberg')}
-                        value={rule.queries?.join('\n') || ''}
+                        value={queriesValue}
                         onChange={(value) => {
-                            const queries = value.split('\n').map(q => q.trim()).filter(q => q.length > 0);
-                            this.updateRuleData(setIndex, ruleIndex, 'queries', queries);
+                            this.updateRuleData(setIndex, ruleIndex, 'queries', value);
                         }}
                         placeholder={__('utm_source\nutm_medium\nref', 'advanced-gutenberg')}
                     />
@@ -1488,6 +1487,12 @@ import {
                     icon = '📝';
                     title = __('No Presets Yet', 'advanced-gutenberg');
                     description = __('Create your first preset to start managing block visibility rules.', 'advanced-gutenberg');
+                    break;
+
+                case 'installed':
+                    icon = '✅';
+                    title = __('Sample Created!', 'advanced-gutenberg');
+                    description = __('Preset sample created successfully! Choose a preset to edit or create a new one.', 'advanced-gutenberg');
                     break;
 
                 default:

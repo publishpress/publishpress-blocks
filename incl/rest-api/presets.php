@@ -195,6 +195,10 @@ class Presets
         $sanitized = [];
 
         switch ($type) {
+            case 'schedule':
+                $sanitized['schedules'] = map_deep($rule['schedules'], 'sanitize_text_field') ?? [];
+                break;
+
             case 'user_role':
                 $sanitized['roles'] = array_map('sanitize_text_field', $rule['roles'] ?? []);
                 $sanitized['approach'] = sanitize_text_field($rule['approach'] ?? 'include');
@@ -202,6 +206,15 @@ class Presets
 
             case 'device_type':
                 $sanitized['devices'] = array_map('sanitize_text_field', $rule['devices'] ?? []);
+                break;
+
+            case 'device_width':
+                if (!empty($rule['min_width']) ) {
+                    $sanitized['min_width'] = intval($rule['min_width']);
+                }
+                if (!empty($rule['max_width']) ) {
+                    $sanitized['max_width'] = intval($rule['max_width']);
+                }
                 break;
 
             case 'browser_device':
@@ -224,7 +237,7 @@ class Presets
                 break;
 
             case 'query_string':
-                $sanitized['queries'] = array_map('sanitize_text_field', $rule['queries'] ?? []);
+                $sanitized['queries'] = is_array($rule['queries']) ? array_map('sanitize_text_field', $rule['queries'] ?? []) : sanitize_textarea_field($rule['queries']);
                 $sanitized['logic'] = sanitize_text_field($rule['logic'] ?? 'all');
                 $sanitized['approach'] = sanitize_text_field($rule['approach'] ?? 'include');
                 break;
@@ -234,8 +247,13 @@ class Presets
                 $sanitized['approach'] = sanitize_text_field($rule['approach'] ?? 'include');
                 break;
 
-            case 'schedule':
-                $sanitized['schedules'] = map_deep($rule['schedules'], 'sanitize_text_field') ?? [];
+            case 'archive':
+                $sanitized['taxonomies'] = array_map('sanitize_text_field', $rule['taxonomies'] ?? []);
+                $sanitized['approach'] = sanitize_text_field($rule['approach'] ?? 'exclude');
+
+            case 'pages':
+                $sanitized['pages'] = array_map('sanitize_text_field', $rule['pages'] ?? []);
+                $sanitized['approach'] = sanitize_text_field($rule['approach'] ?? 'exclude');
                 break;
         }
 

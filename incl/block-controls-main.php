@@ -31,10 +31,6 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             ) {
                 $controls = $block['attrs']['advgbBlockControls'];
 
-                if (isset($controls['presets']) && !empty($controls['presets']['enabled'])) {
-                    return self::checkPresetControls($block_content, $block, $controls['presets']);
-                }
-
                 $show_block = true;
 
                 // Cache device type detection for performance
@@ -51,10 +47,21 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                         && isset($item['enabled'])
                         && (bool) $item['enabled'] === true
                     ) {
-                        if (self::displayBlock($block, $item['control'], $key, $device_type) === false) {
-                            // Stop iteration; we reached a control that decides block shouln't be displayed
-                            $show_block = false;
+                        // skip some control
+                        if (in_array($item['control'], ['meta'])) {
+                            continue;
                         }
+
+                        // apply preset control
+                        if ($item['control'] === 'presets') {
+                            if (!self::checkPresetControls($block_content, $block, $item, $key)) {
+                                $show_block = false;
+                            }
+                        } elseif (self::displayBlock($block, $item['control'], $key, $device_type) === false) {
+                                // Stop iteration; we reached a control that decides block shouln't be displayed
+                                $show_block = false;
+                        }
+
                     }
                 }
                 if (!$show_block) {
@@ -71,17 +78,27 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             return $block_content;
         }
 
-        private static function checkPresetControls($block_content, $block, $preset_config)
+        private static function getPresetItemConfig($preset_id, $presets = false) {
+            $presets = ! is_array($presets) ? self::getPresets(true) : $presets;
+            $preset_config = false;
+
+            if (isset($presets[$preset_id])) {
+                $preset_config = $presets[$preset_id];
+            }
+
+            return $preset_config;
+        }
+
+        private static function checkPresetControls($block_content, $block, $preset_config, $key)
         {
-            $presets = self::getPresets();
             $selected_presets = $preset_config['selected'] ?? [];
             $logic = $preset_config['logic'] ?? 'any';
 
             $preset_matches = 0;
-
             foreach ($selected_presets as $preset_id) {
-                if (isset($presets[$preset_id])) {
-                    if (self::evaluatePreset($presets[$preset_id], $block)) {
+                $preset_rule = self::getPresetItemConfig($preset_id);
+                if ($preset_rule) {
+                    if (self::evaluatePreset($preset_rule, $block, $key)) {
                         $preset_matches++;
                     }
                 }
@@ -97,13 +114,12 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             return $show_block ? $block_content : '';
         }
 
-        private static function evaluatePreset($preset, $block)
+        private static function evaluatePreset($preset, $block, $key)
         {
             $control_sets = $preset['controlSets'] ?? [];
-
             // OR logic between control sets
             foreach ($control_sets as $control_set) {
-                if (self::evaluateControlSet($control_set, $block)) {
+                if (self::evaluateControlSet($control_set, $block, $key)) {
                     return true; // If any control set matches, preset matches
                 }
             }
@@ -111,13 +127,13 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             return false;
         }
 
-        private static function evaluateControlSet($control_set, $block)
+        private static function evaluateControlSet($control_set, $block, $key)
         {
             $rules = $control_set['rules'] ?? [];
 
             // AND logic within control set
             foreach ($rules as $rule) {
-                if (!self::evaluateRule($rule, $block)) {
+                if (!self::evaluateRule($rule, $block, $key)) {
                     return false; // If any rule fails, control set fails
                 }
             }
@@ -125,18 +141,17 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             return true; // All rules passed
         }
 
-        private static function evaluateRule($rule, $block)
+        private static function evaluateRule($rule, $block, $key)
         {
             $rule_type = $rule['type'] ?? '';
 
-            $mock_control = [
+            // Replace preset id with data
+            $block['attrs']['advgbBlockControls'][$key] = array_merge([
                 'control' => $rule_type,
                 'enabled' => true
-            ];
+            ], $rule);
 
-            $mock_control = array_merge($mock_control, $rule);
-
-            return self::displayBlock($block, $rule_type, 0);
+            return self::displayBlock($block, $rule_type, $key);
         }
 
         /**
@@ -411,6 +426,10 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                         return true;
                     }
 
+                    if ($device_type === null) {
+                        $device_type = self::getDeviceType();
+                    }
+
                     // Use the pre-detected device type
                     return in_array($device_type, $selected_devices);
                     break;
@@ -424,7 +443,6 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     $screen_width = isset($_SERVER['HTTP_X_REQUESTED_WITH']) ?
                         (isset($_SERVER['HTTP_X_SCREEN_WIDTH']) ? intval($_SERVER['HTTP_X_SCREEN_WIDTH']) : 0) :
                         (isset($_SERVER['HTTP_X_CLIENT_WIDTH']) ? intval($_SERVER['HTTP_X_CLIENT_WIDTH']) : 0);
-
                     // If we couldn't detect screen width, return true
                     if ($screen_width === 0) {
                         return true;
@@ -724,6 +742,11 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
         public static function checkQueryString($block, $control_data)
         {
             $query_strings = isset($control_data['queries']) ? $control_data['queries'] : [];
+            if (!is_array($query_strings)) {
+                $query_strings = array_filter(
+                    array_map( 'trim', preg_split( '/\r\n|\r|\n/', $query_strings ) )
+                );
+            }
             $logic = isset($control_data['logic']) ? $control_data['logic'] : 'all';
             $approach = isset($control_data['approach']) ? $control_data['approach'] : 'include';
 
@@ -897,39 +920,65 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
 
                 foreach ($controls as $key => $item) {
                     if (isset($item['control']) && isset($item['enabled']) && (bool) $item['enabled'] === true) {
-                        switch ($item['control']) {
-                            case 'device_type':
-                                $devices = isset($item['devices']) ? $item['devices'] : [];
-                                if (!empty($devices)) {
-                                    $hidden_devices = array_diff(['desktop', 'tablet', 'mobile'], $devices);
-
-                                    foreach ($hidden_devices as $device) {
-                                        switch ($device) {
-                                            case 'mobile':
-                                                $css_rules[] = "@media (max-width: 767px) { .{$identifier} { display: none !important; } }";
-                                                break;
-                                            case 'tablet':
-                                                $css_rules[] = "@media (min-width: 768px) and (max-width: 1024px) { .{$identifier} { display: none !important; } }";
-                                                break;
-                                            case 'desktop':
-                                                $css_rules[] = "@media (min-width: 1025px) { .{$identifier} { display: none !important; } }";
-                                                break;
+                        $control_items = [];
+                        if ($item['control'] === 'presets') {
+                            $selected_presets = $item['selected'] ?? [];
+                            foreach ($selected_presets as $preset_id) {
+                                $preset_item_config = self::getPresetItemConfig($preset_id);
+                                $control_sets = $preset_item_config['controlSets'] ?? [];
+                                foreach ($control_sets as $control_set) {
+                                    $control_set_rules = $control_set['rules'] ?? [];
+                                    foreach ($control_set_rules as $control_set_rule) {
+                                        /**
+                                         * CSS Operator cannot respect AND/OR rules in presets.
+                                         * So, we should 100% relied on PHP logic for 'device_type'
+                                         * except 'device_width' that's solely css.
+                                         */
+                                        if (in_array($control_set_rule['type'], ['device_width'])) {
+                                            $control_set_rule['control'] = $control_set_rule['type'];
+                                            $control_items[] = $control_set_rule;
                                         }
                                     }
                                 }
-                                break;
-                            case 'device_width':
-                                $min_width = isset($item['min_width']) ? intval($item['min_width']) : 0;
-                                $max_width = isset($item['max_width']) ? intval($item['max_width']) : 0;
+                            }
+                        } else {
+                            $control_items[] = $item;
+                        }
+                        foreach ($control_items as $control_item) {
+                            switch ($control_item['control']) {
+                                case 'device_type':
+                                    $devices = isset($control_item['devices']) ? $control_item['devices'] : [];
+                                    if (!empty($devices)) {
+                                        $hidden_devices = array_diff(['desktop', 'tablet', 'mobile'], $devices);
 
-                                if ($min_width > 0) {
-                                    $css_rules[] = "@media (max-width: " . ($min_width - 1) . "px) { .{$identifier} { display: none !important; } }";
-                                }
+                                        foreach ($hidden_devices as $device) {
+                                            switch ($device) {
+                                                case 'mobile':
+                                                    $css_rules[] = "@media (max-width: 767px) { .{$identifier} { display: none !important; } }";
+                                                    break;
+                                                case 'tablet':
+                                                    $css_rules[] = "@media (min-width: 768px) and (max-width: 1024px) { .{$identifier} { display: none !important; } }";
+                                                    break;
+                                                case 'desktop':
+                                                    $css_rules[] = "@media (min-width: 1025px) { .{$identifier} { display: none !important; } }";
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 'device_width':
+                                    $min_width = isset($control_item['min_width']) ? intval($control_item['min_width']) : 0;
+                                    $max_width = isset($control_item['max_width']) ? intval($control_item['max_width']) : 0;
 
-                                if ($max_width > 0) {
-                                    $css_rules[] = "@media (min-width: " . ($max_width + 1) . "px) { .{$identifier} { display: none !important; } }";
-                                }
-                                break;
+                                    if ($min_width > 0) {
+                                        $css_rules[] = "@media (max-width: " . ($min_width - 1) . "px) { .{$identifier} { display: none !important; } }";
+                                    }
+
+                                    if ($max_width > 0) {
+                                        $css_rules[] = "@media (min-width: " . ($max_width + 1) . "px) { .{$identifier} { display: none !important; } }";
+                                    }
+                                    break;
+                            }
                         }
                     }
                 }
@@ -1255,10 +1304,12 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             return $result;
         }
 
-        public static function getPresets()
+        public static function getPresets($retain_key = false)
         {
             $presets = (array) get_option('advgb_block_control_presets', []);
-
+            if ($retain_key) {
+                return $presets;
+            }
             $formatted_presets = [];
             foreach ($presets as $id => $preset) {
                 $formatted_presets[] = array_merge($preset, ['id' => $id]);

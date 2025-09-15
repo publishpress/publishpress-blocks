@@ -178,8 +178,8 @@
 .advgb-empty-actions {
     display: flex;
     gap: 10px;
-    justify-content: space-between;
-        margin-top: 20px;
+    flex-flow: column;
+    margin-top: 20px;
 }
 
 .advgb-preset-sidebar-header h3 {
