@@ -381,9 +381,6 @@ import {
         }
 
         async deletePreset(presetId) {
-            if (!confirm(__('Are you sure you want to delete this preset?', 'advanced-gutenberg'))) {
-                return;
-            }
 
             this.setState({
                 deleting: true,
@@ -463,9 +460,6 @@ import {
         }
 
         removeControlSet(setIndex) {
-            if (!confirm(__('Are you sure you want to remove this control set?', 'advanced-gutenberg'))) {
-                return;
-            }
 
             const { currentPreset } = this.state;
             const newControlSets = currentPreset.controlSets.filter((_, index) => index !== setIndex);
@@ -572,28 +566,6 @@ import {
                 console.error('Date formatting error:', error);
                 return __('Invalid date', 'advanced-gutenberg');
             }
-        }
-
-        renderControlRule(rule, setIndex, ruleIndex) {
-            return (
-                <Card className="advgb-control-rule-card">
-                    <CardHeader>
-                        <div className="advgb-rule-header">
-                            <span>{this.getRuleTypeLabel(rule.type)}</span>
-                            <Button
-                                isSmall
-                                isDestructive
-                                onClick={() => this.removeRuleFromSet(setIndex, ruleIndex)}
-                            >
-                                {__('Remove', 'advanced-gutenberg')}
-                            </Button>
-                        </div>
-                    </CardHeader>
-                    <CardBody>
-                        {this.renderRuleConfiguration(rule, setIndex, ruleIndex)}
-                    </CardBody>
-                </Card>
-            );
         }
 
         getRuleTypeLabel(ruleType) {
@@ -718,18 +690,42 @@ import {
                     </div>
 
                     <div className="advgb-preset-actions">
-                         {currentPreset.id && (
-                           <Button
-                                className="advgb-delete-preset-btn is-destructive-outline"
-                                icon="trash"
-                                label={__('Delete Preset', 'advanced-gutenberg')}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    this.deletePreset(currentPreset.id);
-                                    }}
-                            >
-                                {__('Delete Preset', 'advanced-gutenberg')}
-                            </Button>
+                        {currentPreset.id && (
+                            <div className="ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
+                                <Button
+                                    className="advgb-delete-preset-btn is-destructive-outline"
+                                    icon="trash"
+                                    label={__('Delete Preset', 'advanced-gutenberg')}
+                                >
+                                    {__('Delete Preset', 'advanced-gutenberg')}
+                                </Button>
+                                <div className="tooltip-text">
+                                    <p>
+                                        {__('Are you sure you want to delete preset?', 'advanced-gutenberg')}
+                                        <Button
+                                            isSmall
+                                            isDestructive
+                                            label={__('Delete Preset', 'advanced-gutenberg')}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                this.deletePreset(currentPreset.id);
+                                            }}
+                                        >
+                                            <strong>
+                                                {__('Yes, Delete Preset.', 'advanced-gutenberg')}
+                                            </strong>
+                                        </Button>
+                                        |
+                                        <Button
+                                            isSmall
+                                            label={__('No, Cancel', 'advanced-gutenberg')}
+                                        >
+                                            {__('No, Cancel.', 'advanced-gutenberg')}
+                                        </Button>
+                                    </p>
+                                    <i></i>
+                                </div>
+                            </div>
                         )}
                         <Button
                             isPrimary
@@ -774,13 +770,37 @@ import {
                                 }}
                                 className="advgb-add-rule-select"
                             />
-                            <Button
-                                isSmall
-                                isDestructive
-                                icon="trash"
-                                label={__('Delete Set', 'advanced-gutenberg')}
-                                onClick={() => this.removeControlSet(setIndex)}
-                            />
+                            <div className="ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="left">
+                                <Button
+                                    isSmall
+                                    isDestructive
+                                    icon="trash"
+                                    label={__('Delete Set', 'advanced-gutenberg')}
+                                />
+                                <div className="tooltip-text">
+                                    <p>
+                                        {__('Are you sure you want to delete set?', 'advanced-gutenberg')}
+                                        <Button
+                                            isSmall
+                                            isDestructive
+                                            label={__('Delete Set', 'advanced-gutenberg')}
+                                            onClick={() => this.removeControlSet(setIndex)}
+                                        >
+                                            <strong>
+                                                {__('Yes, Delete Set.', 'advanced-gutenberg')}
+                                            </strong>
+                                        </Button>
+                                        |
+                                        <Button
+                                            isSmall
+                                            label={__('No, Cancel', 'advanced-gutenberg')}
+                                        >
+                                            {__('No, Cancel.', 'advanced-gutenberg')}
+                                        </Button>
+                                    </p>
+                                    <i></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -815,13 +835,37 @@ import {
                             <span className="advgb-rule-type-icon">📋</span>
                             <span className="advgb-rule-type-label">{this.getRuleTypeLabel(rule.type)}</span>
                         </div>
-                        <Button
-                            isSmall
-                            isDestructive
-                            icon="trash"
-                            label={__('Remove Rule', 'advanced-gutenberg')}
-                            onClick={() => this.removeRuleFromSet(setIndex, ruleIndex)}
-                        />
+                        <div className="ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="left">
+                            <Button
+                                isSmall
+                                isDestructive
+                                icon="trash"
+                                label={__('Remove Rule', 'advanced-gutenberg')}
+                            />
+                            <div className="tooltip-text">
+                                <p>
+                                    {__('Are you sure you want to remove rule?', 'advanced-gutenberg')}
+                                    <Button
+                                        isSmall
+                                        isDestructive
+                                        label={__('Remove Rule', 'advanced-gutenberg')}
+                                        onClick={() => this.removeRuleFromSet(setIndex, ruleIndex)}
+                                    >
+                                        <strong>
+                                            {__('Yes, Remove Rule.', 'advanced-gutenberg')}
+                                        </strong>
+                                    </Button>
+                                    |
+                                    <Button
+                                        isSmall
+                                        label={__('No, Cancel', 'advanced-gutenberg')}
+                                    >
+                                        {__('No, Cancel.', 'advanced-gutenberg')}
+                                    </Button>
+                                </p>
+                                <i></i>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="advgb-rule-content">
@@ -878,9 +922,6 @@ import {
         }
 
         removeRuleFromSet(setIndex, ruleIndex) {
-            if (!confirm(__('Are you sure you want to remove this rule?', 'advanced-gutenberg'))) {
-                return;
-            }
 
             const { currentPreset } = this.state;
             const newControlSets = [...currentPreset.controlSets];
@@ -992,16 +1033,16 @@ import {
 
         renderScheduleConfig(rule, setIndex, ruleIndex) {
             const schedules = rule.schedules && rule.schedules.length > 0
-            ? rule.schedules
-            : [{
-                dateFrom: null,
-                dateTo: null,
-                recurring: false,
-                days: [],
-                timeFrom: null,
-                timeTo: null,
-                timezone: this.getTimezoneSlug()
-            }];
+                ? rule.schedules
+                : [{
+                    dateFrom: null,
+                    dateTo: null,
+                    recurring: false,
+                    days: [],
+                    timeFrom: null,
+                    timeTo: null,
+                    timezone: this.getTimezoneSlug()
+                }];
 
             return (
                 <Fragment>

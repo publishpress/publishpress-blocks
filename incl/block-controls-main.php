@@ -1547,6 +1547,8 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
 
                 wp_enqueue_style('wp-components');
 
+                Utilities::enqueueToolTipsAssets();
+
                 wp_enqueue_style(
                     'advgb-preset-manager',
                     ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/block-controls-preset-manager.css',
@@ -1574,6 +1576,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/block-controls.js',
                     [
                         'advgb_preset_data_manager',
+                        'ppb-tooltips-js',
                         'wp-blocks',
                         'wp-i18n',
                         'wp-element',
