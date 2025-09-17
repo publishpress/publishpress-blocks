@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, olatechpro
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
 Tested up to: 6.8
-Stable tag: 3.4.0
+Stable tag: 3.5.0
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -275,6 +275,17 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Block Styles: You create custom CSS styles for blocks and make them available to end users.
 
 == Changelog ==
+
+= 3.5.0 - 17 September 2025 =
+  * Feature: Add Presets to Block Control, #1581
+  * Feature: Add Capabilities to Block Control, #1579
+  * Feature: Add User Meta to Block Control, #1579
+  * Feature: Add Post Meta to Block Control, #1579
+  * Feature: Add Query strings to Block Control, #1579
+  * Feature: Add Bot option to Device type in Block Control, #1579
+  * Feature: Add Browser to Block Control, #1579
+  * Feature: Add Operating System to Block Control, #1579
+  * Feature: Add Cookie to Block Control, #1579
 
 = 3.4.0 - 20 August 2025 =
   * Feature: Add Advanced Custom Styles/Editor UI for Block Styles - [Pro feature], #775
