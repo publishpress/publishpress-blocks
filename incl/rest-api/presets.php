@@ -51,7 +51,6 @@ class Presets
     {
         $presets = (array) get_option('advgb_block_control_presets', []);
 
-        // Convert to array format expected by frontend
         $formatted_presets = [];
         foreach ($presets as $id => $preset) {
             $formatted_presets[] = array_merge($preset, ['id' => $id]);
@@ -64,22 +63,19 @@ class Presets
     {
         $data = $request->get_json_params();
 
-        // Validate required fields
         if (empty($data['title'])) {
             return new \WP_Error('missing_title', 'Preset title is required', ['status' => 400]);
         }
 
         $presets = get_option('advgb_block_control_presets', []);
 
-        // Generate ID if not provided (new preset)
         if (empty($data['id'])) {
             $data['id'] = 'preset_' . uniqid();
         }
 
         $preset_id = $data['id'];
-        unset($data['id']); // Remove ID from data to store
+        unset($data['id']);
 
-        // Sanitize and validate data
         $preset_data = [
             'title' => sanitize_text_field($data['title']),
             'controlSets' => self::sanitizeControlSets($data['controlSets'] ?? []),
@@ -87,7 +83,6 @@ class Presets
             'modified' => current_time('mysql')
         ];
 
-        // If updating existing preset, preserve created date
         if (isset($presets[$preset_id])) {
             $preset_data['created'] = $presets[$preset_id]['created'];
         }
@@ -134,7 +129,6 @@ class Presets
         $presets = self::getPresetData();
 
         if ($created) {
-            // Ensure we return proper data structure
             return rest_ensure_response([
                 'success' => true,
                 'presets' => $presets,
@@ -176,7 +170,6 @@ class Presets
                         'enabled' => (bool) ($rule['enabled'] ?? true)
                     ];
 
-                    // Sanitize rule-specific data based on type
                     $sanitized_rule = array_merge($sanitized_rule, self::sanitizeRuleData($rule));
 
                     $sanitized_set['rules'][] = $sanitized_rule;
@@ -417,7 +410,6 @@ class Presets
             ]
         ];
 
-        // Merge with existing samples
         $sample_presets = array_merge($sample_presets, $advanced_samples);
 
         update_option('advgb_block_control_presets', $sample_presets);

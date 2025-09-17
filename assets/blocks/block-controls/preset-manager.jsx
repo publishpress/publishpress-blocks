@@ -517,9 +517,9 @@ import {
                 case 'capabilities':
                     return { ...baseRule, capabilities: [], approach: 'include' };
                 case 'archive':
-                    return { ...baseRule, taxonomies: [], approach: 'exclude' };
+                    return { ...baseRule, taxonomies: [], approach: 'include' };
                 case 'page':
-                    return { ...baseRule, pages: [], approach: 'exclude' };
+                    return { ...baseRule, pages: [], approach: 'include' };
                 default:
                     return baseRule;
             }
@@ -691,7 +691,7 @@ import {
 
                     <div className="advgb-preset-actions">
                         {currentPreset.id && (
-                            <div className="ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
+                            <div className="ppb-tooltips-library click advgb-delete-preset-tooltip" data-toggle="ppbtooltip" data-placement="top">
                                 <Button
                                     className="advgb-delete-preset-btn is-destructive-outline"
                                     icon="trash"
@@ -1618,19 +1618,16 @@ import {
                     </div>
 
                     <div className="advgb-preset-editor">
-                        {/* Only show form if we have presets AND a preset is selected */}
                         {(hasPresets || lastAction == 'creating') && hasActiveForm && this.renderPresetForm()}
 
-                        {/* Show welcome message when no presets exist */}
                         {!hasPresets && lastAction !== 'creating' && (
                             <div className="advgb-welcome-message">
                                 <div className="advgb-welcome-icon">🚀</div>
                                 <h3>{__('Welcome to Block Control Presets', 'advanced-gutenberg')}</h3>
-                                <p>{__('Create your first preset or generate sample presets to get started with advanced block visibility rules.', 'advanced-gutenberg')}</p>
+                                <p>{__('Create your first preset or generate sample presets to get started with block visibility rules.', 'advanced-gutenberg')}</p>
                             </div>
                         )}
 
-                        {/* Contextual guidance message */}
                         {hasPresets && !hasActiveForm && (
                             <div
                                 className="advgb-guidance-message"

@@ -1,4 +1,3 @@
-// Global Preset Data Manager
 (function () {
     'use strict';
 

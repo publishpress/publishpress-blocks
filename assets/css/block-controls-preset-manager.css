@@ -489,7 +489,6 @@
     background: var(--advgb-bg-primary);
     border: 1px solid var(--advgb-border-color);
     border-radius: var(--advgb-radius-md);
-    overflow: hidden;
 }
 
 .advgb-control-set-header {
@@ -558,7 +557,6 @@
     background: var(--advgb-bg-primary);
     border: 1px solid var(--advgb-border-color);
     border-radius: var(--advgb-radius-md);
-    overflow: hidden;
 }
 
 .advgb-rule-header {
@@ -690,7 +688,7 @@
     justify-content: center;
 }
 
-.advgb-preset-actions .components-button.advgb-delete-preset-btn {
+.advgb-preset-actions .advgb-delete-preset-tooltip {
     margin-right: auto;
 }
 
@@ -726,6 +724,11 @@
 .advgb-preset-manager .components-button:hover {
     transform: translateY(-1px);
     box-shadow: var(--advgb-shadow-md);
+}
+
+.advgb-preset-editor .ppb-tooltips-library[data-toggle=ppbtooltip] .tooltip-text .components-button:hover {
+    transform: none;
+    box-shadow: none;
 }
 
 .advgb-preset-manager .components-button span {

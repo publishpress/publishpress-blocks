@@ -1558,7 +1558,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
 
                 wp_enqueue_script(
                     'advgb_preset_data_manager',
-                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/block-controls/preset-data-manager.js',
+                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/preset-data-manager.js',
                     [
                         'wp-blocks',
                         'wp-i18n',
