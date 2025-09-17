@@ -1,5 +1,4 @@
 <?php
-
 namespace PublishPress\Blocks;
 
 use DeviceDetector\DeviceDetector;
@@ -1596,6 +1595,8 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
+
+                wp_set_script_translations( 'advgb_block_controls', 'advanced-gutenberg' );
             }
         }
 
