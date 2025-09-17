@@ -4,6 +4,8 @@ use PublishPress\Blocks\Utilities;
 
 defined('ABSPATH') || die;
 
+require_once plugin_dir_path(dirname(__FILE__)) . 'incl/rest-api/presets.php';
+
 /**
  * Main class of Gutenberg Advanced
  */
@@ -62,6 +64,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             add_action('wp_ajax_nopriv_advgb_lores_validate', array( $this, 'validateLoresForm' ));
 
             if (is_admin()) {
+
                 add_action('admin_footer', array( $this, 'initBlocksList' ));
                 add_action('admin_menu', array( $this, 'registerMainMenu' ));
                 add_action('admin_menu', array( $this, 'registerBlockConfigPage' ));
@@ -420,7 +423,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     // Pro Ads in some blocks for free version
                     if (! defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
 
-                        self::enqueueToolTipsAssets();
+                        Utilities::enqueueToolTipsAssets();
 
                         wp_enqueue_script(
                             'advgb_pro_ad_js',
@@ -2066,32 +2069,6 @@ if (! class_exists('AdvancedGutenbergMain')) {
          * @return void
          * @since 3.0.0
          */
-        public static function enqueueToolTipsAssets()
-        {
-
-            wp_enqueue_style(
-                'ppb-tooltips-css',
-                ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/css/tooltip.min.css',
-                [],
-                ADVANCED_GUTENBERG_VERSION
-            );
-
-            wp_enqueue_script(
-                'ppb-tooltips-js',
-                ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/js/tooltip.min.js',
-                [],
-                ADVANCED_GUTENBERG_VERSION,
-                true
-            );
-
-        }
-
-        /**
-         * Load common JS and CSS for admin pages
-         *
-         * @return void
-         * @since 3.0.0
-         */
         public static function commonAdminPagesAssets()
         {
             wp_enqueue_script('advgb_main_js');
@@ -2099,7 +2076,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_script('minicolors_js');
             wp_enqueue_script('qtip_js');
 
-            self::enqueueToolTipsAssets();
+            Utilities::enqueueToolTipsAssets();
 
             wp_enqueue_style('advgb_admin_styles');
             wp_enqueue_style('advgb_qtip_style');
@@ -2279,6 +2256,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     )
                 );
             }
+
+            self::commonAdminPagesAssets();
 
             self::commonAdminPagesAssets();
 

@@ -118,6 +118,48 @@ module.exports = [
     },
     {
         entry: glob.sync(
+            "./assets/blocks/block-controls/preset-manager.jsx",
+            ),
+        devtool: 'source-map',
+        output: {
+            path: path.join(__dirname, "assets", "blocks"),
+            filename: "preset-manager.js"
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+                    use: { loader: "babel-loader" }, // Babel loader to transpile modern JavaScript.
+                    exclude: [
+                        /(node_modules|bower_components)/,
+                    ]// JavaScript files to be ignored.
+                }
+            ]
+        }
+    },
+    {
+        entry: glob.sync(
+            "./assets/blocks/block-controls/preset-data-manager.jsx",
+            ),
+        devtool: 'source-map',
+        output: {
+            path: path.join(__dirname, "assets", "blocks"),
+            filename: "preset-data-manager.js"
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+                    use: { loader: "babel-loader" }, // Babel loader to transpile modern JavaScript.
+                    exclude: [
+                        /(node_modules|bower_components)/,
+                    ]// JavaScript files to be ignored.
+                }
+            ]
+        }
+    },
+    {
+        entry: glob.sync(
             "./assets/blocks/block-usage/block-usage.jsx",
             ),
         devtool: 'source-map',
