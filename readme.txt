@@ -286,6 +286,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Feature: Add Browser to Block Control, #1579
   * Feature: Add Operating System to Block Control, #1579
   * Feature: Add Cookie to Block Control, #1579
+  * Fixed: Content Display Block is not fully translated using Loco Translate, #1583
 
 = 3.4.0 - 20 August 2025 =
   * Feature: Add Advanced Custom Styles/Editor UI for Block Styles - [Pro feature], #775

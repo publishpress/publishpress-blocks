@@ -3,6 +3,7 @@
 - /vendor
 - .rsync-filters-pre-build
 - .rsync-filters-pro-build
+- .phpcs-php-compatibility.xml
 - /assets/**/*.jsx
 - /assets/scss
 - /assets/js/main.js
