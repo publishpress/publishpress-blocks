@@ -5,6 +5,9 @@ use PublishPress\Blocks\Utilities;
 defined('ABSPATH') || die;
 
 require_once plugin_dir_path(dirname(__FILE__)) . 'incl/rest-api/presets.php';
+require_once plugin_dir_path(dirname(__FILE__)) . 'incl/block-styles/block-styles.php';
+require_once plugin_dir_path(dirname(__FILE__)) . 'incl/auto-insert-blocks/class-auto-insert-blocks.php';
+require_once plugin_dir_path(dirname(__FILE__)) . 'incl/auto-insert-blocks/class-auto-insert-metaboxes.php';
 
 /**
  * Main class of Gutenberg Advanced
@@ -119,14 +122,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
             add_filter('register_taxonomy_args', [$this, 'filterWpBlockCategoryArgs'], 10, 3);
 
             if ( Utilities::settingIsEnabled( 'enable_custom_styles' ) ) {
-                require_once plugin_dir_path(dirname(__FILE__)) . 'incl/block-styles/block-styles.php';
                 new AdvancedGutenbergBlockStyles();
             }
 
             if ( Utilities::settingIsEnabled( 'auto_insert_blocks' ) ) {
-                require_once plugin_dir_path(dirname(__FILE__)) . 'incl/auto-insert-blocks/class-auto-insert-blocks.php';
-                require_once plugin_dir_path(dirname(__FILE__)) . 'incl/auto-insert-blocks/class-auto-insert-metaboxes.php';
-
                 new AdvancedGutenbergAutoInsertBlocks();
                 new AdvancedGutenbergAutoInsertMetaboxes();
             }
@@ -602,7 +601,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $login_logo           = ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/login-form/login.svg';
             $reg_logo             = ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/login-form/reg.svg';
             $saved_settings       = get_option('advgb_settings');
-            $custom_styles_data   = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
+            $custom_styles_data   = Utilities::settingIsEnabled('enable_custom_styles') ? get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles) : [];
             $recaptcha_config     = get_option('advgb_recaptcha_config');
             $recaptcha_config     = $recaptcha_config !== false ? $recaptcha_config : array( 'recaptcha_enable' => 0 );
             $blocks_icon_color    = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#655997';
@@ -2999,6 +2998,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
          */
         public function getCustomStylesContent($content)
         {
+            if (!Utilities::settingIsEnabled('enable_custom_styles')) {
+                return '';
+            }
             $custom_styles = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
 
             if (is_array($custom_styles)) {
@@ -3025,6 +3027,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
          */
         public function loadCustomStylesAdmin()
         {
+            if (!Utilities::settingIsEnabled('enable_custom_styles')) {
+                return;
+            }
+
             $custom_styles = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
 
             if (is_array($custom_styles)) {
