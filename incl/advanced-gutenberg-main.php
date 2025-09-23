@@ -485,7 +485,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
-                $custom_styles_data   = get_option('advgb_custom_styles');
+                $custom_styles_data   = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
                 wp_localize_script('advgb_custom_styles_script', 'advgbBlocksCustomStyles', array(
                     'customStyles' => ! $custom_styles_data ? array() : $custom_styles_data,
                 ));
@@ -602,7 +602,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $login_logo           = ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/login-form/login.svg';
             $reg_logo             = ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/login-form/reg.svg';
             $saved_settings       = get_option('advgb_settings');
-            $custom_styles_data   = get_option('advgb_custom_styles');
+            $custom_styles_data   = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
             $recaptcha_config     = get_option('advgb_recaptcha_config');
             $recaptcha_config     = $recaptcha_config !== false ? $recaptcha_config : array( 'recaptcha_enable' => 0 );
             $blocks_icon_color    = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#655997';
@@ -2999,7 +2999,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
          */
         public function getCustomStylesContent($content)
         {
-            $custom_styles = get_option('advgb_custom_styles');
+            $custom_styles = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
 
             if (is_array($custom_styles)) {
                 $css = '';
@@ -3025,7 +3025,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
          */
         public function loadCustomStylesAdmin()
         {
-            $custom_styles = get_option('advgb_custom_styles');
+            $custom_styles = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
 
             if (is_array($custom_styles)) {
                 $content = '';

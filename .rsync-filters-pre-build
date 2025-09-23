@@ -8,6 +8,7 @@
 - .env.testing.linux.dist
 - .env.testing.mac.dist
 - .eslintrc.js
+- .phpcs-php-compatibility.xml
 - .git
 - .gitattributes
 - .github

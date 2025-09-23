@@ -2382,13 +2382,14 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
 
         getDateTime(post) {
             const { postDate, postDateFormat, displayTime, customDateFormat, showDatePrefix, absoluteDateCreatedPrefix, absoluteDateUpdatedPrefix, relativeDateCreatedPrefix, relativeDateUpdatedPrefix } = this.props.attributes;
+            const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
             if (postDateFormat === 'absolute') {
                 if (customDateFormat && customDateFormat.trim() !== '') {
                     const dateValue = postDate === 'created' ? dateI18n(customDateFormat, post.date) : dateI18n(customDateFormat, post.modified);
 
                     if (showDatePrefix) {
-                        const prefix = postDate === 'created' ? (absoluteDateCreatedPrefix || 'Posted on') : (absoluteDateUpdatedPrefix || 'Updated on');
+                        const prefix = postDate === 'created' ? (absoluteDateCreatedPrefix || __('Posted on', 'advanced-gutenberg')) : (absoluteDateUpdatedPrefix || __('Updated on', 'advanced-gutenberg'));
                         return prefix + ' ' + dateValue;
                     }
                     return dateValue;
@@ -2402,11 +2403,16 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                 }
 
                 if (showDatePrefix) {
-                    const currentPrefix = postDate === 'created' ? 'Posted on' : 'Updated on';
-                    const newPrefix = postDate === 'created' ? (absoluteDateCreatedPrefix || 'Posted on') : (absoluteDateUpdatedPrefix || 'Updated on');
+                    const currentPrefix = postDate === 'created' ? __('Posted on', 'advanced-gutenberg') : __('Updated on', 'advanced-gutenberg');
+                    const newPrefix = postDate === 'created' ? (absoluteDateCreatedPrefix || __('Posted on', 'advanced-gutenberg')) : (absoluteDateUpdatedPrefix || __('Updated on', 'advanced-gutenberg'));
                     dateText = dateText.replace(currentPrefix, newPrefix);
                 } else {
-                    dateText = dateText.replace(/^(Posted on|Updated on)\s+/, '');
+                    const postedPrefix = __('Posted on', 'advanced-gutenberg');
+                    const updatedPrefix = __('Updated on', 'advanced-gutenberg');
+                    const regex = new RegExp(
+                        `^(${escapeRegex(postedPrefix)}|${escapeRegex(updatedPrefix)})\\s+`
+                    );
+                    dateText = dateText.replace(regex, '');
                 }
 
                 return dateText;
@@ -2414,11 +2420,18 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                 let relativeText = postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified;
 
                 if (showDatePrefix) {
-                    const currentPrefix = postDate === 'created' ? 'Posted' : 'Updated';
-                    const newPrefix = postDate === 'created' ? (relativeDateCreatedPrefix || 'Posted') : (relativeDateUpdatedPrefix || 'Updated');
+                    const currentPrefix = postDate === 'created' ? __('Posted', 'advanced-gutenberg') : __('Updated', 'advanced-gutenberg');
+                    const newPrefix = postDate === 'created' ? (relativeDateCreatedPrefix || __('Posted', 'advanced-gutenberg')) : (relativeDateUpdatedPrefix || __('Updated', 'advanced-gutenberg'));
                     relativeText = relativeText.replace(currentPrefix, newPrefix);
                 } else {
-                    relativeText = relativeText.replace(/^(Posted|Updated)\s+/, '');
+                    const relativePostedPrefix = __('Posted', 'advanced-gutenberg');
+                    const relativeUpdatedPrefix = __('Updated', 'advanced-gutenberg');
+
+                    const elativeRegex = new RegExp(
+                        `^(${escapeRegex(relativePostedPrefix)}|${escapeRegex(relativeUpdatedPrefix)})\\s+`
+                    );
+
+                    relativeText = relativeText.replace(elativeRegex, '');
                 }
 
                 return relativeText;
