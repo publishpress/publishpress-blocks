@@ -276,7 +276,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.5.0 - 18 September 2025 =
+= 3.5.0 - 23 September 2025 =
   * Feature: Add Presets to Block Control, #1581
   * Feature: Add Capabilities to Block Control, #1579
   * Feature: Add User Meta to Block Control, #1579
