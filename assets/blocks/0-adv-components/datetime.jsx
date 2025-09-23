@@ -85,23 +85,23 @@ AdvDateTimeControl.defaultProps = {
 
 export function AdvDaysControl(props) {
     const allDays = [
-        { slug: 0, label: _x( 'S', 'Sunday first letter', 'advanced-gutenberg' ) }, // Sunday
-        { slug: 1, label: __( 'M', 'advanced-gutenberg' ) }, // Monday
-        { slug: 2, label: _x( 'T', 'Tuesday first letter', 'advanced-gutenberg' ) }, // Tuesday
-        { slug: 3, label: __( 'W', 'advanced-gutenberg' ) }, // Wednesday
-        { slug: 4, label: _x( 'T', 'Thursday first letter', 'advanced-gutenberg' ) }, // Thursday
-        { slug: 5, label: __( 'F', 'advanced-gutenberg' ) }, // Friday
-        { slug: 6, label: _x( 'S', 'Saturday first letter', 'advanced-gutenberg' ) }  // Saturday
+        { slug: 0, label: _x( 'S', 'Sunday first letter', 'advanced-gutenberg' ) },
+        { slug: 1, label: __( 'M', 'advanced-gutenberg' ) },
+        { slug: 2, label: _x( 'T', 'Tuesday first letter', 'advanced-gutenberg' ) },
+        { slug: 3, label: __( 'W', 'advanced-gutenberg' ) },
+        { slug: 4, label: _x( 'T', 'Thursday first letter', 'advanced-gutenberg' ) },
+        { slug: 5, label: __( 'F', 'advanced-gutenberg' ) },
+        { slug: 6, label: _x( 'S', 'Saturday first letter', 'advanced-gutenberg' ) }
     ];
 
     const {
         label,
-        days,
+        days = [],
         onChangeDays
     } = props;
 
     // Use a single state variable to store the selected days
-    const [ selectedDays, setSelectedDays ] = useState( days );
+    const [selectedDays, setSelectedDays] = useState(Array.isArray(days) ? days : []);
 
     /**
     * Check if the day is selected or not

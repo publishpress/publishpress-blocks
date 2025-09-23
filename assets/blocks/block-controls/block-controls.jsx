@@ -12,7 +12,7 @@ import {
     const { sprintf, __ } = wpI18n;
     const { hasBlockSupport } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { DateTimePicker, ToggleControl, PanelBody, Notice, FormTokenField, SelectControl, TextControl, RadioControl, Button } = wpComponents;
+    const { DateTimePicker, ToggleControl, PanelBody, Notice, FormTokenField, SelectControl, TextControl, TextareaControl, RadioControl, Button, TabPanel, Modal } = wpComponents;
 
     const { createHigherOrderComponent } = wpCompose;
     const { Component, Fragment } = wpElement;
@@ -88,6 +88,13 @@ import {
                 counter++;
             }
         });
+
+        // Check for preset controls
+        if (currentControlKey(controlAttrs, 'presets', 'enabled') &&
+            currentControlKey(controlAttrs, 'presets', 'selected') &&
+            currentControlKey(controlAttrs, 'presets', 'selected').length > 0) {
+            counter++;
+        }
 
         return counter > 0 ? true : false;
     }
@@ -428,6 +435,64 @@ import {
                     : [];
             }
 
+            getBrowserOptions() {
+                return [
+                    { slug: 'chrome', title: 'Chrome' },
+                    { slug: 'firefox', title: 'Firefox' },
+                    { slug: 'safari', title: 'Safari' },
+                    { slug: 'edge', title: 'Edge' },
+                    { slug: 'opera', title: 'Opera' },
+                    { slug: 'internet explorer', title: 'Internet Explorer' }
+                ];
+            }
+
+            getOperatingSystemOptions() {
+                return [
+                    { slug: 'windows', title: 'Windows' },
+                    { slug: 'mac', title: 'macOS' },
+                    { slug: 'linux', title: 'Linux' },
+                    { slug: 'android', title: 'Android' },
+                    { slug: 'ios', title: 'iOS' },
+                    { slug: 'chrome os', title: 'Chrome OS' }
+                ];
+            }
+
+            getConditionOptions() {
+                return [
+                    { label: '=', value: '=' },
+                    { label: '!=', value: '!=' },
+                    { label: '<', value: '<' },
+                    { label: '>', value: '>' },
+                    { label: '<=', value: '<=' },
+                    { label: '>=', value: '>=' },
+                    { label: 'contains', value: 'contains' },
+                    { label: 'begins with', value: 'beginsWith' },
+                    { label: 'ends with', value: 'endsWith' },
+                    { label: 'does not contain', value: 'doesNotContain' },
+                    { label: 'does not begin with', value: 'doesNotBeginWith' },
+                    { label: 'does not end with', value: 'doesNotEndWith' },
+                    { label: 'is null', value: 'null' },
+                    { label: 'is not null', value: 'notNull' },
+                    { label: 'in', value: 'in' },
+                    { label: 'not in', value: 'notIn' },
+                    { label: 'between', value: 'between' },
+                    { label: 'not between', value: 'notBetween' }
+                ];
+            }
+
+            getCapabilitiesOptions() {
+                const capabilities = typeof advgb_block_controls_vars.capabilities !== 'undefined'
+                    ? advgb_block_controls_vars.capabilities
+                    : [];
+
+                return capabilities.map(cap => ({
+                    slug: cap,
+                    title: cap.split('_').map(word =>
+                        word.charAt(0).toUpperCase() + word.slice(1)
+                    ).join(' ')
+                }));
+            }
+
             /**
              * Update advgbBlockControls attribute when a key value changes
              *
@@ -486,6 +551,74 @@ import {
                     min_width: '',
                     max_width: ''
                 };
+
+                const browserDeviceControl = {
+                    control: 'browser_device',
+                    enabled: true,
+                    browsers: [],
+                    approach: 'include'
+                };
+
+                const operatingSystemControl = {
+                    control: 'operating_system',
+                    enabled: true,
+                    systems: [],
+                    approach: 'include'
+                };
+
+                const cookieControl = {
+                    control: 'cookie',
+                    enabled: true,
+                    name: '',
+                    condition: '=',
+                    value: '',
+                    approach: 'include'
+                };
+
+                const userMetaControl = {
+                    control: 'user_meta',
+                    enabled: true,
+                    key: '',
+                    condition: '=',
+                    value: '',
+                    approach: 'include'
+                };
+
+                const postMetaControl = {
+                    control: 'post_meta',
+                    enabled: true,
+                    key: '',
+                    condition: '=',
+                    value: '',
+                    approach: 'include'
+                };
+
+                const queryStringControl = {
+                    control: 'query_string',
+                    enabled: true,
+                    queries: [],
+                    logic: 'all',
+                    approach: 'include'
+                };
+
+                const capabilitiesControl = {
+                    control: 'capabilities',
+                    enabled: true,
+                    capabilities: [],
+                    approach: 'include'
+                };
+
+                const presetsControl = {
+                    control: 'presets',
+                    enabled: true,
+                    selected: [],
+                    logic: 'any'
+                }
+
+                const metaControl = {
+                    control: 'meta',
+                    activeTab: 'custom'
+                }
 
                 // Check if advgbBlockControls attribute exists
                 const controlsAdded = typeof advgbBlockControls !== 'undefined' && advgbBlockControls.length
@@ -633,6 +766,85 @@ import {
                                 ]
                             });
                             break;
+
+                        case 'browser_device':
+                            setAttributes({
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    browserDeviceControl
+                                ]
+                            });
+                            break;
+
+                        case 'operating_system':
+                            setAttributes({
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    operatingSystemControl
+                                ]
+                            });
+                            break;
+
+                        case 'cookie':
+                            setAttributes({
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    cookieControl
+                                ]
+                            });
+                            break;
+
+                        case 'user_meta':
+                            setAttributes({
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    userMetaControl
+                                ]
+                            });
+                            break;
+
+                        case 'post_meta':
+                            setAttributes({
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    postMetaControl
+                                ]
+                            });
+                            break;
+
+                        case 'query_string':
+                            setAttributes({
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    queryStringControl
+                                ]
+                            });
+                            break;
+
+                        case 'capabilities':
+                            setAttributes({
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    capabilitiesControl
+                                ]
+                            });
+                            break;
+                        case 'presets':
+                            setAttributes({
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    presetsControl
+                                ]
+                            });
+                            break;
+                        case 'meta':
+                            setAttributes({
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    metaControl
+                                ]
+                            });
+                            break;
                     }
                     if (controlToAdd[control]) {
                         setAttributes({
@@ -677,6 +889,44 @@ import {
                         case 'device_width':
                             setAttributes({
                                 advgbBlockControls: [deviceWidthControl]
+                            });
+                            break;
+
+                        case 'browser_device':
+                            setAttributes({ advgbBlockControls: [browserDeviceControl] });
+                            break;
+
+                        case 'operating_system':
+                            setAttributes({ advgbBlockControls: [operatingSystemControl] });
+                            break;
+
+                        case 'cookie':
+                            setAttributes({ advgbBlockControls: [cookieControl] });
+                            break;
+
+                        case 'user_meta':
+                            setAttributes({ advgbBlockControls: [userMetaControl] });
+                            break;
+
+                        case 'post_meta':
+                            setAttributes({ advgbBlockControls: [postMetaControl] });
+                            break;
+
+                        case 'query_string':
+                            setAttributes({ advgbBlockControls: [queryStringControl] });
+                            break;
+
+                        case 'capabilities':
+                            setAttributes({ advgbBlockControls: [capabilitiesControl] });
+                            break;
+                        case 'presets':
+                            setAttributes({
+                                advgbBlockControls: [presetsControl]
+                            });
+                            break;
+                        case 'meta':
+                            setAttributes({
+                                advgbBlockControls: [metaControl]
                             });
                             break;
                     }
@@ -1114,10 +1364,39 @@ import {
                     : 'UTC'
             }
 
+            renderTabContent(tabName) {
+                const { attributes } = this.props;
+                const { advgbBlockControls } = attributes;
+
+                switch (tabName) {
+                    case 'custom':
+                        return this.renderCustomControls(advgbBlockControls);
+                    case 'presets':
+                        return this.renderPresetControls(advgbBlockControls);
+                    default:
+                        return null;
+                }
+            }
+
             componentDidMount() {
                 this.setState({
                     taxModOptions: this.iniTaxLabels()
                 });
+
+                // Subscribe to preset data changes
+                if (window.AdvGBPresetData) {
+                    this.presetDataSubscription = (updatedPresets) => {
+                        this.forceUpdate();
+                    };
+                    window.AdvGBPresetData.subscribe(this.presetDataSubscription);
+                }
+            }
+
+            componentWillUnmount() {
+                // Unsubscribe from preset data changes
+                if (window.AdvGBPresetData && this.presetDataSubscription) {
+                    window.AdvGBPresetData.unsubscribe(this.presetDataSubscription);
+                }
             }
 
             componentDidUpdate(prevProps, prevState) {
@@ -1158,6 +1437,818 @@ import {
                 }
             }
 
+            renderCustomControls(advgbBlockControls) {
+                var query_string = currentControlKey(advgbBlockControls, 'query_string', 'queries');
+                const queriesValue = Array.isArray(query_string)
+                    ? query_string.join('\n')
+                    : (query_string || '');
+
+                return (
+                    <Fragment>
+
+                        {isControlEnabled(advgb_block_controls_vars.controls.schedule) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('Schedule', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'schedule', 'enabled')
+                                        ? __('Choose when to start showing and/or stop showing this block.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'schedule', 'enabled')}
+                                    onChange={() => this.changeControlKey('schedule', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'schedule', 'enabled') && (
+                                    <Fragment>
+                                        {(currentControlKey(advgbBlockControls, 'schedule', 'schedules') || []).map((schedule, index) => (
+                                            <ScheduleControl
+                                                key={index}
+                                                index={index}
+                                                schedule={schedule}
+                                                onChange={(key, value) => {
+                                                    const schedules = [...(currentControlKey(advgbBlockControls, 'schedule', 'schedules') || [])];
+                                                    schedules[index][key] = value;
+                                                    this.changeControlKey('schedule', 'schedules', schedules);
+                                                }}
+                                                onRemove={() => {
+                                                    const schedules = [...(currentControlKey(advgbBlockControls, 'schedule', 'schedules') || [])];
+                                                    if (schedules.length > 1) {
+                                                        schedules.splice(index, 1);
+                                                        this.changeControlKey('schedule', 'schedules', schedules);
+                                                    }
+                                                }}
+                                                getTimezoneLabel={this.getTimezoneLabel}
+                                                getTimezoneSlug={this.getTimezoneSlug}
+                                                canRemove={(currentControlKey(advgbBlockControls, 'schedule', 'schedules') || []).length > 1}
+                                            />
+                                        ))}
+                                        <div style={{ marginBottom: 16 }}>
+                                            <Button
+                                                style={{ width: '100%', display: 'block' }}
+                                                isSecondary
+                                                onClick={() => {
+                                                    const currentSchedules = currentControlKey(advgbBlockControls, 'schedule', 'schedules') || [];
+                                                    const newSchedule = {
+                                                        dateFrom: null,
+                                                        dateTo: null,
+                                                        recurring: false,
+                                                        days: [],
+                                                        timeFrom: null,
+                                                        timeTo: null,
+                                                        timezone: this.getTimezoneSlug()
+                                                    };
+                                                    this.changeControlKey('schedule', 'schedules', [...currentSchedules, newSchedule]);
+                                                }}
+                                            >
+                                                {__('Add Another Schedule', 'advanced-gutenberg')}
+                                            </Button>
+                                        </div>
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+                        {isControlEnabled(advgb_block_controls_vars.controls.user_role) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('User roles', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'user_role', 'enabled')
+                                        ? __('Choose which users can see this block.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'user_role', 'enabled')}
+                                    onChange={() => this.changeControlKey('user_role', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'user_role', 'enabled') && (
+                                    <Fragment>
+                                        <div className="advgb-revert-mb">
+                                            <SelectControl
+                                                value={
+                                                    currentControlKey(advgbBlockControls, 'user_role', 'approach')
+                                                }
+                                                options={[
+                                                    {
+                                                        value: 'public',
+                                                        label: __('Show to everyone', 'advanced-gutenberg')
+                                                    },
+                                                    {
+                                                        value: 'hidden',
+                                                        label: __('Hide from everyone', 'advanced-gutenberg')
+                                                    },
+                                                    {
+                                                        value: 'login',
+                                                        label: __('Show to logged in users', 'advanced-gutenberg')
+                                                    },
+                                                    {
+                                                        value: 'logout',
+                                                        label: __('Show to logged out users', 'advanced-gutenberg')
+                                                    },
+                                                    {
+                                                        value: 'include',
+                                                        label: __('Show to the selected user roles', 'advanced-gutenberg')
+                                                    },
+                                                    {
+                                                        value: 'exclude',
+                                                        label: __('Hide from the selected user roles', 'advanced-gutenberg')
+                                                    }
+                                                ]}
+                                                onChange={(value) => this.changeControlKey('user_role', 'approach', value)}
+                                            />
+                                        </div>
+                                        {(currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' ||
+                                            currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude'
+                                        ) && (
+                                                <Fragment>
+                                                    <FormTokenField
+                                                        multiple
+                                                        label={__('Select user roles', 'advanced-gutenberg')}
+                                                        placeholder={__('Search', 'advanced-gutenberg')}
+                                                        suggestions={getOptionSuggestions(this.getUserRoles())}
+                                                        maxSuggestions={10}
+                                                        value={
+                                                            getOptionTitles(
+                                                                !!currentControlKey(advgbBlockControls, 'user_role', 'roles')
+                                                                    ? currentControlKey(advgbBlockControls, 'user_role', 'roles')
+                                                                    : [],
+                                                                this.getUserRoles()
+                                                            )
+                                                        }
+                                                        onChange={(value) => {
+                                                            this.changeControlKey('user_role', 'roles', getOptionSlugs(value, this.getUserRoles()))
+                                                        }}
+                                                        __experimentalExpandOnFocus
+                                                    />
+                                                    {(currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' ||
+                                                        currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude'
+                                                    )
+                                                        && !currentControlKey(advgbBlockControls, 'user_role', 'roles').length && (
+                                                            <Notice
+                                                                className="advgb-notice-sidebar"
+                                                                status="warning"
+                                                                isDismissible={false}
+                                                                style={{ marginBottom: 30 }}
+                                                            >
+                                                                {
+                                                                    __(
+                                                                        'Please select at least one user role.',
+                                                                        'advanced-gutenberg'
+                                                                    )
+                                                                }
+                                                            </Notice>
+                                                        )}
+                                                </Fragment>
+                                            )}
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {isControlEnabled(advgb_block_controls_vars.controls.device_width) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('Device Width', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'device_width', 'enabled')
+                                        ? __('Set minimum and maximum screen widths for this block to display.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'device_width', 'enabled')}
+                                    onChange={() => this.changeControlKey('device_width', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'device_width', 'enabled') && (
+                                    <Fragment>
+                                        <TextControl
+                                            type="number"
+                                            label={__('Minimum width (px)', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'device_width', 'min_width') || ''}
+                                            onChange={(value) => this.changeControlKey('device_width', 'min_width', value)}
+                                            placeholder={__('No minimum', 'advanced-gutenberg')}
+                                        />
+                                        <TextControl
+                                            type="number"
+                                            label={__('Maximum width (px)', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'device_width', 'max_width') || ''}
+                                            onChange={(value) => this.changeControlKey('device_width', 'max_width', value)}
+                                            placeholder={__('No maximum', 'advanced-gutenberg')}
+                                        />
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {isControlEnabled(advgb_block_controls_vars.controls.device_type) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('Device Type', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'device_type', 'enabled')
+                                        ? __('Choose which devices this block should be visible on.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'device_type', 'enabled')}
+                                    onChange={() => this.changeControlKey('device_type', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'device_type', 'enabled') && (
+                                    <Fragment>
+                                        <div style={{ paddingLeft: '17%' }}>
+                                            <ToggleControl
+                                                label={__('Desktop', 'advanced-gutenberg')}
+                                                checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('desktop')}
+                                                onChange={() => {
+                                                    const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
+                                                    const newDevices = devices.includes('desktop')
+                                                        ? devices.filter(d => d !== 'desktop')
+                                                        : [...devices, 'desktop'];
+                                                    this.changeControlKey('device_type', 'devices', newDevices);
+                                                }}
+                                            />
+                                            <ToggleControl
+                                                label={__('Tablet', 'advanced-gutenberg')}
+                                                checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('tablet')}
+                                                onChange={() => {
+                                                    const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
+                                                    const newDevices = devices.includes('tablet')
+                                                        ? devices.filter(d => d !== 'tablet')
+                                                        : [...devices, 'tablet'];
+                                                    this.changeControlKey('device_type', 'devices', newDevices);
+                                                }}
+                                            />
+                                            <ToggleControl
+                                                label={__('Mobile', 'advanced-gutenberg')}
+                                                checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('mobile')}
+                                                onChange={() => {
+                                                    const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
+                                                    const newDevices = devices.includes('mobile')
+                                                        ? devices.filter(d => d !== 'mobile')
+                                                        : [...devices, 'mobile'];
+                                                    this.changeControlKey('device_type', 'devices', newDevices);
+                                                }}
+                                            />
+                                            <ToggleControl
+                                                label={__('Bot', 'advanced-gutenberg')}
+                                                checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('robot')}
+                                                onChange={() => {
+                                                    const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
+                                                    const newDevices = devices.includes('robot')
+                                                        ? devices.filter(d => d !== 'robot')
+                                                        : [...devices, 'robot'];
+                                                    this.changeControlKey('device_type', 'devices', newDevices);
+                                                }}
+                                            />
+                                        </div>
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {isControlEnabled(advgb_block_controls_vars.controls.browser_device) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('Browser', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'browser_device', 'enabled')
+                                        ? __('Choose which browsers can see this block.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'browser_device', 'enabled')}
+                                    onChange={() => this.changeControlKey('browser_device', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'browser_device', 'enabled') && (
+                                    <Fragment>
+                                        <FormTokenField
+                                            multiple
+                                            label={__('Select Browsers', 'advanced-gutenberg')}
+                                            placeholder={__('Search browsers', 'advanced-gutenberg')}
+                                            suggestions={getOptionSuggestions(this.getBrowserOptions())}
+                                            maxSuggestions={10}
+                                            value={getOptionTitles(
+                                                currentControlKey(advgbBlockControls, 'browser_device', 'browsers') || [],
+                                                this.getBrowserOptions()
+                                            )}
+                                            onChange={(value) => {
+                                                this.changeControlKey('browser_device', 'browsers',
+                                                    getOptionSlugs(value, this.getBrowserOptions()))
+                                            }}
+                                            __experimentalExpandOnFocus
+                                        />
+                                        <SelectControl
+                                            label={__('Approach', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'browser_device', 'approach')}
+                                            options={[
+                                                { label: __('Show to selected browsers', 'advanced-gutenberg'), value: 'include' },
+                                                { label: __('Hide from selected browsers', 'advanced-gutenberg'), value: 'exclude' }
+                                            ]}
+                                            onChange={(value) => this.changeControlKey('browser_device', 'approach', value)}
+                                        />
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {isControlEnabled(advgb_block_controls_vars.controls.operating_system) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('Operating System', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'operating_system', 'enabled')
+                                        ? __('Choose which operating systems can see this block.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'operating_system', 'enabled')}
+                                    onChange={() => this.changeControlKey('operating_system', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'operating_system', 'enabled') && (
+                                    <Fragment>
+                                        <FormTokenField
+                                            multiple
+                                            label={__('Select Operating Systems', 'advanced-gutenberg')}
+                                            placeholder={__('Search operating systems', 'advanced-gutenberg')}
+                                            suggestions={getOptionSuggestions(this.getOperatingSystemOptions())}
+                                            maxSuggestions={10}
+                                            value={getOptionTitles(
+                                                currentControlKey(advgbBlockControls, 'operating_system', 'systems') || [],
+                                                this.getOperatingSystemOptions()
+                                            )}
+                                            onChange={(value) => {
+                                                this.changeControlKey('operating_system', 'systems',
+                                                    getOptionSlugs(value, this.getOperatingSystemOptions()))
+                                            }}
+                                            __experimentalExpandOnFocus
+                                        />
+                                        <SelectControl
+                                            label={__('Approach', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'operating_system', 'approach')}
+                                            options={[
+                                                { label: __('Show to selected OS', 'advanced-gutenberg'), value: 'include' },
+                                                { label: __('Hide from selected OS', 'advanced-gutenberg'), value: 'exclude' }
+                                            ]}
+                                            onChange={(value) => this.changeControlKey('operating_system', 'approach', value)}
+                                        />
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {isControlEnabled(advgb_block_controls_vars.controls.cookie) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('Cookie', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'cookie', 'enabled')
+                                        ? __('Show or hide block based on cookie values.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'cookie', 'enabled')}
+                                    onChange={() => this.changeControlKey('cookie', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'cookie', 'enabled') && (
+                                    <Fragment>
+                                        <TextControl
+                                            label={__('Cookie Name', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'cookie', 'name') || ''}
+                                            onChange={(value) => this.changeControlKey('cookie', 'name', value)}
+                                        />
+                                        <SelectControl
+                                            label={__('Condition', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'cookie', 'condition') || '='}
+                                            options={this.getConditionOptions()}
+                                            onChange={(value) => this.changeControlKey('cookie', 'condition', value)}
+                                        />
+                                        <TextControl
+                                            label={__('Value', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'cookie', 'value') || ''}
+                                            onChange={(value) => this.changeControlKey('cookie', 'value', value)}
+                                        />
+                                        <SelectControl
+                                            label={__('Approach', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'cookie', 'approach')}
+                                            options={[
+                                                { label: __('Show block when condition matches', 'advanced-gutenberg'), value: 'include' },
+                                                { label: __('Hide block when condition matches', 'advanced-gutenberg'), value: 'exclude' }
+                                            ]}
+                                            onChange={(value) => this.changeControlKey('cookie', 'approach', value)}
+                                        />
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {isControlEnabled(advgb_block_controls_vars.controls.user_meta) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('User Meta', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'user_meta', 'enabled')
+                                        ? __('Show or hide block based on user meta values.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'user_meta', 'enabled')}
+                                    onChange={() => this.changeControlKey('user_meta', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'user_meta', 'enabled') && (
+                                    <Fragment>
+                                        <TextControl
+                                            label={__('Meta Key', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'user_meta', 'key') || ''}
+                                            onChange={(value) => this.changeControlKey('user_meta', 'key', value)}
+                                        />
+                                        <SelectControl
+                                            label={__('Condition', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'user_meta', 'condition') || '='}
+                                            options={this.getConditionOptions()}
+                                            onChange={(value) => this.changeControlKey('user_meta', 'condition', value)}
+                                        />
+                                        <TextControl
+                                            label={__('Value', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'user_meta', 'value') || ''}
+                                            onChange={(value) => this.changeControlKey('user_meta', 'value', value)}
+                                        />
+                                        <SelectControl
+                                            label={__('Approach', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'user_meta', 'approach')}
+                                            options={[
+                                                { label: __('Show block when condition matches', 'advanced-gutenberg'), value: 'include' },
+                                                { label: __('Hide block when condition matches', 'advanced-gutenberg'), value: 'exclude' }
+                                            ]}
+                                            onChange={(value) => this.changeControlKey('user_meta', 'approach', value)}
+                                        />
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {isControlEnabled(advgb_block_controls_vars.controls.post_meta) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('Post Meta', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'post_meta', 'enabled')
+                                        ? __('Show or hide block based on post meta values.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'post_meta', 'enabled')}
+                                    onChange={() => this.changeControlKey('post_meta', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'post_meta', 'enabled') && (
+                                    <Fragment>
+                                        <TextControl
+                                            label={__('Meta Key', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'post_meta', 'key') || ''}
+                                            onChange={(value) => this.changeControlKey('post_meta', 'key', value)}
+                                        />
+                                        <SelectControl
+                                            label={__('Condition', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'post_meta', 'condition') || '='}
+                                            options={this.getConditionOptions()}
+                                            onChange={(value) => this.changeControlKey('post_meta', 'condition', value)}
+                                        />
+                                        <TextControl
+                                            label={__('Value', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'post_meta', 'value') || ''}
+                                            onChange={(value) => this.changeControlKey('post_meta', 'value', value)}
+                                        />
+                                        <SelectControl
+                                            label={__('Approach', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'post_meta', 'approach')}
+                                            options={[
+                                                { label: __('Show block when condition matches', 'advanced-gutenberg'), value: 'include' },
+                                                { label: __('Hide block when condition matches', 'advanced-gutenberg'), value: 'exclude' }
+                                            ]}
+                                            onChange={(value) => this.changeControlKey('post_meta', 'approach', value)}
+                                        />
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {isControlEnabled(advgb_block_controls_vars.controls.query_string) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('Query String', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'query_string', 'enabled')
+                                        ? __('Show or hide block based on URL query parameters.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'query_string', 'enabled')}
+                                    onChange={() => this.changeControlKey('query_string', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'query_string', 'enabled') && (
+                                    <Fragment>
+                                        <TextareaControl
+                                            label={__('Query Parameters', 'advanced-gutenberg')}
+                                            help={__('Enter query parameter names, one per line', 'advanced-gutenberg')}
+                                            value={queriesValue}
+                                            onChange={(value) => {
+                                                this.changeControlKey('query_string', 'queries', value);
+                                            }}
+                                            placeholder={__('utm_source\nutm_medium\nref', 'advanced-gutenberg')}
+                                        />
+                                        <SelectControl
+                                            label={__('Logic', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'query_string', 'logic') || 'all'}
+                                            options={[
+                                                { label: __('All parameters must be present', 'advanced-gutenberg'), value: 'all' },
+                                                { label: __('Any parameter must be present', 'advanced-gutenberg'), value: 'any' }
+                                            ]}
+                                            onChange={(value) => this.changeControlKey('query_string', 'logic', value)}
+                                        />
+                                        <SelectControl
+                                            label={__('Approach', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'query_string', 'approach')}
+                                            options={[
+                                                { label: __('Show block when condition matches', 'advanced-gutenberg'), value: 'include' },
+                                                { label: __('Hide block when condition matches', 'advanced-gutenberg'), value: 'exclude' }
+                                            ]}
+                                            onChange={(value) => this.changeControlKey('query_string', 'approach', value)}
+                                        />
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {isControlEnabled(advgb_block_controls_vars.controls.capabilities) && (
+                            <Fragment>
+                                <ToggleControl
+                                    label={__('Capabilities', 'advanced-gutenberg')}
+                                    help={currentControlKey(advgbBlockControls, 'capabilities', 'enabled')
+                                        ? __('Show or hide block based on user capabilities.', 'advanced-gutenberg')
+                                        : ''
+                                    }
+                                    checked={currentControlKey(advgbBlockControls, 'capabilities', 'enabled')}
+                                    onChange={() => this.changeControlKey('capabilities', 'enabled')}
+                                />
+                                {currentControlKey(advgbBlockControls, 'capabilities', 'enabled') && (
+                                    <Fragment>
+                                        <FormTokenField
+                                            multiple
+                                            label={__('Select Capabilities', 'advanced-gutenberg')}
+                                            placeholder={__('Search capabilities', 'advanced-gutenberg')}
+                                            suggestions={getOptionSuggestions(this.getCapabilitiesOptions())}
+                                            maxSuggestions={10}
+                                            value={
+                                                getOptionTitles(
+                                                    currentControlKey(advgbBlockControls, 'capabilities', 'capabilities') || [],
+                                                    this.getCapabilitiesOptions()
+                                                )
+                                            }
+                                            onChange={(value) => {
+                                                this.changeControlKey('capabilities', 'capabilities', getOptionSlugs(value, this.getCapabilitiesOptions()))
+                                            }}
+                                            __experimentalExpandOnFocus
+                                        />
+                                        <SelectControl
+                                            label={__('Approach', 'advanced-gutenberg')}
+                                            value={currentControlKey(advgbBlockControls, 'capabilities', 'approach')}
+                                            options={[
+                                                { label: __('Show to users with selected capabilities', 'advanced-gutenberg'), value: 'include' },
+                                                { label: __('Hide from users with selected capabilities', 'advanced-gutenberg'), value: 'exclude' }
+                                            ]}
+                                            onChange={(value) => this.changeControlKey('capabilities', 'approach', value)}
+                                        />
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {!this.isPost() && ( // Disabled in post edit
+                            <Fragment>
+                                {isControlEnabled(advgb_block_controls_vars.controls.archive) && (
+                                    <Fragment>
+                                        <ToggleControl
+                                            label={__('Term archives', 'advanced-gutenberg')}
+                                            help={currentControlKey(advgbBlockControls, 'archive', 'enabled')
+                                                ? __('Choose on which taxonomies and terms archive pages your blocks can be displayed.', 'advanced-gutenberg')
+                                                : ''
+                                            }
+                                            checked={currentControlKey(advgbBlockControls, 'archive', 'enabled')}
+                                            onChange={() => this.changeControlKey('archive', 'enabled')}
+                                        />
+                                        {currentControlKey(advgbBlockControls, 'archive', 'enabled') && (
+                                            <Fragment>
+                                                <div className="advgb-revert-mb--disabled" style={{ marginBottom: 20 }}>
+                                                    <SelectControl
+                                                        value={
+                                                            currentControlKey(advgbBlockControls, 'archive', 'approach')
+                                                        }
+                                                        options={[
+                                                            {
+                                                                value: 'include',
+                                                                label: __('Show for selected terms', 'advanced-gutenberg')
+                                                            },
+                                                            {
+                                                                value: 'exclude',
+                                                                label: __('Hide for selected terms', 'advanced-gutenberg')
+                                                            }
+                                                        ]}
+                                                        onChange={(value) => this.changeControlKey('archive', 'approach', value)}
+                                                    />
+                                                </div>
+                                                <FormTokenField
+                                                    multiple
+                                                    label={__('Select taxonomies', 'advanced-gutenberg')}
+                                                    placeholder={__('Search taxonomies', 'advanced-gutenberg')}
+                                                    suggestions={getOptionSuggestions(this.state.taxModOptions || this.getTaxonomies())}
+                                                    maxSuggestions={10}
+                                                    value={
+                                                        getOptionTitles(
+                                                            this.currentArchiveControl('taxonomies'),
+                                                            this.state.taxModOptions || this.getTaxonomies()
+                                                        )
+                                                    }
+                                                    onChange={(value) => {
+                                                        this.changeArchiveControl(
+                                                            'taxonomies',
+                                                            getOptionSlugs(value, this.state.taxModOptions || this.getTaxonomies())
+                                                        );
+                                                    }}
+                                                    __experimentalExpandOnFocus
+                                                />
+                                                {(currentControlKey(advgbBlockControls, 'archive', 'taxonomies').length > 0) && (
+                                                    <Fragment>
+                                                        <FormTokenField
+                                                            multiple
+                                                            label={__('Filter terms', 'advanced-gutenberg')}
+                                                            placeholder={__('Search terms', 'advanced-gutenberg')}
+                                                            suggestions={getOptionSuggestions(
+                                                                this.state.termOptions
+                                                            )}
+                                                            maxSuggestions={10}
+                                                            value={
+                                                                getOptionTitles(
+                                                                    this.currentArchiveControl('terms'),
+                                                                    this.state.termOptions
+                                                                )
+                                                            }
+                                                            onChange={(value) => {
+                                                                this.changeArchiveControl(
+                                                                    'terms',
+                                                                    getOptionSlugs(
+                                                                        value,
+                                                                        this.state.termOptions
+                                                                    )
+                                                                );
+                                                                this.setState({
+                                                                    updateTaxLabels: true
+                                                                });
+                                                            }}
+                                                            onInputChange={(value) => {
+                                                                this.setState({
+                                                                    searchTermWord: value
+                                                                });
+                                                            }}
+                                                            __experimentalShowHowTo={false}
+                                                        />
+                                                        <div className="advgb-revert-mb--disabled components-form-token-field__help"
+                                                            style={{ marginBottom: 20 }}>
+                                                            {__(
+                                                                'Use this filter to apply only to some terms.',
+                                                                'advanced-gutenberg'
+                                                            )}
+                                                        </div>
+                                                    </Fragment>
+                                                )}
+                                            </Fragment>
+                                        )}
+                                    </Fragment>
+                                )}
+
+                                {isControlEnabled(advgb_block_controls_vars.controls.page) && (
+                                    <Fragment>
+                                        <ToggleControl
+                                            label={__('Pages', 'advanced-gutenberg')}
+                                            help={currentControlKey(advgbBlockControls, 'page', 'enabled')
+                                                ? __('Choose in which pages this block can be displayed.', 'advanced-gutenberg')
+                                                : ''
+                                            }
+                                            checked={currentControlKey(advgbBlockControls, 'page', 'enabled')}
+                                            onChange={() => this.changeControlKey('page', 'enabled')}
+                                        />
+                                        {currentControlKey(advgbBlockControls, 'page', 'enabled') && (
+                                            <Fragment>
+                                                <div className="advgb-revert-mb">
+                                                    <SelectControl
+                                                        value={
+                                                            currentControlKey(advgbBlockControls, 'page', 'approach')
+                                                        }
+                                                        options={[
+                                                            {
+                                                                value: 'include',
+                                                                label: __('Show on the selected pages', 'advanced-gutenberg')
+                                                            },
+                                                            {
+                                                                value: 'exclude',
+                                                                label: __('Hide on the selected pages', 'advanced-gutenberg')
+                                                            }
+                                                        ]}
+                                                        onChange={(value) => this.changeControlKey('page', 'approach', value)}
+                                                    />
+                                                </div>
+                                                {(currentControlKey(advgbBlockControls, 'page', 'approach') === 'include' ||
+                                                    currentControlKey(advgbBlockControls, 'page', 'approach') === 'exclude'
+                                                ) && (
+                                                        <FormTokenField
+                                                            multiple
+                                                            label={__('Select pages', 'advanced-gutenberg')}
+                                                            placeholder={__('Search', 'advanced-gutenberg')}
+                                                            suggestions={getOptionSuggestions(this.getPages())}
+                                                            maxSuggestions={10}
+                                                            value={
+                                                                getOptionTitles(
+                                                                    !!currentControlKey(advgbBlockControls, 'page', 'pages')
+                                                                        ? currentControlKey(advgbBlockControls, 'page', 'pages')
+                                                                        : [],
+                                                                    this.getPages()
+                                                                )
+                                                            }
+                                                            onChange={(value) => {
+                                                                this.changeControlKey('page', 'pages', getOptionSlugs(value, this.getPages()))
+                                                            }}
+                                                            __experimentalExpandOnFocus
+                                                        />
+                                                    )}
+                                            </Fragment>
+                                        )}
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        )}
+                    </Fragment>
+                );
+            }
+
+            renderPresetControls(advgbBlockControls) {
+                return (
+                    <Fragment>
+                        <div className="advgb-preset-buttons">
+                            <Button
+                                isPrimary
+                                onClick={() => {
+                                    this.setState({ showPresetModal: true, modalMode: 'create' });
+                                }}
+                            >
+                                {__('Manage Presets', 'advanced-gutenberg')}
+                            </Button>
+                        </div>
+                        <FormTokenField
+                            multiple
+                            label={__('Select Presets', 'advanced-gutenberg')}
+                            placeholder={__('Search presets', 'advanced-gutenberg')}
+                            suggestions={getOptionSuggestions(this.getPresetOptions())}
+                            maxSuggestions={10}
+                            value={getOptionTitles(
+                                currentControlKey(advgbBlockControls, 'presets', 'selected') || [],
+                                this.getPresetOptions()
+                            )}
+                            onChange={(value) => {
+                                this.changeControlKey('presets', 'selected', getOptionSlugs(value, this.getPresetOptions()));
+                                if (!this.props.attributes.advgbBlockControls.find(control => control.control === 'presets')) {
+                                    this.changeControlKey('presets', 'enabled', true);
+                                }
+                            }}
+                            __experimentalExpandOnFocus
+                        />
+
+                        <SelectControl
+                            label={__('Preset Logic', 'advanced-gutenberg')}
+                            value={currentControlKey(advgbBlockControls, 'presets', 'logic') || 'any'}
+                            options={[
+                                { label: __('Show if ANY preset matches', 'advanced-gutenberg'), value: 'any' },
+                                { label: __('Show if ALL presets match', 'advanced-gutenberg'), value: 'all' }
+                            ]}
+                            onChange={(value) => this.changeControlKey('presets', 'logic', value)}
+                        />
+
+                        {this.state.showPresetModal && this.renderPresetModal()}
+                    </Fragment>
+                );
+            }
+
+            renderPresetModal() {
+                return (
+                    <Modal
+                        title=""
+                        onRequestClose={() => this.setState({ showPresetModal: false })}
+                        className="advgb-preset-modal"
+                        isDismissible={true}
+                        isFullScreen={true}
+                        shouldCloseOnClickOutside={false}
+                        shouldCloseOnEsc={true}
+                    >
+                        {window.AdvGBPresetManager && wp.element.createElement(window.AdvGBPresetManager, { isModal: false })}
+                    </Modal>
+                );
+            }
+
+            getPresetOptions() {
+                const presets = window.AdvGBPresetData ? window.AdvGBPresetData.getAllPresets() : [];
+
+                return presets.map(preset => ({
+                    slug: preset.id,
+                    title: preset.title
+                }));
+            }
+
+            getActiveTab() {
+                const { attributes } = this.props;
+                const { advgbBlockControls } = attributes;
+                return currentControlKey(advgbBlockControls, 'meta', 'activeTab') || 'custom';
+            }
+
+            setActiveTab(tabName) {
+                this.changeControlKey('meta', 'activeTab', tabName);
+            }
+
             render() {
                 const { attributes, setAttributes } = this.props;
                 const { advgbBlockControls } = attributes;
@@ -1175,408 +2266,26 @@ import {
                                     ? 'advgb-feature-icon-active' : ''
                             }
                         >
-                            {isControlEnabled(advgb_block_controls_vars.controls.schedule) && (
-                                <Fragment>
-                                    <ToggleControl
-                                        label={__('Schedule', 'advanced-gutenberg')}
-                                        help={currentControlKey(advgbBlockControls, 'schedule', 'enabled')
-                                            ? __('Choose when to start showing and/or stop showing this block.', 'advanced-gutenberg')
-                                            : ''
-                                        }
-                                        checked={currentControlKey(advgbBlockControls, 'schedule', 'enabled')}
-                                        onChange={() => this.changeControlKey('schedule', 'enabled')}
-                                    />
-                                    {currentControlKey(advgbBlockControls, 'schedule', 'enabled') && (
-                                        <Fragment>
-                                            {(currentControlKey(advgbBlockControls, 'schedule', 'schedules') || []).map((schedule, index) => (
-                                                <ScheduleControl
-                                                    key={index}
-                                                    index={index}
-                                                    schedule={schedule}
-                                                    onChange={(key, value) => {
-                                                        const schedules = [...(currentControlKey(advgbBlockControls, 'schedule', 'schedules') || [])];
-                                                        schedules[index][key] = value;
-                                                        this.changeControlKey('schedule', 'schedules', schedules);
-                                                    }}
-                                                    onRemove={() => {
-                                                        const schedules = [...(currentControlKey(advgbBlockControls, 'schedule', 'schedules') || [])];
-                                                        if (schedules.length > 1) {
-                                                            schedules.splice(index, 1);
-                                                            this.changeControlKey('schedule', 'schedules', schedules);
-                                                        }
-                                                    }}
-                                                    getTimezoneLabel={this.getTimezoneLabel}
-                                                    getTimezoneSlug={this.getTimezoneSlug}
-                                                    canRemove={(currentControlKey(advgbBlockControls, 'schedule', 'schedules') || []).length > 1}
-                                                />
-                                            ))}
-                                            <div style={{ marginBottom: 16 }}>
-                                                <Button
-                                                    style={{ width: '100%', display: 'block' }}
-                                                    isSecondary
-                                                    onClick={() => {
-                                                        const currentSchedules = currentControlKey(advgbBlockControls, 'schedule', 'schedules') || [];
-                                                        const newSchedule = {
-                                                            dateFrom: null,
-                                                            dateTo: null,
-                                                            recurring: false,
-                                                            days: [],
-                                                            timeFrom: null,
-                                                            timeTo: null,
-                                                            timezone: this.getTimezoneSlug()
-                                                        };
-                                                        this.changeControlKey('schedule', 'schedules', [...currentSchedules, newSchedule]);
-                                                    }}
-                                                >
-                                                    {__('Add Another Schedule', 'advanced-gutenberg')}
-                                                </Button>
-                                            </div>
-                                        </Fragment>
-                                    )}
-                                </Fragment>
-                            )}
-                            {isControlEnabled(advgb_block_controls_vars.controls.user_role) && (
-                                <Fragment>
-                                    <ToggleControl
-                                        label={__('User roles', 'advanced-gutenberg')}
-                                        help={currentControlKey(advgbBlockControls, 'user_role', 'enabled')
-                                            ? __('Choose which users can see this block.', 'advanced-gutenberg')
-                                            : ''
-                                        }
-                                        checked={currentControlKey(advgbBlockControls, 'user_role', 'enabled')}
-                                        onChange={() => this.changeControlKey('user_role', 'enabled')}
-                                    />
-                                    {currentControlKey(advgbBlockControls, 'user_role', 'enabled') && (
-                                        <Fragment>
-                                            <div className="advgb-revert-mb">
-                                                <SelectControl
-                                                    value={
-                                                        currentControlKey(advgbBlockControls, 'user_role', 'approach')
-                                                    }
-                                                    options={[
-                                                        {
-                                                            value: 'public',
-                                                            label: __('Show to everyone', 'advanced-gutenberg')
-                                                        },
-                                                        {
-                                                            value: 'hidden',
-                                                            label: __('Hide from everyone', 'advanced-gutenberg')
-                                                        },
-                                                        {
-                                                            value: 'login',
-                                                            label: __('Show to logged in users', 'advanced-gutenberg')
-                                                        },
-                                                        {
-                                                            value: 'logout',
-                                                            label: __('Show to logged out users', 'advanced-gutenberg')
-                                                        },
-                                                        {
-                                                            value: 'include',
-                                                            label: __('Show to the selected user roles', 'advanced-gutenberg')
-                                                        },
-                                                        {
-                                                            value: 'exclude',
-                                                            label: __('Hide from the selected user roles', 'advanced-gutenberg')
-                                                        }
-                                                    ]}
-                                                    onChange={(value) => this.changeControlKey('user_role', 'approach', value)}
-                                                />
-                                            </div>
-                                            {(currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' ||
-                                                currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude'
-                                            ) && (
-                                                    <Fragment>
-                                                        <FormTokenField
-                                                            multiple
-                                                            label={__('Select user roles', 'advanced-gutenberg')}
-                                                            placeholder={__('Search', 'advanced-gutenberg')}
-                                                            suggestions={getOptionSuggestions(this.getUserRoles())}
-                                                            maxSuggestions={10}
-                                                            value={
-                                                                getOptionTitles(
-                                                                    !!currentControlKey(advgbBlockControls, 'user_role', 'roles')
-                                                                        ? currentControlKey(advgbBlockControls, 'user_role', 'roles')
-                                                                        : [],
-                                                                    this.getUserRoles()
-                                                                )
-                                                            }
-                                                            onChange={(value) => {
-                                                                this.changeControlKey('user_role', 'roles', getOptionSlugs(value, this.getUserRoles()))
-                                                            }}
-                                                            __experimentalExpandOnFocus
-                                                        />
-                                                        {(currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' ||
-                                                            currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude'
-                                                        )
-                                                            && !currentControlKey(advgbBlockControls, 'user_role', 'roles').length && (
-                                                                <Notice
-                                                                    className="advgb-notice-sidebar"
-                                                                    status="warning"
-                                                                    isDismissible={false}
-                                                                    style={{ marginBottom: 30 }}
-                                                                >
-                                                                    {
-                                                                        __(
-                                                                            'Please select at least one user role.',
-                                                                            'advanced-gutenberg'
-                                                                        )
-                                                                    }
-                                                                </Notice>
-                                                            )}
-                                                    </Fragment>
-                                                )}
-                                        </Fragment>
-                                    )}
-                                </Fragment>
-                            )}
-
-                            {isControlEnabled(advgb_block_controls_vars.controls.device_width) && (
-                                <Fragment>
-                                    <ToggleControl
-                                        label={__('Device Width', 'advanced-gutenberg')}
-                                        help={currentControlKey(advgbBlockControls, 'device_width', 'enabled')
-                                            ? __('Set minimum and maximum screen widths for this block to display.', 'advanced-gutenberg')
-                                            : ''
-                                        }
-                                        checked={currentControlKey(advgbBlockControls, 'device_width', 'enabled')}
-                                        onChange={() => this.changeControlKey('device_width', 'enabled')}
-                                    />
-                                    {currentControlKey(advgbBlockControls, 'device_width', 'enabled') && (
-                                        <Fragment>
-                                            <TextControl
-                                                type="number"
-                                                label={__('Minimum width (px)', 'advanced-gutenberg')}
-                                                value={currentControlKey(advgbBlockControls, 'device_width', 'min_width') || ''}
-                                                onChange={(value) => this.changeControlKey('device_width', 'min_width', value)}
-                                                placeholder={__('No minimum', 'advanced-gutenberg')}
-                                            />
-                                            <TextControl
-                                                type="number"
-                                                label={__('Maximum width (px)', 'advanced-gutenberg')}
-                                                value={currentControlKey(advgbBlockControls, 'device_width', 'max_width') || ''}
-                                                onChange={(value) => this.changeControlKey('device_width', 'max_width', value)}
-                                                placeholder={__('No maximum', 'advanced-gutenberg')}
-                                            />
-                                        </Fragment>
-                                    )}
-                                </Fragment>
-                            )}
-
-                            {isControlEnabled(advgb_block_controls_vars.controls.device_type) && (
-                                <Fragment>
-                                    <ToggleControl
-                                        label={__('Device Type', 'advanced-gutenberg')}
-                                        help={currentControlKey(advgbBlockControls, 'device_type', 'enabled')
-                                            ? __('Choose which devices this block should be visible on.', 'advanced-gutenberg')
-                                            : ''
-                                        }
-                                        checked={currentControlKey(advgbBlockControls, 'device_type', 'enabled')}
-                                        onChange={() => this.changeControlKey('device_type', 'enabled')}
-                                    />
-                                    {currentControlKey(advgbBlockControls, 'device_type', 'enabled') && (
-                                        <Fragment>
-                                            <div style={{ paddingLeft: '17%' }}>
-                                                <ToggleControl
-                                                    label={__('Desktop', 'advanced-gutenberg')}
-                                                    checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('desktop')}
-                                                    onChange={() => {
-                                                        const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
-                                                        const newDevices = devices.includes('desktop')
-                                                            ? devices.filter(d => d !== 'desktop')
-                                                            : [...devices, 'desktop'];
-                                                        this.changeControlKey('device_type', 'devices', newDevices);
-                                                    }}
-                                                />
-                                                <ToggleControl
-                                                    label={__('Tablet', 'advanced-gutenberg')}
-                                                    checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('tablet')}
-                                                    onChange={() => {
-                                                        const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
-                                                        const newDevices = devices.includes('tablet')
-                                                            ? devices.filter(d => d !== 'tablet')
-                                                            : [...devices, 'tablet'];
-                                                        this.changeControlKey('device_type', 'devices', newDevices);
-                                                    }}
-                                                />
-                                                <ToggleControl
-                                                    label={__('Mobile', 'advanced-gutenberg')}
-                                                    checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('mobile')}
-                                                    onChange={() => {
-                                                        const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
-                                                        const newDevices = devices.includes('mobile')
-                                                            ? devices.filter(d => d !== 'mobile')
-                                                            : [...devices, 'mobile'];
-                                                        this.changeControlKey('device_type', 'devices', newDevices);
-                                                    }}
-                                                />
-                                            </div>
-                                        </Fragment>
-                                    )}
-                                </Fragment>
-                            )}
-
-                            {!this.isPost() && ( // Disabled in post edit
-                                <Fragment>
-                                    {isControlEnabled(advgb_block_controls_vars.controls.archive) && (
-                                        <Fragment>
-                                            <ToggleControl
-                                                label={__('Term archives', 'advanced-gutenberg')}
-                                                help={currentControlKey(advgbBlockControls, 'archive', 'enabled')
-                                                    ? __('Choose on which taxonomies and terms archive pages your blocks can be displayed.', 'advanced-gutenberg')
-                                                    : ''
-                                                }
-                                                checked={currentControlKey(advgbBlockControls, 'archive', 'enabled')}
-                                                onChange={() => this.changeControlKey('archive', 'enabled')}
-                                            />
-                                            {currentControlKey(advgbBlockControls, 'archive', 'enabled') && (
-                                                <Fragment>
-                                                    <div className="advgb-revert-mb--disabled" style={{ marginBottom: 20 }}>
-                                                        <SelectControl
-                                                            value={
-                                                                currentControlKey(advgbBlockControls, 'archive', 'approach')
-                                                            }
-                                                            options={[
-                                                                {
-                                                                    value: 'include',
-                                                                    label: __('Show for selected terms', 'advanced-gutenberg')
-                                                                },
-                                                                {
-                                                                    value: 'exclude',
-                                                                    label: __('Hide for selected terms', 'advanced-gutenberg')
-                                                                }
-                                                            ]}
-                                                            onChange={(value) => this.changeControlKey('archive', 'approach', value)}
-                                                        />
-                                                    </div>
-                                                    <FormTokenField
-                                                        multiple
-                                                        label={__('Select taxonomies', 'advanced-gutenberg')}
-                                                        placeholder={__('Search taxonomies', 'advanced-gutenberg')}
-                                                        suggestions={getOptionSuggestions(this.state.taxModOptions || this.getTaxonomies())}
-                                                        maxSuggestions={10}
-                                                        value={
-                                                            getOptionTitles(
-                                                                this.currentArchiveControl('taxonomies'),
-                                                                this.state.taxModOptions || this.getTaxonomies()
-                                                            )
-                                                        }
-                                                        onChange={(value) => {
-                                                            this.changeArchiveControl(
-                                                                'taxonomies',
-                                                                getOptionSlugs(value, this.state.taxModOptions || this.getTaxonomies())
-                                                            );
-                                                        }}
-                                                        __experimentalExpandOnFocus
-                                                    />
-                                                    {(currentControlKey(advgbBlockControls, 'archive', 'taxonomies').length > 0) && (
-                                                        <Fragment>
-                                                            <FormTokenField
-                                                                multiple
-                                                                label={__('Filter terms', 'advanced-gutenberg')}
-                                                                placeholder={__('Search terms', 'advanced-gutenberg')}
-                                                                suggestions={getOptionSuggestions(
-                                                                    this.state.termOptions
-                                                                )}
-                                                                maxSuggestions={10}
-                                                                value={
-                                                                    getOptionTitles(
-                                                                        this.currentArchiveControl('terms'),
-                                                                        this.state.termOptions
-                                                                    )
-                                                                }
-                                                                onChange={(value) => {
-                                                                    this.changeArchiveControl(
-                                                                        'terms',
-                                                                        getOptionSlugs(
-                                                                            value,
-                                                                            this.state.termOptions
-                                                                        )
-                                                                    );
-                                                                    this.setState({
-                                                                        updateTaxLabels: true
-                                                                    });
-                                                                }}
-                                                                onInputChange={(value) => {
-                                                                    this.setState({
-                                                                        searchTermWord: value
-                                                                    });
-                                                                }}
-                                                                __experimentalShowHowTo={false}
-                                                            />
-                                                            <div className="advgb-revert-mb--disabled components-form-token-field__help"
-                                                                style={{ marginBottom: 20 }}>
-                                                                {__(
-                                                                    'Use this filter to apply only to some terms.',
-                                                                    'advanced-gutenberg'
-                                                                )}
-                                                            </div>
-                                                        </Fragment>
-                                                    )}
-                                                </Fragment>
-                                            )}
-                                        </Fragment>
-                                    )}
-
-                                    {isControlEnabled(advgb_block_controls_vars.controls.page) && (
-                                        <Fragment>
-                                            <ToggleControl
-                                                label={__('Pages', 'advanced-gutenberg')}
-                                                help={currentControlKey(advgbBlockControls, 'page', 'enabled')
-                                                    ? __('Choose in which pages this block can be displayed.', 'advanced-gutenberg')
-                                                    : ''
-                                                }
-                                                checked={currentControlKey(advgbBlockControls, 'page', 'enabled')}
-                                                onChange={() => this.changeControlKey('page', 'enabled')}
-                                            />
-                                            {currentControlKey(advgbBlockControls, 'page', 'enabled') && (
-                                                <Fragment>
-                                                    <div className="advgb-revert-mb">
-                                                        <SelectControl
-                                                            value={
-                                                                currentControlKey(advgbBlockControls, 'page', 'approach')
-                                                            }
-                                                            options={[
-                                                                {
-                                                                    value: 'include',
-                                                                    label: __('Show on the selected pages', 'advanced-gutenberg')
-                                                                },
-                                                                {
-                                                                    value: 'exclude',
-                                                                    label: __('Hide on the selected pages', 'advanced-gutenberg')
-                                                                }
-                                                            ]}
-                                                            onChange={(value) => this.changeControlKey('page', 'approach', value)}
-                                                        />
-                                                    </div>
-                                                    {(currentControlKey(advgbBlockControls, 'page', 'approach') === 'include' ||
-                                                        currentControlKey(advgbBlockControls, 'page', 'approach') === 'exclude'
-                                                    ) && (
-                                                            <FormTokenField
-                                                                multiple
-                                                                label={__('Select pages', 'advanced-gutenberg')}
-                                                                placeholder={__('Search', 'advanced-gutenberg')}
-                                                                suggestions={getOptionSuggestions(this.getPages())}
-                                                                maxSuggestions={10}
-                                                                value={
-                                                                    getOptionTitles(
-                                                                        !!currentControlKey(advgbBlockControls, 'page', 'pages')
-                                                                            ? currentControlKey(advgbBlockControls, 'page', 'pages')
-                                                                            : [],
-                                                                        this.getPages()
-                                                                    )
-                                                                }
-                                                                onChange={(value) => {
-                                                                    this.changeControlKey('page', 'pages', getOptionSlugs(value, this.getPages()))
-                                                                }}
-                                                                __experimentalExpandOnFocus
-                                                            />
-                                                        )}
-                                                </Fragment>
-                                            )}
-                                        </Fragment>
-                                    )}
-                                </Fragment>
-                            )}
+                            <TabPanel
+                                className="advgb-block-controls-tabs"
+                                activeClass="active-tab"
+                                initialTabName={this.getActiveTab()}
+                                onSelect={(tabName) => this.setActiveTab(tabName)}
+                                tabs={[
+                                    {
+                                        name: 'custom',
+                                        title: __('Custom Rules', 'advanced-gutenberg'),
+                                        className: 'tab-custom',
+                                    },
+                                    {
+                                        name: 'presets',
+                                        title: __('Presets', 'advanced-gutenberg'),
+                                        className: 'tab-presets',
+                                    }
+                                ]}
+                            >
+                                {(tab) => this.renderTabContent(tab.name)}
+                            </TabPanel>
                         </PanelBody>
                     </InspectorControls>,
                     <BlockEdit key="block-edit-advgb-dates" {...this.props} />,

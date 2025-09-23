@@ -84,5 +84,31 @@ if (! class_exists('\\PublishPress\\Blocks\\Utilities')) {
 
             return $proActive;
         }
+
+        /**
+         * Load tooltip JS and CSS for admin pages
+         *
+         * @return void
+         * @since 3.0.0
+         */
+        public static function enqueueToolTipsAssets()
+        {
+
+            wp_enqueue_style(
+                'ppb-tooltips-css',
+                ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/css/tooltip.min.css',
+                [],
+                ADVANCED_GUTENBERG_VERSION
+            );
+
+            wp_enqueue_script(
+                'ppb-tooltips-js',
+                ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/js/tooltip.min.js',
+                [],
+                ADVANCED_GUTENBERG_VERSION,
+                true
+            );
+
+        }
     }
 }

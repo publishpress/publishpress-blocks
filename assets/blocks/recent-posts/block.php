@@ -564,19 +564,19 @@ function advgbRegisterBlockRecentPosts()
             ),
             'absoluteDateCreatedPrefix' => array(
                 'type' => 'string',
-                'default' => 'Posted on',
+                'default' => esc_html__('Posted on', 'advanced-gutenberg'),
             ),
             'absoluteDateUpdatedPrefix' => array(
                 'type' => 'string',
-                'default' => 'Updated on',
+                'default' => esc_html__('Updated on', 'advanced-gutenberg'),
             ),
             'relativeDateCreatedPrefix' => array(
                 'type' => 'string',
-                'default' => 'Posted',
+                'default' => esc_html__('Posted', 'advanced-gutenberg'),
             ),
             'relativeDateUpdatedPrefix' => array(
                 'type' => 'string',
-                'default' => 'Updated',
+                'default' => esc_html__('Updated', 'advanced-gutenberg'),
             ),
             'showDatePrefix' => array(
                 'type' => 'boolean',
