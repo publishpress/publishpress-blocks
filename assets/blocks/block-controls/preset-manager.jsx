@@ -1532,8 +1532,8 @@ import {
 
                 case 'installed':
                     icon = '✅';
-                    title = __('Sample Created!', 'advanced-gutenberg');
-                    description = __('Preset sample created successfully! Choose a preset to edit or create a new one.', 'advanced-gutenberg');
+                    title = __('Samples Created!', 'advanced-gutenberg');
+                    description = __('Preset samples created successfully! Choose a preset to edit or create a new one.', 'advanced-gutenberg');
                     break;
 
                 default:
