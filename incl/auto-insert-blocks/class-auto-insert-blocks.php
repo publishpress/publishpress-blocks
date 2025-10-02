@@ -416,14 +416,27 @@ class AdvancedGutenbergAutoInsertBlocks
             return $content;
         }
 
-        // Parse content into blocks
-        $blocks = parse_blocks($post->post_content);
+        // Remove our filter temporarily
+        remove_filter('the_content', [$this, 'autoInsertBlocks'], 8);
 
+        $raw_content = $post->post_content;
+
+        // Parse and apply insertions
+        $blocks = parse_blocks($raw_content);
         foreach ($rules as $rule) {
             $blocks = $this->insertBlockByRule($blocks, $rule);
         }
 
-        return serialize_blocks($blocks);
+        // Convert back to block markup
+        $content_with_insertions = serialize_blocks($blocks);
+
+        // Apply ALL WordPress content filters (this will render embeds, shortcodes, etc to work if auto insert block has it.)
+        $fully_rendered_content = apply_filters('the_content', $content_with_insertions);
+
+        // Readd our filter
+        add_filter('the_content', [$this, 'autoInsertBlocks'], 8);
+
+        return $fully_rendered_content;
     }
 
     /**
