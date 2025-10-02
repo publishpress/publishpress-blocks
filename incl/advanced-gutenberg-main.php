@@ -1270,7 +1270,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'enable_block_usage',
                 'enable_custom_styles',
                 'enable_advgb_blocks',
-                'reusable_blocks'
+                'reusable_blocks',
+                'auto_insert_blocks'
             ];
 
             // Pro features
