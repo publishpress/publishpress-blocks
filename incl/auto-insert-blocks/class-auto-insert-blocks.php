@@ -194,7 +194,6 @@ class AdvancedGutenbergAutoInsertBlocks
         $new_columns['block'] = __('Reusable Block', 'advanced-gutenberg');
         $new_columns['position'] = __('Position', 'advanced-gutenberg');
         $new_columns['targeting'] = __('Targeting', 'advanced-gutenberg');
-        $new_columns['status'] = __('Status', 'advanced-gutenberg');
         $new_columns['priority'] = __('Priority', 'advanced-gutenberg');
         $new_columns['date'] = $columns['date'];
 
@@ -382,13 +381,6 @@ class AdvancedGutenbergAutoInsertBlocks
                 echo !empty($targeting_info) ? implode('<br>', $targeting_info) : __('None', 'advanced-gutenberg');
                 break;
 
-            case 'status':
-                $enabled = get_post_meta($post_id, '_advgb_rule_enabled', true);
-                $status_class = $enabled ? 'enabled' : 'disabled';
-                $status_text = $enabled ? __('Enabled', 'advanced-gutenberg') : __('Disabled', 'advanced-gutenberg');
-                echo '<span class="status-badge ' . $status_class . '">' . esc_html($status_text) . '</span>';
-                break;
-
             case 'priority':
                 $priority = get_post_meta($post_id, '_advgb_priority', true);
                 echo $priority ? esc_html($priority) : '10';
@@ -447,14 +439,7 @@ class AdvancedGutenbergAutoInsertBlocks
         $rules = get_posts(array(
             'post_type' => 'advgb_insert_block',
             'post_status' => 'publish',
-            'numberposts' => -1,
-            'meta_query' => array(
-                array(
-                    'key' => '_advgb_rule_enabled',
-                    'value' => '1',
-                    'compare' => '='
-                )
-            )
+            'numberposts' => -1
         ));
 
         $active_rules = [];
@@ -647,9 +632,6 @@ class AdvancedGutenbergAutoInsertBlocks
         update_post_meta($post_id, '_advgb_taxonomies', $sanitized_taxonomies);
 
         // Save rule settings
-        $enabled = isset($_POST['advgb_rule_enabled']) ? '1' : '0';
-        update_post_meta($post_id, '_advgb_rule_enabled', $enabled);
-
         if (isset($_POST['advgb_priority'])) {
             update_post_meta($post_id, '_advgb_priority', intval($_POST['advgb_priority']));
         }
