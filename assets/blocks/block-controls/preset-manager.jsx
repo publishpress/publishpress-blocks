@@ -150,6 +150,8 @@ import {
                 deleting: false,
                 deletingPresetId: null,
                 lastAction: null, // 'created', 'cancelled', 'deleted', 'saved', 'loaded'
+                expandedControlSets: {},
+                expandedRules: {}
             };
 
             this.handleModalClose = this.handleModalClose.bind(this);
@@ -443,10 +445,60 @@ import {
             });
         }
 
+        toggleControlSet(setIndex) {
+            const { currentPreset } = this.state;
+            const newControlSets = [...currentPreset.controlSets];
+
+            const isCurrentlyExpanded = newControlSets[setIndex].expanded !== false;
+            newControlSets[setIndex].expanded = !isCurrentlyExpanded;
+
+            this.setState({
+                currentPreset: {
+                    ...currentPreset,
+                    controlSets: newControlSets
+                }
+            });
+        }
+
+        toggleRule(setIndex, ruleIndex) {
+            const { currentPreset } = this.state;
+            const newControlSets = [...currentPreset.controlSets];
+
+            const isCurrentlyExpanded = newControlSets[setIndex].rules[ruleIndex].expanded !== false;
+            newControlSets[setIndex].rules[ruleIndex].expanded = !isCurrentlyExpanded;
+
+            this.setState({
+                currentPreset: {
+                    ...currentPreset,
+                    controlSets: newControlSets
+                }
+            });
+        }
+
+        isControlSetExpanded(setIndex) {
+            const { currentPreset } = this.state;
+            if (!currentPreset.controlSets || !currentPreset.controlSets[setIndex]) {
+                return true;
+            }
+            return currentPreset.controlSets[setIndex].expanded !== false;
+        }
+
+        isRuleExpanded(setIndex, ruleIndex) {
+            const { currentPreset } = this.state;
+            if (!currentPreset.controlSets ||
+                !currentPreset.controlSets[setIndex] ||
+                !currentPreset.controlSets[setIndex].rules ||
+                !currentPreset.controlSets[setIndex].rules[ruleIndex]) {
+                return true;
+            }
+            return currentPreset.controlSets[setIndex].rules[ruleIndex].expanded !== false;
+        }
+
         addControlSet() {
             const newControlSet = {
                 id: Date.now().toString(),
-                rules: []
+                rules: [],
+                expanded: true
             };
 
             const updatedControlSets = [newControlSet, ...this.state.currentPreset.controlSets];
@@ -490,7 +542,8 @@ import {
             const baseRule = {
                 id: Date.now(),
                 type: ruleType,
-                enabled: true
+                enabled: true,
+                expanded: true
             };
 
             switch (ruleType) {
@@ -749,12 +802,22 @@ import {
         }
 
         renderControlSet(controlSet, setIndex) {
+            const isExpanded = this.isControlSetExpanded(setIndex);
+
             return (
                 <div className="advgb-control-set" key={controlSet.id || setIndex}>
                     <div className="advgb-control-set-header">
-                        <div className="advgb-set-info">
-                            <h4>{__('Control Set', 'advanced-gutenberg')} {setIndex + 1}</h4>
-                            <p>{__('Show the block if any rule applies. Rules are evaluated with AND logic.', 'advanced-gutenberg')}</p>
+                        <div
+                            className="advgb-set-info advgb-preset-clickable-area"
+                            onClick={() => this.toggleControlSet(setIndex)}
+                        >
+                            <div className="advgb-set-title-row">
+                                <span className={`dashicons dashicons-arrow-${isExpanded ? 'down' : 'right'}`}></span>
+                                <div className="title-row-text">
+                                <h4>{__('Control Set', 'advanced-gutenberg')} {setIndex + 1}</h4>
+                                <p>{__('Show the block if any rule applies. Rules are evaluated with AND logic.', 'advanced-gutenberg')}</p>
+                                </div>
+                            </div>
                         </div>
                         <div className="advgb-set-actions">
                             <SelectControl
@@ -804,73 +867,85 @@ import {
                         </div>
                     </div>
 
-                    <div className="advgb-control-set-rules">
-                        {(controlSet.rules || []).map((rule, ruleIndex) => (
-                            <div key={rule.id || ruleIndex} className="advgb-rule-container">
-                                {ruleIndex > 0 && (
-                                    <div className="advgb-rule-separator">
-                                        <span className="advgb-separator-text">{__('AND', 'advanced-gutenberg')}</span>
-                                    </div>
-                                )}
-                                {this.renderControlRule(rule, setIndex, ruleIndex)}
-                            </div>
-                        ))}
+                    {isExpanded && (
+                        <div className="advgb-control-set-rules">
+                            {(controlSet.rules || []).map((rule, ruleIndex) => (
+                                <div key={rule.id || ruleIndex} className="advgb-rule-container">
+                                    {ruleIndex > 0 && (
+                                        <div className="advgb-rule-separator">
+                                            <span className="advgb-separator-text">{__('AND', 'advanced-gutenberg')}</span>
+                                        </div>
+                                    )}
+                                    {this.renderControlRule(rule, setIndex, ruleIndex)}
+                                </div>
+                            ))}
 
-                        {(!controlSet.rules || controlSet.rules.length === 0) && (
-                            <div className="advgb-no-rules">
-                                <div className="advgb-no-rules-icon">⚡</div>
-                                <p>{__('No rules added yet. Add rules to define when this block should be visible.', 'advanced-gutenberg')}</p>
-                            </div>
-                        )}
-                    </div>
+                            {(!controlSet.rules || controlSet.rules.length === 0) && (
+                                <div className="advgb-no-rules">
+                                    <div className="advgb-no-rules-icon">⚡</div>
+                                    <p>{__('No rules added yet. Add rules to define when this block should be visible.', 'advanced-gutenberg')}</p>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             );
         }
 
         renderControlRule(rule, setIndex, ruleIndex) {
+            const isExpanded = this.isRuleExpanded(setIndex, ruleIndex);
+
             return (
                 <div className="advgb-control-rule">
                     <div className="advgb-rule-header">
-                        <div className="advgb-rule-type">
+                        <div
+                            className="advgb-rule-type advgb-preset-clickable-area"
+                            onClick={() => this.toggleRule(setIndex, ruleIndex)}
+                        >
+                            <span className={`dashicons dashicons-arrow-${isExpanded ? 'down' : 'right'}`}></span>
                             <span className="advgb-rule-type-icon">📋</span>
                             <span className="advgb-rule-type-label">{this.getRuleTypeLabel(rule.type)}</span>
                         </div>
-                        <div className="ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="left">
-                            <Button
-                                isSmall
-                                isDestructive
-                                icon="trash"
-                                label={__('Remove Rule', 'advanced-gutenberg')}
-                            />
-                            <div className="tooltip-text">
-                                <p>
-                                    {__('Are you sure you want to remove rule?', 'advanced-gutenberg')}
-                                    <Button
-                                        isSmall
-                                        isDestructive
-                                        label={__('Remove Rule', 'advanced-gutenberg')}
-                                        onClick={() => this.removeRuleFromSet(setIndex, ruleIndex)}
-                                    >
-                                        <strong>
-                                            {__('Yes, Remove Rule.', 'advanced-gutenberg')}
-                                        </strong>
-                                    </Button>
-                                    |
-                                    <Button
-                                        isSmall
-                                        label={__('No, Cancel', 'advanced-gutenberg')}
-                                    >
-                                        {__('No, Cancel.', 'advanced-gutenberg')}
-                                    </Button>
-                                </p>
-                                <i></i>
+                        <div className="advgb-rule-actions">
+                            <div className="ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="left">
+                                <Button
+                                    isSmall
+                                    isDestructive
+                                    icon="trash"
+                                    label={__('Remove Rule', 'advanced-gutenberg')}
+                                />
+                                <div className="tooltip-text">
+                                    <p>
+                                        {__('Are you sure you want to remove rule?', 'advanced-gutenberg')}
+                                        <Button
+                                            isSmall
+                                            isDestructive
+                                            label={__('Remove Rule', 'advanced-gutenberg')}
+                                            onClick={() => this.removeRuleFromSet(setIndex, ruleIndex)}
+                                        >
+                                            <strong>
+                                                {__('Yes, Remove Rule.', 'advanced-gutenberg')}
+                                            </strong>
+                                        </Button>
+                                        |
+                                        <Button
+                                            isSmall
+                                            label={__('No, Cancel', 'advanced-gutenberg')}
+                                        >
+                                            {__('No, Cancel.', 'advanced-gutenberg')}
+                                        </Button>
+                                    </p>
+                                    <i></i>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="advgb-rule-content">
-                        {this.renderRuleConfiguration(rule, setIndex, ruleIndex)}
-                    </div>
+                    {isExpanded && (
+                        <div className="advgb-rule-content">
+                            {this.renderRuleConfiguration(rule, setIndex, ruleIndex)}
+                        </div>
+                    )}
                 </div>
             );
         }
