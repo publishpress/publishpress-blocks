@@ -406,7 +406,23 @@ jQuery(document).ready(function ($) {
                     },
                     success: function (res, stt) {
                         if (stt === 'success') {
-                            $(that).parent().before('<li class="advgb-customstyles-items" data-id-customstyle="' + res.id + '"><a><i class="title-icon"></i><span class="advgb-customstyles-items-title">' + res.title + '</span></a><a class="copy"><span class="dashicons dashicons-admin-page"></span></a><a class="trash"><span class="dashicons dashicons-no"></span></a><ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">(' + res.name + ')</li></ul></li>');
+                            var newItem =
+                                '<li class="advgb-customstyles-items" data-id-customstyle="' + res.id + '">' +
+                                    '<a><i class="title-icon"></i>' +
+                                    '<span class="advgb-customstyles-items-title">' + res.title + '</span></a>' +
+                                    '<a class="copy"><span class="dashicons dashicons-admin-page"></span></a>' +
+                                    '<a class="trash"><span class="dashicons dashicons-no"></span></a>' +
+                                    '<ul style="margin-left: 30px">' +
+                                        '<li class="advgb-customstyles-items-class">(' + res.name + ')</li>' +
+                                    '</ul>' +
+                                '</li>';
+
+                            if ($(that).hasClass('top-button')) {
+                                $(that).closest('li').after(newItem);
+                            } else {
+                                $(that).parent().before(newItem);
+                            }
+
                             initCustomStyleMenu();
                         } else {
                             alert(stt);
