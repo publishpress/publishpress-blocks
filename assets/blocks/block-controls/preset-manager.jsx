@@ -150,8 +150,6 @@ import {
                 deleting: false,
                 deletingPresetId: null,
                 lastAction: null, // 'created', 'cancelled', 'deleted', 'saved', 'loaded'
-                expandedControlSets: {},
-                expandedRules: {}
             };
 
             this.handleModalClose = this.handleModalClose.bind(this);
