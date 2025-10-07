@@ -2955,13 +2955,21 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            if (isset($_POST['advgb_block_access_save'])) {
-                // Save Block Access
+            if ( isset( $_POST['advgb_block_access_save'] ) ) {
+                // Save Block Access for single role
                 $this->blocksFeatureSave(
-                    'access', // Feature in lowercase
-                    'advgb_blocks_user_roles' // Database option to update
+                    'access',
+                    'advgb_blocks_user_roles'
                 );
+                return true;
+            }
 
+            if ( isset( $_POST['advgb_block_access_save_all_roles'] ) ) {
+                // Save Block Access for all roles
+                $this->blocksFeatureSaveAllRoles(
+                    'access',
+                    'advgb_blocks_user_roles'
+                );
                 return true;
             }
 
@@ -3089,6 +3097,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
+            $user_role = !empty($_POST['user_role']) ? sanitize_text_field($_POST['user_role']) : '';
+
             if (
                 isset($_POST['blocks_list'])
                 && isset($_POST['active_blocks'])
@@ -3097,7 +3107,6 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 && ! empty($_POST['user_role'])
             ) {
                 // @TODO - Check if user role exists - https://gist.github.com/hlashbrooke/8f901da7c6f0d107add7
-                $user_role       = sanitize_text_field($_POST['user_role']);
                 $blocks_list     = array_map(
                     'sanitize_text_field',
                     json_decode(stripslashes($_POST['blocks_list'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
@@ -3111,6 +3120,88 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 $block_feature_by_role[ $user_role ]['inactive_blocks'] = isset($inactive_blocks) ? $inactive_blocks : '';
 
                 update_option($option, $block_feature_by_role, false);
+
+                // Redirect with success message
+                wp_safe_redirect(
+                    add_query_arg(
+                        [
+                            'user_role' => $user_role,
+                            'save'      => 'success'
+                        ],
+                        wp_get_referer()
+                    )
+                );
+            } else {
+                // Redirect with error message / Nothing was saved
+                wp_safe_redirect(
+                    add_query_arg(
+                        [
+                            'user_role' => $user_role,
+                            'save'      => 'error'
+                        ],
+                        wp_get_referer()
+                    )
+                );
+            }
+        }
+
+        /**
+         * Save blocks feature for all roles
+         *
+         * @param string $feature        Feature name in lowercase
+         * @param string $database_option Database option to update
+         *
+         * @return void
+         * @since 3.5.2
+         */
+        public function blocksFeatureSaveAllRoles( $feature, $database_option ) {
+            // Check nonce field exist
+            if (! isset($_POST[ 'advgb_block_' . $feature . '_nonce_field' ])) {
+                return false;
+            }
+            // Verify nonce
+            if (
+                ! wp_verify_nonce(
+                    sanitize_key($_POST[ 'advgb_block_' . $feature . '_nonce_field' ]),
+                    'advgb_nonce'
+                )
+            ) {
+                return false;
+            }
+
+            if (! current_user_can('administrator')) {
+                return false;
+            }
+
+            $user_role = !empty($_POST['user_role']) ? sanitize_text_field($_POST['user_role']) : '';
+
+            if (
+                isset($_POST['blocks_list'])
+                && isset($_POST['active_blocks'])
+                && is_array($_POST['active_blocks'])
+                && isset($_POST['user_role'])
+                && ! empty($_POST['user_role'])
+            ) {
+                $blocks_list     = array_map(
+                    'sanitize_text_field',
+                    json_decode(stripslashes($_POST['blocks_list'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                );
+                $active_blocks   = isset( $_POST['active_blocks'] ) ? array_map('sanitize_text_field', $_POST['active_blocks']) : [];
+                $inactive_blocks = array_values(array_diff($blocks_list, $active_blocks));
+
+                $all_roles = wp_roles()->roles;
+
+                $blocks_user_roles = get_option( $database_option, array() );
+
+                foreach ( $all_roles as $role_key => $role_data ) {
+                    $blocks_user_roles[ $role_key ] = array(
+                        'active_blocks'   => $active_blocks,
+                        'inactive_blocks' => $inactive_blocks,
+                    );
+                }
+
+                // Save to database
+                update_option( $database_option, $blocks_user_roles, false );
 
                 // Redirect with success message
                 wp_safe_redirect(
@@ -3466,15 +3557,13 @@ if (! class_exists('AdvancedGutenbergMain')) {
                                         <span class="dashicons dashicons-warning"></span>
                                     </span>
                                 </span>
-                                <button class="button button-primary save-profile-button"
-                                        type="submit"
-                                        name="advgb_block_<?php
-                                        echo $feature ?>_save"
-                                >
-                                    <span>
-                                        <?php
-                                        printf(__('Save %s', 'advanced-gutenberg'), $label); ?>
-                                    </span>
+                                <button type="submit" name="advgb_block_<?php
+                                        echo $feature ?>_save" class="button button-primary save-profile-button">
+                                    <?php esc_html_e( 'Save Role Block Permissions', 'advanced-gutenberg' ); ?>
+                                </button>
+                                <button type="submit" name="advgb_block_<?php
+                                        echo $feature ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
+                                    <?php esc_html_e( 'Save Permission for all Roles', 'advanced-gutenberg' ); ?>
                                 </button>
                             </div>
                         </div>
@@ -3492,15 +3581,13 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                         <!-- Save button -->
                         <div class="advgb-form-buttons-bottom">
-                            <button class="button button-primary save-profile-button"
-                                    type="submit"
-                                    name="advgb_block_<?php
-                                    echo $feature ?>_save"
-                            >
-                                <span>
-                                    <?php
-                                    printf(__('Save %s', 'advanced-gutenberg'), $label); ?>
-                                </span>
+                            <button type="submit" name="advgb_block_<?php
+                                    echo $feature ?>_save" class="button button-primary save-profile-button">
+                                <?php esc_html_e( 'Save Role Block Permissions', 'advanced-gutenberg' ); ?>
+                            </button>
+                            <button type="submit" name="advgb_block_<?php
+                                    echo $feature ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
+                                <?php esc_html_e( 'Save Permission for all Roles', 'advanced-gutenberg' ); ?>
                             </button>
                             <span class="advgb-enable-one-block-msg" style="display: none;">
                                 <span>
