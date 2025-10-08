@@ -151,14 +151,16 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
 
                                 <!-- Tab Content Wrapper -->
                                 <div class="advgb-tab-body-wrapper">
-                                    <?php foreach (AdvancedGutenbergBlockStyles::get_style_fields() as $tab => $fields) : ?>
+                                    <?php
+                                    $style_fields = AdvancedGutenbergBlockStyles::get_style_fields();
+                                    foreach ($style_fields as $tab => $tab_config) : ?>
                                         <?php
                                             $active_style = $tab !== 'colors' ? 'display: none;' : '';
                                             $additional_class = ! PublishPress\Blocks\Utilities::isProActive() ? 'advgb-promo-overlay-area' : '';
                                         ?>
                                         <div class="advgb-tab-body advgb-tab-content sub-tab-content" data-tab-content="<?php echo esc_attr($tab); ?>" style="<?php echo esc_attr($active_style); ?>">
                                             <div class="style-controls <?php echo esc_attr($additional_class); ?>">
-                                                <?php foreach ($fields as $property => $field) : ?>
+                                                <?php foreach ($tab_config['fields'] as $property => $field) : ?>
                                                     <?php echo AdvancedGutenbergBlockStyles::generate_control_group($field, $property); ?>
                                                 <?php endforeach; ?>
                                             </div>

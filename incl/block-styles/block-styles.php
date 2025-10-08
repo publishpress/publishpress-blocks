@@ -432,22 +432,36 @@ class AdvancedGutenbergBlockStyles
 
         return $css_array;
     }
-
-
     public static function generate_control_group($field, $property)
     {
-
         $proActive = Utilities::isProActive();
+
+        if ($field['type'] === 'fieldset') {
+                $html = '<fieldset class="advgb-fieldset">';
+                $html .= '<legend>';
+                $html .= '<span class="dashicons dashicons-arrow-down"></span>';
+                $html .= esc_html($field['legend']);
+                $html .= '</legend>';
+                $html .= '<div class="advgb-fieldset-content">';
+
+                foreach ($field['fields'] as $sub_property => $sub_field) {
+                    $html .= self::generate_control_group($sub_field, $sub_property);
+                }
+
+                $html .= '</div>';
+                $html .= '</fieldset>';
+            return $html;
+        }
 
         $additional_class = '';
         if (!$proActive) {
             $additional_class = 'advgb-blur';
 
-            if (isset($field_config['aliases'])) {
-                unset($field_config['aliases']);
+            if (isset($field['aliases'])) {
+                unset($field['aliases']);
             }
-            if (isset($field_config['special_values'])) {
-                unset($field_config['special_values']);
+            if (isset($field['special_values'])) {
+                unset($field['special_values']);
             }
             $property = 'promo-' . rand(0, 99) . '_' . rand(0, 99);
         }
@@ -478,8 +492,8 @@ class AdvancedGutenbergBlockStyles
         switch ($field['type']) {
             case 'color':
                 $html .= '<input type="text" class="minicolors style-input"
-                        data-css-property="' . esc_attr($property) . '"
-                        data-field-config="' . esc_attr(json_encode($field_config)) . '"';
+                    data-css-property="' . esc_attr($property) . '"
+                    data-field-config="' . esc_attr(json_encode($field_config)) . '"';
 
                 if (isset($field['special_values'])) {
                     $html .= ' data-special-values="' . esc_attr(json_encode($field['special_values'])) . '"';
@@ -489,8 +503,8 @@ class AdvancedGutenbergBlockStyles
 
             case 'text':
                 $html .= '<input type="text" class="style-input"
-                        data-css-property="' . esc_attr($property) . '"
-                        data-field-config="' . esc_attr(json_encode($field_config)) . '"';
+                    data-css-property="' . esc_attr($property) . '"
+                    data-field-config="' . esc_attr(json_encode($field_config)) . '"';
 
                 if (isset($field['placeholder'])) {
                     $html .= ' placeholder="' . esc_attr($field['placeholder']) . '"';
@@ -508,8 +522,8 @@ class AdvancedGutenbergBlockStyles
                     $attrs .= ' step="' . esc_attr($field['step']) . '"';
 
                 $html .= '<input type="number" class="style-input"
-                        data-css-property="' . esc_attr($property) . '"
-                        data-field-config="' . esc_attr(json_encode($field_config)) . '"';
+                    data-css-property="' . esc_attr($property) . '"
+                    data-field-config="' . esc_attr(json_encode($field_config)) . '"';
 
                 if (isset($field['unit'])) {
                     $html .= ' data-unit="' . esc_attr($field['unit']) . '"';
@@ -520,8 +534,8 @@ class AdvancedGutenbergBlockStyles
 
             case 'select':
                 $html .= '<select class="style-input"
-                        data-css-property="' . esc_attr($property) . '"
-                        data-field-config="' . esc_attr(json_encode($field_config)) . '">';
+                    data-css-property="' . esc_attr($property) . '"
+                    data-field-config="' . esc_attr(json_encode($field_config)) . '">';
 
                 foreach ($field['options'] as $value => $label) {
                     $html .= '<option value="' . esc_attr($value) . '">' . esc_html($label) . '</option>';
@@ -531,11 +545,11 @@ class AdvancedGutenbergBlockStyles
 
             case 'promo':
                 $html .= '<div class="advgb-pro-small-overlay-text">
-                            <a class="advgb-pro-link" href="' . esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK) . '" target="_blank">
-                                <span class="dashicons dashicons-lock"></span> ' . __('Pro feature', 'advanced-gutenberg') . '
-                            </a>
-                        </div>
-                        ';
+                        <a class="advgb-pro-link" href="' . esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK) . '" target="_blank">
+                            <span class="dashicons dashicons-lock"></span> ' . __('Pro feature', 'advanced-gutenberg') . '
+                        </a>
+                    </div>
+                    ';
                 break;
         }
 
@@ -547,475 +561,557 @@ class AdvancedGutenbergBlockStyles
 
     public static function get_style_fields()
     {
-        $felds = [
+        $fields = [
             'colors' => [
-                'background-color' => [
-                    'label' => __('Background Color', 'advanced-gutenberg'),
-                    'type' => 'color',
-                    'aliases' => ['background'],
-                    'special_values' => ['none', 'transparent']
-                ],
-                /*'background' => [ // should background support gradients and not just color? Maybe use this optio instead.
-                    'label' => __('Background', 'advanced-gutenberg'),
-                    'type' => 'text',
-                    'placeholder' => 'e.g. #fff or linear-gradient(...)',
-                    'aliases' => ['background-color'],
-                    'special_values' => ['none', 'transparent']
-                ],*/
-                'colors-promo' => [
-                    'label' => '',
-                    'type' => 'promo'
-                ],
-                'color' => [
-                    'label' => __('Text Color', 'advanced-gutenberg'),
-                    'type' => 'color'
+                'legend' => __('Colors', 'advanced-gutenberg'),
+                'fields' => [
+                    'background-color' => [
+                        'label' => __('Background Color', 'advanced-gutenberg'),
+                        'type' => 'color',
+                        'aliases' => ['background'],
+                        'special_values' => ['none', 'transparent']
+                    ],
+                    'colors-promo' => [
+                        'label' => '',
+                        'type' => 'promo'
+                    ],
+                    'color' => [
+                        'label' => __('Text Color', 'advanced-gutenberg'),
+                        'type' => 'color'
+                    ]
                 ]
             ],
             'spacing' => [
-                'padding' => [
-                    'label' => __('Padding (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'padding-top' => [
-                    'label' => __('Padding Top (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'padding-right' => [
-                    'label' => __('Padding Right (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'padding-bottom' => [
-                    'label' => __('Padding Bottom (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'spacing-promo-1' => [
-                    'label' => '',
-                    'type' => 'promo'
-                ],
-                'padding-left' => [
-                    'label' => __('Padding Left (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'margin' => [
-                    'label' => __('Margin (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px'
-                ],
-                'margin-top' => [
-                    'label' => __('Margin Top (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px'
-                ],
-                'margin-right' => [
-                    'label' => __('Margin Right (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px'
-                ],
-                'margin-bottom' => [
-                    'label' => __('Margin Bottom (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px'
-                ],
-                'margin-left' => [
-                    'label' => __('Margin Left (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px'
-                ],
-                'border-width' => [
-                    'label' => __('Border Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-top-width' => [
-                    'label' => __('Border Top Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-right-width' => [
-                    'label' => __('Border Right Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'spacing-promo-2' => [
-                    'label' => '',
-                    'type' => 'promo'
-                ],
-                'border-bottom-width' => [
-                    'label' => __('Border Bottom Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-left-width' => [
-                    'label' => __('Border Left Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-radius' => [
-                    'label' => __('Border Radius (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-top-left-radius' => [
-                    'label' => __('Border Top Left Radius (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-top-right-radius' => [
-                    'label' => __('Border Top Right Radius (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-bottom-right-radius' => [
-                    'label' => __('Border Bottom Right Radius (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-bottom-left-radius' => [
-                    'label' => __('Border Bottom Left Radius (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
+                'legend' => __('Spacing', 'advanced-gutenberg'),
+                'fields' => [
+                    'padding-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Padding', 'advanced-gutenberg'),
+                        'fields' => [
+                            'padding' => [
+                                'label' => __('Padding (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'padding-top' => [
+                                'label' => __('Padding Top (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'padding-right' => [
+                                'label' => __('Padding Right (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'padding-bottom' => [
+                                'label' => __('Padding Bottom (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'spacing-promo-1' => [
+                                'label' => '',
+                                'type' => 'promo'
+                            ],
+                            'padding-left' => [
+                                'label' => __('Padding Left (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                        ]
+                    ],
+                    'margin-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Margin', 'advanced-gutenberg'),
+                        'fields' => [
+                            'margin' => [
+                                'label' => __('Margin (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px'
+                            ],
+                            'margin-top' => [
+                                'label' => __('Margin Top (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px'
+                            ],
+                            'margin-right' => [
+                                'label' => __('Margin Right (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px'
+                            ],
+                            'margin-bottom' => [
+                                'label' => __('Margin Bottom (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px'
+                            ],
+                            'margin-left' => [
+                                'label' => __('Margin Left (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px'
+                            ],
+                        ]
+                    ],
+                    'border-width-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Border Width', 'advanced-gutenberg'),
+                        'fields' => [
+                            'border-width' => [
+                                'label' => __('Border Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-top-width' => [
+                                'label' => __('Border Top Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-right-width' => [
+                                'label' => __('Border Right Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'spacing-promo-2' => [
+                                'label' => '',
+                                'type' => 'promo'
+                            ],
+                            'border-bottom-width' => [
+                                'label' => __('Border Bottom Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-left-width' => [
+                                'label' => __('Border Left Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                        ]
+                    ],
+                    'border-radius-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Border Radius', 'advanced-gutenberg'),
+                        'fields' => [
+                            'border-radius' => [
+                                'label' => __('Border Radius (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-top-left-radius' => [
+                                'label' => __('Border Top Left Radius (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-top-right-radius' => [
+                                'label' => __('Border Top Right Radius (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-bottom-right-radius' => [
+                                'label' => __('Border Bottom Right Radius (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-bottom-left-radius' => [
+                                'label' => __('Border Bottom Left Radius (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                        ]
+                    ],
+                ]
             ],
             'typography' => [
-                'font-family' => [
-                    'label' => __('Font Family', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'Arial' => 'Arial',
-                        'Helvetica' => 'Helvetica',
-                        'Times New Roman' => 'Times New Roman',
-                        'Courier New' => 'Courier New',
-                        'Georgia' => 'Georgia',
-                        'Verdana' => 'Verdana',
-                        'system-ui' => 'System UI',
-                        'inherit' => 'Inherit'
+                'legend' => __('Typography', 'advanced-gutenberg'),
+                'fields' => [
+                    'font-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Font', 'advanced-gutenberg'),
+                        'fields' => [
+                            'font-family' => [
+                                'label' => __('Font Family', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'Arial' => 'Arial',
+                                    'Helvetica' => 'Helvetica',
+                                    'Times New Roman' => 'Times New Roman',
+                                    'Courier New' => 'Courier New',
+                                    'Georgia' => 'Georgia',
+                                    'Verdana' => 'Verdana',
+                                    'system-ui' => 'System UI',
+                                    'inherit' => 'Inherit'
+                                ]
+                            ],
+                            'font-size' => [
+                                'label' => __('Font Size (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 8
+                            ],
+                            'font-style' => [
+                                'label' => __('Font Style', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'normal' => __('Normal', 'advanced-gutenberg'),
+                                    'italic' => __('Italic', 'advanced-gutenberg'),
+                                    'oblique' => __('Oblique', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'typography-promo-1' => [
+                                'label' => '',
+                                'type' => 'promo'
+                            ],
+                            'font-weight' => [
+                                'label' => __('Font Weight', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'normal' => __('Normal', 'advanced-gutenberg'),
+                                    'bold' => __('Bold', 'advanced-gutenberg'),
+                                    'lighter' => __('Lighter', 'advanced-gutenberg'),
+                                    '100' => '100',
+                                    '200' => '200',
+                                    '300' => '300',
+                                    '400' => '400',
+                                    '500' => '500',
+                                    '600' => '600',
+                                    '700' => '700',
+                                    '800' => '800',
+                                    '900' => '900'
+                                ]
+                            ],
+                        ]
+                    ],
+                    'text-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Text', 'advanced-gutenberg'),
+                        'fields' => [
+                            'line-height' => [
+                                'label' => __('Line Height', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'step' => 0.1,
+                                'min' => 0.5,
+                                'unit' => 'px'
+                            ],
+                            'letter-spacing' => [
+                                'label' => __('Letter Spacing (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px'
+                            ],
+                            'text-align' => [
+                                'label' => __('Text Align', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'left' => __('Left', 'advanced-gutenberg'),
+                                    'center' => __('Center', 'advanced-gutenberg'),
+                                    'right' => __('Right', 'advanced-gutenberg'),
+                                    'justify' => __('Justify', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'typography-promo-2' => [
+                                'label' => '',
+                                'type' => 'promo'
+                            ],
+                            'text-decoration' => [
+                                'label' => __('Text Decoration', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'none' => __('None', 'advanced-gutenberg'),
+                                    'underline' => __('Underline', 'advanced-gutenberg'),
+                                    'overline' => __('Overline', 'advanced-gutenberg'),
+                                    'line-through' => __('Line Through', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'text-transform' => [
+                                'label' => __('Text Transform', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'none' => __('None', 'advanced-gutenberg'),
+                                    'capitalize' => __('Capitalize', 'advanced-gutenberg'),
+                                    'uppercase' => __('Uppercase', 'advanced-gutenberg'),
+                                    'lowercase' => __('Lowercase', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'text-shadow' => [
+                                'label' => __('Text Shadow', 'advanced-gutenberg'),
+                                'type' => 'text',
+                                'placeholder' => 'e.g. 1px 1px 2px #000'
+                            ]
+                        ]
                     ]
-                ],
-                'font-size' => [
-                    'label' => __('Font Size (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 8
-                ],
-                'font-style' => [
-                    'label' => __('Font Style', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'normal' => __('Normal', 'advanced-gutenberg'),
-                        'italic' => __('Italic', 'advanced-gutenberg'),
-                        'oblique' => __('Oblique', 'advanced-gutenberg')
-                    ]
-                ],
-                'typography-promo-1' => [
-                    'label' => '',
-                    'type' => 'promo'
-                ],
-                'font-weight' => [
-                    'label' => __('Font Weight', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'normal' => __('Normal', 'advanced-gutenberg'),
-                        'bold' => __('Bold', 'advanced-gutenberg'),
-                        'lighter' => __('Lighter', 'advanced-gutenberg'),
-                        '100' => '100',
-                        '200' => '200',
-                        '300' => '300',
-                        '400' => '400',
-                        '500' => '500',
-                        '600' => '600',
-                        '700' => '700',
-                        '800' => '800',
-                        '900' => '900'
-                    ]
-                ],
-                'line-height' => [
-                    'label' => __('Line Height', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'step' => 0.1,
-                    'min' => 0.5,
-                    'unit' => 'px'
-                ],
-                'letter-spacing' => [
-                    'label' => __('Letter Spacing (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px'
-                ],
-                'text-align' => [
-                    'label' => __('Text Align', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'left' => __('Left', 'advanced-gutenberg'),
-                        'center' => __('Center', 'advanced-gutenberg'),
-                        'right' => __('Right', 'advanced-gutenberg'),
-                        'justify' => __('Justify', 'advanced-gutenberg')
-                    ]
-                ],
-                'typography-promo-2' => [
-                    'label' => '',
-                    'type' => 'promo'
-                ],
-                'text-decoration' => [
-                    'label' => __('Text Decoration', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'none' => __('None', 'advanced-gutenberg'),
-                        'underline' => __('Underline', 'advanced-gutenberg'),
-                        'overline' => __('Overline', 'advanced-gutenberg'),
-                        'line-through' => __('Line Through', 'advanced-gutenberg')
-                    ]
-                ],
-                'text-transform' => [
-                    'label' => __('Text Transform', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'none' => __('None', 'advanced-gutenberg'),
-                        'capitalize' => __('Capitalize', 'advanced-gutenberg'),
-                        'uppercase' => __('Uppercase', 'advanced-gutenberg'),
-                        'lowercase' => __('Lowercase', 'advanced-gutenberg')
-                    ]
-                ],
-                'text-shadow' => [
-                    'label' => __('Text Shadow', 'advanced-gutenberg'),
-                    'type' => 'text',
-                    'placeholder' => 'e.g. 1px 1px 2px #000'
                 ]
             ],
             'layout' => [
-                'display' => [
-                    'label' => __('Display', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'block' => __('Block', 'advanced-gutenberg'),
-                        'inline' => __('Inline', 'advanced-gutenberg'),
-                        'inline-block' => __('Inline Block', 'advanced-gutenberg'),
-                        'flex' => __('Flex', 'advanced-gutenberg'),
-                        'grid' => __('Grid', 'advanced-gutenberg'),
-                        'none' => __('None', 'advanced-gutenberg')
+                'legend' => __('Layout', 'advanced-gutenberg'),
+                'fields' => [
+                    'display-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Display & Position', 'advanced-gutenberg'),
+                        'fields' => [
+                            'display' => [
+                                'label' => __('Display', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'block' => __('Block', 'advanced-gutenberg'),
+                                    'inline' => __('Inline', 'advanced-gutenberg'),
+                                    'inline-block' => __('Inline Block', 'advanced-gutenberg'),
+                                    'flex' => __('Flex', 'advanced-gutenberg'),
+                                    'grid' => __('Grid', 'advanced-gutenberg'),
+                                    'none' => __('None', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'position' => [
+                                'label' => __('Position', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'static' => __('Static', 'advanced-gutenberg'),
+                                    'relative' => __('Relative', 'advanced-gutenberg'),
+                                    'absolute' => __('Absolute', 'advanced-gutenberg'),
+                                    'fixed' => __('Fixed', 'advanced-gutenberg'),
+                                    'sticky' => __('Sticky', 'advanced-gutenberg')
+                                ]
+                            ],
+                        ]
+                    ],
+                    'sizing-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Sizing', 'advanced-gutenberg'),
+                        'fields' => [
+                            'width' => [
+                                'label' => __('Width (%)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => '%',
+                                'min' => 0,
+                                'max' => 100
+                            ],
+                            'layout-promo-1' => [
+                                'label' => '',
+                                'type' => 'promo'
+                            ],
+                            'height' => [
+                                'label' => __('Height (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'max-width' => [
+                                'label' => __('Max Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'min-width' => [
+                                'label' => __('Min Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'max-height' => [
+                                'label' => __('Max Height (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'min-height' => [
+                                'label' => __('Min Height (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                        ]
+                    ],
+                    'flow-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Flow', 'advanced-gutenberg'),
+                        'fields' => [
+                            'float' => [
+                                'label' => __('Float', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('None', 'advanced-gutenberg'),
+                                    'left' => __('Left', 'advanced-gutenberg'),
+                                    'right' => __('Right', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'layout-promo-2' => [
+                                'label' => '',
+                                'type' => 'promo'
+                            ],
+                            'clear' => [
+                                'label' => __('Clear', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('None', 'advanced-gutenberg'),
+                                    'left' => __('Left', 'advanced-gutenberg'),
+                                    'right' => __('Right', 'advanced-gutenberg'),
+                                    'both' => __('Both', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'overflow' => [
+                                'label' => __('Overflow', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'visible' => __('Visible', 'advanced-gutenberg'),
+                                    'hidden' => __('Hidden', 'advanced-gutenberg'),
+                                    'scroll' => __('Scroll', 'advanced-gutenberg'),
+                                    'auto' => __('Auto', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'z-index' => [
+                                'label' => __('Z-Index', 'advanced-gutenberg'),
+                                'type' => 'number'
+                            ],
+                        ]
                     ]
-                ],
-                'position' => [
-                    'label' => __('Position', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'static' => __('Static', 'advanced-gutenberg'),
-                        'relative' => __('Relative', 'advanced-gutenberg'),
-                        'absolute' => __('Absolute', 'advanced-gutenberg'),
-                        'fixed' => __('Fixed', 'advanced-gutenberg'),
-                        'sticky' => __('Sticky', 'advanced-gutenberg')
-                    ]
-                ],
-                'width' => [
-                    'label' => __('Width (%)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => '%',
-                    'min' => 0,
-                    'max' => 100
-                ],
-                'layout-promo-1' => [
-                    'label' => '',
-                    'type' => 'promo'
-                ],
-                'height' => [
-                    'label' => __('Height (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'max-width' => [
-                    'label' => __('Max Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'min-width' => [
-                    'label' => __('Min Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'max-height' => [
-                    'label' => __('Max Height (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'min-height' => [
-                    'label' => __('Min Height (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'float' => [
-                    'label' => __('Float', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('None', 'advanced-gutenberg'),
-                        'left' => __('Left', 'advanced-gutenberg'),
-                        'right' => __('Right', 'advanced-gutenberg')
-                    ]
-                ],
-                'layout-promo-2' => [
-                    'label' => '',
-                    'type' => 'promo'
-                ],
-                'clear' => [
-                    'label' => __('Clear', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('None', 'advanced-gutenberg'),
-                        'left' => __('Left', 'advanced-gutenberg'),
-                        'right' => __('Right', 'advanced-gutenberg'),
-                        'both' => __('Both', 'advanced-gutenberg')
-                    ]
-                ],
-                'overflow' => [
-                    'label' => __('Overflow', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'visible' => __('Visible', 'advanced-gutenberg'),
-                        'hidden' => __('Hidden', 'advanced-gutenberg'),
-                        'scroll' => __('Scroll', 'advanced-gutenberg'),
-                        'auto' => __('Auto', 'advanced-gutenberg')
-                    ]
-                ],
-                'z-index' => [
-                    'label' => __('Z-Index', 'advanced-gutenberg'),
-                    'type' => 'number'
-                ],
+                ]
             ],
             'border' => [
-                // Left Border Components
-                'border-left-width' => [
-                    'label' => __('Left Border Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-left-style' => [
-                    'label' => __('Left Border Style', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'none' => __('None', 'advanced-gutenberg'),
-                        'solid' => __('Solid', 'advanced-gutenberg'),
-                        'dashed' => __('Dashed', 'advanced-gutenberg'),
-                        'dotted' => __('Dotted', 'advanced-gutenberg'),
-                        'double' => __('Double', 'advanced-gutenberg')
-                    ]
-                ],
-                'border-left-color' => [
-                    'label' => __('Left Border Color', 'advanced-gutenberg'),
-                    'type' => 'color'
-                ],
-                'border-promo-1' => [
-                    'label' => '',
-                    'type' => 'promo'
-                ],
-                // Right Border Components
-                'border-right-width' => [
-                    'label' => __('Right Border Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-right-style' => [
-                    'label' => __('Right Border Style', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'none' => __('None', 'advanced-gutenberg'),
-                        'solid' => __('Solid', 'advanced-gutenberg'),
-                        'dashed' => __('Dashed', 'advanced-gutenberg'),
-                        'dotted' => __('Dotted', 'advanced-gutenberg'),
-                        'double' => __('Double', 'advanced-gutenberg')
-                    ]
-                ],
-                'border-right-color' => [
-                    'label' => __('Right Border Color', 'advanced-gutenberg'),
-                    'type' => 'color'
-                ],
-                // Top Border Components
-                'border-top-width' => [
-                    'label' => __('Top Border Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-top-style' => [
-                    'label' => __('Top Border Style', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'none' => __('None', 'advanced-gutenberg'),
-                        'solid' => __('Solid', 'advanced-gutenberg'),
-                        'dashed' => __('Dashed', 'advanced-gutenberg'),
-                        'dotted' => __('Dotted', 'advanced-gutenberg'),
-                        'double' => __('Double', 'advanced-gutenberg')
-                    ]
-                ],
-                'border-top-color' => [
-                    'label' => __('Top Border Color', 'advanced-gutenberg'),
-                    'type' => 'color'
-                ],
-                'border-promo-2' => [
-                    'label' => '',
-                    'type' => 'promo'
-                ],
-                // Bottom Border Components
-                'border-bottom-width' => [
-                    'label' => __('Bottom Border Width (px)', 'advanced-gutenberg'),
-                    'type' => 'number',
-                    'unit' => 'px',
-                    'min' => 0
-                ],
-                'border-bottom-style' => [
-                    'label' => __('Bottom Border Style', 'advanced-gutenberg'),
-                    'type' => 'select',
-                    'options' => [
-                        '' => __('Default', 'advanced-gutenberg'),
-                        'none' => __('None', 'advanced-gutenberg'),
-                        'solid' => __('Solid', 'advanced-gutenberg'),
-                        'dashed' => __('Dashed', 'advanced-gutenberg'),
-                        'dotted' => __('Dotted', 'advanced-gutenberg'),
-                        'double' => __('Double', 'advanced-gutenberg')
-                    ]
-                ],
-                'border-bottom-color' => [
-                    'label' => __('Bottom Border Color', 'advanced-gutenberg'),
-                    'type' => 'color'
-                ],
+                'legend' => __('Border', 'advanced-gutenberg'),
+                'fields' => [
+                    'left-border-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Left Border', 'advanced-gutenberg'),
+                        'fields' => [
+                            'border-left-width' => [
+                                'label' => __('Left Border Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-left-style' => [
+                                'label' => __('Left Border Style', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'none' => __('None', 'advanced-gutenberg'),
+                                    'solid' => __('Solid', 'advanced-gutenberg'),
+                                    'dashed' => __('Dashed', 'advanced-gutenberg'),
+                                    'dotted' => __('Dotted', 'advanced-gutenberg'),
+                                    'double' => __('Double', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'border-left-color' => [
+                                'label' => __('Left Border Color', 'advanced-gutenberg'),
+                                'type' => 'color'
+                            ],
+                        ]
+                    ],
+                    'right-border-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Right Border', 'advanced-gutenberg'),
+                        'fields' => [
+                            'border-promo-1' => [
+                                'label' => '',
+                                'type' => 'promo'
+                            ],
+                            'border-right-width' => [
+                                'label' => __('Right Border Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-right-style' => [
+                                'label' => __('Right Border Style', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'none' => __('None', 'advanced-gutenberg'),
+                                    'solid' => __('Solid', 'advanced-gutenberg'),
+                                    'dashed' => __('Dashed', 'advanced-gutenberg'),
+                                    'dotted' => __('Dotted', 'advanced-gutenberg'),
+                                    'double' => __('Double', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'border-right-color' => [
+                                'label' => __('Right Border Color', 'advanced-gutenberg'),
+                                'type' => 'color'
+                            ],
+                        ]
+                    ],
+                    'top-border-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Top Border', 'advanced-gutenberg'),
+                        'fields' => [
+                            'border-top-width' => [
+                                'label' => __('Top Border Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-top-style' => [
+                                'label' => __('Top Border Style', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'none' => __('None', 'advanced-gutenberg'),
+                                    'solid' => __('Solid', 'advanced-gutenberg'),
+                                    'dashed' => __('Dashed', 'advanced-gutenberg'),
+                                    'dotted' => __('Dotted', 'advanced-gutenberg'),
+                                    'double' => __('Double', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'border-top-color' => [
+                                'label' => __('Top Border Color', 'advanced-gutenberg'),
+                                'type' => 'color'
+                            ],
+                        ]
+                    ],
+                    'bottom-border-group' => [
+                        'type' => 'fieldset',
+                        'legend' => __('Bottom Border', 'advanced-gutenberg'),
+                        'fields' => [
+                            'border-promo-2' => [
+                                'label' => '',
+                                'type' => 'promo'
+                            ],
+                            'border-bottom-width' => [
+                                'label' => __('Bottom Border Width (px)', 'advanced-gutenberg'),
+                                'type' => 'number',
+                                'unit' => 'px',
+                                'min' => 0
+                            ],
+                            'border-bottom-style' => [
+                                'label' => __('Bottom Border Style', 'advanced-gutenberg'),
+                                'type' => 'select',
+                                'options' => [
+                                    '' => __('Default', 'advanced-gutenberg'),
+                                    'none' => __('None', 'advanced-gutenberg'),
+                                    'solid' => __('Solid', 'advanced-gutenberg'),
+                                    'dashed' => __('Dashed', 'advanced-gutenberg'),
+                                    'dotted' => __('Dotted', 'advanced-gutenberg'),
+                                    'double' => __('Double', 'advanced-gutenberg')
+                                ]
+                            ],
+                            'border-bottom-color' => [
+                                'label' => __('Bottom Border Color', 'advanced-gutenberg'),
+                                'type' => 'color'
+                            ],
+                        ]
+                    ],
+                ]
             ],
         ];
 
-        return $felds;
+        return $fields;
     }
 }
