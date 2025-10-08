@@ -22,6 +22,41 @@ jQuery(document).ready(function ($) {
     initColorPickers();
     bindTabEvents();
     setupLivePreview();
+    initFieldsets();
+
+
+    function initFieldsets() {
+        // Add arrow icons to all fieldset legends
+        $('.advgb-fieldset legend').each(function() {
+            var $legend = $(this);
+            if (!$legend.find('.dashicons').length) {
+                $legend.prepend('<span class="dashicons dashicons-arrow-down"></span>');
+            }
+        });
+
+        // Add collapse/expand functionality to fieldsets
+        $('.advgb-fieldset legend').on('click', function(e) {
+            e.preventDefault();
+            var $fieldset = $(this).closest('.advgb-fieldset');
+            var $content = $fieldset.find('.advgb-fieldset-content');
+            var $arrow = $(this).find('.dashicons');
+
+            $content.slideToggle(200, function() {
+                $fieldset.toggleClass('collapsed');
+
+                // Update arrow icon
+                if ($fieldset.hasClass('collapsed')) {
+                    $arrow.removeClass('dashicons-arrow-down').addClass('dashicons-arrow-right');
+                } else {
+                    $arrow.removeClass('dashicons-arrow-right').addClass('dashicons-arrow-down');
+                }
+            });
+        });
+
+        // Initialize all fieldsets as expanded by default
+        $('.advgb-fieldset .advgb-fieldset-content').show();
+        $('.advgb-fieldset').removeClass('collapsed');
+    }
 
     // Initialize color pickers
     function initColorPickers() {

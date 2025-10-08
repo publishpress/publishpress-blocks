@@ -267,6 +267,248 @@
     color: #000;
 }
 
+// Fieldset Styles
+.advgb-fieldset {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #fff;
+    position: relative;
+
+    legend {
+        font-weight: 600;
+        color: #333;
+        font-size: 14px;
+        padding: 0 10px;
+        margin-left: -10px;
+        background: #fff;
+        border-radius: 3px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: #6372e4;
+        }
+
+        .dashicons {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+    }
+
+    &.collapsed {
+        legend .dashicons-arrow-down {
+            transform: rotate(-90deg);
+        }
+
+        .advgb-fieldset-content {
+            display: none;
+        }
+    }
+
+    .advgb-fieldset-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 10px;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+
+        // Nested fieldsets (for border groups)
+        .advgb-fieldset {
+            background: #f9f9f9;
+            border-color: #e1e1e1;
+            margin-bottom: 15px;
+
+            legend {
+                background: #f9f9f9;
+                font-size: 13px;
+                font-weight: 500;
+            }
+
+            .advgb-fieldset-content {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 12px;
+            }
+        }
+    }
+}
+
+// Enhanced fieldset hover states
+.advgb-fieldset {
+    transition: border-color 0.2s ease;
+
+    &:hover {
+        border-color: #c3c4c7;
+    }
+
+    legend:hover {
+        .dashicons {
+            color: #6372e4;
+        }
+    }
+}
+
+// Specific fieldset layouts for different tabs
+.advgb-tab-body[data-tab-content="spacing"] {
+    .advgb-fieldset-content {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+}
+
+.advgb-tab-body[data-tab-content="border"] {
+    .advgb-fieldset-content {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+        // First level - border directions (left, right, top, bottom)
+        > .advgb-fieldset {
+            grid-column: 1 / -1;
+
+            .advgb-fieldset-content {
+                grid-template-columns: repeat(2, 1fr);
+
+                @media (max-width: 1024px) {
+                    grid-template-columns: 1fr;
+                }
+            }
+        }
+    }
+}
+
+// Compact layout for border fieldsets
+.advgb-fieldset[class*="border-group"] {
+    .advgb-fieldset-content {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+
+        .control-group {
+            margin-bottom: 0;
+        }
+    }
+}
+
+// Promo overlays within fieldsets
+.advgb-fieldset {
+    .advgb-pro-small-overlay-text {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 10px;
+        background: #f8f9fa;
+        border: 1px dashed #ddd;
+        border-radius: 3px;
+        margin: 5px 0;
+    }
+}
+
+// Responsive adjustments for fieldsets
+@media (max-width: 1024px) {
+    .advgb-fieldset .advgb-fieldset-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .advgb-tab-body[data-tab-content="border"] {
+        .advgb-fieldset-content {
+            > .advgb-fieldset .advgb-fieldset-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .advgb-fieldset {
+        padding: 10px;
+
+        .advgb-fieldset-content {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+    }
+
+    .advgb-fieldset[class*="border-group"] {
+        .advgb-fieldset-content {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.advgb-fieldset {
+    .control-group {
+        margin-bottom: 0;
+
+        label {
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+
+        .style-input {
+            font-size: 12px;
+            padding: 6px 8px;
+
+            &.minicolors-input {
+                padding-left: 36px;
+            }
+        }
+
+        .minicolors-theme-bootstrap .minicolors-swatch {
+            width: 18px;
+            height: 18px;
+            left: 6px;
+            top: 6px;
+        }
+    }
+}
+
+.advgb-tab-body {
+    .style-controls {
+        display: block;
+
+        > .advgb-fieldset {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.advgb-tab-body[data-tab-content="border"] {
+    .style-controls {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+
+.advgb-tab-body[data-tab-content="colors"] {
+    .style-controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+}
+
+.advgb-tab-body[data-tab-content="typography"] {
+    .advgb-fieldset-content {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+.advgb-tab-body[data-tab-content="layout"] {
+    .advgb-fieldset-content {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
 // Responsive design
 @media (max-width: 1024px) {
     .advgb-style-builder {
