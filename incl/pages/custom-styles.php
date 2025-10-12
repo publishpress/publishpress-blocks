@@ -36,20 +36,45 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
             <div id="advgb-customstyles-info">
 
                 <div id="advgb-customstyles-preview">
-                    <p class="preview-title"><?php esc_html_e('Preview', 'advanced-gutenberg'); ?></p>
-                    <p class="previous-block" style="margin-bottom: 20px; margin-top: 10px; font-size: 16px; line-height: 24px;">
-                        <strong>
-                            <?php esc_html_e('Previous Paragraph.', 'advanced-gutenberg'); ?>
-                        </strong>
-                        <?php echo esc_html('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae condimentum augue. Nullam semper augue quis posuere lacinia. Praesent non lectus nunc.'); ?>
-                    </p>
-                    <div class="advgb-customstyles-target"><?php esc_html_e('Example text with this style', 'advanced-gutenberg') ?></div>
-                    <p class="follow-block" style="margin-bottom: 10px; margin-top: 20px; font-size: 16px; line-height: 24px;">
-                        <strong>
-                            <?php esc_html_e('Following Paragraph.', 'advanced-gutenberg'); ?>
-                        </strong>
-                        <?php echo esc_html('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae condimentum augue. Nullam semper augue quis posuere lacinia. Praesent non lectus nunc.'); ?>
-                    </p>
+                    <div class="advgb-simple-preview">
+                        <p class="preview-title"><?php esc_html_e('Preview', 'advanced-gutenberg'); ?></p>
+
+                        <div class="advgb-preview-container">
+                            <div class="advgb-customstyles-target">
+                                <?php esc_html_e('Example text with this style', 'advanced-gutenberg') ?>
+                            </div>
+                        </div>
+
+                        <div class="preview-context">
+                            <p class="previous-block" style="margin-bottom: 20px; margin-top: 10px; font-size: 16px; line-height: 24px;">
+                                <strong>
+                                    <?php esc_html_e('Previous Paragraph.', 'advanced-gutenberg'); ?>
+                                </strong>
+                                <?php echo esc_html('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae condimentum augue. Nullam semper augue quis posuere lacinia. Praesent non lectus nunc.'); ?>
+                            </p>
+
+                            <p class="follow-block" style="margin-bottom: 10px; margin-top: 20px; font-size: 16px; line-height: 24px;">
+                                <strong>
+                                    <?php esc_html_e('Following Paragraph.', 'advanced-gutenberg'); ?>
+                                </strong>
+                                <?php echo esc_html('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae condimentum augue. Nullam semper augue quis posuere lacinia. Praesent non lectus nunc.'); ?>
+                            </p>
+                        </div>
+                    </div>
+
+                    <fieldset class="advgb-fieldset advgb-preview-fieldset">
+                        <legend class="advgb-preview-legend">
+                            <span class="dashicons dashicons-arrow-right"></span>
+                            <?php esc_html_e('View Extended Preview', 'advanced-gutenberg'); ?>
+                        </legend>
+                        <div class="advgb-fieldset-content" style="display: none;">
+                            <div class="advgb-extended-preview-container">
+                                <div id="advgb-preview-target" class="advgb-customstyles-target">
+                                    <!-- Dynamic content will be inserted here based on available styles -->
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
 
                 <!-- Global settings -->
@@ -146,6 +171,24 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                                     </li>
                                     <li class="advgb-tab" data-tab="border">
                                         <a><?php esc_html_e('Border', 'advanced-gutenberg'); ?></a>
+                                    </li>
+                                    <li class="advgb-tab" data-tab="text-elements">
+                                        <a><?php esc_html_e('Text', 'advanced-gutenberg'); ?></a>
+                                    </li>
+                                    <li class="advgb-tab" data-tab="heading-elements">
+                                        <a><?php esc_html_e('Headings', 'advanced-gutenberg'); ?></a>
+                                    </li>
+                                    <li class="advgb-tab" data-tab="link-elements">
+                                        <a><?php esc_html_e('Links', 'advanced-gutenberg'); ?></a>
+                                    </li>
+                                    <li class="advgb-tab" data-tab="media-elements">
+                                        <a><?php esc_html_e('Media', 'advanced-gutenberg'); ?></a>
+                                    </li>
+                                    <li class="advgb-tab" data-tab="container-elements">
+                                        <a><?php esc_html_e('Containers', 'advanced-gutenberg'); ?></a>
+                                    </li>
+                                    <li class="advgb-tab" data-tab="interactive-elements">
+                                        <a><?php esc_html_e('Interactive', 'advanced-gutenberg'); ?></a>
                                     </li>
                                 </ul>
 
