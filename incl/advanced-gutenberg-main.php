@@ -3005,8 +3005,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
          *
          * @return string
          */
-        public function getCustomStylesContent($content)
-        {
+        public function getCustomStylesContent($content) {
             if (!Utilities::settingIsEnabled('enable_custom_styles')) {
                 return '';
             }
@@ -3016,14 +3015,15 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 $css = '';
 
                 foreach ($custom_styles as $styles) {
-                    // @TODO Check if the class is in use in the post and widgets
-                    //if (strpos($content, $styles['name']) !== false) {
-                    $css .= '.' . $styles['name'] . " {\n";
-                    $css .= AdvancedGutenbergBlockStyles::css_array_to_string($styles['css']) . "\n} \n";
-                    //}
+                    if (isset($styles['generated_css']) && !empty($styles['generated_css'])) {
+                        $css .= $styles['generated_css'];
+                    } else {
+                        // Fallback: generate CSS on the fly for legacy data
+                        $css .= AdvancedGutenbergBlockStyles::generate_final_css($styles['css'], $styles['name']);
+                    }
                 }
 
-                if (! empty($css)) {
+                if (!empty($css)) {
                     echo '<style type="text/css">' . strip_tags($css) . '</style>';
                 }
             }
@@ -3034,8 +3034,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
          *
          * @return void
          */
-        public function loadCustomStylesAdmin()
-        {
+        public function loadCustomStylesAdmin() {
             if (!Utilities::settingIsEnabled('enable_custom_styles')) {
                 return;
             }
@@ -3045,8 +3044,15 @@ if (! class_exists('AdvancedGutenbergMain')) {
             if (is_array($custom_styles)) {
                 $content = '';
                 foreach ($custom_styles as $styles) {
-                    $content .= '.block-editor-writing-flow .' . esc_html($styles['name']) . " {\n";
-                    $content .= AdvancedGutenbergBlockStyles::css_array_to_string($styles['css']) . "\n} \n";
+                    $class_name = '.block-editor-writing-flow .' . $styles['name'];
+
+                    if (isset($styles['generated_css']) && !empty($styles['generated_css'])) {
+                        $admin_css = str_replace('.' . $styles['name'], $class_name, $styles['generated_css']);
+                        $content .= $admin_css;
+                    } else {
+                        // Fallback: generate CSS on the fly for legacy data
+                        $content .= AdvancedGutenbergBlockStyles::generate_final_css($styles['css'], $class_name);
+                    }
                 }
 
                 echo '<style type="text/css">' . strip_tags($content) . '</style>';
