@@ -1335,8 +1335,18 @@ import {
              * @return {bool}
              */
             isPost() {
-                return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
+                const editorStore = wp.data.select('core/editor');
+                if (!editorStore) {
+                    return false;
+                }
+
+                const postId = editorStore.getCurrentPostId();
+
+                // In Site Editor, this returns a string like "twentytwentyfive//home"
+                // For real posts, it's a number
+                return !!postId && typeof postId === 'number';
             }
+
 
             /**
              * Get the timezone label from site settings stored in advgbBlocks object
