@@ -7,32 +7,17 @@
     const { SelectControl } = wpComponents;
     const { createHigherOrderComponent } = wpCompose;
 
-    const SUPPORTED_BLOCKS = [
-        'core/paragraph',
-        'core/heading',
-        'core/list',
-        'core/code',
-        'core/preformatted',
-        'core/table',
-        'core/columns',
-        'core/column',
-        'core/group',
-        'core/image',
-    ];
-
 
     // Register custom styles to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/registerCustomStyleClass', function ( settings ) {
-        if (SUPPORTED_BLOCKS.includes( settings.name )) {
-            settings.attributes = Object.assign( settings.attributes, {
-                customStyle: {
-                    type: 'string'
-                },
-                identifyColor: {
-                    type: 'string'
-                }
-            } );
-        }
+        settings.attributes = Object.assign( settings.attributes, {
+            customStyle: {
+                type: 'string'
+            },
+            identifyColor: {
+                type: 'string'
+            }
+        } );
 
         return settings;
     } );
@@ -51,8 +36,7 @@
     addFilter( 'editor.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
         return ( props ) => {
             return ( [
-                <BlockEdit key="block-edit-custom-class-name" {...props} />,
-                props.isSelected && SUPPORTED_BLOCKS.includes( props.name ) &&
+                props.isSelected &&
                 <InspectorControls key="advgb-custom-controls">
                     <div className="advgb-custom-styles-wrapper">
                         <SelectControl
@@ -91,7 +75,8 @@
                             }}
                         />
                     </div>
-                </InspectorControls>
+                </InspectorControls>,
+                <BlockEdit key="block-edit-custom-class-name" {...props} />
             ] )
         }
     } );
@@ -113,7 +98,7 @@
 
     const withStyleClasses = createHigherOrderComponent( ( BlockListBlock ) => {
         return ( props ) => {
-            if ( ! SUPPORTED_BLOCKS.includes( props.name ) || !hasBlockSupport( props.name, 'customStyle', true ) ) {
+            if ( !hasBlockSupport( props.name, 'customStyle', true ) ) {
                 return <BlockListBlock { ...props } />
             }
 
