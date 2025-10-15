@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, olatechpro
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
 Tested up to: 6.8
-Stable tag: 3.5.1
+Stable tag: 3.5.2
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -275,6 +275,25 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Block Styles: You create custom CSS styles for blocks and make them available to end users.
 
 == Changelog ==
+
+= 3.5.2 - 15 October 2025 =
+  * Update: Move Style Builder features to the Free version, #1586
+  * Update: Add more options (link, heading, hover etc) for Block Styles, #1592
+  * Update: Make Block Controls preset rules and control sets collapsible, #1634
+  * Update: Group Block styles fields and make each group fieldset collapsible, #1593
+  * Update: Add a "Duplicate" link to Auto Insert Blocks, #1624
+  * Changed: Move Block Styles Preview to the top, #1587
+  * Removed: Remove Auto Insert Blocks "Enable this rule" option, #1627
+  * Update: Add a "Save Permission for all Roles" button to Block Permissions, #1610
+  * Fixed: Undefined array key HTTP_USER_AGENT in Block Controls, #1632
+  * Update: Add additional "Add new style" button at the top of Block Styles list, #1585
+  * Fixed: JS translations not working in Gutenberg Editor, #1408
+  * Fixed: Pages and Term Archives Controls not showing in site editor, #1618
+  * Update: Enable Block Styles for all block, #1588
+  * Fixed: YouTube embeds not working when PublishPress Blocks is active, #1625
+  * Update: Move block [pro] icon to the front of the title in Gutenberg editor sidebar, #1622
+  * Fixed: Improve promo inside Block Controls, #1620
+  * Update: Blocks ITALIAN and FRENCH Translation Updates_v3.5.1, #1642
 
 = 3.5.1 - 23 September 2025 =
   * Fixed: Fatal error when "Block Styles" feature is disabled, #1613
