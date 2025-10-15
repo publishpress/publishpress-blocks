@@ -991,11 +991,12 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked+.slider:before {
 }
 
 .advgb-pro-small-overlay-text {
-  position: absolute;
+  position: absolute !important;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
+  display: flex !important;
+  pointer-events: auto;
   justify-content: center;
   align-items: center;
   text-align: center;

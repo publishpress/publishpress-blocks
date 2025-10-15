@@ -437,9 +437,9 @@ export function AdvTimezoneControl(props) {
                             />
                         </div>
                         <div class="advgb-pro-overlay-wrap">
-                            <div class="advgb-pro-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
+                            <div class="advgb-pro-small-overlay-text advgb-tooltips ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="top">
                                 <span class="advgb-promo-text">
-                                    {__('Pro', 'advanced-gutenberg')}
+                                    <span class="dashicons dashicons-lock" style={{ color: 'initial' }}></span> {__('Pro feature', 'advanced-gutenberg')}
                                 </span>
                                 <span class="tooltip-text">
                                     <p>
