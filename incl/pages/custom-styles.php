@@ -119,17 +119,17 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                 <!-- Main Tabs Navigation -->
                 <div class="advgb-main-tabs">
                     <ul class="advgb-tabs-panel">
-                        <li class="advgb-tab active" data-tab="custom-css">
-                            <a><?php esc_html_e('Custom CSS', 'advanced-gutenberg'); ?></a>
-                        </li>
                         <li class="advgb-tab" data-tab="style-editor">
                             <a><?php esc_html_e('Style Builder', 'advanced-gutenberg'); ?></a>
+                        </li>
+                        <li class="advgb-tab active" data-tab="custom-css">
+                            <a><?php esc_html_e('Custom CSS', 'advanced-gutenberg'); ?></a>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Custom CSS Tab Content -->
-                <div id="custom-css-tab" class="advgb-tab-content main-tab-content active" data-tab-content="custom-css">
+                <div id="custom-css-tab" class="advgb-tab-content main-tab-content" data-tab-content="custom-css" style="display: none;">
 
                     <div>
                         <div class="advgb-customstyles-css">
@@ -147,7 +147,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                 </div>
 
                 <!-- Style Editor Tab Content -->
-                <div id="style-editor-tab" class="advgb-tab-content main-tab-content" data-tab-content="style-editor" style="display: none;">
+                <div id="style-editor-tab" class="advgb-tab-content main-tab-content active" data-tab-content="style-editor">
 
                     <div>
                         <!-- Enhanced Style Builder UI with Tabs -->
@@ -199,7 +199,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                                     foreach ($style_fields as $tab => $tab_config) : ?>
                                         <?php
                                             $active_style = $tab !== 'colors' ? 'display: none;' : '';
-                                            $additional_class = ! PublishPress\Blocks\Utilities::isProActive() ? 'advgb-promo-overlay-area' : '';
+                                            $additional_class = '';//! PublishPress\Blocks\Utilities::isProActive() ? 'advgb-promo-overlay-area' : '';
                                         ?>
                                         <div class="advgb-tab-body advgb-tab-content sub-tab-content" data-tab-content="<?php echo esc_attr($tab); ?>" style="<?php echo esc_attr($active_style); ?>">
                                             <div class="style-controls <?php echo esc_attr($additional_class); ?>">

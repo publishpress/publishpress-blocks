@@ -4,7 +4,7 @@
 class AdvGbCustomStyles {
     constructor($) {
         this.$ = $;
-        this.activeTab = localStorage.getItem('advgb_active_tab') || 'custom-css';
+        this.activeTab = localStorage.getItem('advgb_active_tab') || 'style-editor';
         this.editor = null;
         this.styleId = null;
         this.isProActive = window.advgbCustomStyles?.isProActive || false;
@@ -41,13 +41,6 @@ class AdvGbCustomStyles {
 
         this.$('.advgb-tab-content.main-tab-content').hide();
         this.$(`[data-tab-content="${this.activeTab}"]`).show();
-
-        this.toggleProFeatures();
-    }
-
-    toggleProFeatures() {
-        const isDisabled = this.activeTab === 'style-editor' && !this.isProActive;
-        this.$('#save_custom_styles').prop('disabled', isDisabled);
     }
 
     initFieldsets() {
@@ -429,7 +422,7 @@ class AdvGbCustomStyles {
     }
 
     updateCSSFromUI() {
-        if (this.activeTab !== 'style-editor' || !this.isProActive) {
+        if (this.activeTab !== 'style-editor') {
             return;
         }
 
@@ -1282,7 +1275,6 @@ class AdvGbCustomStyles {
     }
 
     populateUIFields(cssData) {
-        if (!this.isProActive) return;
 
         if (!cssData) {
             this.clearAllFields();
@@ -1469,7 +1461,7 @@ class AdvGbCustomStyles {
         let cssData = {};
         let generatedCSS = '';
 
-        if (this.activeTab === 'style-editor' && this.isProActive) {
+        if (this.activeTab === 'style-editor') {
             cssData = this.buildStructuredDataFromUI();
 
             const scssString = this.arrayToSCSS(cssData);

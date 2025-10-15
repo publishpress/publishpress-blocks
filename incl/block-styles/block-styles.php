@@ -248,7 +248,7 @@ class AdvancedGutenbergBlockStyles
 
         $custom_style_data = get_option('advgb_custom_styles');
         $task = isset($_POST['task']) ? sanitize_text_field($_POST['task']) : '';
-        $active_tab = isset($_POST['active_tab']) ? sanitize_text_field($_POST['active_tab']) : 'custom-css';
+        $active_tab = isset($_POST['active_tab']) ? sanitize_text_field($_POST['active_tab']) : 'style-editor';
 
         if ($task === '') {
             return false;
@@ -317,7 +317,7 @@ class AdvancedGutenbergBlockStyles
                         'name' => esc_html($data['name']),
                         'css' => '',
                         'identifyColor' => esc_html($data['identifyColor']),
-                        'active_tab' => isset($data['active_tab']) ? $data['active_tab'] : 'custom-css',
+                        'active_tab' => isset($data['active_tab']) ? $data['active_tab'] : 'style-editor',
                         'generated_css' => ''
                     );
 
@@ -351,7 +351,7 @@ class AdvancedGutenbergBlockStyles
 
             $new_css = array();
 
-            if ($this->proActive && isset($_POST['css_array']) && is_array($_POST['css_array']) && !empty($_POST['css_array'])) {
+            if (isset($_POST['css_array']) && is_array($_POST['css_array']) && !empty($_POST['css_array'])) {
                 $new_css = $this->sanitize_css_array($_POST['css_array']);
             } else {
                 $new_css = wp_strip_all_tags(wp_specialchars_decode($_POST['mycss'], ENT_QUOTES));
@@ -864,7 +864,7 @@ class AdvancedGutenbergBlockStyles
         }
 
         $additional_class = '';
-        if (!$proActive) {
+        /*if (!$proActive) {
             $additional_class = 'advgb-blur';
 
             if (isset($field['aliases'])) {
@@ -874,9 +874,9 @@ class AdvancedGutenbergBlockStyles
                 unset($field['special_values']);
             }
             $property = 'promo-' . rand(0, 99) . '_' . rand(0, 99);
-        }
+        }*/
 
-        if ($field['type'] == 'promo' && $proActive) {
+        if ($field['type'] == 'promo') {// && $proActive
             return;
         }
 
