@@ -276,7 +276,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.5.2 - 15 October 2025 =
+= 3.5.2 - 16 October 2025 =
   * Update: Move Style Builder features to the Free version, #1586
   * Update: Add more options (link, heading, hover etc) for Block Styles, #1592
   * Update: Make Block Controls preset rules and control sets collapsible, #1634
