@@ -1003,6 +1003,13 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     'type' => 'array',
                     'default' => [],
                 ];
+                // Add custom style attributes to fix https://github.com/publishpress/publishpress-blocks/issues/1652
+                $block->attributes['customStyle'] = [
+                    'type' => 'string',
+                ];
+                $block->attributes['identifyColor'] = [
+                    'type' => 'string',
+                ];
             }
         }
 
@@ -1017,14 +1024,20 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
         public static function removeAttributes($result, $server, $request)
         {
             if (strpos($request->get_route(), '/wp/v2/block-renderer') !== false) {
-                if (
-                    isset($request['attributes'])
-                    && isset($request['attributes']['advgbBlockControls'])
-                ) {
+                if (isset($request['attributes'])) {
                     $attributes = $request['attributes'];
-                    if ($attributes['advgbBlockControls']) {
+
+                    if (isset($attributes['advgbBlockControls'])) {
                         unset($attributes['advgbBlockControls']);
                     }
+
+                    if (isset($attributes['customStyle'])) {
+                        unset($attributes['customStyle']);
+                    }
+                    if (isset($attributes['identifyColor'])) {
+                        unset($attributes['identifyColor']);
+                    }
+
                     $request['attributes'] = $attributes;
                 }
             }
