@@ -63,7 +63,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                     </div>
 
                     <fieldset class="advgb-fieldset advgb-preview-fieldset">
-                        <legend class="advgb-preview-legend">
+                        <legend class="advgb-preview-legend button button-secondary">
                             <span class="dashicons dashicons-arrow-right"></span>
                             <?php esc_html_e('View Extended Preview', 'advanced-gutenberg'); ?>
                         </legend>

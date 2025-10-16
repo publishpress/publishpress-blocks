@@ -440,25 +440,8 @@
     background: #fff;
 
     .advgb-preview-legend {
-        font-weight: 600;
-        color: #333;
-        font-size: 14px;
-        padding: 12px 15px;
-        margin: 0;
-        background: #f9f9f9;
-        border-radius: 4px 4px 0 0;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: background-color 0.2s ease;
-        user-select: none;
-
-        &:hover {
-            background: #f0f0f0;
-        }
-
         .dashicons {
+            vertical-align: middle;
             font-size: 16px;
             width: 16px;
             height: 16px;
@@ -467,7 +450,7 @@
     }
 
     &.collapsed {
-        border-radius: 4px;
+        border: none;
 
         .advgb-preview-legend .dashicons {
             transform: rotate(0);
@@ -476,8 +459,6 @@
 
     &:not(.collapsed) {
         .advgb-preview-legend {
-            border-bottom: 1px solid #ddd;
-
             .dashicons {
                 transform: rotate(90deg);
             }
@@ -487,14 +468,6 @@
     .advgb-fieldset-content {
         padding: 20px;
         margin: 0;
-    }
-
-    .advgb-extended-preview-container {
-        min-height: 200px;
-        padding: 20px;
-        background: #f9f9f9;
-        border: 1px solid #e1e1e1;
-        border-radius: 4px;
     }
 }
 
