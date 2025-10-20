@@ -847,7 +847,8 @@ class AdvancedGutenbergBlockStyles
         $proActive = Utilities::isProActive();
 
         if ($field['type'] === 'fieldset') {
-            $html = '<fieldset class="advgb-fieldset">';
+            $additional_class = (!$proActive && isset($field['pro']) && $field['pro']) ? 'advgb-promo-overlay-area' : '';
+            $html = '<fieldset class="advgb-fieldset '. esc_attr($additional_class) .'">';
             $html .= '<legend>';
             $html .= '<span class="dashicons dashicons-arrow-down"></span>';
             $html .= esc_html($field['legend']);
@@ -864,7 +865,8 @@ class AdvancedGutenbergBlockStyles
         }
 
         $additional_class = '';
-        /*if (!$proActive) {
+
+        if (!$proActive && isset($field['pro']) && $field['pro']) {
             $additional_class = 'advgb-blur';
 
             if (isset($field['aliases'])) {
@@ -874,9 +876,9 @@ class AdvancedGutenbergBlockStyles
                 unset($field['special_values']);
             }
             $property = 'promo-' . rand(0, 99) . '_' . rand(0, 99);
-        }*/
+        }
 
-        if ($field['type'] == 'promo') {// && $proActive
+        if ($field['type'] == 'promo' && $proActive) {
             return;
         }
 
@@ -1023,10 +1025,6 @@ class AdvancedGutenbergBlockStyles
                         'aliases' => ['background'],
                         'special_values' => ['none', 'transparent']
                     ],
-                    'colors-promo' => [
-                        'label' => '',
-                        'type' => 'promo'
-                    ],
                     'color' => [
                         'label' => __('Text Color', 'advanced-gutenberg'),
                         'type' => 'color'
@@ -1063,10 +1061,6 @@ class AdvancedGutenbergBlockStyles
                                 'type' => 'number',
                                 'unit' => 'px',
                                 'min' => 0
-                            ],
-                            'spacing-promo-1' => [
-                                'label' => '',
-                                'type' => 'promo'
                             ],
                             'padding-left' => [
                                 'label' => __('Padding Left (px)', 'advanced-gutenberg'),
@@ -1128,10 +1122,6 @@ class AdvancedGutenbergBlockStyles
                                 'type' => 'number',
                                 'unit' => 'px',
                                 'min' => 0
-                            ],
-                            'spacing-promo-2' => [
-                                'label' => '',
-                                'type' => 'promo'
                             ],
                             'border-bottom-width' => [
                                 'label' => __('Border Bottom Width (px)', 'advanced-gutenberg'),
@@ -1223,10 +1213,6 @@ class AdvancedGutenbergBlockStyles
                                     'oblique' => __('Oblique', 'advanced-gutenberg')
                                 ]
                             ],
-                            'typography-promo-1' => [
-                                'label' => '',
-                                'type' => 'promo'
-                            ],
                             'font-weight' => [
                                 'label' => __('Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
@@ -1260,10 +1246,6 @@ class AdvancedGutenbergBlockStyles
                                     'right' => __('Right', 'advanced-gutenberg'),
                                     'justify' => __('Justify', 'advanced-gutenberg')
                                 ]
-                            ],
-                            'typography-promo-2' => [
-                                'label' => '',
-                                'type' => 'promo'
                             ],
                             'text-decoration' => [
                                 'label' => __('Text Decoration', 'advanced-gutenberg'),
@@ -1335,10 +1317,6 @@ class AdvancedGutenbergBlockStyles
                                 'min' => 0,
                                 'max' => 100
                             ],
-                            'layout-promo-1' => [
-                                'label' => '',
-                                'type' => 'promo'
-                            ],
                             'height' => [
                                 'label' => __('Height (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
@@ -1383,10 +1361,6 @@ class AdvancedGutenbergBlockStyles
                                     'left' => __('Left', 'advanced-gutenberg'),
                                     'right' => __('Right', 'advanced-gutenberg')
                                 ]
-                            ],
-                            'layout-promo-2' => [
-                                'label' => '',
-                                'type' => 'promo'
                             ],
                             'clear' => [
                                 'label' => __('Clear', 'advanced-gutenberg'),
@@ -1452,10 +1426,6 @@ class AdvancedGutenbergBlockStyles
                         'type' => 'fieldset',
                         'legend' => __('Right Border', 'advanced-gutenberg'),
                         'fields' => [
-                            'border-promo-1' => [
-                                'label' => '',
-                                'type' => 'promo'
-                            ],
                             'border-right-width' => [
                                 'label' => __('Right Border Width (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
@@ -1512,10 +1482,6 @@ class AdvancedGutenbergBlockStyles
                         'type' => 'fieldset',
                         'legend' => __('Bottom Border', 'advanced-gutenberg'),
                         'fields' => [
-                            'border-promo-2' => [
-                                'label' => '',
-                                'type' => 'promo'
-                            ],
                             'border-bottom-width' => [
                                 'label' => __('Bottom Border Width (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
@@ -1550,28 +1516,37 @@ class AdvancedGutenbergBlockStyles
                 'fields' => [
                     'paragraph-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Paragraph', 'advanced-gutenberg'),
                         'fields' => [
                             'p-font-size' => [
                                 'label' => __('Font Size (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 8
+                                'min' => 8,
+                                'pro' => true,
                             ],
                             'p-line-height' => [
                                 'label' => __('Line Height', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'step' => 0.1,
-                                'min' => 0.5
+                                'min' => 0.5,
+                                'pro' => true,
+                            ],
+                            'paragraph-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'p-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'p-margin-bottom' => [
                                 'label' => __('Margin Bottom (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
                             ],
                             'p-text-align' => [
                                 'label' => __('Text Align', 'advanced-gutenberg'),
@@ -1582,96 +1557,126 @@ class AdvancedGutenbergBlockStyles
                                     'center' => __('Center', 'advanced-gutenberg'),
                                     'right' => __('Right', 'advanced-gutenberg'),
                                     'justify' => __('Justify', 'advanced-gutenberg')
-                                ]
+                                ],
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'span-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Span', 'advanced-gutenberg'),
                         'fields' => [
                             'span-font-size' => [
                                 'label' => __('Font Size (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 8
+                                'min' => 8,
+                                'pro' => true,
                             ],
                             'span-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
+                            ],
+                            'span-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'span-font-weight' => [
                                 'label' => __('Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_font_weight_options()
+                                'options' => self::get_font_weight_options(),
+                                'pro' => true,
                             ],
                             'span-background-color' => [
                                 'label' => __('Background Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'blockquote-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Blockquote', 'advanced-gutenberg'),
                         'fields' => [
                             'blockquote-font-size' => [
                                 'label' => __('Font Size (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 8
+                                'min' => 8,
+                                'pro' => true,
                             ],
                             'blockquote-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'blockquote-border-color' => [
                                 'label' => __('Border Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
+                            ],
+                            'blockquote-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'blockquote-background-color' => [
                                 'label' => __('Background Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'blockquote-padding' => [
                                 'label' => __('Padding (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
+                                'min' => 0,
+                                'pro' => true,
                             ],
                             'blockquote-margin' => [
                                 'label' => __('Margin (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'list-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Lists', 'advanced-gutenberg'),
                         'fields' => [
                             'ul-margin' => [
                                 'label' => __('List Margin (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
                             ],
                             'ul-padding' => [
                                 'label' => __('List Padding (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
+                                'min' => 0,
+                                'pro' => true,
+                            ],
+                            'list-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'li-margin-bottom' => [
                                 'label' => __('Item Margin Bottom (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
                             ],
                             'li-color' => [
                                 'label' => __('Item Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ]
                         ]
                     ]
@@ -1683,33 +1688,43 @@ class AdvancedGutenbergBlockStyles
                 'fields' => [
                     'h1-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('H1 Heading', 'advanced-gutenberg'),
                         'fields' => [
                             'h1-font-size' => [
                                 'label' => __('Font Size (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 8
+                                'min' => 8,
+                                'pro' => true,
                             ],
                             'h1-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'h1-font-weight' => [
                                 'label' => __('Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_font_weight_options()
+                                'options' => self::get_font_weight_options(),
+                                'pro' => true,
+                            ],
+                            'h1-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'h1-margin-bottom' => [
                                 'label' => __('Margin Bottom (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
                             ],
                             'h1-line-height' => [
                                 'label' => __('Line Height', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'step' => 0.1,
-                                'min' => 0.5
+                                'min' => 0.5,
+                                'pro' => true,
                             ],
                             'h1-text-align' => [
                                 'label' => __('Text Align', 'advanced-gutenberg'),
@@ -1719,173 +1734,229 @@ class AdvancedGutenbergBlockStyles
                                     'left' => __('Left', 'advanced-gutenberg'),
                                     'center' => __('Center', 'advanced-gutenberg'),
                                     'right' => __('Right', 'advanced-gutenberg')
-                                ]
+                                ],
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'h2-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('H2 Heading', 'advanced-gutenberg'),
                         'fields' => [
                             'h2-font-size' => [
                                 'label' => __('Font Size (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 8
+                                'min' => 8,
+                                'pro' => true,
                             ],
                             'h2-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'h2-font-weight' => [
                                 'label' => __('Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_font_weight_options()
+                                'options' => self::get_font_weight_options(),
+                                'pro' => true,
+                            ],
+                            'h2-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'h2-margin-bottom' => [
                                 'label' => __('Margin Bottom (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
                             ],
                             'h2-line-height' => [
                                 'label' => __('Line Height', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'step' => 0.1,
-                                'min' => 0.5
+                                'min' => 0.5,
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'h3-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('H3 Heading', 'advanced-gutenberg'),
                         'fields' => [
                             'h3-font-size' => [
                                 'label' => __('Font Size (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 8
+                                'min' => 8,
+                                'pro' => true,
                             ],
                             'h3-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
+                            ],
+                            'h3-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'h3-font-weight' => [
                                 'label' => __('Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_font_weight_options()
+                                'options' => self::get_font_weight_options(),
+                                'pro' => true,
                             ],
                             'h3-margin-bottom' => [
                                 'label' => __('Margin Bottom (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
                             ],
                             'h3-line-height' => [
                                 'label' => __('Line Height', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'step' => 0.1,
-                                'min' => 0.5
+                                'min' => 0.5,
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'h4-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('H4 Heading', 'advanced-gutenberg'),
                         'fields' => [
                             'h4-font-size' => [
                                 'label' => __('Font Size (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 8
+                                'min' => 8,
+                                'pro' => true,
                             ],
                             'h4-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
+                            ],
+                            'h4-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'h4-font-weight' => [
                                 'label' => __('Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_font_weight_options()
+                                'options' => self::get_font_weight_options(),
+                                'pro' => true,
                             ],
                             'h4-margin-bottom' => [
                                 'label' => __('Margin Bottom (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'h5-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('H5 Heading', 'advanced-gutenberg'),
                         'fields' => [
                             'h5-font-size' => [
                                 'label' => __('Font Size (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 8
+                                'min' => 8,
+                                'pro' => true,
                             ],
                             'h5-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
+                            ],
+                            'h5-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'h5-font-weight' => [
                                 'label' => __('Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_font_weight_options()
+                                'options' => self::get_font_weight_options(),
+                                'pro' => true,
                             ],
                             'h5-margin-bottom' => [
                                 'label' => __('Margin Bottom (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'h6-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('H6 Heading', 'advanced-gutenberg'),
                         'fields' => [
                             'h6-font-size' => [
                                 'label' => __('Font Size (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 8
+                                'min' => 8,
+                                'pro' => true,
                             ],
                             'h6-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
+                            ],
+                            'h6-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'h6-font-weight' => [
                                 'label' => __('Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_font_weight_options()
+                                'options' => self::get_font_weight_options(),
+                                'pro' => true,
                             ],
                             'h6-margin-bottom' => [
                                 'label' => __('Margin Bottom (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'heading-hover-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Heading Hover Effects', 'advanced-gutenberg'),
                         'fields' => [
                             'h1-hover-color' => [
                                 'label' => __('H1 Hover Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'h2-hover-color' => [
                                 'label' => __('H2 Hover Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
+                            ],
+                            'heading-hover-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'h3-hover-color' => [
                                 'label' => __('H3 Hover Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'heading-hover-promo' => [
                                 'label' => '',
@@ -1901,83 +1972,107 @@ class AdvancedGutenbergBlockStyles
                 'fields' => [
                     'link-base-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Link Base Styles', 'advanced-gutenberg'),
                         'fields' => [
                             'a-color' => [
                                 'label' => __('Link Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'a-text-decoration' => [
                                 'label' => __('Text Decoration', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_text_decoration_options()
+                                'options' => self::get_text_decoration_options(),
+                                'pro' => true,
+                            ],
+                            'a-link-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'a-font-weight' => [
                                 'label' => __('Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_font_weight_options()
+                                'options' => self::get_font_weight_options(),
+                                'pro' => true,
                             ],
                             'a-font-size' => [
                                 'label' => __('Font Size (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 8
+                                'min' => 8,
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'link-hover-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Link Hover States', 'advanced-gutenberg'),
                         'fields' => [
                             'a-hover-color' => [
                                 'label' => __('Hover Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'a-hover-text-decoration' => [
                                 'label' => __('Hover Text Decoration', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_text_decoration_options()
+                                'options' => self::get_text_decoration_options(),
+                                'pro' => true,
+                            ],
+                            'a-link-hover-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'a-hover-background-color' => [
                                 'label' => __('Hover Background', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'a-hover-font-weight' => [
                                 'label' => __('Hover Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_font_weight_options()
+                                'options' => self::get_font_weight_options(),
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'link-in-heading-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Links in Headings', 'advanced-gutenberg'),
                         'fields' => [
                             'h1-a-color' => [
                                 'label' => __('H1 Link Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'h2-a-color' => [
                                 'label' => __('H2 Link Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'h3-a-color' => [
                                 'label' => __('H3 Link Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
+                            ],
+                            'h1-a-hover-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'h1-a-hover-color' => [
                                 'label' => __('H1 Link Hover Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'h2-a-hover-color' => [
                                 'label' => __('H2 Link Hover Color', 'advanced-gutenberg'),
-                                'type' => 'color'
-                            ],
-                            'link-heading-promo' => [
-                                'label' => '',
-                                'type' => 'promo'
+                                'type' => 'color',
+                                'pro' => true,
                             ]
                         ]
                     ]
@@ -1989,54 +2084,71 @@ class AdvancedGutenbergBlockStyles
                 'fields' => [
                     'image-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Images', 'advanced-gutenberg'),
                         'fields' => [
                             'img-border-radius' => [
                                 'label' => __('Border Radius (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
+                                'min' => 0,
+                                'pro' => true,
                             ],
                             'img-border-width' => [
                                 'label' => __('Border Width (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
+                                'min' => 0,
+                                'pro' => true,
+                            ],
+                            'img-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'img-border-color' => [
                                 'label' => __('Border Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'img-max-width' => [
                                 'label' => __('Max Width (%)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => '%',
                                 'min' => 0,
-                                'max' => 100
+                                'max' => 100,
+                                'pro' => true,
                             ],
                             'img-box-shadow' => [
                                 'label' => __('Box Shadow', 'advanced-gutenberg'),
                                 'type' => 'text',
-                                'placeholder' => 'e.g. 0 2px 10px rgba(0,0,0,0.1)'
+                                'placeholder' => 'e.g. 0 2px 10px rgba(0,0,0,0.1)',
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'image-hover-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Image Hover Effects', 'advanced-gutenberg'),
                         'fields' => [
                             'img-hover-transform' => [
                                 'label' => __('Hover Transform', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_transform_options()
+                                'options' => self::get_transform_options(),
+                                'pro' => true,
                             ],
                             'img-hover-opacity' => [
                                 'label' => __('Hover Opacity', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'min' => 0,
                                 'max' => 1,
-                                'step' => 0.1
+                                'step' => 0.1,
+                                'pro' => true,
+                            ],
+                            'img-hover-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'img-hover-filter' => [
                                 'label' => __('Hover Filter', 'advanced-gutenberg'),
@@ -2048,21 +2160,20 @@ class AdvancedGutenbergBlockStyles
                                     'blur(2px)' => __('Blur', 'advanced-gutenberg'),
                                     'brightness(1.2)' => __('Brightness', 'advanced-gutenberg'),
                                     'contrast(1.2)' => __('Contrast', 'advanced-gutenberg')
-                                ]
+                                ],
+                                'pro' => true,
                             ],
                             'img-hover-border-color' => [
                                 'label' => __('Hover Border Color', 'advanced-gutenberg'),
-                                'type' => 'color'
-                            ],
-                            'image-hover-promo' => [
-                                'label' => '',
-                                'type' => 'promo'
+                                'type' => 'color',
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'video-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Videos', 'advanced-gutenberg'),
                         'fields' => [
                             'video-width' => [
@@ -2070,17 +2181,19 @@ class AdvancedGutenbergBlockStyles
                                 'type' => 'number',
                                 'unit' => '%',
                                 'min' => 0,
-                                'max' => 100
+                                'max' => 100,
+                                'pro' => true,
+                            ],
+                            'vidoe-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'video-border-radius' => [
                                 'label' => __('Border Radius (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
-                            ],
-                            'video-promo' => [
-                                'label' => '',
-                                'type' => 'promo'
+                                'min' => 0,
+                                'pro' => true,
                             ]
                         ]
                     ]
@@ -2092,84 +2205,107 @@ class AdvancedGutenbergBlockStyles
                 'fields' => [
                     'div-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Div Containers', 'advanced-gutenberg'),
                         'fields' => [
                             'div-background-color' => [
                                 'label' => __('Background Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'div-padding' => [
                                 'label' => __('Padding (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
+                                'min' => 0,
+                                'pro' => true,
                             ],
                             'div-border-radius' => [
                                 'label' => __('Border Radius (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
+                                'min' => 0,
+                                'pro' => true,
+                            ],
+                            'div-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'div-box-shadow' => [
                                 'label' => __('Box Shadow', 'advanced-gutenberg'),
                                 'type' => 'text',
-                                'placeholder' => 'e.g. 0 2px 10px rgba(0,0,0,0.1)'
+                                'placeholder' => 'e.g. 0 2px 10px rgba(0,0,0,0.1)',
+                                'pro' => true,
                             ],
                             'div-border' => [
                                 'label' => __('Border', 'advanced-gutenberg'),
                                 'type' => 'text',
-                                'placeholder' => 'e.g. 1px solid #ccc'
+                                'placeholder' => 'e.g. 1px solid #ccc',
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'section-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Sections', 'advanced-gutenberg'),
                         'fields' => [
                             'section-background-color' => [
                                 'label' => __('Background Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'section-margin' => [
                                 'label' => __('Margin (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
-                                'unit' => 'px'
+                                'unit' => 'px',
+                                'pro' => true,
+                            ],
+                            'section-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'section-padding' => [
                                 'label' => __('Padding (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
+                                'min' => 0,
+                                'pro' => true,
                             ],
                             'section-border' => [
                                 'label' => __('Border', 'advanced-gutenberg'),
                                 'type' => 'text',
-                                'placeholder' => 'e.g. 1px solid #ccc'
+                                'placeholder' => 'e.g. 1px solid #ccc',
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'container-hover-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Container Hover Effects', 'advanced-gutenberg'),
                         'fields' => [
                             'div-hover-background-color' => [
                                 'label' => __('Div Hover Background', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'div-hover-box-shadow' => [
                                 'label' => __('Div Hover Shadow', 'advanced-gutenberg'),
                                 'type' => 'text',
-                                'placeholder' => 'e.g. 0 4px 20px rgba(0,0,0,0.15)'
-                            ],
-                            'section-hover-background-color' => [
-                                'label' => __('Section Hover Background', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'placeholder' => 'e.g. 0 4px 20px rgba(0,0,0,0.15)',
+                                'pro' => true,
                             ],
                             'container-hover-promo' => [
                                 'label' => '',
                                 'type' => 'promo'
+                            ],
+                            'section-hover-background-color' => [
+                                'label' => __('Section Hover Background', 'advanced-gutenberg'),
+                                'type' => 'color',
+                                'pro' => true,
                             ]
                         ]
                     ]
@@ -2181,66 +2317,87 @@ class AdvancedGutenbergBlockStyles
                 'fields' => [
                     'button-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Buttons', 'advanced-gutenberg'),
                         'fields' => [
                             'button-background-color' => [
                                 'label' => __('Background Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'button-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'button-border-radius' => [
                                 'label' => __('Border Radius (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
+                                'min' => 0,
+                                'pro' => true,
+                            ],
+                            'buton-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'button-padding' => [
                                 'label' => __('Padding (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
+                                'min' => 0,
+                                'pro' => true,
                             ],
                             'button-border' => [
                                 'label' => __('Border', 'advanced-gutenberg'),
                                 'type' => 'text',
-                                'placeholder' => 'e.g. 2px solid #333'
+                                'placeholder' => 'e.g. 2px solid #333',
+                                'pro' => true,
                             ],
                             'button-font-weight' => [
                                 'label' => __('Font Weight', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_font_weight_options()
+                                'options' => self::get_font_weight_options(),
+                                'pro' => true,
                             ]
                         ]
                     ],
 
                     'button-hover-group' => [
                         'type' => 'fieldset',
+                        'pro' => true,
                         'legend' => __('Button Hover States', 'advanced-gutenberg'),
                         'fields' => [
                             'button-hover-background-color' => [
                                 'label' => __('Hover Background', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'button-hover-color' => [
                                 'label' => __('Hover Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
+                            ],
+                            'button-hover-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'button-hover-transform' => [
                                 'label' => __('Hover Transform', 'advanced-gutenberg'),
                                 'type' => 'select',
-                                'options' => self::get_transform_options()
+                                'options' => self::get_transform_options(),
+                                'pro' => true,
                             ],
                             'button-hover-border-color' => [
                                 'label' => __('Hover Border Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'button-hover-box-shadow' => [
                                 'label' => __('Hover Shadow', 'advanced-gutenberg'),
                                 'type' => 'text',
-                                'placeholder' => 'e.g. 0 4px 15px rgba(0,0,0,0.2)'
+                                'placeholder' => 'e.g. 0 4px 15px rgba(0,0,0,0.2)',
+                                'pro' => true,
                             ]
                         ]
                     ],
@@ -2248,35 +2405,41 @@ class AdvancedGutenbergBlockStyles
                     'input-group' => [
                         'type' => 'fieldset',
                         'legend' => __('Form Inputs', 'advanced-gutenberg'),
+                        'pro' => true,
                         'fields' => [
                             'input-background-color' => [
                                 'label' => __('Background Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'input-color' => [
                                 'label' => __('Text Color', 'advanced-gutenberg'),
-                                'type' => 'color'
+                                'type' => 'color',
+                                'pro' => true,
                             ],
                             'input-border' => [
                                 'label' => __('Border', 'advanced-gutenberg'),
                                 'type' => 'text',
-                                'placeholder' => 'e.g. 1px solid #ddd'
+                                'placeholder' => 'e.g. 1px solid #ddd',
+                                'pro' => true,
+                            ],
+                            'input-promo' => [
+                                'label' => '',
+                                'type' => 'promo'
                             ],
                             'input-border-radius' => [
                                 'label' => __('Border Radius (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
+                                'min' => 0,
+                                'pro' => true,
                             ],
                             'input-padding' => [
                                 'label' => __('Padding (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
                                 'unit' => 'px',
-                                'min' => 0
-                            ],
-                            'input-promo' => [
-                                'label' => '',
-                                'type' => 'promo'
+                                'min' => 0,
+                                'pro' => true,
                             ]
                         ]
                     ]

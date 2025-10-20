@@ -1087,9 +1087,14 @@ class AdvGbCustomStyles {
                     }
 
                     self.initCustomStyleMenu();
+                    self.customStylePreview(res.id);
                 },
                 complete: () => {
-                    self.$('#customstyles-tab').find('.advgb-overlay-box').remove();
+                    // DON'T remove overlay here, let customStylePreview handle it
+                    //self.$('#customstyles-tab').find('.advgb-overlay-box').remove();
+                },
+                error: () => {
+                    this.$('#customstyles-tab').find('.advgb-overlay-box').remove();
                 }
             });
         });
@@ -1150,7 +1155,7 @@ class AdvGbCustomStyles {
                     self.$('#customstyles-tab').append('<div class="advgb-overlay-box"></div>');
                 },
                 success: (res) => {
-                    self.$(that).parents('.advgb-customstyles-list').find('li').last().before(
+                    self.$(that).parent().after(
                         `<li class="advgb-customstyles-items" data-id-customstyle="${res.id}">
                             <a><i class="title-icon" style="background-color: ${res.identifyColor}"></i>
                             <span class="advgb-customstyles-items-title">${res.title}</span></a>
@@ -1162,9 +1167,14 @@ class AdvGbCustomStyles {
                         </li>`
                     );
                     self.initCustomStyleMenu();
+                    self.customStylePreview(res.id);
                 },
                 complete: () => {
-                    self.$('#customstyles-tab').find('.advgb-overlay-box').remove();
+                    // DON'T remove overlay here, let customStylePreview handle it
+                    //self.$('#customstyles-tab').find('.advgb-overlay-box').remove();
+                },
+                error: () => {
+                    this.$('#customstyles-tab').find('.advgb-overlay-box').remove();
                 }
             });
         });
@@ -1263,8 +1273,10 @@ class AdvGbCustomStyles {
             },
             complete: () => {
                 this.$('#advgb-customstyles-info').find('.advgb-overlay-box').remove();
+                this.$('#customstyles-tab').find('.advgb-overlay-box').remove();
             },
             error: () => {
+                this.$('#customstyles-tab').find('.advgb-overlay-box').remove();
                 this.$('#advgb-customstyles-info').find('.advgb-overlay-box').css({
                     backgroundImage: 'none',
                     backgroundColor: '#ff0000',
