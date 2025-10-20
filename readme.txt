@@ -276,4 +276,4 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-The full changelog can be found on [GitHub](https://github.com/publishpress/publishPress-blocks/blob/develop/CHANGELOG.md).
+The full changelog can be found on [GitHub](https://github.com/publishpress/publishPress-blocks/blob/master/CHANGELOG.md).
