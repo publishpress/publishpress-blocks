@@ -32,6 +32,7 @@ class AdvancedGutenbergAutoInsertBlocks
         add_filter('the_content', [$this, 'autoInsertBlocks'], 8);
         add_filter('parent_file', [$this, 'setAutoInsertMenuParent']);
         add_filter('submenu_file', [$this, 'setAutoInsertSubmenuFile']);
+        add_action('admin_notices', [$this, 'displayAdminNotices']);
 
         // AJAX handlers
         add_action('wp_ajax_advgb_search_taxonomy_terms', [$this, 'searchTaxonomyTerms']);
@@ -43,6 +44,8 @@ class AdvancedGutenbergAutoInsertBlocks
         add_filter('manage_advgb_insert_block_posts_columns', [$this, 'addAutoInsertColumns']);
         add_action('manage_advgb_insert_block_posts_custom_column', [$this, 'populateAutoInsertColumns'], 10, 2);
         add_action('admin_head-edit.php', [$this, 'remove_quick_edit_row']);
+        add_filter('post_row_actions', [$this, 'addDuplicateAction'], 10, 2);
+        add_action('admin_post_duplicate_auto_insert_block', [$this, 'handleDuplicateAction']);
 
         // Scripts and styles
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminAssets']);
@@ -194,7 +197,6 @@ class AdvancedGutenbergAutoInsertBlocks
         $new_columns['block'] = __('Reusable Block', 'advanced-gutenberg');
         $new_columns['position'] = __('Position', 'advanced-gutenberg');
         $new_columns['targeting'] = __('Targeting', 'advanced-gutenberg');
-        $new_columns['status'] = __('Status', 'advanced-gutenberg');
         $new_columns['priority'] = __('Priority', 'advanced-gutenberg');
         $new_columns['date'] = $columns['date'];
 
@@ -382,13 +384,6 @@ class AdvancedGutenbergAutoInsertBlocks
                 echo !empty($targeting_info) ? implode('<br>', $targeting_info) : __('None', 'advanced-gutenberg');
                 break;
 
-            case 'status':
-                $enabled = get_post_meta($post_id, '_advgb_rule_enabled', true);
-                $status_class = $enabled ? 'enabled' : 'disabled';
-                $status_text = $enabled ? __('Enabled', 'advanced-gutenberg') : __('Disabled', 'advanced-gutenberg');
-                echo '<span class="status-badge ' . $status_class . '">' . esc_html($status_text) . '</span>';
-                break;
-
             case 'priority':
                 $priority = get_post_meta($post_id, '_advgb_priority', true);
                 echo $priority ? esc_html($priority) : '10';
@@ -416,14 +411,27 @@ class AdvancedGutenbergAutoInsertBlocks
             return $content;
         }
 
-        // Parse content into blocks
-        $blocks = parse_blocks($post->post_content);
+        // Remove our filter temporarily
+        remove_filter('the_content', [$this, 'autoInsertBlocks'], 8);
 
+        $raw_content = $post->post_content;
+
+        // Parse and apply insertions
+        $blocks = parse_blocks($raw_content);
         foreach ($rules as $rule) {
             $blocks = $this->insertBlockByRule($blocks, $rule);
         }
 
-        return serialize_blocks($blocks);
+        // Convert back to block markup
+        $content_with_insertions = serialize_blocks($blocks);
+
+        // Apply ALL WordPress content filters (this will render embeds, shortcodes, etc to work if auto insert block has it.)
+        $fully_rendered_content = apply_filters('the_content', $content_with_insertions);
+
+        // Readd our filter
+        add_filter('the_content', [$this, 'autoInsertBlocks'], 8);
+
+        return $fully_rendered_content;
     }
 
     /**
@@ -434,14 +442,7 @@ class AdvancedGutenbergAutoInsertBlocks
         $rules = get_posts(array(
             'post_type' => 'advgb_insert_block',
             'post_status' => 'publish',
-            'numberposts' => -1,
-            'meta_query' => array(
-                array(
-                    'key' => '_advgb_rule_enabled',
-                    'value' => '1',
-                    'compare' => '='
-                )
-            )
+            'numberposts' => -1
         ));
 
         $active_rules = [];
@@ -634,9 +635,6 @@ class AdvancedGutenbergAutoInsertBlocks
         update_post_meta($post_id, '_advgb_taxonomies', $sanitized_taxonomies);
 
         // Save rule settings
-        $enabled = isset($_POST['advgb_rule_enabled']) ? '1' : '0';
-        update_post_meta($post_id, '_advgb_rule_enabled', $enabled);
-
         if (isset($_POST['advgb_priority'])) {
             update_post_meta($post_id, '_advgb_priority', intval($_POST['advgb_priority']));
         }
@@ -794,5 +792,162 @@ class AdvancedGutenbergAutoInsertBlocks
             </script>
             <?php
         endif;
+    }
+
+    /**
+     * Add duplicate action to row actions
+     */
+    public function addDuplicateAction($actions, $post)
+    {
+        if ($post->post_type === 'advgb_insert_block') {
+            $duplicate_url = wp_nonce_url(
+                add_query_arg([
+                    'action' => 'duplicate_auto_insert_block',
+                    'post_id' => $post->ID
+                ], admin_url('admin-post.php')),
+                'duplicate_auto_insert_block_' . $post->ID
+            );
+
+            $actions['duplicate'] = sprintf(
+                '<a href="%s" title="%s">%s</a>',
+                esc_url($duplicate_url),
+                esc_attr__('Duplicate this auto insert rule', 'advanced-gutenberg'),
+                __('Duplicate', 'advanced-gutenberg')
+            );
+        }
+
+        return $actions;
+    }
+
+    /**
+     * Handle duplicate action
+     */
+    public function handleDuplicateAction()
+    {
+        if (!isset($_GET['action']) || $_GET['action'] !== 'duplicate_auto_insert_block') {
+            return;
+        }
+
+        if (!isset($_GET['post_id']) || !isset($_GET['_wpnonce'])) {
+            $this->addAdminNotice(__('Invalid request', 'advanced-gutenberg'), 'error');
+            wp_safe_redirect(admin_url('edit.php?post_type=advgb_insert_block'));
+            exit;
+        }
+
+        $post_id = intval($_GET['post_id']);
+        $nonce = $_GET['_wpnonce'];
+
+        if (!wp_verify_nonce($nonce, 'duplicate_auto_insert_block_' . $post_id)) {
+            $this->addAdminNotice(__('Security check failed', 'advanced-gutenberg'), 'error');
+            wp_safe_redirect(admin_url('edit.php?post_type=advgb_insert_block'));
+            exit;
+        }
+
+        if (!current_user_can('edit_post', $post_id)) {
+            $this->addAdminNotice(__('You do not have permission to duplicate this item', 'advanced-gutenberg'), 'error');
+            wp_safe_redirect(admin_url('edit.php?post_type=advgb_insert_block'));
+            exit;
+        }
+
+        $new_post_id = $this->duplicateAutoInsertBlock($post_id);
+
+        if ($new_post_id) {
+            $this->addAdminNotice(
+                sprintf(
+                    __('Auto insert block duplicated successfully. <a href="%s">Edit the new rule</a>', 'advanced-gutenberg'),
+                    admin_url('post.php?post=' . $new_post_id . '&action=edit')
+                ),
+                'success'
+            );
+        } else {
+            $this->addAdminNotice(__('Error duplicating auto insert block', 'advanced-gutenberg'), 'error');
+        }
+
+        wp_safe_redirect(admin_url('edit.php?post_type=advgb_insert_block'));
+        exit;
+    }
+
+    /**
+     * Duplicate auto insert block with all meta data
+     */
+    private function duplicateAutoInsertBlock($post_id)
+    {
+        $post = get_post($post_id);
+
+        if (!$post || $post->post_type !== 'advgb_insert_block') {
+            return false;
+        }
+
+        // Create new post
+        $new_post = [
+            'post_title' => $post->post_title . ' (' . __('Copy', 'advanced-gutenberg') . ')',
+            'post_content' => $post->post_content,
+            'post_status' => 'draft',
+            'post_type' => 'advgb_insert_block',
+            'post_author' => get_current_user_id(),
+        ];
+
+        $new_post_id = wp_insert_post($new_post);
+
+        if (is_wp_error($new_post_id)) {
+            return false;
+        }
+
+        // Get all post meta
+        $meta_keys = get_post_custom_keys($post_id);
+
+        if (!empty($meta_keys)) {
+            foreach ($meta_keys as $meta_key) {
+                // Skip internal meta keys
+                if ($meta_key === '_edit_lock' || $meta_key === '_edit_last') {
+                    continue;
+                }
+
+                $meta_values = get_post_custom_values($meta_key, $post_id);
+                foreach ($meta_values as $meta_value) {
+                    $meta_value = maybe_unserialize($meta_value);
+                    add_post_meta($new_post_id, $meta_key, $meta_value);
+                }
+            }
+        }
+
+        return $new_post_id;
+    }
+
+    /**
+     * Add admin notice
+     */
+    private function addAdminNotice($message, $type = 'info')
+    {
+        $notices = get_transient('advgb_auto_insert_notices');
+        if (!is_array($notices)) {
+            $notices = [];
+        }
+
+        $notices[] = [
+            'message' => $message,
+            'type' => $type
+        ];
+
+        set_transient('advgb_auto_insert_notices', $notices, 30);
+    }
+
+    /**
+     * Display admin notices
+     */
+    public function displayAdminNotices()
+    {
+        $notices = get_transient('advgb_auto_insert_notices');
+        if (!empty($notices)) {
+            foreach ($notices as $notice) {
+                printf(
+                    '<div class="notice notice-%s is-dismissible"><p>%s</p></div>',
+                    esc_attr($notice['type']),
+                    $notice['message']
+                );
+            }
+
+            delete_transient('advgb_auto_insert_notices');
+        }
     }
 }

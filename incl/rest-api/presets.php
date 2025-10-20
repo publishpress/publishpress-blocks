@@ -156,7 +156,8 @@ class Presets
 
             $sanitized_set = [
                 'id' => sanitize_text_field($controlSet['id'] ?? uniqid()),
-                'rules' => []
+                'rules' => [],
+                'expanded' => (bool) ($controlSet['expanded'] ?? true)
             ];
 
             if (isset($controlSet['rules']) && is_array($controlSet['rules'])) {
@@ -167,7 +168,8 @@ class Presets
                     $sanitized_rule = [
                         'id' => sanitize_text_field($rule['id'] ?? uniqid()),
                         'type' => sanitize_text_field($rule['type'] ?? ''),
-                        'enabled' => (bool) ($rule['enabled'] ?? true)
+                        'enabled' => (bool) ($rule['enabled'] ?? true),
+                        'expanded' => (bool) ($rule['expanded'] ?? true)
                     ];
 
                     $sanitized_rule = array_merge($sanitized_rule, self::sanitizeRuleData($rule));
@@ -268,11 +270,13 @@ class Presets
                 'controlSets' => [
                     [
                         'id' => 'set_1',
+                        'expanded' => true,
                         'rules' => [
                             [
                                 'id' => 'rule_1',
                                 'type' => 'schedule',
                                 'enabled' => true,
+                                'expanded' => true,
                                 'schedules' => [
                                     [
                                         'dateFrom' => null,

@@ -2,7 +2,6 @@
 namespace PublishPress\Blocks;
 
 use DeviceDetector\DeviceDetector;
-use DeviceDetector\Parser\Device\AbstractDeviceParser;
 
 /*
  * Block controls logic
@@ -560,7 +559,8 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
         {
             static $browser_type = null;
             if ($browser_type === null) {
-                $dd = new DeviceDetector($_SERVER['HTTP_USER_AGENT']);
+                $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+                $dd = new DeviceDetector($user_agent);
                 $dd->parse();
                 $browser_type = strtolower($dd->getClient('name'));
             }
@@ -571,7 +571,8 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
         {
             static $os_type = null;
             if ($os_type === null) {
-                $dd = new DeviceDetector($_SERVER['HTTP_USER_AGENT']);
+                $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+                $dd = new DeviceDetector($user_agent);
                 $dd->parse();
                 $os_type = strtolower($dd->getOs('name'));
             }
@@ -587,7 +588,8 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
         {
             static $device_type = null;
             if ($device_type === null) {
-                $dd = new DeviceDetector($_SERVER['HTTP_USER_AGENT']);
+                $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+                $dd = new DeviceDetector($user_agent);
                 $dd->parse();
 
                 if ($dd->isBot()) {
@@ -601,71 +603,6 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                 }
             }
             return $device_type;
-        }
-
-        /*
-        public static function getDeviceType()
-        {
-
-            AbstractDeviceParser::setVersionTruncation(AbstractDeviceParser::VERSION_TRUNCATION_NONE);
-
-            $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-
-            try {
-                $dd = new DeviceDetector($userAgent);
-                $dd->parse();
-
-                if ($dd->isBot()) {
-                    return 'desktop';
-                }
-
-                $deviceType = $dd->getDevice();
-
-                // Map device types to our categories
-                switch ($deviceType) {
-                    case AbstractDeviceParser::DEVICE_TYPE_SMARTPHONE:
-                    case AbstractDeviceParser::DEVICE_TYPE_FEATURE_PHONE:
-                        return 'mobile';
-
-                    case AbstractDeviceParser::DEVICE_TYPE_TABLET:
-                        return 'tablet';
-
-                    case AbstractDeviceParser::DEVICE_TYPE_DESKTOP:
-                    case AbstractDeviceParser::DEVICE_TYPE_TV:
-                    case AbstractDeviceParser::DEVICE_TYPE_CONSOLE:
-                    case AbstractDeviceParser::DEVICE_TYPE_CAR_BROWSER:
-                    default:
-                        return 'desktop';
-                }
-            } catch (Exception $e) {
-                // Fallback to basic detection if DeviceDetector fails
-                return self::basicDeviceDetection();
-            }
-        }*/
-
-        /**
-         * Basic device detection fallback function
-         *
-         * @return string
-         */
-        private static function basicDeviceDetection()
-        {
-            $userAgent = strtolower($_SERVER['HTTP_USER_AGENT'] ?? '');
-
-            if (
-                strpos($userAgent, 'mobile') !== false ||
-                strpos($userAgent, 'android') !== false ||
-                strpos($userAgent, 'iphone') !== false
-            ) {
-                return 'mobile';
-            } elseif (
-                strpos($userAgent, 'tablet') !== false ||
-                strpos($userAgent, 'ipad') !== false
-            ) {
-                return 'tablet';
-            }
-
-            return 'desktop';
         }
 
         public static function checkBrowserDevice($block, $control_data)
@@ -1066,6 +1003,13 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     'type' => 'array',
                     'default' => [],
                 ];
+                // Add custom style attributes to fix https://github.com/publishpress/publishpress-blocks/issues/1652
+                $block->attributes['customStyle'] = [
+                    'type' => 'string',
+                ];
+                $block->attributes['identifyColor'] = [
+                    'type' => 'string',
+                ];
             }
         }
 
@@ -1080,14 +1024,20 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
         public static function removeAttributes($result, $server, $request)
         {
             if (strpos($request->get_route(), '/wp/v2/block-renderer') !== false) {
-                if (
-                    isset($request['attributes'])
-                    && isset($request['attributes']['advgbBlockControls'])
-                ) {
+                if (isset($request['attributes'])) {
                     $attributes = $request['attributes'];
-                    if ($attributes['advgbBlockControls']) {
+
+                    if (isset($attributes['advgbBlockControls'])) {
                         unset($attributes['advgbBlockControls']);
                     }
+
+                    if (isset($attributes['customStyle'])) {
+                        unset($attributes['customStyle']);
+                    }
+                    if (isset($attributes['identifyColor'])) {
+                        unset($attributes['identifyColor']);
+                    }
+
                     $request['attributes'] = $attributes;
                 }
             }

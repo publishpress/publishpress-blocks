@@ -522,27 +522,13 @@ class AdvancedGutenbergAutoInsertMetaboxes {
      */
     public function ruleSettingsMetaBox($post)
     {
-        $enabled = get_post_meta($post->ID, '_advgb_rule_enabled', true);
         $priority = get_post_meta($post->ID, '_advgb_priority', true);
-
-        if ( empty( $enabled ) && $post->post_status === 'auto-draft' ) {
-            $enabled = '1';
-        }
 
         if (empty($priority)) {
             $priority = 10;
         }
         ?>
         <table class="form-table advgb-auto-insert-settngs-metabox">
-            <tr>
-                <th><label for="advgb_rule_enabled"><?php _e('Status', 'advanced-gutenberg'); ?></label></th>
-                <td>
-                    <label>
-                        <input type="checkbox" name="advgb_rule_enabled" id="advgb_rule_enabled" value="1" <?php checked($enabled, '1'); ?>>
-                        <?php _e('Enable this rule', 'advanced-gutenberg'); ?>
-                    </label>
-                </td>
-            </tr>
             <tr>
                 <th><label for="advgb_priority"><?php _e('Priority', 'advanced-gutenberg'); ?></label></th>
                 <td>

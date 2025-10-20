@@ -462,7 +462,7 @@
 .advgb-control-sets {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
 }
 
 .advgb-set-separator {
@@ -489,16 +489,48 @@
     background: var(--advgb-bg-primary);
     border: 1px solid var(--advgb-border-color);
     border-radius: var(--advgb-radius-md);
+    transition: all 0.2s ease;
+}
+
+.advgb-control-set:hover {
+    border-color: var(--advgb-primary-color);
+    box-shadow: 0 2px 8px rgba(101, 89, 151, 0.1);
 }
 
 .advgb-control-set-header {
-    padding: 20px 24px;
-    background: var(--advgb-bg-alternative);
+    padding: 16px 20px;
+    background: linear-gradient(135deg, var(--advgb-bg-alternative) 0%, #f8f7ff 100%);
     border-bottom: 1px solid var(--advgb-border-alternative);
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 16px;
+    cursor: default;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.advgb-control-set-header,
+.advgb-rule-header {
+    position: relative;
+}
+
+.advgb-control-set-header::after,
+.advgb-rule-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    transition: background-color 0.2s ease;
+    pointer-events: none;
+}
+
+.advgb-control-set-header:hover::after,
+.advgb-rule-header:hover::after {
+    background: rgba(101, 89, 151, 0.03);
 }
 
 .advgb-set-info h4 {
@@ -509,17 +541,24 @@
 }
 
 .advgb-set-info p {
-    margin: 0;
+    margin: 4px 0 0 0;
     color: var(--advgb-text-muted);
     font-size: 13px;
     line-height: 1.4;
 }
 
-.advgb-set-actions {
+.advgb-set-actions,
+.advgb-rule-actions {
     display: flex;
     gap: 8px;
     align-items: center;
     flex-shrink: 0;
+}
+
+.advgb-set-actions .components-select-control,
+.advgb-set-actions .components-button,
+.advgb-rule-actions .components-button {
+    pointer-events: auto;
 }
 
 .advgb-add-rule-select {
@@ -528,8 +567,28 @@
 
 /* Rules */
 .advgb-control-set-rules {
-    padding: 24px;
+    padding: 20px;
+    background: var(--advgb-bg-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
 }
+
+.advgb-control-set-rules .advgb-control-rule {
+    background: var(--advgb-bg-primary);
+    border: 1px solid #e8e9f0;
+}
+
+.advgb-control-set-rules .advgb-rule-header {
+    background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+}
+
+.advgb-control-set-rules .advgb-rule-content {
+    background: var(--advgb-bg-secondary);
+    border-top: 1px solid #f1f3f9;
+}
+
 
 .advgb-rule-container {
     margin-bottom: 20px;
@@ -555,27 +614,68 @@
 /* Rule Card */
 .advgb-control-rule {
     background: var(--advgb-bg-primary);
-    border: 1px solid var(--advgb-border-color);
-    border-radius: var(--advgb-radius-md);
+    border: 1px solid var(--advgb-border-light);
+    border-radius: var(--advgb-radius-sm);
+    transition: all 0.2s ease;
+}
+
+.advgb-control-rule:hover {
+    border-color: #d4d4e0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .advgb-rule-header {
-    padding: 16px 20px;
-    background: var(--advgb-bg-tertiary);
-    border-bottom: 1px solid var(--advgb-border-light);
+    padding: 14px 16px;
+    background: linear-gradient(135deg, var(--advgb-bg-tertiary) 0%, #f9fafb 100%);
+    border-bottom: 1px solid transparent;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: default;
+    transition: all 0.2s ease;
+    position: relative;
 }
 
+.advgb-rule-header:hover {
+    background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+}
+
+.advgb-control-rule[aria-expanded="true"] .advgb-rule-header {
+    border-bottom-color: var(--advgb-border-light);
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.advgb-set-title-row,
 .advgb-rule-type {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.advgb-rule-type-icon {
+.advgb-set-title-row .dashicons,
+.advgb-rule-type .dashicons {
     font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: var(--advgb-text-secondary);
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.advgb-control-set-header:hover .dashicons,
+.advgb-rule-header:hover .dashicons {
+    color: var(--advgb-primary-color);
+}
+
+.advgb-set-title-row h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--advgb-text-primary);
+}
+
+.advgb-rule-type-icon {
+    font-size: 14px;
+    opacity: 0.7;
 }
 
 .advgb-rule-type-label {
@@ -587,7 +687,62 @@
 }
 
 .advgb-rule-content {
+    position: relative;
     padding: 20px;
+    background: var(--advgb-bg-secondary);
+    border-radius: 0 0 var(--advgb-radius-sm) var(--advgb-radius-sm);
+    border-top: 1px solid var(--advgb-border-light);
+}
+
+.advgb-control-set-header,
+.advgb-rule-header {
+    cursor: default;
+}
+
+.advgb-set-actions,
+.advgb-rule-actions {
+    cursor: default;
+}
+
+.advgb-set-actions .components-button,
+.advgb-rule-actions .components-button {
+    cursor: pointer;
+}
+
+.advgb-preset-clickable-area {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    gap: 4px;
+}
+
+.advgb-preset-clickable-area .title-row-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.advgb-preset-clickable-area:hover {
+    color: var(--advgb-primary-color);
+}
+
+.advgb-preset-clickable-area:hover .dashicons {
+    color: var(--advgb-primary-color);
+}
+
+.advgb-set-info.advgb-preset-clickable-area {
+    padding: 4px 8px;
+    margin: -4px -8px;
+    border-radius: 4px;
+    flex: 1;
+}
+
+.advgb-rule-type.advgb-preset-clickable-area {
+    padding: 4px 8px;
+    margin: -4px -8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 /* No Rules State */
