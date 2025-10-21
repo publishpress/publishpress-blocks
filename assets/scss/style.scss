@@ -1035,7 +1035,16 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked+.slider:before {
 
 .advgb-switch-button.promo-area {
   line-height: normal;
-  margin-top: 15px;
+  margin-top: 10px;
+}
+
+.advgb-settings-option .advgb-pro-small-overlay-text {
+  position: initial !important;
+  transform: initial !important;
+}
+
+.advgb-settings-option .advgb-pro-small-overlay-text .dashicons {
+  vertical-align: sub;
 }
 
 .advgb-tooltips .tooltip-text {

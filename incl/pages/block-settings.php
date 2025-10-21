@@ -115,32 +115,23 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                     //$block['title'] = str_replace( 'PublishPress', '', $new_titles[$block['name']] ); // Remove 'PublishPress'
                     //$block['title'] = str_replace( '-', '', $block['title'] ); // Remove hyphen in RTL and LTR
                 }
-                $additional_attr = $additional_class = $blur_class = '';
+                $blur_class = '';
                 $isProPromo = false;
                 if ($free_version && isset($block['isPro']) && $block['isPro'] ===  true) {
                     $blur_class = 'advgb-blur';
-                    $additional_attr = 'data-toggle="ppbtooltip" data-placement="top"';
-                    $additional_class = 'advgb-tooltips ppb-tooltips-library click';
                     $isProPromo = true;
                 }
                 ?>
-            <li class="block-config-item advgb-settings-option <?php echo esc_attr($additional_class); ?>" <?php echo $additional_attr;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+            <li class="block-config-item advgb-settings-option">
                 <span class="block-icon <?php echo esc_attr($blur_class); ?>" <?php echo $iconColor ?>>
                     <?php echo html_entity_decode(html_entity_decode(stripslashes($block['icon']))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>
                 <span class="block-title  <?php echo esc_attr($blur_class); ?>"><?php echo esc_html(__($block['title'], 'advanced-gutenberg')); ?></span>
                 <?php if ($isProPromo) : ?>
-                    <span class="advgb-promo-text">
-                        <?php esc_html_e('Pro', 'advanced-gutenberg') ?>
-                    </span>
-                    <span class="tooltip-text">
-                        <p><?php echo esc_html($block['title']); ?> - <?php echo esc_html($block['description']); ?></p>
-                        <p>
-                            <a class="clickable" href="<?php echo esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK); ?>" target="_blank">
-                                <?php esc_html_e('Upgrade to Pro', 'advanced-gutenberg') ?>
-                            </a>
-                        </p>
-                        <i></i>
+                    <span class="advgb-pro-small-overlay-text" style="float: right;">
+                        <a class="advgb-pro-link clickable" href="<?php echo esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK); ?>" target="_blank">
+                            <span class="dashicons dashicons-lock"></span> <?php esc_html_e('Pro', 'advanced-gutenberg') ?>
+                        </a>
                     </span>
                 <?php elseif (!in_array($block['name'], $excluded_blocks_config)) : ?>
                     <i class="dashicons dashicons-admin-generic block-config-button"
