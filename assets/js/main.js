@@ -378,18 +378,12 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             blockHTML +=    '</label>';
             if (isProPromo) {
                 blockHTML +=    '<div class="advgb-switch-button promo-area">';
-                blockHTML +=    '<span class="advgb-promo-text">';
+                blockHTML +=    '<div class="advgb-pro-small-overlay-text">';
+                blockHTML +=    '<a class="advgb-pro-link clickable" href="' + advgbMainI18n.promoLink + '" target="_blank">';
+                blockHTML +=        '<span class="dashicons dashicons-lock"></span> ';
                 blockHTML +=        advgbMainI18n.proText;
-                blockHTML +=    '</span>';
-                blockHTML +=    '<span class="tooltip-text">';
-                blockHTML +=        '<p>' + block.title + ' - ' + (block.description || '') + '</p>';
-                blockHTML +=        '<p>';
-                blockHTML +=            '<a class="clickable" href="' + advgbMainI18n.promoLink + '" target="_blank">';
-                blockHTML +=                advgbMainI18n.upgradeText;
-                blockHTML +=            '</a>';
-                blockHTML +=        '</p>';
-                blockHTML +=        '<i></i>';
-                blockHTML +=    '</span>';
+                blockHTML +=    '</a>';
+                blockHTML +=    '</div>';
                 blockHTML +=    '</div>';
             } else {
                 blockHTML +=    '<div class="advgb-switch-button">';
@@ -666,18 +660,12 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
 
             if (isProPromo) {
                 blockHTML +=    '<div class="advgb-switch-button promo-area">';
-                blockHTML +=    '<span class="advgb-promo-text">';
-                blockHTML +=        advgbMainI18n.proText
-                blockHTML +=    '</span>';
-                blockHTML +=    '<span class="tooltip-text">';
-                blockHTML +=        '<p>' + block.title + ' - ' + (block.description || '') + '</p>';
-                blockHTML +=        '<p>';
-                blockHTML +=            '<a class="clickable" href="' + advgbMainI18n.promoLink + '" target="_blank">';
-                blockHTML +=                advgbMainI18n.upgradeText;
-                blockHTML +=            '</a>';
-                blockHTML +=        '</p>';
-                blockHTML +=        '<i></i>';
-                blockHTML +=    '</span>';
+                blockHTML +=    '<div class="advgb-pro-small-overlay-text">';
+                blockHTML +=    '<a class="advgb-pro-link clickable" href="' + advgbMainI18n.promoLink + '" target="_blank">';
+                blockHTML +=        '<span class="dashicons dashicons-lock"></span> ';
+                blockHTML +=        advgbMainI18n.proText;
+                blockHTML +=    '</a>';
+                blockHTML +=    '</div>';
                 blockHTML +=    '</div>';
             } else {
                 blockHTML +=    '<div class="advgb-switch-button">';
