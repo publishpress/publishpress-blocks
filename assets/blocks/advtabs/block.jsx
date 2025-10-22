@@ -318,18 +318,13 @@
             const { getBlockOrder } = !wp.blockEditor ? select('core/editor') : select('core/block-editor');
             const childBlocks = getBlockOrder(clientId);
 
-            const newHeaders = [...attributes.tabHeaders];
-            newHeaders.splice(index, 1);
-            newHeaders.splice(newIndex, 0, header[0]);
+            headers.splice( newIndex, 0, header[0] );
+            anchors.splice( newIndex, 0, anchor[0] );
 
-            const newAnchors = [...attributes.tabAnchors];
-            newAnchors.splice(index, 1);
-            newAnchors.splice(newIndex, 0, anchor[0]);
-
-            setAttributes({
-                tabHeaders: newHeaders,
-                tabAnchors: newAnchors
-            });
+            setAttributes( {
+                tabHeaders: headers,
+                tabAnchors: anchors
+            } );
 
             moveBlockToPosition(
                 childBlocks[index],
@@ -341,7 +336,7 @@
             this.updateTabHeaders();
             this.updateTabAnchors();
             this.props.resetOrder();
-            this.props.updateTabActive(newIndex);
+            this.props.updateTabActive( newIndex );
         }
 
         translatableText(text) {
