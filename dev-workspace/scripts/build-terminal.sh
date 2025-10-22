@@ -9,4 +9,8 @@ set -a
 source ../.env
 set +a
 
-bash ./scripts/terminal-service-run.sh "$@"
+echo "Building terminal container..."
+
+docker compose -f docker/compose.yaml build terminal
+
+echo "Terminal container built successfully!"

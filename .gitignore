@@ -6,3 +6,6 @@ node_modules/
 .DS_Store*
 report.csv
 /dist
+
+/dev-workspace/.cache/
+.env
