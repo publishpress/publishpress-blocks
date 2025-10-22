@@ -32,9 +32,9 @@
         "wp-cli/i18n-command": "^2.4"
     },
     "scripts": {
-        "build": "ppbuild build",
-        "build:dir": "ppbuild build-dir",
-        "build:clean": "ppbuild clean",
+        "build": "pbuild build",
+        "build:dir": "pbuild build-dir",
+        "build:clean": "pbuild clean",
         "build:make-pot": "wp i18n make-pot --exclude=/dev-workspace --exclude=/.wordpress-org --exclude=/.github --exclude=/dist --exclude=/vendor --exclude=/lib . ./languages/advanced-gutenberg.pot --allow-root",
         "build:js-translations": "bash /project/dev-workspace/docker/scripts/json_translations.sh",
         "build:css": "sass assets/scss/:assets/css/ --style=compressed --no-source-map",
@@ -43,7 +43,7 @@
         "build:js": "webpack --mode production",
         "minify:js-main": "uglifyjs assets/js/main.js --output assets/js/main.min.js",
         "minify:js-settings": "uglifyjs assets/js/settings.js --output assets/js/settings.min.js",
-        "get-version": "ppbuild version",
+        "get-version": "pbuild version",
         "check:longpath": "longpath .",
         "check:lint": "phplint --no-cache",
         "check:cs": "phpcs",
