@@ -307,6 +307,35 @@
   margin-left: auto;
 }
 
+.pp-blocks-usage-category-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.pp-blocks-usage-category-title .category-name {
+    font-weight: 600;
+}
+
+.pp-blocks-usage-category-title .category-stats {
+    font-size: 0.9em;
+    color: #757575;
+    font-weight: normal;
+    margin-left: 8px;
+}
+
+.pp-blocks-usage-block-count {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 6px;
+    background: #0073aa;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
 .pp-blocks-usage-post-content {
   padding: 1rem;
   border-top: 1px solid #eee;

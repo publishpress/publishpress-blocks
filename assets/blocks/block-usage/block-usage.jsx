@@ -258,8 +258,36 @@
             return Object.values(groups);
         }, [blockPosts, blockData]);
 
+        const groupBlocksByName = (blocks) => {
+            const grouped = {};
+
+            blocks.forEach(block => {
+                if (!block.name) return;
+
+                const key = block.name;
+                if (!grouped[key]) {
+                    grouped[key] = {
+                        ...block,
+                        count: 0,
+                        innerBlocks: []
+                    };
+                }
+                grouped[key].count += 1;
+
+                if (block.innerBlocks && block.innerBlocks.length > 0) {
+                    grouped[key].innerBlocks.push(...block.innerBlocks);
+                }
+            });
+
+            return Object.values(grouped);
+        };
+
         const renderBlockItem = (block, depth = 0) => {
             if (!block.name) return null;
+
+            const groupedInnerBlocks = block.innerBlocks && block.innerBlocks.length > 0
+                ? groupBlocksByName(block.innerBlocks)
+                : [];
 
             return (
                 <div
@@ -278,8 +306,11 @@
                             </span>
                         )}
                         {block.name}
+                        {block.count > 1 && (
+                            <span className="pp-blocks-usage-block-count">×{block.count}</span>
+                        )}
                     </div>
-                    {block.innerBlocks?.map(innerBlock => renderBlockItem(innerBlock, depth + 1))}
+                    {groupedInnerBlocks.map(innerBlock => renderBlockItem(innerBlock, depth + 1))}
                 </div>
             );
         };
@@ -361,7 +392,7 @@
                                                     <div className="pp-blocks-usage-post-blocks">
                                                         <h4>{__('Blocks in this post:', 'advanced-gutenberg')}</h4>
                                                         {post.blocks?.length > 0 ? (
-                                                            post.blocks.map(block => renderBlockItem(block))
+                                                            groupBlocksByName(post.blocks).map(block => renderBlockItem(block))
                                                         ) : (
                                                             <p>{__('No blocks found in this post.', 'advanced-gutenberg')}</p>
                                                         )}
@@ -544,6 +575,32 @@
 
             return filtered;
         }, [categories, data.usage, showEmptyBlocks]);
+
+        const categoryStats = useMemo(() => {
+            const stats = {};
+
+            Object.entries(filteredCategories).forEach(([slug, category]) => {
+                let totalBlocks = category.blocks.length;
+                let totalLocations = 0;
+                let totalInstances = 0;
+
+                category.blocks.forEach(block => {
+                    const blockData = data.usage[block.name];
+                    if (blockData && blockData.posts) {
+                        totalLocations += Object.keys(blockData.posts).length;
+                        totalInstances += blockData.total || 0;
+                    }
+                });
+
+                stats[slug] = {
+                    blocks: totalBlocks,
+                    locations: totalLocations,
+                    instances: totalInstances
+                };
+            });
+
+            return stats;
+        }, [filteredCategories, data.usage]);
 
         useEffect(() => {
             if (!selected && blocksData.blocks.length > 0 && initialLoadComplete) {
@@ -808,62 +865,79 @@
 
                 <div className="pp-blocks-usage-container">
                     <div className="pp-blocks-usage-categories">
-                        {Object.entries(filteredCategories).map(([slug, { title, blocks }]) => (
-                            <PanelBody key={slug} title={title} initialOpen>
-                                <div className="pp-blocks-usage-block-grid">
-                                    {blocks.map(bt => {
-                                        const hasData = data.usage[bt.name] && Object.keys(data.usage[bt.name].posts).length > 0;
-                                        const blockData = data.usage[bt.name] || { posts: {}, total: 0 };
-                                        const postCount = Object.keys(blockData.posts).length;
-                                        const useCount = blockData.total;
-                                        const lastScanned = Object.values(blockData.posts)[0]?.scanned || '';
+                        {Object.entries(filteredCategories).map(([slug, { title, blocks }]) => {
+                            const stats = categoryStats[slug] || { blocks: 0, locations: 0, instances: 0 };
 
-                                        return (
-                                            <Card
-                                                key={bt.name}
-                                                className={`pp-blocks-usage-block-tile ${selected?.name === bt.name ? 'active' : ''}`}
-                                                onClick={() => handleDetailsClick(bt)}
-                                            >
-                                                <div className="pp-blocks-usage-tile-main">
-                                                    {bt.icon && (
-                                                        <span className="block-icon" style={bt.iconColor ? { color: bt.iconColor } : {}}>
-                                                            {typeof bt.icon === 'string' && !bt.icon.includes('<') ? (
-                                                                <span className={`dashicons dashicons-${bt.icon}`}></span>
-                                                            ) : (
-                                                                <span dangerouslySetInnerHTML={{ __html: bt.icon }} />
-                                                            )}
-                                                        </span>
-                                                    )}
-                                                    <span>{bt.title}</span>
-                                                </div>
-                                                {hasData ? (
-                                                    <div className="pp-blocks-usage-tile-counts">
-                                                        <div>{__('Locations:', 'advanced-gutenberg')} {postCount}</div>
-                                                        <div>{__('Instances:', 'advanced-gutenberg')} {useCount}</div>
+                            const pluralize = (count, singular, plural) => {
+                                return count === 1 ? singular : plural;
+                            };
+
+                            const categoryTitle = (
+                                <span className="pp-blocks-usage-category-title">
+                                    <span className="category-name">{title}</span>
+                                    <span className="category-stats">
+                                        ({stats.blocks} {pluralize(stats.blocks, __('block', 'advanced-gutenberg'), __('blocks', 'advanced-gutenberg'))}, {stats.locations} {pluralize(stats.locations, __('location', 'advanced-gutenberg'), __('locations', 'advanced-gutenberg'))}, {stats.instances} {pluralize(stats.instances, __('instance', 'advanced-gutenberg'), __('instances', 'advanced-gutenberg'))})
+                                    </span>
+                                </span>
+                            );
+                            return (
+
+                                <PanelBody key={slug} title={categoryTitle} initialOpen>
+                                    <div className="pp-blocks-usage-block-grid">
+                                        {blocks.map(bt => {
+                                            const hasData = data.usage[bt.name] && Object.keys(data.usage[bt.name].posts).length > 0;
+                                            const blockData = data.usage[bt.name] || { posts: {}, total: 0 };
+                                            const postCount = Object.keys(blockData.posts).length;
+                                            const useCount = blockData.total;
+                                            const lastScanned = Object.values(blockData.posts)[0]?.scanned || '';
+
+                                            return (
+                                                <Card
+                                                    key={bt.name}
+                                                    className={`pp-blocks-usage-block-tile ${selected?.name === bt.name ? 'active' : ''}`}
+                                                    onClick={() => handleDetailsClick(bt)}
+                                                >
+                                                    <div className="pp-blocks-usage-tile-main">
+                                                        {bt.icon && (
+                                                            <span className="block-icon" style={bt.iconColor ? { color: bt.iconColor } : {}}>
+                                                                {typeof bt.icon === 'string' && !bt.icon.includes('<') ? (
+                                                                    <span className={`dashicons dashicons-${bt.icon}`}></span>
+                                                                ) : (
+                                                                    <span dangerouslySetInnerHTML={{ __html: bt.icon }} />
+                                                                )}
+                                                            </span>
+                                                        )}
+                                                        <span>{bt.title}</span>
                                                     </div>
-                                                ) : (
-                                                    <div className="pp-blocks-usage-tile-counts">
-                                                        <div className="no-scan">
-                                                            {data.lastScanDate
-                                                                ? __('Not found in any posts', 'advanced-gutenberg')
-                                                                : __('No scan history', 'advanced-gutenberg')}
+                                                    {hasData ? (
+                                                        <div className="pp-blocks-usage-tile-counts">
+                                                            <div>{__('Locations:', 'advanced-gutenberg')} {postCount}</div>
+                                                            <div>{__('Instances:', 'advanced-gutenberg')} {useCount}</div>
                                                         </div>
+                                                    ) : (
+                                                        <div className="pp-blocks-usage-tile-counts">
+                                                            <div className="no-scan">
+                                                                {data.lastScanDate
+                                                                    ? __('Not found in any posts', 'advanced-gutenberg')
+                                                                    : __('No scan history', 'advanced-gutenberg')}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    <div className="pp-blocks-usage-tile-actions">
+                                                        <Button variant="secondary" size="small" onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleDetailsClick(bt);
+                                                        }}>
+                                                            {__('Details', 'advanced-gutenberg')}
+                                                        </Button>
                                                     </div>
-                                                )}
-                                                <div className="pp-blocks-usage-tile-actions">
-                                                    <Button variant="secondary" size="small" onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleDetailsClick(bt);
-                                                    }}>
-                                                        {__('Details', 'advanced-gutenberg')}
-                                                    </Button>
-                                                </div>
-                                            </Card>
-                                        );
-                                    })}
-                                </div>
-                            </PanelBody>
-                        ))}
+                                                </Card>
+                                            );
+                                        })}
+                                    </div>
+                                </PanelBody>
+                            );
+                        })}
                     </div>
 
                     {selected && (
