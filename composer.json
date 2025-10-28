@@ -29,7 +29,8 @@
         "publishpress/publishpress-phpcs-standards": "dev-main",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "squizlabs/php_codesniffer": "^3.6",
-        "wp-cli/i18n-command": "^2.4"
+        "wp-cli/i18n-command": "^2.4",
+        "overtrue/phplint": "^9.6"
     },
     "scripts": {
         "build": "pbuild build",
@@ -45,7 +46,7 @@
         "minify:js-settings": "uglifyjs assets/js/settings.js --output assets/js/settings.min.js",
         "get-version": "pbuild version",
         "check:longpath": "longpath .",
-        "check:lint": "phplint --no-cache",
+        "check:lint": "phplint",
         "check:cs": "phpcs",
         "fix:cs": "phpcbf --standard=.phpcs.xml",
         "fix:php": [

@@ -1,4 +1,7 @@
-path: .
+path:
+  - .
+  - incl
+  - review
 jobs: 10
 extensions:
   - php
