@@ -46,6 +46,7 @@ class AdvancedGutenbergAutoInsertBlocks
         add_action('admin_head-edit.php', [$this, 'remove_quick_edit_row']);
         add_filter('post_row_actions', [$this, 'addDuplicateAction'], 10, 2);
         add_action('admin_post_duplicate_auto_insert_block', [$this, 'handleDuplicateAction']);
+        add_action('months_dropdown_results', [$this, 'removeMonthFilters'], 10, 2);
 
         // Scripts and styles
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminAssets']);
@@ -898,6 +899,18 @@ class AdvancedGutenbergAutoInsertBlocks
 
         wp_safe_redirect(admin_url('edit.php?post_type=advgb_insert_block'));
         exit;
+    }
+
+    /**
+     * Remove the month filter dropdown
+     */
+    private function removeMonthFilters($months, $post_type)
+    {
+        if ($post_type === 'advgb_insert_block') {
+            // Return empty to remove the dropdown
+            return [];
+        }
+        return $months;
     }
 
     /**
