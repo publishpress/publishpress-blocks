@@ -638,16 +638,14 @@ import {
                             <p>{__('Create your first preset or generate sample presets to get started.', 'advanced-gutenberg')}</p>
                             <div className="advgb-empty-actions">
                                 <Button
-                                    isPrimary
                                     onClick={() => this.createNewPreset()}
-                                    className="advgb-create-first-btn"
+                                    className="advgb-create-first-btn advgb-primary-button button button-primary"
                                 >
                                     {__('Create First Preset', 'advanced-gutenberg')}
                                 </Button>
                                 <Button
-                                    isSecondary
                                     onClick={() => this.createSamplePresets()}
-                                    className="advgb-create-samples-btn"
+                                    className="advgb-create-samples-btn button button-secondary"
                                 >
                                     {__('Create Sample Presets', 'advanced-gutenberg')}
                                 </Button>
@@ -717,10 +715,9 @@ import {
                                 {__('Show the block if any control set applies. Each set can contain multiple rules.', 'advanced-gutenberg')}
                             </p>
                             <Button
-                                isPrimary
                                 icon="plus"
                                 onClick={this.addControlSet}
-                                className="advgb-add-set-btn"
+                                className="advgb-add-set-btn button button-secondary"
                             >
                                 {__('Add Control Set', 'advanced-gutenberg')}
                             </Button>
@@ -779,16 +776,15 @@ import {
                             </div>
                         )}
                         <Button
-                            isPrimary
                             onClick={() => this.savePreset(this.state.currentPreset)}
                             disabled={saving || !currentPreset.title}
                             isBusy={saving}
-                            className="advgb-save-btn"
+                            className="advgb-save-btn advgb-primary-button button button-primary"
                         >
                             {saving ? __('Saving...', 'advanced-gutenberg') : __('Save Preset', 'advanced-gutenberg')}
                         </Button>
                         <Button
-                            isSecondary
+                            className="button button-secondary"
                             onClick={this.handleModalClose}
                             disabled={saving}
                         >
@@ -1143,7 +1139,7 @@ import {
                     <div style={{ marginBottom: 16 }}>
                         <Button
                             style={{ width: '100%', display: 'block' }}
-                            isSecondary
+                            className="button button-secondary"
                             onClick={() => {
                                 const newSchedule = {
                                     dateFrom: null,
@@ -1622,17 +1618,15 @@ import {
                     <p>{description}</p>
                     <div className="advgb-guidance-actions">
                         <Button
-                            isPrimary
                             onClick={() => this.createNewPreset()}
-                            className="advgb-guidance-create-btn"
+                            className="advgb-guidance-create-btn button button-secondary"
                         >
                             {__('Create New Preset', 'advanced-gutenberg')}
                         </Button>
                         {lastAction === 'loaded' && (
                             <Button
-                                isSecondary
                                 onClick={() => this.createSamplePresets()}
-                                className="advgb-guidance-samples-btn"
+                                className="advgb-guidance-samples-btn button button-secondary"
                             >
                                 {__('Add More Samples', 'advanced-gutenberg')}
                             </Button>
@@ -1680,7 +1674,7 @@ import {
                         <div className="advgb-preset-sidebar-header">
                             {hasPresets && !hasActiveForm && (
                                 <Button
-                                    isPrimary
+                                    className="advgb-primary-button button button-primary"
                                     onClick={() => this.createNewPreset()}
                                 >
                                     {__('Add New', 'advanced-gutenberg')}

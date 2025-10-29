@@ -246,10 +246,9 @@
                         </div>
                     </div>
                     <Button
-                        variant="primary"
                         onClick={onScanClick}
                         disabled={loadingAll}
-                        className="pp-blocks-usage-welcome-scan-button"
+                        className="pp-blocks-usage-welcome-scan-button advgb-primary-button button button-primary"
                     >
                         {loadingAll ? <Spinner /> : __('Scan Block Usage', 'advanced-gutenberg')}
                     </Button>
@@ -870,7 +869,7 @@
                                         />
                                     </div>
                                 )}
-                                <Button variant="primary" onClick={scanAll} disabled={loadingAll}>
+                                <Button className="advgb-primary-button button button-primary" onClick={scanAll} disabled={loadingAll}>
                                     {loadingAll ? <Spinner /> : __('Scan Block Usage', 'advanced-gutenberg')}
                                 </Button>
                             </div>

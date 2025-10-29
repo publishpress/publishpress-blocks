@@ -1,6 +1,10 @@
 @import "variables";
 @import "mixins";
 
+.components-button.advgb-primary-button:hover {
+  color: #fff;
+}
+
 .pp-version-notice-bold-purple-button a {
   color: #000000;
   text-decoration: none;
