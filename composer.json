@@ -44,7 +44,7 @@
         "build:js": "webpack --mode production",
         "minify:js-main": "uglifyjs assets/js/main.js --output assets/js/main.min.js",
         "minify:js-settings": "uglifyjs assets/js/settings.js --output assets/js/settings.min.js",
-        "get-version": "pbuild version",
+        "info:versions": "bash ./dev-workspace/scripts/dependency-versions.sh",
         "check:longpath": "longpath .",
         "check:lint": "phplint",
         "check:cs": "phpcs",
