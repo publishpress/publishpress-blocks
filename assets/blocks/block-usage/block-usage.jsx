@@ -222,6 +222,42 @@
         };
     };
 
+    const WelcomeIntro = ({ onScanClick, loadingAll }) => {
+        return (
+            <div className="pp-blocks-usage-welcome-intro">
+                <div className="pp-blocks-usage-welcome-card">
+                    <div className="pp-blocks-usage-welcome-icon">
+                        <span className="dashicons dashicons-search"></span>
+                    </div>
+                    <h2>{__('Welcome to Block Usage', 'advanced-gutenberg')}</h2>
+                    <p>{__('This screen allows you to search for and find any usage of blocks on your site.', 'advanced-gutenberg')}</p>
+                    <div className="pp-blocks-usage-welcome-features">
+                        <div className="pp-blocks-usage-feature">
+                            <span className="dashicons dashicons-admin-post"></span>
+                            <span>{__('Scan posts, pages or any custom post types for block usage', 'advanced-gutenberg')}</span>
+                        </div>
+                        <div className="pp-blocks-usage-feature">
+                            <span className="dashicons dashicons-chart-bar"></span>
+                            <span>{__('View detailed usage statistics', 'advanced-gutenberg')}</span>
+                        </div>
+                        <div className="pp-blocks-usage-feature">
+                            <span className="dashicons dashicons-list-view"></span>
+                            <span>{__('See exactly where each block is used', 'advanced-gutenberg')}</span>
+                        </div>
+                    </div>
+                    <Button
+                        variant="primary"
+                        onClick={onScanClick}
+                        disabled={loadingAll}
+                        className="pp-blocks-usage-welcome-scan-button"
+                    >
+                        {loadingAll ? <Spinner /> : __('Scan Block Usage', 'advanced-gutenberg')}
+                    </Button>
+                </div>
+            </div>
+        );
+    };
+
     const Sidebar = React.memo(({ selected, data, onClose, canEditPosts }) => {
         const [expandedPost, setExpandedPost] = useState(null);
         const { usage = {}, posts = [] } = data;
@@ -606,6 +642,17 @@
             return stats;
         }, [filteredCategories, data.usage]);
 
+        // Check if we should show the welcome intro
+        const shouldShowWelcomeIntro = useMemo(() => {
+            // Show intro if no scan data exists or if there are no blocks with usage data
+            const hasScanData = data.lastScanDate && Object.keys(data.usage).length > 0;
+            const hasBlocksWithUsage = Object.values(data.usage).some(blockData =>
+                blockData.posts && Object.keys(blockData.posts).length > 0
+            );
+
+            return !hasScanData || !hasBlocksWithUsage;
+        }, [data]);
+
         useEffect(() => {
             if (!selected && blocksData.blocks.length > 0 && initialLoadComplete) {
                 const firstCategory = Object.values(filteredCategories)[0];
@@ -886,90 +933,96 @@
                 )}
 
                 <div className="pp-blocks-usage-container">
-                    <div className="pp-blocks-usage-categories">
-                        {Object.entries(filteredCategories).map(([slug, { title, blocks }]) => {
-                            const stats = categoryStats[slug] || { blocks: 0, locations: 0, instances: 0 };
+                    {shouldShowWelcomeIntro ? (
+                        <WelcomeIntro onScanClick={scanAll} loadingAll={loadingAll} />
+                    ) : (
+                        <>
+                            <div className="pp-blocks-usage-categories">
+                                {Object.entries(filteredCategories).map(([slug, { title, blocks }]) => {
+                                    const stats = categoryStats[slug] || { blocks: 0, locations: 0, instances: 0 };
 
-                            const pluralize = (count, singular, plural) => {
-                                return count === 1 ? singular : plural;
-                            };
+                                    const pluralize = (count, singular, plural) => {
+                                        return count === 1 ? singular : plural;
+                                    };
 
-                            const categoryTitle = (
-                                <span className="pp-blocks-usage-category-title">
-                                    <span className="category-name">{title}</span>
-                                    <span className="category-stats">
-                                        ({stats.blocks} {pluralize(stats.blocks, __('block', 'advanced-gutenberg'), __('blocks', 'advanced-gutenberg'))}, {stats.locations} {pluralize(stats.locations, __('location', 'advanced-gutenberg'), __('locations', 'advanced-gutenberg'))}, {stats.instances} {pluralize(stats.instances, __('instance', 'advanced-gutenberg'), __('instances', 'advanced-gutenberg'))})
-                                    </span>
-                                </span>
-                            );
-                            return (
+                                    const categoryTitle = (
+                                        <span className="pp-blocks-usage-category-title">
+                                            <span className="category-name">{title}</span>
+                                            <span className="category-stats">
+                                                ({stats.blocks} {pluralize(stats.blocks, __('block', 'advanced-gutenberg'), __('blocks', 'advanced-gutenberg'))}, {stats.locations} {pluralize(stats.locations, __('location', 'advanced-gutenberg'), __('locations', 'advanced-gutenberg'))}, {stats.instances} {pluralize(stats.instances, __('instance', 'advanced-gutenberg'), __('instances', 'advanced-gutenberg'))})
+                                            </span>
+                                        </span>
+                                    );
+                                    return (
 
-                                <PanelBody key={slug} title={categoryTitle} initialOpen>
-                                    <div className="pp-blocks-usage-block-grid">
-                                        {blocks.map(bt => {
-                                            const hasData = data.usage[bt.name] && Object.keys(data.usage[bt.name].posts).length > 0;
-                                            const blockData = data.usage[bt.name] || { posts: {}, total: 0 };
-                                            const postCount = Object.keys(blockData.posts).length;
-                                            const useCount = blockData.total;
-                                            const lastScanned = Object.values(blockData.posts)[0]?.scanned || '';
+                                        <PanelBody key={slug} title={categoryTitle} initialOpen>
+                                            <div className="pp-blocks-usage-block-grid">
+                                                {blocks.map(bt => {
+                                                    const hasData = data.usage[bt.name] && Object.keys(data.usage[bt.name].posts).length > 0;
+                                                    const blockData = data.usage[bt.name] || { posts: {}, total: 0 };
+                                                    const postCount = Object.keys(blockData.posts).length;
+                                                    const useCount = blockData.total;
+                                                    const lastScanned = Object.values(blockData.posts)[0]?.scanned || '';
 
-                                            return (
-                                                <Card
-                                                    key={bt.name}
-                                                    className={`pp-blocks-usage-block-tile ${selected?.name === bt.name ? 'active' : ''}`}
-                                                    onClick={() => handleDetailsClick(bt)}
-                                                >
-                                                    <div className="pp-blocks-usage-tile-main">
-                                                        {bt.icon && (
-                                                            <span className="block-icon" style={bt.iconColor ? { color: bt.iconColor } : {}}>
-                                                                {typeof bt.icon === 'string' && !bt.icon.includes('<') ? (
-                                                                    <span className={`dashicons dashicons-${bt.icon}`}></span>
-                                                                ) : (
-                                                                    <span dangerouslySetInnerHTML={{ __html: bt.icon }} />
+                                                    return (
+                                                        <Card
+                                                            key={bt.name}
+                                                            className={`pp-blocks-usage-block-tile ${selected?.name === bt.name ? 'active' : ''}`}
+                                                            onClick={() => handleDetailsClick(bt)}
+                                                        >
+                                                            <div className="pp-blocks-usage-tile-main">
+                                                                {bt.icon && (
+                                                                    <span className="block-icon" style={bt.iconColor ? { color: bt.iconColor } : {}}>
+                                                                        {typeof bt.icon === 'string' && !bt.icon.includes('<') ? (
+                                                                            <span className={`dashicons dashicons-${bt.icon}`}></span>
+                                                                        ) : (
+                                                                            <span dangerouslySetInnerHTML={{ __html: bt.icon }} />
+                                                                        )}
+                                                                    </span>
                                                                 )}
-                                                            </span>
-                                                        )}
-                                                        <span>{bt.title}</span>
-                                                    </div>
-                                                    {hasData ? (
-                                                        <div className="pp-blocks-usage-tile-counts">
-                                                            <div>{__('Locations:', 'advanced-gutenberg')} {postCount}</div>
-                                                            <div>{__('Instances:', 'advanced-gutenberg')} {useCount}</div>
-                                                        </div>
-                                                    ) : (
-                                                        <div className="pp-blocks-usage-tile-counts">
-                                                            <div className="no-scan">
-                                                                {data.lastScanDate
-                                                                    ? __('Not found in any posts', 'advanced-gutenberg')
-                                                                    : __('No scan history', 'advanced-gutenberg')}
+                                                                <span>{bt.title}</span>
                                                             </div>
-                                                        </div>
-                                                    )}
-                                                    <div className="pp-blocks-usage-tile-actions">
-                                                        <Button variant="secondary" size="small" onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            handleDetailsClick(bt);
-                                                        }}>
-                                                            {__('Details', 'advanced-gutenberg')}
-                                                        </Button>
-                                                    </div>
-                                                </Card>
-                                            );
-                                        })}
-                                    </div>
-                                </PanelBody>
-                            );
-                        })}
-                    </div>
+                                                            {hasData ? (
+                                                                <div className="pp-blocks-usage-tile-counts">
+                                                                    <div>{__('Locations:', 'advanced-gutenberg')} {postCount}</div>
+                                                                    <div>{__('Instances:', 'advanced-gutenberg')} {useCount}</div>
+                                                                </div>
+                                                            ) : (
+                                                                <div className="pp-blocks-usage-tile-counts">
+                                                                    <div className="no-scan">
+                                                                        {data.lastScanDate
+                                                                            ? __('Not found in any posts', 'advanced-gutenberg')
+                                                                            : __('No scan history', 'advanced-gutenberg')}
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                            <div className="pp-blocks-usage-tile-actions">
+                                                                <Button variant="secondary" size="small" onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    handleDetailsClick(bt);
+                                                                }}>
+                                                                    {__('Details', 'advanced-gutenberg')}
+                                                                </Button>
+                                                            </div>
+                                                        </Card>
+                                                    );
+                                                })}
+                                            </div>
+                                        </PanelBody>
+                                    );
+                                })}
+                            </div>
 
-                    {selected && (
-                        <Sidebar
-                            key={selected.name}
-                            selected={selected}
-                            data={data}
-                            onClose={() => setSelected(null)}
-                            canEditPosts={currentUser?.canEditPosts || false}
-                        />
+                            {selected && (
+                                <Sidebar
+                                    key={selected.name}
+                                    selected={selected}
+                                    data={data}
+                                    onClose={() => setSelected(null)}
+                                    canEditPosts={currentUser?.canEditPosts || false}
+                                />
+                            )}
+                        </>
                     )}
                 </div>
             </div>

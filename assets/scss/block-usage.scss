@@ -412,6 +412,95 @@
   }
 }
 
+
+.pp-blocks-usage-welcome-intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    flex: 1;
+}
+
+.pp-blocks-usage-welcome-card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.pp-blocks-usage-welcome-icon {
+    font-size: 48px;
+    color: #2271b1;
+    margin-bottom: 20px;
+}
+
+.pp-blocks-usage-welcome-icon .dashicons {
+    width: 48px;
+    height: 48px;
+    font-size: 48px;
+}
+
+.pp-blocks-usage-welcome-card h2 {
+    font-size: 24px;
+    color: #1d2327;
+    margin: 0 0 16px 0;
+    font-weight: 600;
+}
+
+.pp-blocks-usage-welcome-card p {
+    font-size: 16px;
+    color: #646970;
+    margin: 0 0 30px 0;
+    line-height: 1.5;
+}
+
+.pp-blocks-usage-welcome-features {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.pp-blocks-usage-feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #3c434a;
+}
+
+.pp-blocks-usage-feature .dashicons {
+    color: #2271b1;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+}
+
+.pp-blocks-usage-welcome-scan-button {
+    font-size: 16px;
+    padding: 12px 24px;
+    height: auto;
+    min-height: 40px;
+}
+
+@media (max-width: 768px) {
+    .pp-blocks-usage-welcome-card {
+        padding: 30px 20px;
+    }
+
+    .pp-blocks-usage-welcome-features {
+        text-align: center;
+    }
+
+    .pp-blocks-usage-feature {
+        justify-content: center;
+    }
+}
+
 @media (max-width: 782px) {
   .pp-blocks-usage-controls {
       .pp-blocks-usage-post-type-selector {
