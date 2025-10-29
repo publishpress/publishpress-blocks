@@ -507,6 +507,10 @@
         };
 
         const handlePostTypeChange = async (newPostTypes) => {
+            if (!window.advgb_block_usage_data.isProActive) {
+                return;
+            }
+
             setSelectedPostTypes(newPostTypes);
             try {
                 await saveToCache('block_usage_settings', {
@@ -774,6 +778,23 @@
             );
         }
 
+        let proHtml = '';
+        let wrapperCalss = '';
+        let blurClass = '';
+
+        if (!window.advgb_block_usage_data.isProActive) {
+            wrapperCalss = 'advgb-promo-overlay-area';
+            blurClass = 'advgb-blur';
+            proHtml = (
+                <div className="advgb-pro-small-overlay-text">
+                    <a className="advgb-pro-link clickable" href={window.advgb_block_usage_data.promoLink} target="_blank" rel="noopener noreferrer">
+                        <span className="dashicons dashicons-lock"></span>
+                        {window.advgb_block_usage_data.proText}
+                    </a>
+                </div>
+            );
+        }
+
         return (
             <div className={`pp-blocks-usage-wrapper ${selected ? 'has-sidebar' : ''}`}>
                 {dbError && (
@@ -785,9 +806,10 @@
                 <div className="pp-blocks-usage-header">
                     <Flex justify="space-between" align="center">
                         <FlexItem>
-                            <div className="pp-blocks-usage-controls">
+                            <div className={`${wrapperCalss} pp-blocks-usage-controls`}>
+                                {proHtml}
                                 {window.advgb_block_usage_data?.postTypes && (
-                                    <div className="pp-blocks-usage-post-type-selector">
+                                    <div className={`${blurClass} pp-blocks-usage-post-type-selector`}>
                                         <FormTokenField
                                             label={__('Limit Scan to Post Types:', 'advanced-gutenberg')}
                                             value={selectedPostTypes}
