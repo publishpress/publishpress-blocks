@@ -11,3 +11,4 @@ report.csv
 .env
 .phplint-cache
 .phplint.cache
+version.txt
