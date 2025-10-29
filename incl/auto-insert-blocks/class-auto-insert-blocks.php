@@ -904,7 +904,7 @@ class AdvancedGutenbergAutoInsertBlocks
     /**
      * Remove the month filter dropdown
      */
-    private function removeMonthFilters($months, $post_type)
+    public function removeMonthFilters($months, $post_type)
     {
         if ($post_type === 'advgb_insert_block') {
             // Return empty to remove the dropdown

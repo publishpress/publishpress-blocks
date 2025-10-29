@@ -3315,6 +3315,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'blockCategories' => $blockCategories,
                 'saved_blocks' => $saved_blocks,
                 'postTypes' => $this->get_editor_post_types(),
+                'isProActive' => Utilities::isProActive(),
+                'promoLink' => ADVANCED_GUTENBERG_UPGRADE_LINK,
+                'upgradeText'   => __( 'Upgrade to Pro', 'advanced-gutenberg' ),
+                 'proText'   => __( 'Pro', 'advanced-gutenberg' ),
                 'initialData' => [
                     'usage' => [],
                     'lastScanDate' => '',
