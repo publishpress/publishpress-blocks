@@ -44,22 +44,6 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                                 <?php esc_html_e('Example text with this style', 'advanced-gutenberg') ?>
                             </div>
                         </div>
-
-                        <div class="preview-context">
-                            <p class="previous-block" style="margin-bottom: 20px; margin-top: 10px; font-size: 16px; line-height: 24px;">
-                                <strong>
-                                    <?php esc_html_e('Previous Paragraph.', 'advanced-gutenberg'); ?>
-                                </strong>
-                                <?php echo esc_html('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae condimentum augue. Nullam semper augue quis posuere lacinia. Praesent non lectus nunc.'); ?>
-                            </p>
-
-                            <p class="follow-block" style="margin-bottom: 10px; margin-top: 20px; font-size: 16px; line-height: 24px;">
-                                <strong>
-                                    <?php esc_html_e('Following Paragraph.', 'advanced-gutenberg'); ?>
-                                </strong>
-                                <?php echo esc_html('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae condimentum augue. Nullam semper augue quis posuere lacinia. Praesent non lectus nunc.'); ?>
-                            </p>
-                        </div>
                     </div>
 
                     <fieldset class="advgb-fieldset advgb-preview-fieldset">
