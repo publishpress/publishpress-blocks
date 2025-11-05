@@ -3770,6 +3770,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
             } else {
                 $current_user = wp_get_current_user();
 
+                if (empty($current_user->roles) || empty($current_user->roles[0])) {
+                    return $user_roles_data;
+                }
+
                 if (count($current_user->roles) === 1) {
                     // User has 1 user role
                     $current_user_role = $current_user->roles[0]; // string
