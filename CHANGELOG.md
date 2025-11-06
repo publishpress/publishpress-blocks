@@ -1,6 +1,20 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= 3.6.0 - 06 November 2025 =
+  * Update: Add intro message to Block Usage screen, #1657
+  * Update: Show how many block instances come from each plugin on Block Usage screen, #1492
+  * Update: Make Block Usage "Post Types" filter a pro feature, #1658
+  * Update: Update screens button to use WordPress primary/secondary buttons on all pages, #1650
+  * Fixed: Tab Blocks not working properly when it is moved resulting in previous block been removed, #1584
+  * Update: Lightbox not working for Gallery blocks, #1383
+  * Update: Change promo tooltips to direct links, #1656
+  * Update: Remove Month filter on Auto Insert Blocks, #1666
+  * Fixed: Auto Insert Blocks results in duplicated author box on a single content, #1667
+  * Update: Remove "Previous Paragraph" and "Following Paragraph" in Block styles preview, #1675
+  * Fixed: PHP Warning, Undefined array key 0, #1674
+  * Fixed: Incorrect link to changelog in readme.txt, #1678
+
 = 3.5.2 - 20 October 2025 =
   * Update: Move Style Builder features to the Free version, #1586
   * Update: Add more options (link, heading, hover etc) for Block Styles, #1592
