@@ -69,3 +69,4 @@ webpack.config.js export-ignore
 webpack.dev.js export-ignore
 webpack.prod.js export-ignore
 wp-cli.local.yml export-ignore
+.wordpress-org export-ignore
