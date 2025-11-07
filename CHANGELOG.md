@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   * Update: Remove Month filter on Auto Insert Blocks, #1666
   * Fixed: Auto Insert Blocks results in duplicated author box on a single content, #1667
   * Update: Remove "Previous Paragraph" and "Following Paragraph" in Block styles preview, #1675
+  * Update: Remove main Padding, Margin, Border etc from block styles, #1676
   * Fixed: PHP Warning, Undefined array key 0, #1674
   * Fixed: Incorrect link to changelog in readme.txt, #1678
 
