@@ -22,3 +22,4 @@ exclude:
   - cache
   - .cache
   - assets
+  - .wordpress-org
