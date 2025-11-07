@@ -577,3 +577,61 @@
   margin-top: -12px;
   margin-left: 0;
 }
+
+
+
+
+
+
+
+/* Header Scan Button States */
+#header-scan-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
+
+#header-scan-button:not(:disabled):hover {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+}
+
+.pp-blocks-usage-header {
+    margin: 0;
+}
+
+
+.pp-blocks-usage-post-type-filter {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+
+.pp-blocks-usage-post-type-filter .components-form-token-field__suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    margin-top: -1px;
+}
+
+.pp-blocks-usage-post-type-filter .components-form-token-field__suggestions-list {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.pp-blocks-usage-controls {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
+    position: relative;
+}

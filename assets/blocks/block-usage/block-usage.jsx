@@ -483,6 +483,22 @@
         const [dbError, setDbError] = useState(null);
         const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
+        // Enable header scan button when component mounts
+        useEffect(() => {
+            if (initialLoadComplete) {
+                const headerButton = document.getElementById('header-scan-button');
+                if (headerButton) {
+                    headerButton.disabled = false;
+                    headerButton.style.opacity = '1';
+                    headerButton.style.cursor = 'pointer';
+                    headerButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        scanAll();
+                    });
+                }
+            }
+        }, [initialLoadComplete]);
+
         // Load data from IndexedDB on initial render
         useEffect(() => {
             const loadData = async () => {
@@ -855,7 +871,7 @@
                             <div className={`${wrapperCalss} pp-blocks-usage-controls`}>
                                 {proHtml}
                                 {window.advgb_block_usage_data?.postTypes && (
-                                    <div className={`${blurClass} pp-blocks-usage-post-type-selector`}>
+                                    <div className={`${blurClass} pp-blocks-usage-post-type-filter`}>
                                         <FormTokenField
                                             label={__('Limit Scan to Post Types:', 'advanced-gutenberg')}
                                             value={selectedPostTypes}
@@ -865,13 +881,18 @@
                                             tokenizeOnSpace={false}
                                             __experimentalExpandOnFocus={true}
                                             __experimentalShowHowTo={false}
-                                            style={{ minWidth: '300px' }}
+                                            style={{ minWidth: '300px', marginRight: '12px' }}
                                         />
+                                        <Button
+                                            style={{ marginTop: '13px' }}
+                                            className="button"
+                                            onClick={scanAll}
+                                            disabled={loadingAll}
+                                        >
+                                            {loadingAll ? <Spinner /> : __('Filter', 'advanced-gutenberg')}
+                                        </Button>
                                     </div>
                                 )}
-                                <Button className="advgb-primary-button button button-primary" onClick={scanAll} disabled={loadingAll}>
-                                    {loadingAll ? <Spinner /> : __('Scan Block Usage', 'advanced-gutenberg')}
-                                </Button>
                             </div>
                         </FlexItem>
                         <FlexItem>
