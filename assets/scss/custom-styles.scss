@@ -532,3 +532,32 @@
         padding: 15px;
     }
 }
+
+.advgb-customstyles-header-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.advgb-style-title-wrapper,
+.advgb-classname-wrapper,
+.advgb-identify-color-wrapper {
+    flex: 1;
+}
+
+.advgb-customstyles-header-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.advgb-customstyles-header-row .regular-text {
+    width: 100%;
+}
+
+.advgb-customstyles-new:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

@@ -26,12 +26,20 @@ class AdvGbCustomStyles {
         this.initColorPickers();
         this.initFieldsets();
         this.setupLivePreview();
+        this.enableAddNewButton();
     }
 
     initializeEventHandlers() {
         this.bindTabEvents();
         this.bindFormEvents();
         this.bindPreviewEvents();
+    }
+
+
+    enableAddNewButton() {
+        this.$('.advgb-customstyles-new')
+            .prop('disabled', false)
+            .removeAttr('disabled');
     }
 
     // UI Management
@@ -1055,7 +1063,7 @@ class AdvGbCustomStyles {
 
     initCustomStyleNew() {
         const self = this;
-        this.$('#mybootstrap a.advgb-customstyles-new').off('click').on('click', function (e) {
+        this.$('.advgb-customstyles-new').off('click').on('click', function (e) {
             e.preventDefault();
             const that = this;
             const nonce_val = self.$('#advgb_cstyles_nonce_field').val();
@@ -1080,11 +1088,7 @@ class AdvGbCustomStyles {
                             </ul>
                         </li>`;
 
-                    if (self.$(that).hasClass('top-button')) {
-                        self.$(that).closest('li').after(newItem);
-                    } else {
-                        self.$(that).parent().before(newItem);
-                    }
+                    self.$('.advgb-customstyles-list').prepend(newItem);
 
                     self.initCustomStyleMenu();
                     self.customStylePreview(res.id);
