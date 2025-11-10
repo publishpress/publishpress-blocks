@@ -222,36 +222,81 @@
         };
     };
 
-    const WelcomeIntro = ({ onScanClick, loadingAll }) => {
+    const WelcomeIntro = ({ onScanClick, loadingAll, data }) => {
+        const totalBlocks = Object.keys(data.usage || {}).length;
+        const totalPosts = data.posts?.length || 0;
+        const lastScanDate = data.lastScanDate;
+
         return (
             <div className="pp-blocks-usage-welcome-intro">
                 <div className="pp-blocks-usage-welcome-card">
                     <div className="pp-blocks-usage-welcome-icon">
-                        <span className="dashicons dashicons-search"></span>
+                        <span className="dashicons dashicons-block-default"></span>
                     </div>
+
                     <h2>{__('Welcome to Block Usage', 'advanced-gutenberg')}</h2>
                     <p>{__('This screen allows you to search for and find any usage of blocks on your site.', 'advanced-gutenberg')}</p>
-                    <div className="pp-blocks-usage-welcome-features">
-                        <div className="pp-blocks-usage-feature">
-                            <span className="dashicons dashicons-admin-post"></span>
-                            <span>{__('Scan posts, pages or any custom post types for block usage', 'advanced-gutenberg')}</span>
+
+                    {lastScanDate && (
+                        <div className="pp-blocks-usage-stats-overview">
+                            <div className="pp-blocks-usage-stat-card">
+                                <span className="pp-blocks-usage-stat-number">{totalBlocks}</span>
+                                <span className="pp-blocks-usage-stat-label">{__('Blocks Found', 'advanced-gutenberg')}</span>
+                            </div>
+                            <div className="pp-blocks-usage-stat-card">
+                                <span className="pp-blocks-usage-stat-number">{totalPosts}</span>
+                                <span className="pp-blocks-usage-stat-label">{__('Posts Scanned', 'advanced-gutenberg')}</span>
+                            </div>
+                            <div className="pp-blocks-usage-stat-card">
+                                <span className="pp-blocks-usage-stat-label">{__('Last Scan', 'advanced-gutenberg')}</span>
+                                <span className="pp-blocks-usage-stat-number" style={{ fontSize: '0.9em' }}>
+                                    {new Date(lastScanDate).toLocaleDateString()}
+                                </span>
+                            </div>
                         </div>
-                        <div className="pp-blocks-usage-feature">
-                            <span className="dashicons dashicons-chart-bar"></span>
-                            <span>{__('View detailed usage statistics', 'advanced-gutenberg')}</span>
+                    )}
+
+                    <div className="pp-blocks-usage-features-grid">
+                        <div className="pp-blocks-usage-feature-card">
+                            <div className="pp-blocks-usage-feature-icon">
+                                <span className="dashicons dashicons-search"></span>
+                            </div>
+                            <h3>{__('Scan Content', 'advanced-gutenberg')}</h3>
+                            <p>{__('Find all blocks used across your posts, pages, and custom post types', 'advanced-gutenberg')}</p>
                         </div>
-                        <div className="pp-blocks-usage-feature">
-                            <span className="dashicons dashicons-list-view"></span>
-                            <span>{__('See exactly where each block is used', 'advanced-gutenberg')}</span>
+
+                        <div className="pp-blocks-usage-feature-card">
+                            <div className="pp-blocks-usage-feature-icon">
+                                <span className="dashicons dashicons-analytics"></span>
+                            </div>
+                            <h3>{__('Usage Analytics', 'advanced-gutenberg')}</h3>
+                            <p>{__('See detailed statistics about block usage and locations', 'advanced-gutenberg')}</p>
+                        </div>
+
+                        <div className="pp-blocks-usage-feature-card">
+                            <div className="pp-blocks-usage-feature-icon">
+                                <span className="dashicons dashicons-admin-links"></span>
+                            </div>
+                            <h3>{__('Quick Navigation', 'advanced-gutenberg')}</h3>
+                            <p>{__('Jump directly to posts containing specific blocks for editing', 'advanced-gutenberg')}</p>
                         </div>
                     </div>
-                    <Button
-                        onClick={onScanClick}
-                        disabled={loadingAll}
-                        className="pp-blocks-usage-welcome-scan-button advgb-primary-button button button-primary"
-                    >
-                        {loadingAll ? <Spinner /> : __('Scan Block Usage', 'advanced-gutenberg')}
-                    </Button>
+
+                    <div className="pp-blocks-usage-welcome-scan-button">
+                        <button
+                            class="button button-secondary"
+                            onClick={onScanClick}
+                            disabled={loadingAll}
+                        >
+                            {loadingAll ? <Spinner /> : __('Scan Block Usage', 'advanced-gutenberg')}
+                        </button>
+                    </div>
+
+                    {!lastScanDate && (
+                        <p style={{ marginTop: '20px', color: '#666', fontSize: '0.9em' }}>
+                            {__('Start by scanning your content to discover block usage patterns.', 'advanced-gutenberg')}
+                        </p>
+                    )}
                 </div>
             </div>
         );
@@ -931,17 +976,15 @@
                         <span>{__('Last scan:', 'advanced-gutenberg')} {new Date(data.lastScanDate).toLocaleString()}</span>
                         <div className="ppb-tooltips-library" data-toggle="ppbtooltip" data-placement="left">
                             {!loadingClearAll &&
-                                <span className="dashicons dashicons-editor-help" style={{ verticalAlign: 'middle', lineHeight: 'inherit' }}></span>
+                                <span className="dashicons dashicons-editor-help" style={{ verticalAlign: 'sub', lineHeight: 'inherit' }}></span>
                             }
-                            <Button
-                                variant="secondary"
+                            <button className="button button-secondary advgb-destructive-button"
                                 onClick={clearAllData}
                                 disabled={loadingAll || loadingClearAll}
-                                className="is-destructive"
                                 style={{ marginLeft: '8px' }}
                             >
                                 {loadingClearAll ? <Spinner /> : __('Clear All Data', 'advanced-gutenberg')}
-                            </Button>
+                            </button>
                             {!loadingClearAll &&
                                 <span className="tooltip-text">
                                     <span>{__('Scan data is stored in your browser to improve performance and handle large datasets. This keeps your WordPress database clean. Click to permanently delete all stored data.', 'advanced-gutenberg')}</span>
@@ -954,7 +997,7 @@
 
                 <div className="pp-blocks-usage-container">
                     {shouldShowWelcomeIntro ? (
-                        <WelcomeIntro onScanClick={scanAll} loadingAll={loadingAll} />
+                        <WelcomeIntro onScanClick={scanAll} loadingAll={loadingAll} data={data} />
                     ) : (
                         <>
                             <div className="pp-blocks-usage-categories">

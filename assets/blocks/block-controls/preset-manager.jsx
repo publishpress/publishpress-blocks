@@ -152,6 +152,8 @@ import {
                 lastAction: null, // 'created', 'cancelled', 'deleted', 'saved', 'loaded'
             };
 
+            this.messageContainerRef = React.createRef();
+
             this.handleModalClose = this.handleModalClose.bind(this);
             this.createNewPreset = this.createNewPreset.bind(this);
             this.editPreset = this.editPreset.bind(this);
@@ -313,9 +315,10 @@ import {
             }
         }
 
-        getDefaultPreset() {
+        getDefaultPreset(defaultpreset = true) {
             return {
                 id: null,
+                default: defaultpreset,
                 title: '',
                 controlSets: [],
                 created: null,
@@ -360,12 +363,16 @@ import {
                             saving: false,
                             showModal: false,
                             lastAction: 'saved'
+                        }, () => {
+                            this.scrollToMessage();
                         });
                     } else {
                         this.setState({
                             saving: false,
                             showModal: false,
                             lastAction: 'saved'
+                        }, () => {
+                            this.scrollToMessage();
                         });
                     }
                     return response;
@@ -375,13 +382,67 @@ import {
                     error: error.message,
                     saving: false,
                     lastAction: 'error'
+                }, () => {
+                    this.scrollToMessage();
+                });
+                throw error;
+            }
+        }
+
+        async savePreset(presetData) {
+            this.setState({ saving: true, error: null });
+
+            try {
+                const response = await wp.apiFetch({
+                    path: '/advgb/v1/presets',
+                    method: 'POST',
+                    data: presetData
+                });
+
+                if (response.success) {
+                    await this.loadPresets();
+
+                    const newPreset = response.presets.find(p => p.id === response.id);
+                    if (newPreset) {
+                        const updatedPresets = response.presets || [];
+                        if (window.AdvGBPresetData) {
+                            window.AdvGBPresetData.updatePresets(updatedPresets);
+                        }
+
+                        this.setState({
+                            editingPreset: null,
+                            currentPreset: null,
+                            saving: false,
+                            showModal: false,
+                            lastAction: 'saved'
+                        }, () => {
+                            // Scroll to top after state update
+                            this.scrollToMessage();
+                        });
+                    } else {
+                        this.setState({
+                            saving: false,
+                            showModal: false,
+                            lastAction: 'saved'
+                        }, () => {
+                            this.scrollToMessage();
+                        });
+                    }
+                    return response;
+                }
+            } catch (error) {
+                this.setState({
+                    error: error.message,
+                    saving: false,
+                    lastAction: 'error'
+                }, () => {
+                    this.scrollToMessage();
                 });
                 throw error;
             }
         }
 
         async deletePreset(presetId) {
-
             this.setState({
                 deleting: true,
                 deletingPresetId: presetId
@@ -392,6 +453,7 @@ import {
                     path: `/advgb/v1/presets/${presetId}`,
                     method: 'DELETE'
                 });
+
                 if (response.success) {
                     if (window.AdvGBPresetData) {
                         window.AdvGBPresetData.updatePresets(response.presets, 'delete');
@@ -410,8 +472,9 @@ import {
                         currentPreset: null,
                         editingPreset: null,
                         lastAction: 'deleted'
+                    }, () => {
+                        this.scrollToMessage();
                     });
-
                     await this.loadPresets();
                 }
             } catch (error) {
@@ -419,17 +482,21 @@ import {
                     deleting: false,
                     deletingPresetId: null,
                     error: error.message
+                }, () => {
+                    this.scrollToMessage();
                 });
             }
         }
 
         createNewPreset() {
             this.setState({
-                currentPreset: this.getDefaultPreset(),
+                currentPreset: this.getDefaultPreset(false),
                 editingPreset: null,
                 modalMode: 'create',
                 showModal: true,
                 lastAction: 'creating'
+            }, () => {
+                this.scrollToMessage();
             });
         }
 
@@ -440,7 +507,25 @@ import {
                 editingPreset: preset,
                 showModal: true,
                 lastAction: 'editing'
+            }, () => {
+                this.scrollToMessage();
             });
+        }
+
+        scrollToMessage() {
+            console.log('now?')
+            setTimeout(() => {
+                console.log('wn?')
+                console.log(this.messageContainerRef);
+                console.log(this.messageContainerRef.current);
+                if (this.messageContainerRef.current) {
+                    this.messageContainerRef.current.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    console.log('scroll')
+                }
+            }, 100);
         }
 
         toggleControlSet(setIndex) {
@@ -633,23 +718,8 @@ import {
                 <div className="advgb-presets-list">
                     {(!presets || presets.length === 0) && (
                         <div className="advgb-empty-presets-message">
-                            <div className="advgb-empty-icon">📋</div>
                             <h3>{__('No presets yet', 'advanced-gutenberg')}</h3>
-                            <p>{__('Create your first preset or generate sample presets to get started.', 'advanced-gutenberg')}</p>
-                            <div className="advgb-empty-actions">
-                                <Button
-                                    onClick={() => this.createNewPreset()}
-                                    className="advgb-create-first-btn advgb-primary-button button button-primary"
-                                >
-                                    {__('Create First Preset', 'advanced-gutenberg')}
-                                </Button>
-                                <Button
-                                    onClick={() => this.createSamplePresets()}
-                                    className="advgb-create-samples-btn button button-secondary"
-                                >
-                                    {__('Create Sample Presets', 'advanced-gutenberg')}
-                                </Button>
-                            </div>
+                            <p>{__('You have not created any preset.', 'advanced-gutenberg')}</p>
                         </div>
                     )}
 
@@ -688,7 +758,7 @@ import {
         }
 
         renderPresetForm() {
-            const { currentPreset, saving } = this.state;
+            const { currentPreset, saving, deleting } = this.state;
 
             if (!currentPreset) return null;
 
@@ -714,13 +784,12 @@ import {
                             <p className="advgb-control-sets-description">
                                 {__('Show the block if any control set applies. Each set can contain multiple rules.', 'advanced-gutenberg')}
                             </p>
-                            <Button
-                                icon="plus"
-                                onClick={this.addControlSet}
-                                className="advgb-add-set-btn button button-secondary"
-                            >
+
+                            <button type="button"
+                                className="button button-secondary"
+                                onClick={this.addControlSet}>
                                 {__('Add Control Set', 'advanced-gutenberg')}
-                            </Button>
+                            </button>
                         </div>
 
                         <div className="advgb-control-sets">
@@ -740,22 +809,28 @@ import {
                     <div className="advgb-preset-actions">
                         {currentPreset.id && (
                             <div className="ppb-tooltips-library click advgb-delete-preset-tooltip" data-toggle="ppbtooltip" data-placement="top">
-                                <Button
-                                    className="advgb-delete-preset-btn is-destructive-outline"
-                                    icon="trash"
-                                    label={__('Delete Preset', 'advanced-gutenberg')}
+                                <button className="advgb-delete-preset-btn button button-secondary advgb-destructive-button"
+                                    disabled={deleting || saving}
                                 >
-                                    {__('Delete Preset', 'advanced-gutenberg')}
-                                </Button>
+                                    {deleting ? (
+                                        <>
+                                            <Spinner />
+                                            {__('Deleting...', 'advanced-gutenberg')}
+                                        </>
+                                    ) : (
+                                        __('Delete Preset', 'advanced-gutenberg')
+                                    )}
+                                </button>
                                 <div className="tooltip-text">
                                     <p>
                                         {__('Are you sure you want to delete preset?', 'advanced-gutenberg')}
+                                        <br />
                                         <Button
+                                            isLink
                                             isSmall
                                             isDestructive
                                             label={__('Delete Preset', 'advanced-gutenberg')}
                                             onClick={(e) => {
-                                                e.stopPropagation();
                                                 this.deletePreset(currentPreset.id);
                                             }}
                                         >
@@ -765,6 +840,7 @@ import {
                                         </Button>
                                         |
                                         <Button
+                                            isLink
                                             isSmall
                                             label={__('No, Cancel', 'advanced-gutenberg')}
                                         >
@@ -775,21 +851,25 @@ import {
                                 </div>
                             </div>
                         )}
-                        <Button
-                            onClick={() => this.savePreset(this.state.currentPreset)}
+                        <button
+                         onClick={() => this.savePreset(this.state.currentPreset)}
                             disabled={saving || !currentPreset.title}
-                            isBusy={saving}
-                            className="advgb-save-btn advgb-primary-button button button-primary"
-                        >
-                            {saving ? __('Saving...', 'advanced-gutenberg') : __('Save Preset', 'advanced-gutenberg')}
-                        </Button>
-                        <Button
+                        className="advgb-save-btn button button-primary">
+                             {saving ? (
+                                <>
+                                    <Spinner />
+                                    {__('Saving...', 'advanced-gutenberg')}
+                                </>
+                            ) : (
+                                __('Save Preset', 'advanced-gutenberg')
+                            )}
+                        </button>
+                        <button
                             className="button button-secondary"
                             onClick={this.handleModalClose}
-                            disabled={saving}
-                        >
-                            {__('Cancel', 'advanced-gutenberg')}
-                        </Button>
+                            disabled={saving}>
+                             {__('Cancel', 'advanced-gutenberg')}
+                        </button>
                     </div>
                 </div>
             );
@@ -808,8 +888,8 @@ import {
                             <div className="advgb-set-title-row">
                                 <span className={`dashicons dashicons-arrow-${isExpanded ? 'down' : 'right'}`}></span>
                                 <div className="title-row-text">
-                                <h4>{__('Control Set', 'advanced-gutenberg')} {setIndex + 1}</h4>
-                                <p>{__('Show the block if any rule applies. Rules are evaluated with AND logic.', 'advanced-gutenberg')}</p>
+                                    <h4>{__('Control Set', 'advanced-gutenberg')} {setIndex + 1}</h4>
+                                    <p>{__('Show the block if any rule applies. Rules are evaluated with AND logic.', 'advanced-gutenberg')}</p>
                                 </div>
                             </div>
                         </div>
@@ -829,6 +909,7 @@ import {
                             />
                             <div className="ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="left">
                                 <Button
+                                    isLink
                                     isSmall
                                     isDestructive
                                     icon="trash"
@@ -837,7 +918,9 @@ import {
                                 <div className="tooltip-text">
                                     <p>
                                         {__('Are you sure you want to delete set?', 'advanced-gutenberg')}
+                                        <br />
                                         <Button
+                                            isLink
                                             isSmall
                                             isDestructive
                                             label={__('Delete Set', 'advanced-gutenberg')}
@@ -849,6 +932,7 @@ import {
                                         </Button>
                                         |
                                         <Button
+                                            isLink
                                             isSmall
                                             label={__('No, Cancel', 'advanced-gutenberg')}
                                         >
@@ -876,7 +960,6 @@ import {
 
                             {(!controlSet.rules || controlSet.rules.length === 0) && (
                                 <div className="advgb-no-rules">
-                                    <div className="advgb-no-rules-icon">⚡</div>
                                     <p>{__('No rules added yet. Add rules to define when this block should be visible.', 'advanced-gutenberg')}</p>
                                 </div>
                             )}
@@ -903,6 +986,7 @@ import {
                         <div className="advgb-rule-actions">
                             <div className="ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="left">
                                 <Button
+                                    isLink
                                     isSmall
                                     isDestructive
                                     icon="trash"
@@ -911,7 +995,9 @@ import {
                                 <div className="tooltip-text">
                                     <p>
                                         {__('Are you sure you want to remove rule?', 'advanced-gutenberg')}
+                                        <br />
                                         <Button
+                                            isLink
                                             isSmall
                                             isDestructive
                                             label={__('Remove Rule', 'advanced-gutenberg')}
@@ -923,6 +1009,7 @@ import {
                                         </Button>
                                         |
                                         <Button
+                                            isLink
                                             isSmall
                                             label={__('No, Cancel', 'advanced-gutenberg')}
                                         >
@@ -1011,6 +1098,8 @@ import {
                 editingPreset: null,
                 modalMode: 'create',
                 lastAction: 'cancelled'
+            }, () => {
+                this.scrollToMessage();
             });
         }
 
@@ -1559,80 +1648,147 @@ import {
             });
         }
 
-        renderContextualMessage(lastAction) {
-            let icon, title, description;
 
+        renderContextualMessage(lastAction) {
+            const { presets } = this.state;
+
+            let title, description, icon, showFeatures = false, showStats = false;
+
+            const hasPresets = presets && presets.length > 0;
             switch (lastAction) {
                 case 'cancelled':
-                    icon = '↩️';
                     title = __('Edit Cancelled', 'advanced-gutenberg');
                     description = __('Edit cancelled. Select another preset to edit or create a new one.', 'advanced-gutenberg');
+                    icon = 'dismiss';
                     break;
 
                 case 'saved':
-                    icon = '✅';
                     title = __('Preset Saved!', 'advanced-gutenberg');
                     description = __('Preset saved successfully! Choose another preset to edit or create a new one.', 'advanced-gutenberg');
+                    icon = 'yes-alt';
                     break;
 
                 case 'deleted':
-                    icon = '🗑️';
                     title = __('Preset Deleted', 'advanced-gutenberg');
                     description = __('Preset deleted. Select another preset to edit or create a new one.', 'advanced-gutenberg');
+                    icon = 'trash';
                     break;
 
                 case 'error':
-                    icon = '⚠️';
                     title = __('Action Completed', 'advanced-gutenberg');
                     description = __('Operation completed. You can continue editing presets or create new ones.', 'advanced-gutenberg');
+                    icon = 'info';
                     break;
 
                 case 'loaded':
-                    icon = '📋';
                     title = __('Select a Preset to Edit', 'advanced-gutenberg');
                     description = __('Choose a preset from the list to edit its rules, or create a new preset to get started.', 'advanced-gutenberg');
+                    icon = 'admin-settings';
                     break;
 
                 case 'empty':
-                    icon = '📝';
                     title = __('No Presets Yet', 'advanced-gutenberg');
                     description = __('Create your first preset to start managing block visibility rules.', 'advanced-gutenberg');
+                    icon = 'welcome-add-page';
+                    showFeatures = true;
                     break;
 
                 case 'installed':
-                    icon = '✅';
                     title = __('Samples Created!', 'advanced-gutenberg');
                     description = __('Preset samples created successfully! Choose a preset to edit or create a new one.', 'advanced-gutenberg');
+                    icon = 'portfolio';
+                    showStats = true;
                     break;
 
                 default:
-                    icon = '👋';
                     title = __('Manage Your Presets', 'advanced-gutenberg');
                     description = __('Select a preset to edit or create a new one to control block visibility.', 'advanced-gutenberg');
+                    icon = 'admin-generic';
+                    showStats = true;
             }
 
             return (
                 <>
-                    <div className="advgb-guidance-icon">{icon}</div>
+                    {icon && (
+                        <div className="advgb-guidance-icon">
+                            <span className={`dashicons dashicons-${icon}`}></span>
+                        </div>
+                    )}
                     <h3>{title}</h3>
                     <p>{description}</p>
+
+                    {showStats && this.renderPresetStats()}
+                    {showFeatures && this.renderFeatureGrid()}
+
                     <div className="advgb-guidance-actions">
-                        <Button
+
+                        <button className="button button-primary"
                             onClick={() => this.createNewPreset()}
-                            className="advgb-guidance-create-btn button button-secondary"
                         >
                             {__('Create New Preset', 'advanced-gutenberg')}
-                        </Button>
-                        {lastAction === 'loaded' && (
-                            <Button
+                        </button>
+                        {!hasPresets && (
+                            <button className="button button-secondary"
                                 onClick={() => this.createSamplePresets()}
-                                className="advgb-guidance-samples-btn button button-secondary"
                             >
-                                {__('Add More Samples', 'advanced-gutenberg')}
-                            </Button>
+                                {__('Generate Samples', 'advanced-gutenberg')}
+                            </button>
                         )}
                     </div>
                 </>
+            );
+        }
+
+        renderPresetStats() {
+            const { presets } = this.state;
+            const totalPresets = presets?.length || 0;
+            const totalRules = presets?.reduce((count, preset) => {
+                return count + (preset.controlSets?.reduce((setCount, set) => {
+                    return setCount + (set.rules?.length || 0);
+                }, 0) || 0);
+            }, 0) || 0;
+
+            return (
+                <div className="advgb-preset-stats-overview">
+                    <div className="advgb-preset-stat-card">
+                        <span className="advgb-preset-stat-number">{totalPresets}</span>
+                        <span className="advgb-preset-stat-label">{__('Total Presets', 'advanced-gutenberg')}</span>
+                    </div>
+                    <div className="advgb-preset-stat-card">
+                        <span className="advgb-preset-stat-number">{totalRules}</span>
+                        <span className="advgb-preset-stat-label">{__('Rules Created', 'advanced-gutenberg')}</span>
+                    </div>
+                </div>
+            );
+        }
+
+        renderFeatureGrid() {
+            return (
+                <div className="advgb-preset-features-grid">
+                    <div className="advgb-preset-feature-card">
+                        <div className="advgb-preset-feature-icon">
+                            <span className="dashicons dashicons-visibility"></span>
+                        </div>
+                        <h4>{__('Conditional Visibility', 'advanced-gutenberg')}</h4>
+                        <p>{__('Control when blocks appear based on user roles, devices, schedules, and more', 'advanced-gutenberg')}</p>
+                    </div>
+
+                    <div className="advgb-preset-feature-card">
+                        <div className="advgb-preset-feature-icon">
+                            <span className="dashicons dashicons-admin-users"></span>
+                        </div>
+                        <h4>{__('User Targeting', 'advanced-gutenberg')}</h4>
+                        <p>{__('Show or hide content to specific user roles, logged-in status, or capabilities', 'advanced-gutenberg')}</p>
+                    </div>
+
+                    <div className="advgb-preset-feature-card">
+                        <div className="advgb-preset-feature-icon">
+                            <span className="dashicons dashicons-clock"></span>
+                        </div>
+                        <h4>{__('Scheduling', 'advanced-gutenberg')}</h4>
+                        <p>{__('Set time-based rules to display content only during specific periods', 'advanced-gutenberg')}</p>
+                    </div>
+                </div>
             );
         }
 
@@ -1640,7 +1796,7 @@ import {
             const { showModal, loading, error, currentPreset, editingPreset, deleting, presets, lastAction } = this.state;
             const { isModal = false } = this.props;
 
-            const hasActiveForm = currentPreset || editingPreset;
+            const hasActiveForm = (currentPreset && !currentPreset.default) || editingPreset;
             const hasPresets = presets && presets.length > 0;
 
             if (loading) {
@@ -1662,49 +1818,81 @@ import {
             }
 
             const content = (
-                <div className={`advgb-preset-manager ${deleting ? 'deleting' : ''}`}>
-                    {deleting && (
-                        <div className="advgb-preset-deleting-overlay">
-                            <div className="advgb-preset-deleting-message">
-                                <Spinner />
-                            </div>
-                        </div>
-                    )}
-                    <div className="advgb-preset-sidebar">
-                        <div className="advgb-preset-sidebar-header">
-                            {hasPresets && !hasActiveForm && (
-                                <Button
-                                    className="advgb-primary-button button button-primary"
+                <>
+                    <div className="advgb-preset-sidebar-header" ref={this.messageContainerRef}>
+                        {!hasActiveForm && (
+                            <>
+                                <button className="button button-secondary"
                                     onClick={() => this.createNewPreset()}
                                 >
-                                    {__('Add New', 'advanced-gutenberg')}
-                                </Button>
+                                    {__('Add New Preset', 'advanced-gutenberg')}
+                                </button>
+                                {!hasPresets && (
+                                    <button className="button button-primary"
+                                        onClick={() => this.createSamplePresets()}
+                                    >
+                                        {__('Generate Sample Preset', 'advanced-gutenberg')}
+                                    </button>
+                                )}
+                            </>
+                        )}
+                    </div>
+                    <div className={`advgb-preset-manager ${deleting ? 'deleting' : ''}`}>
+                        {deleting && (
+                            <div className="advgb-preset-deleting-overlay">
+                                <div className="advgb-preset-deleting-message">
+                                    <Spinner />
+                                </div>
+                            </div>
+                        )}
+
+                        {(hasPresets || hasActiveForm) && (
+                            <div className="advgb-preset-sidebar">
+                                {this.renderPresetList()}
+                            </div>
+                        )}
+
+                        <div className="advgb-preset-editor">
+                            {(hasPresets || lastAction == 'creating') && hasActiveForm && this.renderPresetForm()}
+
+                            {(!hasPresets && lastAction !== 'creating') && (
+                                <div className="advgb-welcome-message">
+                                    <div className="advgb-welcome-icon">
+                                        <span className="dashicons dashicons-admin-tools"></span>
+                                    </div>
+                                    <h3>{__('Welcome to Block Control Presets', 'advanced-gutenberg')}</h3>
+                                    <p>{__('Create powerful visibility rules for your blocks. Control when and to whom your content appears with advanced conditional logic.', 'advanced-gutenberg')}</p>
+
+                                    {this.renderFeatureGrid()}
+
+                                    <div className="advgb-guidance-actions">
+                                        <button className="button button-primary"
+                                            onClick={() => this.createNewPreset()}
+                                        >
+                                            {__('Create Your First Preset', 'advanced-gutenberg')}
+                                        </button>
+                                        {!hasPresets && (
+                                            <button className="button button-secondary"
+                                                onClick={() => this.createSamplePresets()}
+                                            >
+                                                {__('Generate Sample Presets', 'advanced-gutenberg')}
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {(hasPresets && !hasActiveForm) && (
+                                <div
+                                    className="advgb-guidance-message"
+                                    data-action={lastAction}
+                                >
+                                    {this.renderContextualMessage(lastAction)}
+                                </div>
                             )}
                         </div>
-                        {this.renderPresetList()}
                     </div>
-
-                    <div className="advgb-preset-editor">
-                        {(hasPresets || lastAction == 'creating') && hasActiveForm && this.renderPresetForm()}
-
-                        {!hasPresets && lastAction !== 'creating' && (
-                            <div className="advgb-welcome-message">
-                                <div className="advgb-welcome-icon">🚀</div>
-                                <h3>{__('Welcome to Block Control Presets', 'advanced-gutenberg')}</h3>
-                                <p>{__('Create your first preset or generate sample presets to get started with block visibility rules.', 'advanced-gutenberg')}</p>
-                            </div>
-                        )}
-
-                        {hasPresets && !hasActiveForm && (
-                            <div
-                                className="advgb-guidance-message"
-                                data-action={lastAction}
-                            >
-                                {this.renderContextualMessage(lastAction)}
-                            </div>
-                        )}
-                    </div>
-                </div>
+                </>
             );
 
             if (isModal) {

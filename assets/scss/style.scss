@@ -412,6 +412,12 @@ body[class*="_page_advgb_"] #wpcontent {
   }
 }
 
+.advgb-destructive-button {
+    color: #dc3232 !important;
+    border: 1px solid #dc3232 !important;
+    background: transparent;
+}
+
 // PublishPress Footer
 .advgb-footer {
   text-align: center;
