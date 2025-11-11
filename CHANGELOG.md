@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   * Update: Remove main Padding, Margin, Border etc from block styles, #1676
   * Fixed: PHP Warning, Undefined array key 0, #1674
   * Fixed: Incorrect link to changelog in readme.txt, #1678
+  * Update: Blocks v3.5.2 ITALIAN-FRENCH-SPANISH Translation Updates, #1692
 
 = 3.5.2 - 20 October 2025 =
   * Update: Move Style Builder features to the Free version, #1586
