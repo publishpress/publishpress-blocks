@@ -291,12 +291,6 @@
                             {loadingAll ? <Spinner /> : __('Scan Block Usage', 'advanced-gutenberg')}
                         </button>
                     </div>
-
-                    {!lastScanDate && (
-                        <p style={{ marginTop: '20px', color: '#666', fontSize: '0.9em' }}>
-                            {__('Start by scanning your content to discover block usage patterns.', 'advanced-gutenberg')}
-                        </p>
-                    )}
                 </div>
             </div>
         );

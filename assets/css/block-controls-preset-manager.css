@@ -166,8 +166,13 @@
 }
 
 .advgb-welcome-message {
-    padding: 40px 20px;
-    min-height: 400px;
+    padding: 20px;
+    text-align: center;
+    background: #fff;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .advgb-guidance-message {
@@ -215,7 +220,8 @@
 
 .advgb-welcome-message p {
     font-size: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 0;
+    max-width: unset;
 }
 
 .advgb-guidance-message p {

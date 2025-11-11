@@ -1,7 +1,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= 3.6.0 - 10 November 2025 =
+= 3.6.0 - 11 November 2025 =
   * Update: Add intro message to Block Usage screen, #1657
   * Update: Show how many block instances come from each plugin on Block Usage screen, #1492
   * Update: Make Block Usage "Post Types" filter a pro feature, #1658

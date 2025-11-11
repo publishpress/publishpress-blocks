@@ -2,14 +2,14 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Blocks 3.5.2\n"
+"Project-Id-Version: PublishPress Blocks 3.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-06T09:24:12+00:00\n"
+"POT-Creation-Date: 2025-11-11T07:58:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
@@ -48,7 +48,7 @@ msgstr ""
 #: incl/advanced-gutenberg-main.php:911
 #: incl/advanced-gutenberg-main.php:2094
 #: incl/advanced-gutenberg-main.php:3320
-#: incl/advanced-gutenberg-main.php:5922
+#: incl/advanced-gutenberg-main.php:5925
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -152,7 +152,7 @@ msgid "Captcha is empty"
 msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1865
-#: incl/advanced-gutenberg-main.php:5909
+#: incl/advanced-gutenberg-main.php:5912
 msgid "Dashboard"
 msgstr ""
 
@@ -181,8 +181,8 @@ msgid "Block Usage"
 msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1907
-#: incl/advanced-gutenberg-main.php:5941
-#: incl/advanced-gutenberg-main.php:5943
+#: incl/advanced-gutenberg-main.php:5944
+#: incl/advanced-gutenberg-main.php:5946
 #: incl/pages/main.php:71
 msgid "Reusable Blocks"
 msgstr ""
@@ -196,7 +196,7 @@ msgid "Auto Insert Blocks"
 msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1921
-#: incl/advanced-gutenberg-main.php:5915
+#: incl/advanced-gutenberg-main.php:5918
 #: incl/pages/settings.php:26
 msgid "Settings"
 msgstr ""
@@ -278,180 +278,184 @@ msgid "Save Permission for all Roles"
 msgstr ""
 
 #: incl/advanced-gutenberg-main.php:3585
-#: incl/advanced-gutenberg-main.php:3638
+#: incl/advanced-gutenberg-main.php:3641
 #: incl/pages/block-controls/blocks.php:56
 msgid "Loading..."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3974
-#: incl/advanced-gutenberg-main.php:3975
+#: incl/advanced-gutenberg-main.php:3634
+msgid "Scan Block Usage"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:3977
+#: incl/advanced-gutenberg-main.php:3978
 msgid "Block Config"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4034
+#: incl/advanced-gutenberg-main.php:4037
 msgid "Default configuration for this block is not available."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4100
+#: incl/advanced-gutenberg-main.php:4103
 #, php-format
 msgid "Page not found. Go to %sDashboard%s"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4513
+#: incl/advanced-gutenberg-main.php:4516
 #: incl/block-styles/block-styles.php:977
 #: incl/block-styles/block-styles.php:996
-#: incl/block-styles/block-styles.php:1189
-#: incl/block-styles/block-styles.php:1210
-#: incl/block-styles/block-styles.php:1243
-#: incl/block-styles/block-styles.php:1259
-#: incl/block-styles/block-styles.php:1286
-#: incl/block-styles/block-styles.php:1299
-#: incl/block-styles/block-styles.php:1379
-#: incl/block-styles/block-styles.php:1411
-#: incl/block-styles/block-styles.php:1439
-#: incl/block-styles/block-styles.php:1467
-#: incl/block-styles/block-styles.php:1495
-#: incl/block-styles/block-styles.php:1555
-#: incl/block-styles/block-styles.php:1733
+#: incl/block-styles/block-styles.php:1166
+#: incl/block-styles/block-styles.php:1187
+#: incl/block-styles/block-styles.php:1220
+#: incl/block-styles/block-styles.php:1236
+#: incl/block-styles/block-styles.php:1263
+#: incl/block-styles/block-styles.php:1276
+#: incl/block-styles/block-styles.php:1356
+#: incl/block-styles/block-styles.php:1388
+#: incl/block-styles/block-styles.php:1416
+#: incl/block-styles/block-styles.php:1444
+#: incl/block-styles/block-styles.php:1472
+#: incl/block-styles/block-styles.php:1532
+#: incl/block-styles/block-styles.php:1710
 #: incl/pages/settings/general.php:135
 msgid "Default"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4527
+#: incl/advanced-gutenberg-main.php:4530
 msgid "Type field not defined"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4802
+#: incl/advanced-gutenberg-main.php:4805
 msgid "User registration is currently not allowed."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4806
+#: incl/advanced-gutenberg-main.php:4809
 msgid "Captcha must be checked!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4807
+#: incl/advanced-gutenberg-main.php:4810
 msgid "Username or password is incorrect!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5942
+#: incl/advanced-gutenberg-main.php:5945
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:198
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:87
 msgid "Reusable Block"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5944
+#: incl/advanced-gutenberg-main.php:5947
 msgid "All Reusable Blocks"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5945
+#: incl/advanced-gutenberg-main.php:5948
 msgid "Add New"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5946
+#: incl/advanced-gutenberg-main.php:5949
 msgid "Add New Reusable Block"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5947
+#: incl/advanced-gutenberg-main.php:5950
 msgid "Edit Reusable Block"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5948
+#: incl/advanced-gutenberg-main.php:5951
 msgid "New Reusable Block"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5949
+#: incl/advanced-gutenberg-main.php:5952
 msgid "View Reusable Block"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5950
+#: incl/advanced-gutenberg-main.php:5953
 msgid "View Reusable Blocks"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5951
+#: incl/advanced-gutenberg-main.php:5954
 msgid "Search Reusable Blocks"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5952
+#: incl/advanced-gutenberg-main.php:5955
 msgid "No reusable blocks found."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5953
+#: incl/advanced-gutenberg-main.php:5956
 msgid "No reusable blocks found in Trash."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5954
+#: incl/advanced-gutenberg-main.php:5957
 msgid "Parent Reusable Block:"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5955
+#: incl/advanced-gutenberg-main.php:5958
 msgid "Reusable Block Archives"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5973
+#: incl/advanced-gutenberg-main.php:5976
 msgid "Reusable Block Categories"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5974
+#: incl/advanced-gutenberg-main.php:5977
 msgid "Reusable Block Category"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5975
+#: incl/advanced-gutenberg-main.php:5978
 msgid "Block Categories"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5976
+#: incl/advanced-gutenberg-main.php:5979
 msgid "All Block Categories"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5977
+#: incl/advanced-gutenberg-main.php:5980
 msgid "Edit Block Category"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5978
+#: incl/advanced-gutenberg-main.php:5981
 msgid "View Block Category"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5979
+#: incl/advanced-gutenberg-main.php:5982
 msgid "Update Block Category"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5980
+#: incl/advanced-gutenberg-main.php:5983
 msgid "Add New Block Category"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5981
+#: incl/advanced-gutenberg-main.php:5984
 msgid "New Block Category Name"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5982
+#: incl/advanced-gutenberg-main.php:5985
 msgid "Parent Block Category"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5983
+#: incl/advanced-gutenberg-main.php:5986
 msgid "Parent Block Category:"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5984
+#: incl/advanced-gutenberg-main.php:5987
 msgid "Search Block Categories"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5985
+#: incl/advanced-gutenberg-main.php:5988
 msgid "Popular Block Categories"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5986
+#: incl/advanced-gutenberg-main.php:5989
 msgid "Separate block categories with commas"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5987
+#: incl/advanced-gutenberg-main.php:5990
 msgid "Add or remove block categories"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5988
+#: incl/advanced-gutenberg-main.php:5991
 msgid "Choose from the most used block categories"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:5989
+#: incl/advanced-gutenberg-main.php:5992
 msgid "No block categories found."
 msgstr ""
 
@@ -492,7 +496,7 @@ msgid "No auto insert blocks found in trash"
 msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:199
-#: incl/block-styles/block-styles.php:1296
+#: incl/block-styles/block-styles.php:1273
 msgid "Position"
 msgstr ""
 
@@ -603,15 +607,15 @@ msgstr ""
 #: incl/block-settings-main.php:1728
 #: incl/block-styles/block-styles.php:997
 #: incl/block-styles/block-styles.php:1007
-#: incl/block-styles/block-styles.php:1260
-#: incl/block-styles/block-styles.php:1292
-#: incl/block-styles/block-styles.php:1360
-#: incl/block-styles/block-styles.php:1369
-#: incl/block-styles/block-styles.php:1412
-#: incl/block-styles/block-styles.php:1440
-#: incl/block-styles/block-styles.php:1468
-#: incl/block-styles/block-styles.php:1496
-#: incl/block-styles/block-styles.php:2157
+#: incl/block-styles/block-styles.php:1237
+#: incl/block-styles/block-styles.php:1269
+#: incl/block-styles/block-styles.php:1337
+#: incl/block-styles/block-styles.php:1346
+#: incl/block-styles/block-styles.php:1389
+#: incl/block-styles/block-styles.php:1417
+#: incl/block-styles/block-styles.php:1445
+#: incl/block-styles/block-styles.php:1473
+#: incl/block-styles/block-styles.php:2134
 msgid "None"
 msgstr ""
 
@@ -645,7 +649,7 @@ msgid "Error duplicating auto insert block"
 msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:929
-#: incl/pages/custom-styles.php:23
+#: incl/pages/custom-styles.php:26
 msgid "Copy"
 msgstr ""
 
@@ -692,7 +696,7 @@ msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:139
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:217
-#: incl/block-styles/block-styles.php:1520
+#: incl/block-styles/block-styles.php:1497
 msgid "Paragraph"
 msgstr ""
 
@@ -940,12 +944,12 @@ msgstr ""
 #: incl/block-settings-main.php:1811
 #: incl/block-settings-main.php:1880
 #: incl/block-styles/block-styles.php:1023
-#: incl/block-styles/block-styles.php:1594
-#: incl/block-styles/block-styles.php:1628
-#: incl/block-styles/block-styles.php:2212
-#: incl/block-styles/block-styles.php:2255
-#: incl/block-styles/block-styles.php:2324
-#: incl/block-styles/block-styles.php:2411
+#: incl/block-styles/block-styles.php:1571
+#: incl/block-styles/block-styles.php:1605
+#: incl/block-styles/block-styles.php:2189
+#: incl/block-styles/block-styles.php:2232
+#: incl/block-styles/block-styles.php:2301
+#: incl/block-styles/block-styles.php:2388
 #: assets/blocks/testimonial/block.jsx:368
 msgid "Background Color"
 msgstr ""
@@ -961,17 +965,17 @@ msgstr ""
 #: incl/block-settings-main.php:1367
 #: incl/block-settings-main.php:1496
 #: incl/block-styles/block-styles.php:1029
-#: incl/block-styles/block-styles.php:1541
-#: incl/block-styles/block-styles.php:1579
-#: incl/block-styles/block-styles.php:1614
-#: incl/block-styles/block-styles.php:1702
-#: incl/block-styles/block-styles.php:1756
-#: incl/block-styles/block-styles.php:1799
-#: incl/block-styles/block-styles.php:1842
-#: incl/block-styles/block-styles.php:1878
-#: incl/block-styles/block-styles.php:1914
-#: incl/block-styles/block-styles.php:2329
-#: incl/block-styles/block-styles.php:2416
+#: incl/block-styles/block-styles.php:1518
+#: incl/block-styles/block-styles.php:1556
+#: incl/block-styles/block-styles.php:1591
+#: incl/block-styles/block-styles.php:1679
+#: incl/block-styles/block-styles.php:1733
+#: incl/block-styles/block-styles.php:1776
+#: incl/block-styles/block-styles.php:1819
+#: incl/block-styles/block-styles.php:1855
+#: incl/block-styles/block-styles.php:1891
+#: incl/block-styles/block-styles.php:2306
+#: incl/block-styles/block-styles.php:2393
 msgid "Text Color"
 msgstr ""
 
@@ -1040,10 +1044,10 @@ msgstr ""
 #: incl/block-settings-main.php:1231
 #: incl/block-settings-main.php:1387
 #: incl/block-settings-main.php:1732
-#: incl/block-styles/block-styles.php:1413
-#: incl/block-styles/block-styles.php:1441
-#: incl/block-styles/block-styles.php:1469
-#: incl/block-styles/block-styles.php:1497
+#: incl/block-styles/block-styles.php:1390
+#: incl/block-styles/block-styles.php:1418
+#: incl/block-styles/block-styles.php:1446
+#: incl/block-styles/block-styles.php:1474
 msgid "Solid"
 msgstr ""
 
@@ -1053,10 +1057,10 @@ msgstr ""
 #: incl/block-settings-main.php:1235
 #: incl/block-settings-main.php:1391
 #: incl/block-settings-main.php:1740
-#: incl/block-styles/block-styles.php:1414
-#: incl/block-styles/block-styles.php:1442
-#: incl/block-styles/block-styles.php:1470
-#: incl/block-styles/block-styles.php:1498
+#: incl/block-styles/block-styles.php:1391
+#: incl/block-styles/block-styles.php:1419
+#: incl/block-styles/block-styles.php:1447
+#: incl/block-styles/block-styles.php:1475
 msgid "Dashed"
 msgstr ""
 
@@ -1066,10 +1070,10 @@ msgstr ""
 #: incl/block-settings-main.php:1239
 #: incl/block-settings-main.php:1395
 #: incl/block-settings-main.php:1736
-#: incl/block-styles/block-styles.php:1415
-#: incl/block-styles/block-styles.php:1443
-#: incl/block-styles/block-styles.php:1471
-#: incl/block-styles/block-styles.php:1499
+#: incl/block-styles/block-styles.php:1392
+#: incl/block-styles/block-styles.php:1420
+#: incl/block-styles/block-styles.php:1448
+#: incl/block-styles/block-styles.php:1476
 msgid "Dotted"
 msgstr ""
 
@@ -1082,8 +1086,8 @@ msgstr ""
 #: incl/block-settings-main.php:1746
 #: incl/block-settings-main.php:1816
 #: incl/block-settings-main.php:1885
-#: incl/block-styles/block-styles.php:1619
-#: incl/block-styles/block-styles.php:2109
+#: incl/block-styles/block-styles.php:1596
+#: incl/block-styles/block-styles.php:2086
 #: assets/blocks/testimonial/block.jsx:373
 msgid "Border Color"
 msgstr ""
@@ -1095,7 +1099,7 @@ msgstr ""
 #: incl/block-settings-main.php:1751
 #: incl/block-settings-main.php:1821
 #: incl/block-settings-main.php:1890
-#: incl/block-styles/block-styles.php:1106
+#: incl/block-styles/block-styles.php:1095
 #: assets/blocks/testimonial/block.jsx:387
 msgid "Border Width"
 msgstr ""
@@ -1110,7 +1114,7 @@ msgstr ""
 #: incl/block-settings-main.php:1758
 #: incl/block-settings-main.php:1828
 #: incl/block-settings-main.php:1897
-#: incl/block-styles/block-styles.php:1142
+#: incl/block-styles/block-styles.php:1125
 msgid "Border Radius"
 msgstr ""
 
@@ -1306,9 +1310,9 @@ msgstr ""
 #: incl/block-settings-main.php:1515
 #: incl/block-settings-main.php:1534
 #: incl/block-settings-main.php:1779
-#: incl/block-styles/block-styles.php:1245
-#: incl/block-styles/block-styles.php:1557
-#: incl/block-styles/block-styles.php:1735
+#: incl/block-styles/block-styles.php:1222
+#: incl/block-styles/block-styles.php:1534
+#: incl/block-styles/block-styles.php:1712
 msgid "Center"
 msgstr ""
 
@@ -1331,11 +1335,11 @@ msgstr ""
 #: incl/block-settings-main.php:1283
 #: incl/block-settings-main.php:1530
 #: incl/block-settings-main.php:1775
-#: incl/block-styles/block-styles.php:1244
-#: incl/block-styles/block-styles.php:1361
-#: incl/block-styles/block-styles.php:1370
-#: incl/block-styles/block-styles.php:1556
-#: incl/block-styles/block-styles.php:1734
+#: incl/block-styles/block-styles.php:1221
+#: incl/block-styles/block-styles.php:1338
+#: incl/block-styles/block-styles.php:1347
+#: incl/block-styles/block-styles.php:1533
+#: incl/block-styles/block-styles.php:1711
 #: assets/blocks/testimonial/block.jsx:406
 msgid "Left"
 msgstr ""
@@ -1346,11 +1350,11 @@ msgstr ""
 #: incl/block-settings-main.php:1287
 #: incl/block-settings-main.php:1538
 #: incl/block-settings-main.php:1783
-#: incl/block-styles/block-styles.php:1246
-#: incl/block-styles/block-styles.php:1362
-#: incl/block-styles/block-styles.php:1371
-#: incl/block-styles/block-styles.php:1558
-#: incl/block-styles/block-styles.php:1736
+#: incl/block-styles/block-styles.php:1223
+#: incl/block-styles/block-styles.php:1339
+#: incl/block-styles/block-styles.php:1348
+#: incl/block-styles/block-styles.php:1535
+#: incl/block-styles/block-styles.php:1713
 msgid "Right"
 msgstr ""
 
@@ -1432,16 +1436,16 @@ msgid "Icon Size"
 msgstr ""
 
 #: incl/block-settings-main.php:548
-#: incl/block-styles/block-styles.php:1228
-#: incl/block-styles/block-styles.php:1530
-#: incl/block-styles/block-styles.php:1723
-#: incl/block-styles/block-styles.php:1777
-#: incl/block-styles/block-styles.php:1820
+#: incl/block-styles/block-styles.php:1205
+#: incl/block-styles/block-styles.php:1507
+#: incl/block-styles/block-styles.php:1700
+#: incl/block-styles/block-styles.php:1754
+#: incl/block-styles/block-styles.php:1797
 msgid "Line Height"
 msgstr ""
 
 #: incl/block-settings-main.php:555
-#: incl/block-styles/block-styles.php:1075
+#: incl/block-styles/block-styles.php:1069
 msgid "Margin"
 msgstr ""
 
@@ -1493,7 +1497,7 @@ msgstr ""
 #: incl/block-settings-main.php:634
 #: incl/block-settings-main.php:1305
 #: incl/block-styles/block-styles.php:978
-#: incl/block-styles/block-styles.php:1211
+#: incl/block-styles/block-styles.php:1188
 msgid "Normal"
 msgstr ""
 
@@ -1928,7 +1932,7 @@ msgid "Always show overlay"
 msgstr ""
 
 #: incl/block-settings-main.php:1486
-#: incl/block-styles/block-styles.php:2015
+#: incl/block-styles/block-styles.php:1992
 msgid "Hover Color"
 msgstr ""
 
@@ -2069,17 +2073,17 @@ msgstr ""
 
 #: incl/block-settings-main.php:1970
 #: incl/block-settings-main.php:2081
-#: incl/block-styles/block-styles.php:1201
-#: incl/block-styles/block-styles.php:1523
-#: incl/block-styles/block-styles.php:1572
-#: incl/block-styles/block-styles.php:1607
-#: incl/block-styles/block-styles.php:1695
-#: incl/block-styles/block-styles.php:1749
-#: incl/block-styles/block-styles.php:1792
-#: incl/block-styles/block-styles.php:1835
-#: incl/block-styles/block-styles.php:1871
-#: incl/block-styles/block-styles.php:1907
-#: incl/block-styles/block-styles.php:2000
+#: incl/block-styles/block-styles.php:1178
+#: incl/block-styles/block-styles.php:1500
+#: incl/block-styles/block-styles.php:1549
+#: incl/block-styles/block-styles.php:1584
+#: incl/block-styles/block-styles.php:1672
+#: incl/block-styles/block-styles.php:1726
+#: incl/block-styles/block-styles.php:1769
+#: incl/block-styles/block-styles.php:1812
+#: incl/block-styles/block-styles.php:1848
+#: incl/block-styles/block-styles.php:1884
+#: incl/block-styles/block-styles.php:1977
 msgid "Font Size (px)"
 msgstr ""
 
@@ -2121,7 +2125,7 @@ msgid "Your styles have been saved!"
 msgstr ""
 
 #: incl/block-styles/block-styles.php:260
-#: incl/pages/custom-styles.php:67
+#: incl/pages/custom-styles.php:72
 msgid "Style title"
 msgstr ""
 
@@ -2170,642 +2174,638 @@ msgid "Rotate"
 msgstr ""
 
 #: incl/block-styles/block-styles.php:1020
-#: incl/pages/custom-styles.php:145
+#: incl/pages/custom-styles.php:149
 msgid "Colors"
 msgstr ""
 
 #: incl/block-styles/block-styles.php:1035
-#: incl/pages/custom-styles.php:148
+#: incl/pages/custom-styles.php:152
 msgid "Spacing"
 msgstr ""
 
 #: incl/block-styles/block-styles.php:1042
-#: incl/block-styles/block-styles.php:1633
-#: incl/block-styles/block-styles.php:2217
-#: incl/block-styles/block-styles.php:2270
-#: incl/block-styles/block-styles.php:2345
-#: incl/block-styles/block-styles.php:2438
-msgid "Padding (px)"
-msgstr ""
-
-#: incl/block-styles/block-styles.php:1048
 msgid "Padding Top (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1054
+#: incl/block-styles/block-styles.php:1048
 msgid "Padding Right (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1060
+#: incl/block-styles/block-styles.php:1054
 msgid "Padding Bottom (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1066
+#: incl/block-styles/block-styles.php:1060
 msgid "Padding Left (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1078
-#: incl/block-styles/block-styles.php:1640
-#: incl/block-styles/block-styles.php:2260
-msgid "Margin (px)"
-msgstr ""
-
-#: incl/block-styles/block-styles.php:1083
+#: incl/block-styles/block-styles.php:1072
 msgid "Margin Top (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1088
+#: incl/block-styles/block-styles.php:1077
 msgid "Margin Right (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1093
-#: incl/block-styles/block-styles.php:1546
-#: incl/block-styles/block-styles.php:1717
-#: incl/block-styles/block-styles.php:1771
-#: incl/block-styles/block-styles.php:1814
-#: incl/block-styles/block-styles.php:1857
-#: incl/block-styles/block-styles.php:1893
-#: incl/block-styles/block-styles.php:1929
+#: incl/block-styles/block-styles.php:1082
+#: incl/block-styles/block-styles.php:1523
+#: incl/block-styles/block-styles.php:1694
+#: incl/block-styles/block-styles.php:1748
+#: incl/block-styles/block-styles.php:1791
+#: incl/block-styles/block-styles.php:1834
+#: incl/block-styles/block-styles.php:1870
+#: incl/block-styles/block-styles.php:1906
 msgid "Margin Bottom (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1098
+#: incl/block-styles/block-styles.php:1087
 msgid "Margin Left (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1109
-#: incl/block-styles/block-styles.php:2098
-msgid "Border Width (px)"
-msgstr ""
-
-#: incl/block-styles/block-styles.php:1115
+#: incl/block-styles/block-styles.php:1098
 msgid "Border Top Width (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1121
+#: incl/block-styles/block-styles.php:1104
 msgid "Border Right Width (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1127
+#: incl/block-styles/block-styles.php:1110
 msgid "Border Bottom Width (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1133
+#: incl/block-styles/block-styles.php:1116
 msgid "Border Left Width (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1145
-#: incl/block-styles/block-styles.php:2091
-#: incl/block-styles/block-styles.php:2192
-#: incl/block-styles/block-styles.php:2224
-#: incl/block-styles/block-styles.php:2334
-#: incl/block-styles/block-styles.php:2431
-msgid "Border Radius (px)"
-msgstr ""
-
-#: incl/block-styles/block-styles.php:1151
+#: incl/block-styles/block-styles.php:1128
 msgid "Border Top Left Radius (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1157
+#: incl/block-styles/block-styles.php:1134
 msgid "Border Top Right Radius (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1163
+#: incl/block-styles/block-styles.php:1140
 msgid "Border Bottom Right Radius (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1169
+#: incl/block-styles/block-styles.php:1146
 msgid "Border Bottom Left Radius (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1179
-#: incl/pages/custom-styles.php:151
+#: incl/block-styles/block-styles.php:1156
+#: incl/pages/custom-styles.php:155
 msgid "Typography"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1183
+#: incl/block-styles/block-styles.php:1160
 msgid "Font"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1186
+#: incl/block-styles/block-styles.php:1163
 msgid "Font Family"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1207
+#: incl/block-styles/block-styles.php:1184
 msgid "Font Style"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1212
+#: incl/block-styles/block-styles.php:1189
 msgid "Italic"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1213
+#: incl/block-styles/block-styles.php:1190
 msgid "Oblique"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1217
-#: incl/block-styles/block-styles.php:1588
-#: incl/block-styles/block-styles.php:1707
-#: incl/block-styles/block-styles.php:1761
-#: incl/block-styles/block-styles.php:1808
-#: incl/block-styles/block-styles.php:1851
-#: incl/block-styles/block-styles.php:1887
-#: incl/block-styles/block-styles.php:1923
-#: incl/block-styles/block-styles.php:1994
-#: incl/block-styles/block-styles.php:2358
+#: incl/block-styles/block-styles.php:1194
+#: incl/block-styles/block-styles.php:1565
+#: incl/block-styles/block-styles.php:1684
+#: incl/block-styles/block-styles.php:1738
+#: incl/block-styles/block-styles.php:1785
+#: incl/block-styles/block-styles.php:1828
+#: incl/block-styles/block-styles.php:1864
+#: incl/block-styles/block-styles.php:1900
+#: incl/block-styles/block-styles.php:1971
+#: incl/block-styles/block-styles.php:2335
 msgid "Font Weight"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1225
-#: incl/pages/custom-styles.php:160
+#: incl/block-styles/block-styles.php:1202
+#: incl/pages/custom-styles.php:164
 msgid "Text"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1235
+#: incl/block-styles/block-styles.php:1212
 msgid "Letter Spacing (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1240
-#: incl/block-styles/block-styles.php:1552
-#: incl/block-styles/block-styles.php:1730
+#: incl/block-styles/block-styles.php:1217
+#: incl/block-styles/block-styles.php:1529
+#: incl/block-styles/block-styles.php:1707
 msgid "Text Align"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1247
-#: incl/block-styles/block-styles.php:1559
+#: incl/block-styles/block-styles.php:1224
+#: incl/block-styles/block-styles.php:1536
 msgid "Justify"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1251
-#: incl/block-styles/block-styles.php:1984
+#: incl/block-styles/block-styles.php:1228
+#: incl/block-styles/block-styles.php:1961
 msgid "Text Decoration"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1256
+#: incl/block-styles/block-styles.php:1233
 msgid "Text Transform"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1261
+#: incl/block-styles/block-styles.php:1238
 msgid "Capitalize"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1262
+#: incl/block-styles/block-styles.php:1239
 msgid "Uppercase"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1263
+#: incl/block-styles/block-styles.php:1240
 msgid "Lowercase"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1267
+#: incl/block-styles/block-styles.php:1244
 msgid "Text Shadow"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1276
-#: incl/pages/custom-styles.php:154
+#: incl/block-styles/block-styles.php:1253
+#: incl/pages/custom-styles.php:158
 msgid "Layout"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1280
+#: incl/block-styles/block-styles.php:1257
 msgid "Display & Position"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1283
+#: incl/block-styles/block-styles.php:1260
 msgid "Display"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1287
+#: incl/block-styles/block-styles.php:1264
 msgid "Block"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1288
+#: incl/block-styles/block-styles.php:1265
 msgid "Inline"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1289
+#: incl/block-styles/block-styles.php:1266
 msgid "Inline Block"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1290
+#: incl/block-styles/block-styles.php:1267
 msgid "Flex"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1291
+#: incl/block-styles/block-styles.php:1268
 msgid "Grid"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1300
+#: incl/block-styles/block-styles.php:1277
 msgid "Static"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1301
+#: incl/block-styles/block-styles.php:1278
 msgid "Relative"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1302
+#: incl/block-styles/block-styles.php:1279
 msgid "Absolute"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1303
+#: incl/block-styles/block-styles.php:1280
 msgid "Fixed"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1304
+#: incl/block-styles/block-styles.php:1281
 msgid "Sticky"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1311
+#: incl/block-styles/block-styles.php:1288
 msgid "Sizing"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1314
-#: incl/block-styles/block-styles.php:2180
+#: incl/block-styles/block-styles.php:1291
+#: incl/block-styles/block-styles.php:2157
 msgid "Width (%)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1321
+#: incl/block-styles/block-styles.php:1298
 msgid "Height (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1327
+#: incl/block-styles/block-styles.php:1304
 msgid "Max Width (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1333
+#: incl/block-styles/block-styles.php:1310
 msgid "Min Width (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1339
+#: incl/block-styles/block-styles.php:1316
 msgid "Max Height (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1345
+#: incl/block-styles/block-styles.php:1322
 msgid "Min Height (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1354
+#: incl/block-styles/block-styles.php:1331
 msgid "Flow"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1357
+#: incl/block-styles/block-styles.php:1334
 msgid "Float"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1366
+#: incl/block-styles/block-styles.php:1343
 msgid "Clear"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1372
+#: incl/block-styles/block-styles.php:1349
 msgid "Both"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1376
+#: incl/block-styles/block-styles.php:1353
 msgid "Overflow"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1380
+#: incl/block-styles/block-styles.php:1357
 msgid "Visible"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1381
+#: incl/block-styles/block-styles.php:1358
 msgid "Hidden"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1382
+#: incl/block-styles/block-styles.php:1359
 msgid "Scroll"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1383
+#: incl/block-styles/block-styles.php:1360
 msgid "Auto"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1387
+#: incl/block-styles/block-styles.php:1364
 msgid "Z-Index"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1395
-#: incl/block-styles/block-styles.php:2241
-#: incl/block-styles/block-styles.php:2277
-#: incl/block-styles/block-styles.php:2352
-#: incl/block-styles/block-styles.php:2421
-#: incl/pages/custom-styles.php:157
+#: incl/block-styles/block-styles.php:1372
+#: incl/block-styles/block-styles.php:2218
+#: incl/block-styles/block-styles.php:2254
+#: incl/block-styles/block-styles.php:2329
+#: incl/block-styles/block-styles.php:2398
+#: incl/pages/custom-styles.php:161
 msgid "Border"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1399
+#: incl/block-styles/block-styles.php:1376
 msgid "Left Border"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1402
+#: incl/block-styles/block-styles.php:1379
 msgid "Left Border Width (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1408
+#: incl/block-styles/block-styles.php:1385
 msgid "Left Border Style"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1416
-#: incl/block-styles/block-styles.php:1444
-#: incl/block-styles/block-styles.php:1472
-#: incl/block-styles/block-styles.php:1500
+#: incl/block-styles/block-styles.php:1393
+#: incl/block-styles/block-styles.php:1421
+#: incl/block-styles/block-styles.php:1449
+#: incl/block-styles/block-styles.php:1477
 msgid "Double"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1420
+#: incl/block-styles/block-styles.php:1397
 msgid "Left Border Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1427
+#: incl/block-styles/block-styles.php:1404
 msgid "Right Border"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1430
+#: incl/block-styles/block-styles.php:1407
 msgid "Right Border Width (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1436
+#: incl/block-styles/block-styles.php:1413
 msgid "Right Border Style"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1448
+#: incl/block-styles/block-styles.php:1425
 msgid "Right Border Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1455
+#: incl/block-styles/block-styles.php:1432
 msgid "Top Border"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1458
+#: incl/block-styles/block-styles.php:1435
 msgid "Top Border Width (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1464
+#: incl/block-styles/block-styles.php:1441
 msgid "Top Border Style"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1476
+#: incl/block-styles/block-styles.php:1453
 msgid "Top Border Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1483
+#: incl/block-styles/block-styles.php:1460
 msgid "Bottom Border"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1486
+#: incl/block-styles/block-styles.php:1463
 msgid "Bottom Border Width (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1492
+#: incl/block-styles/block-styles.php:1469
 msgid "Bottom Border Style"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1504
+#: incl/block-styles/block-styles.php:1481
 msgid "Bottom Border Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1515
+#: incl/block-styles/block-styles.php:1492
 msgid "Text Elements"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1569
+#: incl/block-styles/block-styles.php:1546
 msgid "Span"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1604
+#: incl/block-styles/block-styles.php:1581
 msgid "Blockquote"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1651
+#: incl/block-styles/block-styles.php:1610
+#: incl/block-styles/block-styles.php:2194
+#: incl/block-styles/block-styles.php:2247
+#: incl/block-styles/block-styles.php:2322
+#: incl/block-styles/block-styles.php:2415
+msgid "Padding (px)"
+msgstr ""
+
+#: incl/block-styles/block-styles.php:1617
+#: incl/block-styles/block-styles.php:2237
+msgid "Margin (px)"
+msgstr ""
+
+#: incl/block-styles/block-styles.php:1628
 msgid "Lists"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1654
+#: incl/block-styles/block-styles.php:1631
 msgid "List Margin (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1660
+#: incl/block-styles/block-styles.php:1637
 msgid "List Padding (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1671
+#: incl/block-styles/block-styles.php:1648
 msgid "Item Margin Bottom (px)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1677
+#: incl/block-styles/block-styles.php:1654
 msgid "Item Text Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1687
+#: incl/block-styles/block-styles.php:1664
 msgid "Heading Elements"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1692
+#: incl/block-styles/block-styles.php:1669
 msgid "H1 Heading"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1746
+#: incl/block-styles/block-styles.php:1723
 msgid "H2 Heading"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1789
+#: incl/block-styles/block-styles.php:1766
 msgid "H3 Heading"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1832
+#: incl/block-styles/block-styles.php:1809
 msgid "H4 Heading"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1868
+#: incl/block-styles/block-styles.php:1845
 msgid "H5 Heading"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1904
+#: incl/block-styles/block-styles.php:1881
 msgid "H6 Heading"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1940
+#: incl/block-styles/block-styles.php:1917
 msgid "Heading Hover Effects"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1943
+#: incl/block-styles/block-styles.php:1920
 msgid "H1 Hover Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1948
+#: incl/block-styles/block-styles.php:1925
 msgid "H2 Hover Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1957
+#: incl/block-styles/block-styles.php:1934
 msgid "H3 Hover Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1971
+#: incl/block-styles/block-styles.php:1948
 msgid "Link Elements"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1976
+#: incl/block-styles/block-styles.php:1953
 msgid "Link Base Styles"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:1979
+#: incl/block-styles/block-styles.php:1956
 msgid "Link Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2012
+#: incl/block-styles/block-styles.php:1989
 msgid "Link Hover States"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2020
+#: incl/block-styles/block-styles.php:1997
 msgid "Hover Text Decoration"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2030
-#: incl/block-styles/block-styles.php:2372
+#: incl/block-styles/block-styles.php:2007
+#: incl/block-styles/block-styles.php:2349
 msgid "Hover Background"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2035
+#: incl/block-styles/block-styles.php:2012
 msgid "Hover Font Weight"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2046
+#: incl/block-styles/block-styles.php:2023
 msgid "Links in Headings"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2049
+#: incl/block-styles/block-styles.php:2026
 msgid "H1 Link Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2054
+#: incl/block-styles/block-styles.php:2031
 msgid "H2 Link Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2059
+#: incl/block-styles/block-styles.php:2036
 msgid "H3 Link Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2068
+#: incl/block-styles/block-styles.php:2045
 msgid "H1 Link Hover Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2073
+#: incl/block-styles/block-styles.php:2050
 msgid "H2 Link Hover Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2083
+#: incl/block-styles/block-styles.php:2060
 msgid "Media Elements"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2088
+#: incl/block-styles/block-styles.php:2065
 #: incl/pages/settings.php:46
 msgid "Images"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2114
+#: incl/block-styles/block-styles.php:2068
+#: incl/block-styles/block-styles.php:2169
+#: incl/block-styles/block-styles.php:2201
+#: incl/block-styles/block-styles.php:2311
+#: incl/block-styles/block-styles.php:2408
+msgid "Border Radius (px)"
+msgstr ""
+
+#: incl/block-styles/block-styles.php:2075
+msgid "Border Width (px)"
+msgstr ""
+
+#: incl/block-styles/block-styles.php:2091
 msgid "Max Width (%)"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2122
-#: incl/block-styles/block-styles.php:2235
+#: incl/block-styles/block-styles.php:2099
+#: incl/block-styles/block-styles.php:2212
 msgid "Box Shadow"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2133
+#: incl/block-styles/block-styles.php:2110
 msgid "Image Hover Effects"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2136
-#: incl/block-styles/block-styles.php:2386
+#: incl/block-styles/block-styles.php:2113
+#: incl/block-styles/block-styles.php:2363
 msgid "Hover Transform"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2142
+#: incl/block-styles/block-styles.php:2119
 msgid "Hover Opacity"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2154
+#: incl/block-styles/block-styles.php:2131
 msgid "Hover Filter"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2158
+#: incl/block-styles/block-styles.php:2135
 msgid "Grayscale"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2159
+#: incl/block-styles/block-styles.php:2136
 msgid "Sepia"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2160
+#: incl/block-styles/block-styles.php:2137
 msgid "Blur"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2161
+#: incl/block-styles/block-styles.php:2138
 msgid "Brightness"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2162
+#: incl/block-styles/block-styles.php:2139
 msgid "Contrast"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2167
-#: incl/block-styles/block-styles.php:2392
+#: incl/block-styles/block-styles.php:2144
+#: incl/block-styles/block-styles.php:2369
 msgid "Hover Border Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2177
+#: incl/block-styles/block-styles.php:2154
 msgid "Videos"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2204
+#: incl/block-styles/block-styles.php:2181
 msgid "Container Elements"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2209
+#: incl/block-styles/block-styles.php:2186
 msgid "Div Containers"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2252
+#: incl/block-styles/block-styles.php:2229
 msgid "Sections"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2288
+#: incl/block-styles/block-styles.php:2265
 msgid "Container Hover Effects"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2291
+#: incl/block-styles/block-styles.php:2268
 msgid "Div Hover Background"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2296
+#: incl/block-styles/block-styles.php:2273
 msgid "Div Hover Shadow"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2306
+#: incl/block-styles/block-styles.php:2283
 msgid "Section Hover Background"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2316
+#: incl/block-styles/block-styles.php:2293
 msgid "Interactive Elements"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2321
+#: incl/block-styles/block-styles.php:2298
 msgid "Buttons"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2369
+#: incl/block-styles/block-styles.php:2346
 msgid "Button Hover States"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2377
+#: incl/block-styles/block-styles.php:2354
 msgid "Hover Text Color"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2397
+#: incl/block-styles/block-styles.php:2374
 msgid "Hover Shadow"
 msgstr ""
 
-#: incl/block-styles/block-styles.php:2407
+#: incl/block-styles/block-styles.php:2384
 msgid "Form Inputs"
 msgstr ""
 
@@ -3117,76 +3117,75 @@ msgstr ""
 msgid "block"
 msgstr ""
 
-#: incl/pages/custom-styles.php:19
-#: incl/pages/custom-styles.php:28
+#: incl/pages/custom-styles.php:12
 msgid "Add new style"
 msgstr ""
 
-#: incl/pages/custom-styles.php:24
+#: incl/pages/custom-styles.php:27
 msgid "Delete"
 msgstr ""
 
-#: incl/pages/custom-styles.php:40
+#: incl/pages/custom-styles.php:43
 msgid "Preview"
 msgstr ""
 
-#: incl/pages/custom-styles.php:44
+#: incl/pages/custom-styles.php:47
 msgid "Example text with this style"
 msgstr ""
 
-#: incl/pages/custom-styles.php:52
+#: incl/pages/custom-styles.php:55
 msgid "View Extended Preview"
 msgstr ""
 
-#: incl/pages/custom-styles.php:75
+#: incl/pages/custom-styles.php:79
 msgid "Class name"
 msgstr ""
 
-#: incl/pages/custom-styles.php:84
+#: incl/pages/custom-styles.php:88
 msgid ""
 "This option help you identify specific custom styles in the list\r\n"
 "                                            (usually set this same as the custom style's background color)"
 msgstr ""
 
-#: incl/pages/custom-styles.php:90
+#: incl/pages/custom-styles.php:94
 msgid "Identification color"
 msgstr ""
 
-#: incl/pages/custom-styles.php:107
-#: incl/pages/custom-styles.php:139
+#: incl/pages/custom-styles.php:111
+#: incl/pages/custom-styles.php:143
 msgid "Style Builder"
 msgstr ""
 
-#: incl/pages/custom-styles.php:110
-#: incl/pages/custom-styles.php:121
+#: incl/pages/custom-styles.php:114
+#: incl/pages/custom-styles.php:125
 msgid "Custom CSS"
 msgstr ""
 
-#: incl/pages/custom-styles.php:127
+#: incl/pages/custom-styles.php:131
 msgid "Hint: Use \"Ctrl + Space\" for auto completion"
 msgstr ""
 
-#: incl/pages/custom-styles.php:163
+#: incl/pages/custom-styles.php:167
 msgid "Headings"
 msgstr ""
 
-#: incl/pages/custom-styles.php:166
+#: incl/pages/custom-styles.php:170
 msgid "Links"
 msgstr ""
 
-#: incl/pages/custom-styles.php:169
+#: incl/pages/custom-styles.php:173
 msgid "Media"
 msgstr ""
 
-#: incl/pages/custom-styles.php:172
+#: incl/pages/custom-styles.php:176
 msgid "Containers"
 msgstr ""
 
-#: incl/pages/custom-styles.php:175
+#: incl/pages/custom-styles.php:179
 msgid "Interactive"
 msgstr ""
 
-#: incl/pages/custom-styles.php:213
+#: incl/pages/custom-styles.php:217
 msgid "Save styles"
 msgstr ""
 
