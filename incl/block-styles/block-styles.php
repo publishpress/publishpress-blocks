@@ -1038,12 +1038,6 @@ class AdvancedGutenbergBlockStyles
                         'type' => 'fieldset',
                         'legend' => __('Padding', 'advanced-gutenberg'),
                         'fields' => [
-                            'padding' => [
-                                'label' => __('Padding (px)', 'advanced-gutenberg'),
-                                'type' => 'number',
-                                'unit' => 'px',
-                                'min' => 0
-                            ],
                             'padding-top' => [
                                 'label' => __('Padding Top (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
@@ -1074,11 +1068,6 @@ class AdvancedGutenbergBlockStyles
                         'type' => 'fieldset',
                         'legend' => __('Margin', 'advanced-gutenberg'),
                         'fields' => [
-                            'margin' => [
-                                'label' => __('Margin (px)', 'advanced-gutenberg'),
-                                'type' => 'number',
-                                'unit' => 'px'
-                            ],
                             'margin-top' => [
                                 'label' => __('Margin Top (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
@@ -1105,12 +1094,6 @@ class AdvancedGutenbergBlockStyles
                         'type' => 'fieldset',
                         'legend' => __('Border Width', 'advanced-gutenberg'),
                         'fields' => [
-                            'border-width' => [
-                                'label' => __('Border Width (px)', 'advanced-gutenberg'),
-                                'type' => 'number',
-                                'unit' => 'px',
-                                'min' => 0
-                            ],
                             'border-top-width' => [
                                 'label' => __('Border Top Width (px)', 'advanced-gutenberg'),
                                 'type' => 'number',
@@ -1141,12 +1124,6 @@ class AdvancedGutenbergBlockStyles
                         'type' => 'fieldset',
                         'legend' => __('Border Radius', 'advanced-gutenberg'),
                         'fields' => [
-                            'border-radius' => [
-                                'label' => __('Border Radius (px)', 'advanced-gutenberg'),
-                                'type' => 'number',
-                                'unit' => 'px',
-                                'min' => 0
-                            ],
                             'border-top-left-radius' => [
                                 'label' => __('Border Top Left Radius (px)', 'advanced-gutenberg'),
                                 'type' => 'number',

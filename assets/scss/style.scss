@@ -412,6 +412,12 @@ body[class*="_page_advgb_"] #wpcontent {
   }
 }
 
+.advgb-destructive-button {
+    color: #dc3232 !important;
+    border: 1px solid #dc3232 !important;
+    background: transparent;
+}
+
 // PublishPress Footer
 .advgb-footer {
   text-align: center;
@@ -635,10 +641,6 @@ img.thumb-selected {
 /* Style for Block Styles */
 #customstyles-tab {
   background-color: #f9fafb;
-
-  .advgb-style-title-wrapper {
-    margin-bottom: 20px;
-  }
 
   @media (min-width: 1024px) {
     display: grid;

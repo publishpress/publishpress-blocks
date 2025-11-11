@@ -3630,14 +3630,17 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     <h1 class="wp-heading-inline">
                         <?php esc_html_e('Block Usage', 'advanced-gutenberg'); ?>
                     </h1>
+                    <button class="page-title-action button button-secondary" id="header-scan-button" style="vertical-align: unset;" disabled style="opacity: 0.5; cursor: not-allowed;">
+                        <?php esc_html_e('Scan Block Usage', 'advanced-gutenberg'); ?>
+                    </button>
                 </header>
+
                 <div class="wrap">
-                        <div class="tab-content block-list-tab" id="advgb-block-usage-app">
-                            <div class="advgb-block-feature-loading-msg" style="display: block;">
-                                <?php
-                                _e('Loading...', 'advanced-gutenberg') ?>
-                            </div>
+                    <div class="tab-content block-list-tab" id="advgb-block-usage-app">
+                        <div class="advgb-block-feature-loading-msg" style="display: block;">
+                            <?php _e('Loading...', 'advanced-gutenberg') ?>
                         </div>
+                    </div>
                 </div>
             </div>
             <?php

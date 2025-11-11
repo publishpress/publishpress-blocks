@@ -8,6 +8,9 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
         <h1 class="wp-heading-inline">
             <?php esc_html_e('Block Styles', 'advanced-gutenberg'); ?>
         </h1>
+        <button type="button" class="page-title-action advgb-customstyles-new" disabled="disabled">
+            <?php esc_html_e('Add new style', 'advanced-gutenberg'); ?>
+        </button>
     </header>
 
     <div class="wrap">
@@ -16,7 +19,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                 <div id="mybootstrap">
                     <ul class="advgb-customstyles-list">
                         <?php
-                        $content = '<li style="text-align: center; margin-top: 40px"><a class="advgb-customstyles-new top-button button button-secondary"><span class="dashicons dashicons-plus"></span>' . esc_html__( 'Add new style', 'advanced-gutenberg' ) . '</a></li>';
+                        $content = '';
                         foreach ( $custom_styles_saved as $customStyles ) {
                             $content .= '<li class="advgb-customstyles-items" data-id-customstyle="' . esc_attr( (int) $customStyles['id'] ) . '">';
                             $content .= '<a><i class="title-icon" style="background-color: ' . esc_attr( $customStyles['identifyColor'] ) . '"></i><span class="advgb-customstyles-items-title">' . esc_html( $customStyles['title'] ) . '</span></a>';
@@ -25,7 +28,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                             $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">(' . esc_html( $customStyles['name'] ) . ')</li></ul>';
                             $content .= '</li>';
                         }
-                        $content .= '<li style="text-align: center; margin-top: 40px"><a class="advgb-customstyles-new button button-secondary"><span class="dashicons dashicons-plus"></span>' . esc_html__( 'Add new style', 'advanced-gutenberg' ) . '</a></li>';
+                        $content .= '';
 
                         echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped
                         ?>
@@ -46,7 +49,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                         </div>
                     </div>
 
-                    <fieldset class="advgb-fieldset advgb-preview-fieldset">
+                    <fieldset class="advgb-fieldset advgb-preview-fieldset" style="display: none !important;">
                         <legend class="advgb-preview-legend button button-secondary">
                             <span class="dashicons dashicons-arrow-right"></span>
                             <?php esc_html_e('View Extended Preview', 'advanced-gutenberg'); ?>
@@ -62,22 +65,23 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                 </div>
 
                 <!-- Global settings -->
-                <div class="advgb-style-title-wrapper">
-                    <label for="advgb-customstyles-title">
-                        <?php esc_html_e('Style title', 'advanced-gutenberg') ?>
-                    </label>
-                    <input type="text" class="regular-text" name="customstyles-title" id="advgb-customstyles-title"
-                           value=""/>
-                </div>
-                <div class="advgb-customstyles-two-columns">
-                    <div>
+
+                <div class="advgb-customstyles-header-row">
+                    <div class="advgb-style-title-wrapper">
+                        <label for="advgb-customstyles-title">
+                            <?php esc_html_e('Style title', 'advanced-gutenberg') ?>
+                        </label>
+                        <input type="text" class="regular-text" name="customstyles-title" id="advgb-customstyles-title"
+                               value=""/>
+                    </div>
+                    <div class="advgb-classname-wrapper">
                         <label for="advgb-customstyles-classname">
                             <?php esc_html_e('Class name', 'advanced-gutenberg') ?>
                         </label>
                         <input type="text" class="regular-text" name="customstyles-classname" id="advgb-customstyles-classname"
                                value=""/>
                     </div>
-                    <div id="identify-colors">
+                    <div class="advgb-identify-color-wrapper">
                         <div class="control-label">
                             <label for="advgb-customstyles-identify-color"
                                    class="advgb_qtip"
