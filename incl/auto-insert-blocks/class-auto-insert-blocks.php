@@ -29,7 +29,7 @@ class AdvancedGutenbergAutoInsertBlocks
     {
         add_action('init', [$this, 'registerAutoInsertPostType']);
         add_action('save_post', [$this, 'saveAutoInsertRule']);
-        add_filter('the_content', [$this, 'autoInsertBlocks'], 8);
+        add_filter('the_content', [$this, 'autoInsertBlocks'], -10);
         add_filter('parent_file', [$this, 'setAutoInsertMenuParent']);
         add_filter('submenu_file', [$this, 'setAutoInsertSubmenuFile']);
         add_action('admin_notices', [$this, 'displayAdminNotices']);
@@ -46,6 +46,7 @@ class AdvancedGutenbergAutoInsertBlocks
         add_action('admin_head-edit.php', [$this, 'remove_quick_edit_row']);
         add_filter('post_row_actions', [$this, 'addDuplicateAction'], 10, 2);
         add_action('admin_post_duplicate_auto_insert_block', [$this, 'handleDuplicateAction']);
+        add_action('months_dropdown_results', [$this, 'removeMonthFilters'], 10, 2);
 
         // Scripts and styles
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminAssets']);
@@ -412,7 +413,7 @@ class AdvancedGutenbergAutoInsertBlocks
         }
 
         // Remove our filter temporarily
-        remove_filter('the_content', [$this, 'autoInsertBlocks'], 8);
+        remove_filter('the_content', [$this, 'autoInsertBlocks'], -10);
 
         $raw_content = $post->post_content;
 
@@ -425,13 +426,10 @@ class AdvancedGutenbergAutoInsertBlocks
         // Convert back to block markup
         $content_with_insertions = serialize_blocks($blocks);
 
-        // Apply ALL WordPress content filters (this will render embeds, shortcodes, etc to work if auto insert block has it.)
-        $fully_rendered_content = apply_filters('the_content', $content_with_insertions);
-
         // Readd our filter
-        add_filter('the_content', [$this, 'autoInsertBlocks'], 8);
+        add_filter('the_content', [$this, 'autoInsertBlocks'], -10);
 
-        return $fully_rendered_content;
+        return $content_with_insertions;
     }
 
     /**
@@ -540,7 +538,6 @@ class AdvancedGutenbergAutoInsertBlocks
     /**
      * Insert block according to rule
      */
-
     public function insertBlockByRule($blocks, $rule)
     {
         // Load reusable block to insert
@@ -549,12 +546,18 @@ class AdvancedGutenbergAutoInsertBlocks
             return $blocks;
         }
 
-        // Parse and expand the reusable block's content
-        $insert_blocks = parse_blocks($block_content->post_content);
+        // Render the entire reusable block once
+        $rendered_content = $this->renderReusableBlockLikeWordPressCore($block_content);
 
-        if (empty($insert_blocks)) {
-            return $blocks;
-        }
+        $html_block = [
+            'blockName' => 'core/html',
+            'attrs' => [],
+            'innerBlocks' => [],
+            'innerHTML' => $rendered_content,
+            'innerContent' => [$rendered_content],
+        ];
+
+        $insert_blocks = [$html_block];
 
         switch ($rule['position']) {
             case 'beginning':
@@ -578,6 +581,37 @@ class AdvancedGutenbergAutoInsertBlocks
         }
 
         return $blocks;
+    }
+
+
+    /**
+     * Render reusable block using the same method WordPress core uses
+     */
+    private function renderReusableBlockLikeWordPressCore($reusable_block)
+    {
+        global $wp_embed;
+
+        if (!$reusable_block || 'wp_block' !== $reusable_block->post_type) {
+            return '';
+        }
+
+        if ('publish' !== $reusable_block->post_status || !empty($reusable_block->post_password)) {
+            return '';
+        }
+
+        // Handle embeds for reusable blocks
+        $content = $wp_embed->run_shortcode($reusable_block->post_content);
+        $content = $wp_embed->autoembed($content);
+
+        // Apply Block Hooks if the function exists
+        if (function_exists('apply_block_hooks_to_content_from_post_object')) {
+            $content = apply_block_hooks_to_content_from_post_object($content, $reusable_block);
+        }
+
+        // Process blocks
+        $content = do_blocks($content);
+
+        return $content;
     }
 
 
@@ -865,6 +899,18 @@ class AdvancedGutenbergAutoInsertBlocks
 
         wp_safe_redirect(admin_url('edit.php?post_type=advgb_insert_block'));
         exit;
+    }
+
+    /**
+     * Remove the month filter dropdown
+     */
+    public function removeMonthFilters($months, $post_type)
+    {
+        if ($post_type === 'advgb_insert_block') {
+            // Return empty to remove the dropdown
+            return [];
+        }
+        return $months;
     }
 
     /**

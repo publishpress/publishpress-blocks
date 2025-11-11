@@ -8,3 +8,5 @@
 - /assets/scss
 - /assets/js/main.js
 - /assets/js/settings.js
+- .env
+- .env.example

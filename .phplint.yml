@@ -1,4 +1,7 @@
-path: .
+path:
+  - .
+  - incl
+  - review
 jobs: 10
 extensions:
   - php
@@ -19,3 +22,4 @@ exclude:
   - cache
   - .cache
   - assets
+  - .wordpress-org

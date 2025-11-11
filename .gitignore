@@ -6,3 +6,9 @@ node_modules/
 .DS_Store*
 report.csv
 /dist
+
+/dev-workspace/.cache/
+.env
+.phplint-cache
+.phplint.cache
+version.txt

@@ -55,7 +55,7 @@
                                           marginLeft: '10px',
                                       } } />
                             ] }
-                            help={__( 'This option let you add custom style for the current block', 'advanced-gutenberg' )}
+                            help={__( 'This option let you add custom styles for the current block.', 'advanced-gutenberg' )}
                             value={props.attributes.customStyle}
                             options={advgbBlocksCustomStyles.customStyles.map( ( cstyle, index ) => {
                                 if (cstyle.title) advgbBlocksCustomStyles.customStyles[ index ].label = cstyle.title;

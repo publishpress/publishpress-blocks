@@ -27,6 +27,7 @@
     <exclude-pattern>/dev-workspace/*</exclude-pattern>
     <exclude-pattern>/cache/*</exclude-pattern>
     <exclude-pattern>/.cache/*</exclude-pattern>
+    <exclude-pattern>/.wordpress-org/*</exclude-pattern>
 
     <rule ref="PHPCompatibility"/>
 </ruleset>

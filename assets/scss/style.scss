@@ -1,6 +1,10 @@
 @import "variables";
 @import "mixins";
 
+.components-button.advgb-primary-button:hover {
+  color: #fff;
+}
+
 .pp-version-notice-bold-purple-button a {
   color: #000000;
   text-decoration: none;
@@ -408,6 +412,12 @@ body[class*="_page_advgb_"] #wpcontent {
   }
 }
 
+.advgb-destructive-button {
+    color: #dc3232 !important;
+    border: 1px solid #dc3232 !important;
+    background: transparent;
+}
+
 // PublishPress Footer
 .advgb-footer {
   text-align: center;
@@ -631,10 +641,6 @@ img.thumb-selected {
 /* Style for Block Styles */
 #customstyles-tab {
   background-color: #f9fafb;
-
-  .advgb-style-title-wrapper {
-    margin-bottom: 20px;
-  }
 
   @media (min-width: 1024px) {
     display: grid;
@@ -1035,7 +1041,16 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked+.slider:before {
 
 .advgb-switch-button.promo-area {
   line-height: normal;
-  margin-top: 15px;
+  margin-top: 10px;
+}
+
+.advgb-settings-option .advgb-pro-small-overlay-text {
+  position: initial !important;
+  transform: initial !important;
+}
+
+.advgb-settings-option .advgb-pro-small-overlay-text .dashicons {
+  vertical-align: sub;
 }
 
 .advgb-tooltips .tooltip-text {

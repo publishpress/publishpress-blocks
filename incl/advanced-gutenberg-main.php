@@ -3315,6 +3315,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'blockCategories' => $blockCategories,
                 'saved_blocks' => $saved_blocks,
                 'postTypes' => $this->get_editor_post_types(),
+                'isProActive' => Utilities::isProActive(),
+                'promoLink' => ADVANCED_GUTENBERG_UPGRADE_LINK,
+                'upgradeText'   => __( 'Upgrade to Pro', 'advanced-gutenberg' ),
+                 'proText'   => __( 'Pro', 'advanced-gutenberg' ),
                 'initialData' => [
                     'usage' => [],
                     'lastScanDate' => '',
@@ -3626,14 +3630,17 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     <h1 class="wp-heading-inline">
                         <?php esc_html_e('Block Usage', 'advanced-gutenberg'); ?>
                     </h1>
+                    <button class="page-title-action button button-secondary" id="header-scan-button" style="vertical-align: unset;" disabled style="opacity: 0.5; cursor: not-allowed;">
+                        <?php esc_html_e('Scan Block Usage', 'advanced-gutenberg'); ?>
+                    </button>
                 </header>
+
                 <div class="wrap">
-                        <div class="tab-content block-list-tab" id="advgb-block-usage-app">
-                            <div class="advgb-block-feature-loading-msg" style="display: block;">
-                                <?php
-                                _e('Loading...', 'advanced-gutenberg') ?>
-                            </div>
+                    <div class="tab-content block-list-tab" id="advgb-block-usage-app">
+                        <div class="advgb-block-feature-loading-msg" style="display: block;">
+                            <?php _e('Loading...', 'advanced-gutenberg') ?>
                         </div>
+                    </div>
                 </div>
             </div>
             <?php
@@ -3765,6 +3772,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 $current_user_role = 'administrator';
             } else {
                 $current_user = wp_get_current_user();
+
+                if (empty($current_user->roles) || empty($current_user->roles[0])) {
+                    return $user_roles_data;
+                }
 
                 if (count($current_user->roles) === 1) {
                     // User has 1 user role
