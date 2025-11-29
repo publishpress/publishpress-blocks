@@ -3512,7 +3512,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                                 $page_ = sanitize_text_field($_GET['page']);
                                 ?>
                                 <input type="hidden" name="advgb_page_slug" id="advgb_page_slug" value="<?php
-                                esc_attr_e($page_) ?>"/>
+                                echo esc_attr($page_) ?>"/>
                                 <?php
                             } ?>
                             <input type="hidden" name="advgb_feature" id="advgb_feature" value="<?php
