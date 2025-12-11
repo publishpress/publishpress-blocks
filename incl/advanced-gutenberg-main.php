@@ -1876,7 +1876,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 ],
                 [
                     'slug'     => 'advgb_block_settings',
-                    'title'    => esc_html__('PublishPress Blocks', 'advanced-gutenberg'),
+                    'title'    => esc_html__('Extra Blocks', 'advanced-gutenberg'),
                     'callback' => 'loadBlockSettingsPage',
                     'order'    => 3,
                     'enabled'  => Utilities::settingIsEnabled('enable_advgb_blocks')
