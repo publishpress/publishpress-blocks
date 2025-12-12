@@ -43,6 +43,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             global $wp_version;
 
             add_action('init', array( $this, 'registerPostMeta' ));
+            add_action('admin_init', array($this, 'addCustomStylesToReusableBlocks'));
             add_action('admin_init', array( $this, 'registerStylesScripts' ));
             add_action('wp_loaded', [ 'PublishPress\Blocks\Controls', 'addAttributes' ], 999);
             add_filter('rest_pre_dispatch', [ 'PublishPress\Blocks\Controls', 'removeAttributes' ], 10, 3);
@@ -3029,6 +3030,33 @@ if (! class_exists('AdvancedGutenbergMain')) {
             }
         }
 
+        private function getAdminEditorCustomStyles() {
+
+            $content = '';
+            $custom_styles = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
+
+            if (is_array($custom_styles)) {
+                foreach ($custom_styles as $styles) {
+                    // post editor
+                    $class_name = '.block-editor-writing-flow .' . $styles['name'];
+                    // resusable block editor
+                    $class_name .= ', .editor-visual-editor iframe .' . $styles['name'];
+                    $class_name .= ', .block-editor-iframe__body .' . $styles['name'];
+
+                    if (isset($styles['generated_css']) && !empty($styles['generated_css'])) {
+                        $admin_css = str_replace('.' . $styles['name'], $class_name, $styles['generated_css']);
+                        $content .= $admin_css;
+                    } else {
+                        // Fallback: generate CSS on the fly for legacy data
+                        $content .= AdvancedGutenbergBlockStyles::generate_final_css($styles['css'], $class_name);
+                    }
+                }
+            }
+
+            return $content;
+
+        }
+
         /**
          * Load Block Styles in <head> in admin
          *
@@ -3039,23 +3067,36 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 return;
             }
 
-            $custom_styles = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
+            $custom_styles = $this->getAdminEditorCustomStyles();
 
-            if (is_array($custom_styles)) {
-                $content = '';
-                foreach ($custom_styles as $styles) {
-                    $class_name = '.block-editor-writing-flow .' . $styles['name'];
+            if (!empty($custom_styles)) {
+                echo '<style type="text/css">' . strip_tags($custom_styles) . '</style>';
+            }
+        }
 
-                    if (isset($styles['generated_css']) && !empty($styles['generated_css'])) {
-                        $admin_css = str_replace('.' . $styles['name'], $class_name, $styles['generated_css']);
-                        $content .= $admin_css;
-                    } else {
-                        // Fallback: generate CSS on the fly for legacy data
-                        $content .= AdvancedGutenbergBlockStyles::generate_final_css($styles['css'], $class_name);
+        public function addCustomStylesToReusableBlocks() {
+
+            if (!Utilities::settingIsEnabled('enable_custom_styles')) {
+                return;
+            }
+
+            if (get_post_type() === 'wp_block') {
+                add_filter('block_editor_settings_all', function($settings) {
+
+                    $custom_styles = $this->getAdminEditorCustomStyles();
+
+                    if (!empty($custom_styles)) {
+                        if (!isset($settings['styles'])) {
+                            $settings['styles'] = [];
+                        }
+
+                        $settings['styles'][] = [
+                            'css' => $custom_styles,
+                        ];
                     }
-                }
 
-                echo '<style type="text/css">' . strip_tags($content) . '</style>';
+                    return $settings;
+                }, 20);
             }
         }
 
