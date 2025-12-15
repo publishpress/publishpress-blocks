@@ -863,6 +863,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
         {
             // Block Content Display
             require_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/recent-posts/block.php');
+            // Load all block registrations
+            require_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/register-blocks.php');
+
         }
 
         /**
