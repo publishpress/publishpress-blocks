@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-develop',
-        'version' => 'dev-develop',
-        'reference' => '289f033b34c722b7bc7c2b77dd4ce70e09e9975d',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'aa26c6524ba47df905d66fb28a0625fc23223bf1',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,18 +11,18 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
-            'reference' => '289f033b34c722b7bc7c2b77dd4ce70e09e9975d',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'aa26c6524ba47df905d66fb28a0625fc23223bf1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'matomo/device-detector' => array(
-            'pretty_version' => '6.4.7',
-            'version' => '6.4.7.0',
-            'reference' => 'e53eed31bb1530851feebe52bd64c3451da19e77',
+            'pretty_version' => '6.4.8',
+            'version' => '6.4.8.0',
+            'reference' => '56baf981af4f192e15a4f369d4975af847a81ccb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../matomo/device-detector',
             'aliases' => array(),
@@ -40,13 +40,13 @@
         'piwik/device-detector' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '6.4.7',
+                0 => '6.4.8',
             ),
         ),
         'publishpress/instance-protection' => array(
-            'pretty_version' => '2.0.1',
-            'version' => '2.0.1.0',
-            'reference' => '4193f84a8a680bf4c0d40cc64976ddcadd92158a',
+            'pretty_version' => '2.1.0',
+            'version' => '2.1.0.0',
+            'reference' => '24289afd5ac8f1f4098a22a45cab3939c02db15f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../publishpress/instance-protection',
             'aliases' => array(),
@@ -62,9 +62,9 @@
             'dev_requirement' => false,
         ),
         'publishpress/psr-container' => array(
-            'pretty_version' => '2.0.1.10',
-            'version' => '2.0.1.10',
-            'reference' => '4ccd2cb058e7b93e96186791ca25870a02e35c5d',
+            'pretty_version' => '2.0.2.1',
+            'version' => '2.0.2.1',
+            'reference' => '773a2510aa39a7f0ad5d5dfc78878abb939f5704',
             'type' => 'library',
             'install_path' => __DIR__ . '/../publishpress/psr-container',
             'aliases' => array(),
