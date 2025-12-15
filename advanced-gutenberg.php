@@ -9,6 +9,7 @@
  * Author URI: https://publishpress.com/
  * Text Domain: advanced-gutenberg
  * Domain Path: /languages
+ * Blocks: advgb/accordions, advgb/adv-tabs, advgb/button, advgb/columns, advgb/contact-form, advgb/count-up, advgb/image, advgb/images-slider, advgb/infobox, advgb/icon, advgb/list, advgb/login-form, advgb/map, advgb/newsletter, advgb/recent-posts, advgb/search-bar, advgb/social-links, advgb/summary, advgb/table, advgb/tabs, advgb/testimonial, advgb/video, advgb/woo-products, advgb/countdown, advgb/feature, advgb/feature-list, advgb/pricing-table
  * Requires at least: 5.5
  * Requires PHP: 7.2.5
  * License: GPL2
