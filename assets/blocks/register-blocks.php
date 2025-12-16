@@ -35,7 +35,6 @@ function advgbRegisterBlockAccordion() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
     ));
 }
 
@@ -70,7 +69,7 @@ function advgbRegisterBlockButton() {
                 'default' => 'left',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -101,7 +100,7 @@ function advgbRegisterBlockColumns() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -128,7 +127,7 @@ function advgbRegisterBlockContactForm() {
                 'default' => array(),
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -163,7 +162,7 @@ function advgbRegisterBlockCountUp() {
                 'default' => '',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -194,7 +193,7 @@ function advgbRegisterBlockImage() {
                 'default' => 'large',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -221,7 +220,7 @@ function advgbRegisterBlockImagesSlider() {
                 'default' => 3000,
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -252,7 +251,7 @@ function advgbRegisterBlockInfoBox() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -283,7 +282,7 @@ function advgbRegisterBlockIcon() {
                 'default' => '#000000',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -310,7 +309,7 @@ function advgbRegisterBlockList() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -337,7 +336,7 @@ function advgbRegisterBlockLoginForm() {
                 'default' => true,
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -368,7 +367,7 @@ function advgbRegisterBlockMap() {
                 'default' => '400px',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -395,7 +394,7 @@ function advgbRegisterBlockNewsletter() {
                 'default' => 'Subscribe',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -422,7 +421,7 @@ function advgbRegisterBlockSearchBar() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -449,7 +448,7 @@ function advgbRegisterBlockSocialLinks() {
                 'default' => 'medium',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -472,7 +471,7 @@ function advgbRegisterBlockSummary() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -499,7 +498,7 @@ function advgbRegisterBlockTable() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -522,7 +521,7 @@ function advgbRegisterBlockTabs() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -553,7 +552,7 @@ function advgbRegisterBlockTestimonial() {
                 'default' => null,
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -584,7 +583,7 @@ function advgbRegisterBlockVideo() {
                 'default' => false,
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -619,7 +618,7 @@ function advgbRegisterBlockWooProducts() {
                 'default' => 'desc',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -648,7 +647,7 @@ function advgbRegisterBlockAdvTabs() {
                 'default' => 'horizontal',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
@@ -680,7 +679,7 @@ function advgbRegisterProBlocks() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 
     // Feature block
@@ -699,7 +698,7 @@ function advgbRegisterProBlocks() {
                 'default' => '',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 
     // Feature List block
@@ -714,7 +713,7 @@ function advgbRegisterProBlocks() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 
     // Pricing Table block
@@ -729,7 +728,7 @@ function advgbRegisterProBlocks() {
                 'default' => 'default',
             ),
         ),
-        'render_callback' => 'advgbDummyRenderCallback',
+
     ));
 }
 
