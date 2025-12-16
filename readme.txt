@@ -1,9 +1,9 @@
 === PublishPress Blocks - Block Controls, Block Visibility, Block Permissions ===
 Contributors: publishpress, stevejburge, htmgarcia, olatechpro
-Tags: gutenberg, gutenberg blocks, block editor, block visibility, block permissions 
+Tags: gutenberg, gutenberg blocks, block editor, block visibility, block permissions
 Requires at least: 5.5
 Tested up to: 6.9
-Stable tag: 3.6.0
+Stable tag: 3.6.2
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
