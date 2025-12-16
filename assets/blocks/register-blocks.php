@@ -9,14 +9,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Dummy render callback for static blocks
- * Returns empty string since these blocks save their HTML directly
- */
-function advgbDummyRenderCallback($attributes) {
-    return '';
-}
-
-/**
  * Register Accordion block
  */
 function advgbRegisterBlockAccordion() {
