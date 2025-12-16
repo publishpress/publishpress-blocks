@@ -1,6 +1,9 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= 3.6.2 - 16 December 2025 =
+  * Fixed: Tables and some other publishpress blocks not working after 3.6.1 update, #1709
+
 = 3.6.1 - 15 December 2025 =
   * Update: Remove the Priority on the Auto Insert Blocks screen, #1696
   * Update: Rename "PublishPress Blocks" menu link to "Extra Blocks", #1698
