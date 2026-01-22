@@ -33,9 +33,9 @@
         "overtrue/phplint": "^9.6"
     },
     "scripts": {
-        "build": "pbuild build",
-        "build:dir": "pbuild build-dir",
-        "build:clean": "pbuild clean",
+        "build": "build zip",
+        "build:dir": "build dir",
+        "build:clean": "build clean",
         "build:make-pot": "wp i18n make-pot --exclude=/dev-workspace --exclude=/.wordpress-org --exclude=/.github --exclude=/dist --exclude=/vendor --exclude=/lib . ./languages/advanced-gutenberg.pot --allow-root",
         "build:js-translations": "bash /project/dev-workspace/docker/scripts/json_translations.sh",
         "build:css": "sass assets/scss/:assets/css/ --style=compressed --no-source-map",
