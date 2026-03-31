@@ -9,6 +9,7 @@
 *.tar.gz export-ignore
 *.testing export-ignore
 *.zip export-ignore
+.env export-ignore
 .DS_Store export-ignore
 .babelrc export-ignore
 .distignore export-ignore
