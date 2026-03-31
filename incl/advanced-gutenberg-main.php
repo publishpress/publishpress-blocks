@@ -58,6 +58,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             add_action('wp_login_failed', array( $this, 'handleLoginFailed' ));
             add_filter('safe_style_css', array( $this, 'addAllowedInlineStyles' ), 10, 1);
             add_filter('wp_kses_allowed_html', array( $this, 'addAllowedTags' ), 1);
+            add_filter('all_plugins', array( $this, 'addFreeLabel' ));
 
             // Front-end ajax
             add_action('wp_ajax_advgb_contact_form_save', array( $this, 'saveContactFormData' ));
@@ -226,6 +227,30 @@ if (! class_exists('AdvancedGutenbergMain')) {
             );
 
             return $tags;
+        }
+
+        /**
+         * Add "Free" label to plugin name in the Plugins list page only
+         *
+         * @param array $plugins List of plugins
+         *
+         * @return array
+         */
+        public function addFreeLabel($plugins)
+        {
+            global $pagenow;
+
+            if (!is_admin() || 'plugins.php' !== $pagenow) {
+                return $plugins;
+            }
+
+            $plugin_file = plugin_basename(ADVANCED_GUTENBERG_PLUGIN);
+
+            if (isset($plugins[$plugin_file]['Name'])) {
+                $plugins[$plugin_file]['Name'] = 'PublishPress Blocks Free';
+            }
+
+            return $plugins;
         }
 
         /**
