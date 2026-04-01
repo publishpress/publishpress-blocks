@@ -1,4 +1,4 @@
-# Copyright (C) 2025 PublishPress
+# Copyright (C) 2026 PublishPress
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
@@ -10,10 +10,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-12-15T13:55:51+00:00\n"
-"PO-Revision-Date: 2026-03-31 11:29+0000\n"
+"PO-Revision-Date: 2026-04-01 14:42+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+">= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);\n"
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1: 2);\n"
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=3; plural=(n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);\n"
 
@@ -22,171 +23,191 @@ msgstr ""
 msgid "404"
 msgstr "404"
 
-#: advanced-gutenberg.php
-#: incl/advanced-gutenberg-main.php:175
+#: advanced-gutenberg.php:7
+#: incl/advanced-gutenberg-main.php:176
 #: incl/pages/block-settings.php:95
 #: incl/pages/main.php:8, fuzzy
 #. Plugin Name of the plugin
 msgid "PublishPress Blocks"
 msgstr "PublishPress Blocks"
 
-#: advanced-gutenberg.php, fuzzy
+#: advanced-gutenberg.php:9, fuzzy
 #. Plugin URI of the plugin
 msgid "https://publishpress.com/blocks/"
 msgstr "https://publishpress.com/blocks/"
 
-#: advanced-gutenberg.php
+#: advanced-gutenberg.php:11
 #. Description of the plugin
+msgid ""
+"PublishPress Blocks has everything you need to build professional websites "
+"with the Gutenberg editor."
+msgstr ""
+"PublishPress Blocks имеет все необходимое для создания профессиональных "
+"веб-сайтов с редактором Gutenberg."
+
+#: advanced-gutenberg.php:15, fuzzy
+#. Author of the plugin
 msgid "PublishPress"
 msgstr "PublishPress"
 
-#: advanced-gutenberg.php, fuzzy
+#: advanced-gutenberg.php:17, fuzzy
 #. Author URI of the plugin
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
 
-#: incl/advanced-gutenberg-main.php:446
-#: incl/advanced-gutenberg-main.php:915
-#: incl/advanced-gutenberg-main.php:2098
-#: incl/advanced-gutenberg-main.php:3364
-#: incl/advanced-gutenberg-main.php:5969
+#: incl/advanced-gutenberg-main.php:471
+#: incl/advanced-gutenberg-main.php:940
+#: incl/advanced-gutenberg-main.php:2123
+#: incl/advanced-gutenberg-main.php:3389
+#: incl/advanced-gutenberg-main.php:5994
 msgid "Upgrade to Pro"
 msgstr "Обновить до Pro"
 
-#: incl/advanced-gutenberg-main.php:447
-#: incl/advanced-gutenberg-main.php:2099
-#: incl/advanced-gutenberg-main.php:3365
+#: incl/advanced-gutenberg-main.php:472
+#: incl/advanced-gutenberg-main.php:2124
+#: incl/advanced-gutenberg-main.php:3390
 #: incl/pages/block-settings.php:133, fuzzy
 msgid "Pro"
 msgstr "Pro"
 
-#: incl/advanced-gutenberg-main.php:889
+#: incl/advanced-gutenberg-main.php:914
 #, php-format
+msgid ""
+"You're using PublishPress Blocks Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"Вы используете PublishPress Blocks Free. Профессиональная версия имеет "
+"больше функций и поддержку. %sОбновите до Pro%s"
+
+#: incl/advanced-gutenberg-main.php:1149
+#: incl/advanced-gutenberg-main.php:1275
+#: incl/advanced-gutenberg-main.php:1336
+#: incl/block-styles/block-styles.php:234
 msgid "No permission!"
 msgstr "Нет разрешения!"
 
-#: incl/advanced-gutenberg-main.php:1261
-#: incl/advanced-gutenberg-main.php:1317
-#: incl/advanced-gutenberg-main.php:1377
-#: incl/advanced-gutenberg-main.php:1469
+#: incl/advanced-gutenberg-main.php:1286
+#: incl/advanced-gutenberg-main.php:1342
+#: incl/advanced-gutenberg-main.php:1402
+#: incl/advanced-gutenberg-main.php:1494
 #: incl/block-styles/block-styles.php:241
 msgid "Invalid nonce token!"
 msgstr "Неверный токен nonce!"
 
-#: incl/advanced-gutenberg-main.php:1265
+#: incl/advanced-gutenberg-main.php:1290
 msgid "Error: wrong data"
 msgstr "Ошибка: неверные данные"
 
-#: incl/advanced-gutenberg-main.php:1296
+#: incl/advanced-gutenberg-main.php:1321
 msgid "Error: can't edit this feature"
 msgstr "Ошибка: не удается редактировать эту функцию"
 
-#: incl/advanced-gutenberg-main.php:1382
-#: incl/advanced-gutenberg-main.php:1474
-#: incl/advanced-gutenberg-main.php:1527
+#: incl/advanced-gutenberg-main.php:1407
+#: incl/advanced-gutenberg-main.php:1499
+#: incl/advanced-gutenberg-main.php:1552
 msgid "Bad Request!"
 msgstr "Неверный запрос!"
 
-#: incl/advanced-gutenberg-main.php:1390
-#: incl/advanced-gutenberg-main.php:1482
-#: incl/advanced-gutenberg-main.php:1535
+#: incl/advanced-gutenberg-main.php:1415
+#: incl/advanced-gutenberg-main.php:1507
+#: incl/advanced-gutenberg-main.php:1560
 msgid "Server error. Try again later!"
 msgstr "Ошибка сервера. Попробуйте еще раз позже!"
 
-#: incl/advanced-gutenberg-main.php:1398
-#: incl/advanced-gutenberg-main.php:1490
-#: incl/advanced-gutenberg-main.php:1543
+#: incl/advanced-gutenberg-main.php:1423
+#: incl/advanced-gutenberg-main.php:1515
+#: incl/advanced-gutenberg-main.php:1568
 msgid "Cannot validate captcha"
 msgstr "Не удалось проверить капчу"
 
-#: incl/advanced-gutenberg-main.php:1403
-#: incl/advanced-gutenberg-main.php:1495
-#: incl/advanced-gutenberg-main.php:1548
+#: incl/advanced-gutenberg-main.php:1428
+#: incl/advanced-gutenberg-main.php:1520
+#: incl/advanced-gutenberg-main.php:1573
 msgid "Captcha validation error"
 msgstr "Ошибка проверки капчи"
 
-#: incl/advanced-gutenberg-main.php:1428
+#: incl/advanced-gutenberg-main.php:1453
 #: incl/pages/settings/forms.php:24
 msgid "Website Contact"
 msgstr "Контакт с веб-сайтом"
 
-#: incl/advanced-gutenberg-main.php:1434
+#: incl/advanced-gutenberg-main.php:1459
 msgid "You have received a contact from your website."
 msgstr "Вы получили контактное сообщение с вашего веб-сайта."
 
-#: incl/advanced-gutenberg-main.php:1437
+#: incl/advanced-gutenberg-main.php:1462
 msgid "Name"
 msgstr "Имя"
 
-#: incl/advanced-gutenberg-main.php:1439
+#: incl/advanced-gutenberg-main.php:1464
 #: incl/block-settings-main.php:808
 #: incl/block-settings-main.php:849
 #: incl/block-settings-main.php:890
 msgid "Email"
 msgstr "Электронная почта"
 
-#: incl/advanced-gutenberg-main.php:1441
+#: incl/advanced-gutenberg-main.php:1466
 msgid "Date"
 msgstr "Дата"
 
-#: incl/advanced-gutenberg-main.php:1443
+#: incl/advanced-gutenberg-main.php:1468
 msgid "Message"
 msgstr "Сообщение"
 
-#: incl/advanced-gutenberg-main.php:1451
+#: incl/advanced-gutenberg-main.php:1476
 msgid "Error while sending the form. Please try again."
 msgstr "Ошибка при отправке формы. Пожалуйста, попробуйте еще раз."
 
-#: incl/advanced-gutenberg-main.php:1551
+#: incl/advanced-gutenberg-main.php:1576
 msgid "Captcha validated"
 msgstr "Капча подтверждена"
 
-#: incl/advanced-gutenberg-main.php:1554
+#: incl/advanced-gutenberg-main.php:1579
 msgid "Captcha is empty"
 msgstr "Капча пуста"
 
-#: incl/advanced-gutenberg-main.php:1869
-#: incl/advanced-gutenberg-main.php:5956
+#: incl/advanced-gutenberg-main.php:1894
+#: incl/advanced-gutenberg-main.php:5981
 msgid "Dashboard"
 msgstr "Панель управления"
 
-#: incl/advanced-gutenberg-main.php:1876
-#: incl/advanced-gutenberg-main.php:2189
+#: incl/advanced-gutenberg-main.php:1901
+#: incl/advanced-gutenberg-main.php:2214
 #: incl/pages/main.php:21
 msgid "Block Permissions"
 msgstr "Разрешения на блоки"
 
-#: incl/advanced-gutenberg-main.php:1883
+#: incl/advanced-gutenberg-main.php:1908
 #: incl/pages/main.php:31
 msgid "Extra Blocks"
 msgstr "Дополнительные блоки"
 
-#: incl/advanced-gutenberg-main.php:1890
+#: incl/advanced-gutenberg-main.php:1915
 #: incl/pages/custom-styles.php:9
 #: incl/pages/main.php:41
 msgid "Block Styles"
 msgstr "Стили блоков"
 
-#: incl/advanced-gutenberg-main.php:1897
+#: incl/advanced-gutenberg-main.php:1922
 #: incl/pages/block-controls.php:30
 #: incl/pages/main.php:51
 msgid "Block Controls"
 msgstr "Управление блоками"
 
-#: incl/advanced-gutenberg-main.php:1904
-#: incl/advanced-gutenberg-main.php:3675
+#: incl/advanced-gutenberg-main.php:1929
+#: incl/advanced-gutenberg-main.php:3700
 #: incl/pages/main.php:61
 msgid "Block Usage"
 msgstr "Использование блоков"
 
-#: incl/advanced-gutenberg-main.php:1911
-#: incl/advanced-gutenberg-main.php:5988
-#: incl/advanced-gutenberg-main.php:5990
+#: incl/advanced-gutenberg-main.php:1936
+#: incl/advanced-gutenberg-main.php:6013
+#: incl/advanced-gutenberg-main.php:6015
 #: incl/pages/main.php:71
 msgid "Reusable Blocks"
 msgstr "Повторно используемые блоки"
 
-#: incl/advanced-gutenberg-main.php:1918
+#: incl/advanced-gutenberg-main.php:1943
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:117
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:155
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:156
@@ -194,110 +215,119 @@ msgstr "Повторно используемые блоки"
 msgid "Auto Insert Blocks"
 msgstr "Авто вставка блоков"
 
-#: incl/advanced-gutenberg-main.php:1925
-#: incl/advanced-gutenberg-main.php:5962
+#: incl/advanced-gutenberg-main.php:1950
+#: incl/advanced-gutenberg-main.php:5987
 #: incl/pages/settings.php:26
 msgid "Settings"
 msgstr "Настройки"
 
-#: incl/advanced-gutenberg-main.php:2164
-#: incl/advanced-gutenberg-main.php:2210
-#: incl/advanced-gutenberg-main.php:2254
-#: incl/advanced-gutenberg-main.php:2290
-#: incl/advanced-gutenberg-main.php:2336
+#: incl/advanced-gutenberg-main.php:2189
+#: incl/advanced-gutenberg-main.php:2235
+#: incl/advanced-gutenberg-main.php:2279
+#: incl/advanced-gutenberg-main.php:2315
+#: incl/advanced-gutenberg-main.php:2361
+#, php-format
+msgid ""
+"This feature is disabled. In order to use, please enable back through "
+"%sDashboard%s."
+msgstr ""
+"Эта функция отключена. Чтобы использовать, пожалуйста, включите её снова "
+"через %sПанель управления%s."
+
+#: incl/advanced-gutenberg-main.php:2434
 #, php-format
 msgid "If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!"
 msgstr ""
 "Если вам нравятся %sPublishPress Blocks%s, пожалуйста, оставьте нам %s "
 "оценку. Спасибо!"
 
-#: incl/advanced-gutenberg-main.php:2426
+#: incl/advanced-gutenberg-main.php:2451
 msgid "About PublishPress Blocks"
 msgstr "О PublishPress Blocks"
 
-#: incl/advanced-gutenberg-main.php:2429
+#: incl/advanced-gutenberg-main.php:2454
 msgid "About"
 msgstr "О программе"
 
-#: incl/advanced-gutenberg-main.php:2436
-#: incl/advanced-gutenberg-main.php:2439
+#: incl/advanced-gutenberg-main.php:2461
+#: incl/advanced-gutenberg-main.php:2464
 msgid "Documentation"
 msgstr "Документация"
 
-#: incl/advanced-gutenberg-main.php:2447
+#: incl/advanced-gutenberg-main.php:2472
 msgid "Contact the PublishPress team"
 msgstr "Свяжитесь с командой PublishPress"
 
-#: incl/advanced-gutenberg-main.php:2450
+#: incl/advanced-gutenberg-main.php:2475
 msgid "Contact"
 msgstr "Контакт"
 
-#: incl/advanced-gutenberg-main.php:2458
+#: incl/advanced-gutenberg-main.php:2483
 msgid "PublishPress Blocks logo"
 msgstr "Логотип PublishPress Blocks"
 
-#: incl/advanced-gutenberg-main.php:3521
+#: incl/advanced-gutenberg-main.php:3546
 #, php-format
 msgid "%s saved successfully!"
 msgstr "%s успешно сохранён!"
 
-#: incl/advanced-gutenberg-main.php:3531
+#: incl/advanced-gutenberg-main.php:3556
 #, php-format
 msgid "%s can't be saved. Please try again."
 msgstr "%s не может быть сохранён. Пожалуйста, попробуйте снова."
 
-#: incl/advanced-gutenberg-main.php:3587
+#: incl/advanced-gutenberg-main.php:3612
 #: incl/pages/block-controls/blocks.php:13
 #: incl/pages/block-settings.php:102
 msgid "Search blocks"
 msgstr "Поиск блоков"
 
-#: incl/advanced-gutenberg-main.php:3592
+#: incl/advanced-gutenberg-main.php:3617
 msgid "Enable or disable all blocks"
 msgstr "Включить или отключить все блоки"
 
-#: incl/advanced-gutenberg-main.php:3605
-#: incl/advanced-gutenberg-main.php:3651
+#: incl/advanced-gutenberg-main.php:3630
+#: incl/advanced-gutenberg-main.php:3676
 #: incl/pages/block-controls/blocks.php:31
 #: incl/pages/block-controls/blocks.php:79
 msgid "To save this configuration, enable at least one block."
 msgstr "Чтобы сохранить эту конфигурацию, включите хотя бы один блок."
 
-#: incl/advanced-gutenberg-main.php:3616
-#: incl/advanced-gutenberg-main.php:3640
+#: incl/advanced-gutenberg-main.php:3641
+#: incl/advanced-gutenberg-main.php:3665
 msgid "Save Role Block Permissions"
 msgstr "Сохранить разрешения для блока роли"
 
-#: incl/advanced-gutenberg-main.php:3620
-#: incl/advanced-gutenberg-main.php:3644
+#: incl/advanced-gutenberg-main.php:3645
+#: incl/advanced-gutenberg-main.php:3669
 msgid "Save Permission for all Roles"
 msgstr "Сохранить разрешение для всех ролей"
 
-#: incl/advanced-gutenberg-main.php:3629
-#: incl/advanced-gutenberg-main.php:3685
+#: incl/advanced-gutenberg-main.php:3654
+#: incl/advanced-gutenberg-main.php:3710
 #: incl/pages/block-controls/blocks.php:56
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: incl/advanced-gutenberg-main.php:3678
+#: incl/advanced-gutenberg-main.php:3703
 msgid "Scan Block Usage"
 msgstr "Сканировать использование блока"
 
-#: incl/advanced-gutenberg-main.php:4021
-#: incl/advanced-gutenberg-main.php:4022
+#: incl/advanced-gutenberg-main.php:4046
+#: incl/advanced-gutenberg-main.php:4047
 msgid "Block Config"
 msgstr "Конфигурация блока"
 
-#: incl/advanced-gutenberg-main.php:4081
+#: incl/advanced-gutenberg-main.php:4106
 msgid "Default configuration for this block is not available."
 msgstr "Стандартная конфигурация для этого блока недоступна."
 
-#: incl/advanced-gutenberg-main.php:4147
+#: incl/advanced-gutenberg-main.php:4172
 #, php-format
 msgid "Page not found. Go to %sDashboard%s"
 msgstr "Страница не найдена. Перейдите в %sПанель управления%s"
 
-#: incl/advanced-gutenberg-main.php:4560
+#: incl/advanced-gutenberg-main.php:4585
 #: incl/block-styles/block-styles.php:977
 #: incl/block-styles/block-styles.php:996
 #: incl/block-styles/block-styles.php:1166
@@ -317,141 +347,141 @@ msgstr "Страница не найдена. Перейдите в %sПанел
 msgid "Default"
 msgstr "По умолчанию"
 
-#: incl/advanced-gutenberg-main.php:4574
+#: incl/advanced-gutenberg-main.php:4599
 msgid "Type field not defined"
 msgstr "Поле типа не определено"
 
-#: incl/advanced-gutenberg-main.php:4849
+#: incl/advanced-gutenberg-main.php:4874
 msgid "User registration is currently not allowed."
 msgstr "Регистрация пользователей в настоящее время не разрешена."
 
-#: incl/advanced-gutenberg-main.php:4853
+#: incl/advanced-gutenberg-main.php:4878
 msgid "Captcha must be checked!"
 msgstr "Необходимо проверить капчу!"
 
-#: incl/advanced-gutenberg-main.php:4854
+#: incl/advanced-gutenberg-main.php:4879
 msgid "Username or password is incorrect!"
 msgstr "Имя пользователя или пароль неверны!"
 
-#: incl/advanced-gutenberg-main.php:5989
+#: incl/advanced-gutenberg-main.php:6014
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:198
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:87
 msgid "Reusable Block"
 msgstr "Повторно используемый блок"
 
-#: incl/advanced-gutenberg-main.php:5991
+#: incl/advanced-gutenberg-main.php:6016
 msgid "All Reusable Blocks"
 msgstr "Все повторно используемые блоки"
 
-#: incl/advanced-gutenberg-main.php:5992
+#: incl/advanced-gutenberg-main.php:6017
 msgid "Add New"
 msgstr "Добавить новый"
 
-#: incl/advanced-gutenberg-main.php:5993
+#: incl/advanced-gutenberg-main.php:6018
 msgid "Add New Reusable Block"
 msgstr "Добавить новый повторно используемый блок"
 
-#: incl/advanced-gutenberg-main.php:5994
+#: incl/advanced-gutenberg-main.php:6019
 msgid "Edit Reusable Block"
 msgstr "Редактировать повторно используемый блок"
 
-#: incl/advanced-gutenberg-main.php:5995
+#: incl/advanced-gutenberg-main.php:6020
 msgid "New Reusable Block"
 msgstr "Новый повторно используемый блок"
 
-#: incl/advanced-gutenberg-main.php:5996
+#: incl/advanced-gutenberg-main.php:6021
 msgid "View Reusable Block"
 msgstr "Просмотреть повторно используемый блок"
 
-#: incl/advanced-gutenberg-main.php:5997
+#: incl/advanced-gutenberg-main.php:6022
 msgid "View Reusable Blocks"
 msgstr "Просмотреть повторно используемые блоки"
 
-#: incl/advanced-gutenberg-main.php:5998
+#: incl/advanced-gutenberg-main.php:6023
 msgid "Search Reusable Blocks"
 msgstr "Поиск повторно используемых блоков"
 
-#: incl/advanced-gutenberg-main.php:5999
+#: incl/advanced-gutenberg-main.php:6024
 msgid "No reusable blocks found."
 msgstr "Повторно используемые блоки не найдены."
 
-#: incl/advanced-gutenberg-main.php:6000
+#: incl/advanced-gutenberg-main.php:6025
 msgid "No reusable blocks found in Trash."
 msgstr "Повторно используемые блоки не найдены в корзине."
 
-#: incl/advanced-gutenberg-main.php:6001
+#: incl/advanced-gutenberg-main.php:6026
 msgid "Parent Reusable Block:"
 msgstr "Родительский повторно используемый блок:"
 
-#: incl/advanced-gutenberg-main.php:6002
+#: incl/advanced-gutenberg-main.php:6027
 msgid "Reusable Block Archives"
 msgstr "Архивы повторно используемых блоков"
 
-#: incl/advanced-gutenberg-main.php:6020
+#: incl/advanced-gutenberg-main.php:6045
 msgid "Reusable Block Categories"
 msgstr "Категории повторно используемых блоков"
 
-#: incl/advanced-gutenberg-main.php:6021
+#: incl/advanced-gutenberg-main.php:6046
 msgid "Reusable Block Category"
 msgstr "Категория повторно используемого блока"
 
-#: incl/advanced-gutenberg-main.php:6022
+#: incl/advanced-gutenberg-main.php:6047
 msgid "Block Categories"
 msgstr "Категории блоков"
 
-#: incl/advanced-gutenberg-main.php:6023
+#: incl/advanced-gutenberg-main.php:6048
 msgid "All Block Categories"
 msgstr "Все категории блоков"
 
-#: incl/advanced-gutenberg-main.php:6024
+#: incl/advanced-gutenberg-main.php:6049
 msgid "Edit Block Category"
 msgstr "Редактировать категорию блока"
 
-#: incl/advanced-gutenberg-main.php:6025
+#: incl/advanced-gutenberg-main.php:6050
 msgid "View Block Category"
 msgstr "Просмотреть категорию блока"
 
-#: incl/advanced-gutenberg-main.php:6026
+#: incl/advanced-gutenberg-main.php:6051
 msgid "Update Block Category"
 msgstr "Обновить категорию блока"
 
-#: incl/advanced-gutenberg-main.php:6027
+#: incl/advanced-gutenberg-main.php:6052
 msgid "Add New Block Category"
 msgstr "Добавить новую категорию блока"
 
-#: incl/advanced-gutenberg-main.php:6028
+#: incl/advanced-gutenberg-main.php:6053
 msgid "New Block Category Name"
 msgstr "Название новой категории блока"
 
-#: incl/advanced-gutenberg-main.php:6029
+#: incl/advanced-gutenberg-main.php:6054
 msgid "Parent Block Category"
 msgstr "Родительская категория блока"
 
-#: incl/advanced-gutenberg-main.php:6030
+#: incl/advanced-gutenberg-main.php:6055
 msgid "Parent Block Category:"
 msgstr "Родительская категория блока:"
 
-#: incl/advanced-gutenberg-main.php:6031
+#: incl/advanced-gutenberg-main.php:6056
 msgid "Search Block Categories"
 msgstr "Поиск категорий блоков"
 
-#: incl/advanced-gutenberg-main.php:6032
+#: incl/advanced-gutenberg-main.php:6057
 msgid "Popular Block Categories"
 msgstr "Популярные категории блоков"
 
-#: incl/advanced-gutenberg-main.php:6033
+#: incl/advanced-gutenberg-main.php:6058
 msgid "Separate block categories with commas"
 msgstr "Разделяйте категории блоков запятыми"
 
-#: incl/advanced-gutenberg-main.php:6034
+#: incl/advanced-gutenberg-main.php:6059
 msgid "Add or remove block categories"
 msgstr "Добавить или удалить категории блоков"
 
-#: incl/advanced-gutenberg-main.php:6035
+#: incl/advanced-gutenberg-main.php:6060
 msgid "Choose from the most used block categories"
 msgstr "Выберите из наиболее используемых категорий блоков"
 
-#: incl/advanced-gutenberg-main.php:6036
+#: incl/advanced-gutenberg-main.php:6061
 msgid "No block categories found."
 msgstr "Категории блоков не найдены."
 
@@ -610,32 +640,40 @@ msgstr "Исключить ID постов: %s"
 msgid "None"
 msgstr "Нет"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:842
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:846
 msgid "Duplicate this auto insert rule"
 msgstr "Дублировать это правило автоматического вставки"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:843
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:847
 msgid "Duplicate"
 msgstr "Дублировать"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:860
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:864
 msgid "Invalid request"
 msgstr "Неверный запрос"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:869
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:873
 msgid "Security check failed"
 msgstr "Проверка безопасности не пройдена"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:875
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:879
 msgid "You do not have permission to duplicate this item"
 msgstr "У вас нет прав на дублирование этого элемента"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:885
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:889
 #, php-format
+msgid ""
+"Auto insert block duplicated successfully. <a href=\"%s\">Edit the new "
+"rule</a>"
+msgstr ""
+"Авто вставка блока успешно дублирована. <a href=\"%s\">Редактировать новое "
+"правило</a>"
+
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:895
 msgid "Error duplicating auto insert block"
 msgstr "Ошибка при дублировании блока автоматической вставки"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:923
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:927
 #: incl/pages/custom-styles.php:26
 msgid "Copy"
 msgstr "Копировать"
@@ -738,6 +776,14 @@ msgstr "Позиция вставки"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:185
 #, php-format
+msgid ""
+"The selected option requires the Pro version. Please select one of the "
+"general options or %1$sUpgrade to Pro%2$s."
+msgstr ""
+"Выбранный вариант требует профессиональной версии. Пожалуйста, выберите "
+"один из общих вариантов или %1$sОбновите до Pro%2$s."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:196
 msgid "Position Number"
 msgstr "Номер позиции"
 
@@ -805,6 +851,14 @@ msgid "Taxonomies"
 msgstr "Таксономии"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:351
+msgid ""
+"You can restrict this block insertion to only post with specific taxonomy "
+"terms."
+msgstr ""
+"Вы можете ограничить вставку этого блока только для записей с определёнными "
+"терминами таксономии."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:359
 msgid "Authors"
 msgstr "Авторы"
 
@@ -837,6 +891,15 @@ msgid "Target Posts"
 msgstr "Целевые посты"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:445
+msgid ""
+"Search and select posts or enter their IDs to limit this rules to specific "
+"posts."
+msgstr ""
+"Ищите и выбирайте записи или вводите их идентификаторы, чтобы ограничить "
+"эти правила конкретными записями."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:448
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:485
 msgid "Search posts..."
 msgstr "Поиск постов..."
 
@@ -872,6 +935,15 @@ msgid "Priority"
 msgstr "Приоритет"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:537
+msgid ""
+"This option decides which rule runs first if you have multiple rules "
+"targeting the same position in a post. For example, 9 will run before 10."
+msgstr ""
+"Этот параметр определяет, какое правило выполняется первым, если у вас есть "
+"несколько правил, нацеленных на одно и то же место в записи. Например, 9 "
+"выполнится перед 10."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:617
 msgid "Search terms..."
 msgstr "Поисковые запросы..."
 
@@ -2933,6 +3005,14 @@ msgid "Term archives"
 msgstr "Архивы терминов"
 
 #: incl/pages/block-controls/controls.php:170
+msgid ""
+"Choose on which taxonomies and terms archive pages your blocks can be "
+"displayed."
+msgstr ""
+"Выберите, на каких страницах архивов таксономий и терминов могут "
+"отображаться ваши блоки."
+
+#: incl/pages/block-controls/controls.php:190
 msgid "Pages"
 msgstr "Страницы"
 
@@ -3093,6 +3173,17 @@ msgid "Edit"
 msgstr "Редактировать"
 
 #: incl/pages/block-settings.php:149
+msgid ""
+"No blocks available. Please go to a post edit (without saving either "
+"modifying anything). Then come back to Block Settings to see the blocks "
+"list."
+msgstr ""
+"Нет доступных блоков. Пожалуйста, перейдите к редактированию записи (не "
+"сохраняйте и не изменяйте ничего). Затем вернитесь к настройкам блока, "
+"чтобы увидеть список блоков."
+
+#: incl/pages/block-settings/block-config.php:14
+#: incl/pages/block-settings/block-config.php:30
 msgid "Save"
 msgstr "Сохранить"
 
@@ -3125,6 +3216,17 @@ msgid "Class name"
 msgstr "Имя класса"
 
 #: incl/pages/custom-styles.php:88
+msgid ""
+"This option help you identify specific custom styles in the list\r\n"
+"                                            (usually set this same as the "
+"custom style's background color)"
+msgstr ""
+"Этот параметр помогает вам идентифицировать конкретные пользовательские "
+"стили в списке\r\n"
+"                                            (обычно устанавливайте это так "
+"же, как цвет фона пользовательского стиля)"
+
+#: incl/pages/custom-styles.php:94
 msgid "Identification color"
 msgstr "Цвет идентификации"
 
@@ -3173,6 +3275,31 @@ msgstr ""
 "стандартные блоки WordPress."
 
 #: incl/pages/main.php:32
+msgid ""
+"Enable extra blocks including content displays, sliders, buttons, icons, "
+"tabs, accordions, and more."
+msgstr ""
+"Включите дополнительные блоки, включая отображение контента, слайдеры, "
+"кнопки, иконки, вкладки, аккордеоны и многое другое."
+
+#: incl/pages/main.php:42
+msgid ""
+"You can add your own CSS styles for your blocks. Anyone editing posts can "
+"quickly add the styles to blocks."
+msgstr ""
+"Вы можете добавить свои собственные CSS стили для ваших блоков. Любой "
+"редактирующий записи может быстро добавить стили к блокам."
+
+#: incl/pages/main.php:52
+msgid ""
+"This feature adds display controls for blocks. You can schedule when blocks "
+"are shown, and add user role restrictions."
+msgstr ""
+"Эта функция добавляет элементы управления отображением для блоков. Вы "
+"можете планировать, когда блоки будут показаны, и добавлять ограничения по "
+"ролям пользователей."
+
+#: incl/pages/main.php:62
 msgid "You can scan the posts on your website for blocks usage."
 msgstr "Вы можете просканировать посты на вашем сайте для использования блоков."
 
@@ -3181,6 +3308,14 @@ msgid "This feature enables a submenu to manage your Reusable Blocks."
 msgstr "Эта функция включает подменю для управления вашими многоразовыми блоками."
 
 #: incl/pages/main.php:82
+msgid ""
+"Automatically insert reusable blocks into posts based on position, "
+"categories, tags, and other criteria."
+msgstr ""
+"Автоматически вставляйте многоразовые блоки в записи на основе позиции, "
+"категорий, тегов и других критериев."
+
+#: incl/pages/main.php:90
 msgid "Core Blocks Features"
 msgstr "Особенности основных блоков"
 
@@ -3277,6 +3412,14 @@ msgid "Data stored through Newsletter form blocks."
 msgstr "Данные, хранящиеся через блоки формы подписки на новости."
 
 #: incl/pages/settings/forms.php:38
+msgid ""
+"These email settings apply to messages sent through PublishPress Contact "
+"form block."
+msgstr ""
+"Эти настройки электронной почты применяются к сообщениям, отправляемым "
+"через блок контактной формы PublishPress."
+
+#: incl/pages/settings/forms.php:48
 msgid "Sender name"
 msgstr "Имя отправителя"
 
@@ -3389,6 +3532,14 @@ msgid "Reset to default"
 msgstr "Сбросить на умолчание"
 
 #: incl/pages/settings/images.php:106
+msgid ""
+"Set the default post thumbnail to use in Content Display blocks for posts "
+"without featured image."
+msgstr ""
+"Установите миниатюру по умолчанию для использования в блоках отображения "
+"контента для записей без выделенного изображения."
+
+#: incl/pages/settings/maps.php:15
 msgid "Google API key"
 msgstr "Ключ API Google"
 
@@ -3408,6 +3559,15 @@ msgstr "Сохранить настройки карт"
 
 #: incl/pages/settings/recaptcha.php:17
 #, php-format
+msgid ""
+"Use the Google reCAPTCHA to avoid spam in PublishPress Blocks forms. Get "
+"credentials for your domain by registering %shere%s."
+msgstr ""
+"Используйте Google reCAPTCHA, чтобы избежать спама в формах PublishPress "
+"Blocks. Получите учетные данные для вашего домена, зарегистрировавшись "
+"%shere%s."
+
+#: incl/pages/settings/recaptcha.php:30
 msgid "Enable reCAPTCHA"
 msgstr "Включить reCAPTCHA"
 
@@ -3449,6 +3609,14 @@ msgid "Invisible"
 msgstr "Невидимая"
 
 #: incl/pages/settings/recaptcha.php:134
+msgid ""
+"We strongly recommend not using Invisible reCAPTCHA if you have more than 1 "
+"Newsletter or Contact forms block in a page."
+msgstr ""
+"Мы настоятельно рекомендуем не использовать невидимую reCAPTCHA, если у вас "
+"есть более 1 блока новостной рассылки или контактной формы на странице."
+
+#: incl/pages/settings/recaptcha.php:151
 msgid "Save reCAPTCHA Settings"
 msgstr "Сохранить настройки reCAPTCHA"
 
@@ -3502,10 +3670,26 @@ msgid "Insert Table of Contents"
 msgstr "Вставить оглавление"
 
 #: assets/blocks/summary/block.jsx:72
+msgid ""
+"After manually changing the anchor, remember to refresh Table of Contents "
+"block to make the links work!"
+msgstr ""
+"После ручного изменения якоря не забудьте обновить блок оглавления, чтобы "
+"ссылки работали!"
+
+#: assets/blocks/summary/block.jsx:269
 msgid "Table of Contents"
 msgstr "Оглавление"
 
 #: assets/blocks/summary/block.jsx:274
+msgid ""
+"Your current post/page has no headings. Try add some headings and update "
+"this block later"
+msgstr ""
+"Ваша текущая запись/страница не имеет заголовков. Попробуйте добавить "
+"заголовки и обновить этот блок позже"
+
+#: assets/blocks/summary/block.jsx:279
 msgid "Update"
 msgstr "Обновить"
 
@@ -3601,6 +3785,16 @@ msgstr "Вкладка 1"
 #: assets/blocks/tabs/block.jsx:297
 #: assets/blocks/tabs/block.jsx:301
 #: assets/blocks/tabs/block.jsx:305
+msgid ""
+"Filler text (also placeholder text or dummy text) is text that shares some "
+"characteristics of a real written text, but is random or otherwise "
+"generated."
+msgstr ""
+"Заполнитель текста (также текст-заполнитель или фиктивный текст) — это "
+"текст, который имеет некоторые характеристики настоящего написанного "
+"текста, но является случайным или иным образом сгенерированным."
+
+#: assets/blocks/tabs/block.jsx:300
 msgid "Tab 2"
 msgstr "Вкладка 2"
 
@@ -3862,6 +4056,14 @@ msgid "Woo Products Block"
 msgstr "Блок товаров Woo"
 
 #: assets/blocks/woo-products/block.jsx:349
+msgid ""
+"WooCommerce has not been detected, make sure WooCommerce is installed and "
+"activated."
+msgstr ""
+"WooCommerce не обнаружен, убедитесь, что WooCommerce установлен и "
+"активирован."
+
+#: assets/blocks/woo-products/block.jsx:355
 msgid "Try again"
 msgstr "Попробуйте снова"
 
@@ -3880,19 +4082,3 @@ msgstr "список продуктов"
 #: assets/blocks/woo-products/block.jsx:415
 msgid "price list"
 msgstr "список цен"
-
-#: assets/js/main.js:112
-msgid "Changes saved!"
-msgstr "Изменения сохранены!"
-
-#: assets/js/main.js:113
-msgid " Error: changes can't be saved."
-msgstr "Ошибка: изменения не могут быть сохранены."
-
-#: assets/js/settings.js:110
-msgid "Edit block"
-msgstr "Редактировать блок"
-
-#: assets/js/settings.js:110
-msgid "default config"
-msgstr "конфигурация по умолчанию"

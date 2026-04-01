@@ -1,4 +1,4 @@
-# Copyright (C) 2025 PublishPress
+# Copyright (C) 2026 PublishPress
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-12-15T13:55:51+00:00\n"
-"PO-Revision-Date: 2026-03-31 11:24+0000\n"
+"PO-Revision-Date: 2026-04-01 14:42+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -21,171 +21,191 @@ msgstr ""
 msgid "404"
 msgstr "404"
 
-#: advanced-gutenberg.php
-#: incl/advanced-gutenberg-main.php:175
+#: advanced-gutenberg.php:7
+#: incl/advanced-gutenberg-main.php:176
 #: incl/pages/block-settings.php:95
 #: incl/pages/main.php:8
 #. Plugin Name of the plugin
 msgid "PublishPress Blocks"
 msgstr "PublishPress Blokken"
 
-#: advanced-gutenberg.php, fuzzy
+#: advanced-gutenberg.php:9, fuzzy
 #. Plugin URI of the plugin
 msgid "https://publishpress.com/blocks/"
 msgstr "https://publishpress.com/blocks/"
 
-#: advanced-gutenberg.php
+#: advanced-gutenberg.php:11
 #. Description of the plugin
+msgid ""
+"PublishPress Blocks has everything you need to build professional websites "
+"with the Gutenberg editor."
+msgstr ""
+"PublishPress Blocks heeft alles wat je nodig hebt om professionele websites "
+"te bouwen met de Gutenberg-editor."
+
+#: advanced-gutenberg.php:15, fuzzy
+#. Author of the plugin
 msgid "PublishPress"
 msgstr "PublishPress"
 
-#: advanced-gutenberg.php, fuzzy
+#: advanced-gutenberg.php:17, fuzzy
 #. Author URI of the plugin
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
 
-#: incl/advanced-gutenberg-main.php:446
-#: incl/advanced-gutenberg-main.php:915
-#: incl/advanced-gutenberg-main.php:2098
-#: incl/advanced-gutenberg-main.php:3364
-#: incl/advanced-gutenberg-main.php:5969
+#: incl/advanced-gutenberg-main.php:471
+#: incl/advanced-gutenberg-main.php:940
+#: incl/advanced-gutenberg-main.php:2123
+#: incl/advanced-gutenberg-main.php:3389
+#: incl/advanced-gutenberg-main.php:5994
 msgid "Upgrade to Pro"
 msgstr "Upgrade naar Pro"
 
-#: incl/advanced-gutenberg-main.php:447
-#: incl/advanced-gutenberg-main.php:2099
-#: incl/advanced-gutenberg-main.php:3365
+#: incl/advanced-gutenberg-main.php:472
+#: incl/advanced-gutenberg-main.php:2124
+#: incl/advanced-gutenberg-main.php:3390
 #: incl/pages/block-settings.php:133, fuzzy
 msgid "Pro"
 msgstr "Pro"
 
-#: incl/advanced-gutenberg-main.php:889
+#: incl/advanced-gutenberg-main.php:914
 #, php-format
+msgid ""
+"You're using PublishPress Blocks Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"Je gebruikt PublishPress Blocks Gratis. De Pro-versie heeft meer functies "
+"en ondersteuning. %sUpgrade naar Pro%s"
+
+#: incl/advanced-gutenberg-main.php:1149
+#: incl/advanced-gutenberg-main.php:1275
+#: incl/advanced-gutenberg-main.php:1336
+#: incl/block-styles/block-styles.php:234
 msgid "No permission!"
 msgstr "Geen toestemming!"
 
-#: incl/advanced-gutenberg-main.php:1261
-#: incl/advanced-gutenberg-main.php:1317
-#: incl/advanced-gutenberg-main.php:1377
-#: incl/advanced-gutenberg-main.php:1469
+#: incl/advanced-gutenberg-main.php:1286
+#: incl/advanced-gutenberg-main.php:1342
+#: incl/advanced-gutenberg-main.php:1402
+#: incl/advanced-gutenberg-main.php:1494
 #: incl/block-styles/block-styles.php:241
 msgid "Invalid nonce token!"
 msgstr "Ongeldig nonce-token!"
 
-#: incl/advanced-gutenberg-main.php:1265
+#: incl/advanced-gutenberg-main.php:1290
 msgid "Error: wrong data"
 msgstr "Fout: verkeerde gegevens"
 
-#: incl/advanced-gutenberg-main.php:1296
+#: incl/advanced-gutenberg-main.php:1321
 msgid "Error: can't edit this feature"
 msgstr "Fout: kan deze functie niet bewerken"
 
-#: incl/advanced-gutenberg-main.php:1382
-#: incl/advanced-gutenberg-main.php:1474
-#: incl/advanced-gutenberg-main.php:1527
+#: incl/advanced-gutenberg-main.php:1407
+#: incl/advanced-gutenberg-main.php:1499
+#: incl/advanced-gutenberg-main.php:1552
 msgid "Bad Request!"
 msgstr "Slechte aanvraag!"
 
-#: incl/advanced-gutenberg-main.php:1390
-#: incl/advanced-gutenberg-main.php:1482
-#: incl/advanced-gutenberg-main.php:1535
+#: incl/advanced-gutenberg-main.php:1415
+#: incl/advanced-gutenberg-main.php:1507
+#: incl/advanced-gutenberg-main.php:1560
 msgid "Server error. Try again later!"
 msgstr "Serverfout. Probeer het later opnieuw!"
 
-#: incl/advanced-gutenberg-main.php:1398
-#: incl/advanced-gutenberg-main.php:1490
-#: incl/advanced-gutenberg-main.php:1543
+#: incl/advanced-gutenberg-main.php:1423
+#: incl/advanced-gutenberg-main.php:1515
+#: incl/advanced-gutenberg-main.php:1568
 msgid "Cannot validate captcha"
 msgstr "Kan captcha niet valideren"
 
-#: incl/advanced-gutenberg-main.php:1403
-#: incl/advanced-gutenberg-main.php:1495
-#: incl/advanced-gutenberg-main.php:1548
+#: incl/advanced-gutenberg-main.php:1428
+#: incl/advanced-gutenberg-main.php:1520
+#: incl/advanced-gutenberg-main.php:1573
 msgid "Captcha validation error"
 msgstr "Fout bij captcha-validatie"
 
-#: incl/advanced-gutenberg-main.php:1428
+#: incl/advanced-gutenberg-main.php:1453
 #: incl/pages/settings/forms.php:24, fuzzy
 msgid "Website Contact"
 msgstr "Website Contact"
 
-#: incl/advanced-gutenberg-main.php:1434
+#: incl/advanced-gutenberg-main.php:1459
 msgid "You have received a contact from your website."
 msgstr "Je hebt een contactverzoek ontvangen van je website."
 
-#: incl/advanced-gutenberg-main.php:1437
+#: incl/advanced-gutenberg-main.php:1462
 msgid "Name"
 msgstr "Naam"
 
-#: incl/advanced-gutenberg-main.php:1439
+#: incl/advanced-gutenberg-main.php:1464
 #: incl/block-settings-main.php:808
 #: incl/block-settings-main.php:849
 #: incl/block-settings-main.php:890
 msgid "Email"
 msgstr "E-mail"
 
-#: incl/advanced-gutenberg-main.php:1441
+#: incl/advanced-gutenberg-main.php:1466
 msgid "Date"
 msgstr "Datum"
 
-#: incl/advanced-gutenberg-main.php:1443
+#: incl/advanced-gutenberg-main.php:1468
 msgid "Message"
 msgstr "Bericht"
 
-#: incl/advanced-gutenberg-main.php:1451
+#: incl/advanced-gutenberg-main.php:1476
 msgid "Error while sending the form. Please try again."
 msgstr "Fout bij het verzenden van het formulier. Probeer het opnieuw."
 
-#: incl/advanced-gutenberg-main.php:1551
+#: incl/advanced-gutenberg-main.php:1576
 msgid "Captcha validated"
 msgstr "Captcha gevalideerd"
 
-#: incl/advanced-gutenberg-main.php:1554
+#: incl/advanced-gutenberg-main.php:1579
 msgid "Captcha is empty"
 msgstr "Captcha is leeg"
 
-#: incl/advanced-gutenberg-main.php:1869
-#: incl/advanced-gutenberg-main.php:5956, fuzzy
+#: incl/advanced-gutenberg-main.php:1894
+#: incl/advanced-gutenberg-main.php:5981, fuzzy
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: incl/advanced-gutenberg-main.php:1876
-#: incl/advanced-gutenberg-main.php:2189
+#: incl/advanced-gutenberg-main.php:1901
+#: incl/advanced-gutenberg-main.php:2214
 #: incl/pages/main.php:21
 msgid "Block Permissions"
 msgstr "Blokrechten"
 
-#: incl/advanced-gutenberg-main.php:1883
+#: incl/advanced-gutenberg-main.php:1908
 #: incl/pages/main.php:31
 msgid "Extra Blocks"
 msgstr "Extra blokken"
 
-#: incl/advanced-gutenberg-main.php:1890
+#: incl/advanced-gutenberg-main.php:1915
 #: incl/pages/custom-styles.php:9
 #: incl/pages/main.php:41
 msgid "Block Styles"
 msgstr "Blokstijlen"
 
-#: incl/advanced-gutenberg-main.php:1897
+#: incl/advanced-gutenberg-main.php:1922
 #: incl/pages/block-controls.php:30
 #: incl/pages/main.php:51
 msgid "Block Controls"
 msgstr "Blokbediening"
 
-#: incl/advanced-gutenberg-main.php:1904
-#: incl/advanced-gutenberg-main.php:3675
+#: incl/advanced-gutenberg-main.php:1929
+#: incl/advanced-gutenberg-main.php:3700
 #: incl/pages/main.php:61
 msgid "Block Usage"
 msgstr "Blokgebruik"
 
-#: incl/advanced-gutenberg-main.php:1911
-#: incl/advanced-gutenberg-main.php:5988
-#: incl/advanced-gutenberg-main.php:5990
+#: incl/advanced-gutenberg-main.php:1936
+#: incl/advanced-gutenberg-main.php:6013
+#: incl/advanced-gutenberg-main.php:6015
 #: incl/pages/main.php:71
 msgid "Reusable Blocks"
 msgstr "Herbruikbare blokken"
 
-#: incl/advanced-gutenberg-main.php:1918
+#: incl/advanced-gutenberg-main.php:1943
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:117
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:155
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:156
@@ -193,110 +213,119 @@ msgstr "Herbruikbare blokken"
 msgid "Auto Insert Blocks"
 msgstr "Automatisch blokken invoegen"
 
-#: incl/advanced-gutenberg-main.php:1925
-#: incl/advanced-gutenberg-main.php:5962
+#: incl/advanced-gutenberg-main.php:1950
+#: incl/advanced-gutenberg-main.php:5987
 #: incl/pages/settings.php:26
 msgid "Settings"
 msgstr "Instellingen"
 
-#: incl/advanced-gutenberg-main.php:2164
-#: incl/advanced-gutenberg-main.php:2210
-#: incl/advanced-gutenberg-main.php:2254
-#: incl/advanced-gutenberg-main.php:2290
-#: incl/advanced-gutenberg-main.php:2336
+#: incl/advanced-gutenberg-main.php:2189
+#: incl/advanced-gutenberg-main.php:2235
+#: incl/advanced-gutenberg-main.php:2279
+#: incl/advanced-gutenberg-main.php:2315
+#: incl/advanced-gutenberg-main.php:2361
+#, php-format
+msgid ""
+"This feature is disabled. In order to use, please enable back through "
+"%sDashboard%s."
+msgstr ""
+"Deze functie is uitgeschakeld. Om te gebruiken, inschakelen via "
+"%sDashboard%s."
+
+#: incl/advanced-gutenberg-main.php:2434
 #, php-format
 msgid "If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!"
 msgstr ""
 "Als je %sPublishPress Blocks%s leuk vindt, laat ons dan een %s beoordeling "
 "achter. Bedankt!"
 
-#: incl/advanced-gutenberg-main.php:2426
+#: incl/advanced-gutenberg-main.php:2451
 msgid "About PublishPress Blocks"
 msgstr "Over PublishPress Blocks"
 
-#: incl/advanced-gutenberg-main.php:2429
+#: incl/advanced-gutenberg-main.php:2454
 msgid "About"
 msgstr "Over"
 
-#: incl/advanced-gutenberg-main.php:2436
-#: incl/advanced-gutenberg-main.php:2439
+#: incl/advanced-gutenberg-main.php:2461
+#: incl/advanced-gutenberg-main.php:2464
 msgid "Documentation"
 msgstr "Documentatie"
 
-#: incl/advanced-gutenberg-main.php:2447
+#: incl/advanced-gutenberg-main.php:2472
 msgid "Contact the PublishPress team"
 msgstr "Neem contact op met het PublishPress-team"
 
-#: incl/advanced-gutenberg-main.php:2450, fuzzy
+#: incl/advanced-gutenberg-main.php:2475, fuzzy
 msgid "Contact"
 msgstr "Contact"
 
-#: incl/advanced-gutenberg-main.php:2458
+#: incl/advanced-gutenberg-main.php:2483
 msgid "PublishPress Blocks logo"
 msgstr "PublishPress Blocks-logo"
 
-#: incl/advanced-gutenberg-main.php:3521
+#: incl/advanced-gutenberg-main.php:3546
 #, php-format
 msgid "%s saved successfully!"
 msgstr "%s succesvol opgeslagen!"
 
-#: incl/advanced-gutenberg-main.php:3531
+#: incl/advanced-gutenberg-main.php:3556
 #, php-format
 msgid "%s can't be saved. Please try again."
 msgstr "%s kan niet worden opgeslagen. Probeer het opnieuw."
 
-#: incl/advanced-gutenberg-main.php:3587
+#: incl/advanced-gutenberg-main.php:3612
 #: incl/pages/block-controls/blocks.php:13
 #: incl/pages/block-settings.php:102
 msgid "Search blocks"
 msgstr "Zoek blokken"
 
-#: incl/advanced-gutenberg-main.php:3592
+#: incl/advanced-gutenberg-main.php:3617
 msgid "Enable or disable all blocks"
 msgstr "Schakel alle blokken in of uit"
 
-#: incl/advanced-gutenberg-main.php:3605
-#: incl/advanced-gutenberg-main.php:3651
+#: incl/advanced-gutenberg-main.php:3630
+#: incl/advanced-gutenberg-main.php:3676
 #: incl/pages/block-controls/blocks.php:31
 #: incl/pages/block-controls/blocks.php:79
 msgid "To save this configuration, enable at least one block."
 msgstr "Om deze configuratie op te slaan, schakelt u ten minste één blok in."
 
-#: incl/advanced-gutenberg-main.php:3616
-#: incl/advanced-gutenberg-main.php:3640
+#: incl/advanced-gutenberg-main.php:3641
+#: incl/advanced-gutenberg-main.php:3665
 msgid "Save Role Block Permissions"
 msgstr "Sla rolblokrechten op"
 
-#: incl/advanced-gutenberg-main.php:3620
-#: incl/advanced-gutenberg-main.php:3644
+#: incl/advanced-gutenberg-main.php:3645
+#: incl/advanced-gutenberg-main.php:3669
 msgid "Save Permission for all Roles"
 msgstr "Sla toestemming voor alle rollen op"
 
-#: incl/advanced-gutenberg-main.php:3629
-#: incl/advanced-gutenberg-main.php:3685
+#: incl/advanced-gutenberg-main.php:3654
+#: incl/advanced-gutenberg-main.php:3710
 #: incl/pages/block-controls/blocks.php:56
 msgid "Loading..."
 msgstr "Laden..."
 
-#: incl/advanced-gutenberg-main.php:3678
+#: incl/advanced-gutenberg-main.php:3703
 msgid "Scan Block Usage"
 msgstr "Scan blokgebruik"
 
-#: incl/advanced-gutenberg-main.php:4021
-#: incl/advanced-gutenberg-main.php:4022
+#: incl/advanced-gutenberg-main.php:4046
+#: incl/advanced-gutenberg-main.php:4047
 msgid "Block Config"
 msgstr "Blokconfiguratie"
 
-#: incl/advanced-gutenberg-main.php:4081
+#: incl/advanced-gutenberg-main.php:4106
 msgid "Default configuration for this block is not available."
 msgstr "Standaardconfiguratie voor dit blok is niet beschikbaar."
 
-#: incl/advanced-gutenberg-main.php:4147
+#: incl/advanced-gutenberg-main.php:4172
 #, php-format
 msgid "Page not found. Go to %sDashboard%s"
 msgstr "Pagina niet gevonden. Ga naar %sDashboard%s"
 
-#: incl/advanced-gutenberg-main.php:4560
+#: incl/advanced-gutenberg-main.php:4585
 #: incl/block-styles/block-styles.php:977
 #: incl/block-styles/block-styles.php:996
 #: incl/block-styles/block-styles.php:1166
@@ -316,141 +345,141 @@ msgstr "Pagina niet gevonden. Ga naar %sDashboard%s"
 msgid "Default"
 msgstr "Standaard"
 
-#: incl/advanced-gutenberg-main.php:4574
+#: incl/advanced-gutenberg-main.php:4599
 msgid "Type field not defined"
 msgstr "Typeveld niet gedefinieerd"
 
-#: incl/advanced-gutenberg-main.php:4849
+#: incl/advanced-gutenberg-main.php:4874
 msgid "User registration is currently not allowed."
 msgstr "Gebruikersregistratie is momenteel niet toegestaan."
 
-#: incl/advanced-gutenberg-main.php:4853
+#: incl/advanced-gutenberg-main.php:4878
 msgid "Captcha must be checked!"
 msgstr "Captcha moet worden gecontroleerd!"
 
-#: incl/advanced-gutenberg-main.php:4854
+#: incl/advanced-gutenberg-main.php:4879
 msgid "Username or password is incorrect!"
 msgstr "Gebruikersnaam of wachtwoord is onjuist!"
 
-#: incl/advanced-gutenberg-main.php:5989
+#: incl/advanced-gutenberg-main.php:6014
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:198
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:87
 msgid "Reusable Block"
 msgstr "Herbruikbaar Blok"
 
-#: incl/advanced-gutenberg-main.php:5991
+#: incl/advanced-gutenberg-main.php:6016
 msgid "All Reusable Blocks"
 msgstr "Alle Herbruikbare Blokken"
 
-#: incl/advanced-gutenberg-main.php:5992
+#: incl/advanced-gutenberg-main.php:6017
 msgid "Add New"
 msgstr "Nieuwe Toevoegen"
 
-#: incl/advanced-gutenberg-main.php:5993
+#: incl/advanced-gutenberg-main.php:6018
 msgid "Add New Reusable Block"
 msgstr "Nieuwe Herbruikbare Blok Toevoegen"
 
-#: incl/advanced-gutenberg-main.php:5994
+#: incl/advanced-gutenberg-main.php:6019
 msgid "Edit Reusable Block"
 msgstr "Herbruikbaar Blok Bewerken"
 
-#: incl/advanced-gutenberg-main.php:5995
+#: incl/advanced-gutenberg-main.php:6020
 msgid "New Reusable Block"
 msgstr "Nieuw Herbruikbaar Blok"
 
-#: incl/advanced-gutenberg-main.php:5996
+#: incl/advanced-gutenberg-main.php:6021
 msgid "View Reusable Block"
 msgstr "Herbruikbaar Blok Bekijken"
 
-#: incl/advanced-gutenberg-main.php:5997
+#: incl/advanced-gutenberg-main.php:6022
 msgid "View Reusable Blocks"
 msgstr "Herbruikbare Blokken Bekijken"
 
-#: incl/advanced-gutenberg-main.php:5998
+#: incl/advanced-gutenberg-main.php:6023
 msgid "Search Reusable Blocks"
 msgstr "Zoek Herbruikbare Blokken"
 
-#: incl/advanced-gutenberg-main.php:5999
+#: incl/advanced-gutenberg-main.php:6024
 msgid "No reusable blocks found."
 msgstr "Geen herbruikbare blokken gevonden."
 
-#: incl/advanced-gutenberg-main.php:6000
+#: incl/advanced-gutenberg-main.php:6025
 msgid "No reusable blocks found in Trash."
 msgstr "Geen herbruikbare blokken gevonden in Prullenbak."
 
-#: incl/advanced-gutenberg-main.php:6001
+#: incl/advanced-gutenberg-main.php:6026
 msgid "Parent Reusable Block:"
 msgstr "Ouder Herbruikbaar Blok:"
 
-#: incl/advanced-gutenberg-main.php:6002
+#: incl/advanced-gutenberg-main.php:6027
 msgid "Reusable Block Archives"
 msgstr "Archieven van Herbruikbare Blokken"
 
-#: incl/advanced-gutenberg-main.php:6020
+#: incl/advanced-gutenberg-main.php:6045
 msgid "Reusable Block Categories"
 msgstr "Categorieën van Herbruikbare Blokken"
 
-#: incl/advanced-gutenberg-main.php:6021
+#: incl/advanced-gutenberg-main.php:6046
 msgid "Reusable Block Category"
 msgstr "Categorie van Herbruikbaar Blok"
 
-#: incl/advanced-gutenberg-main.php:6022
+#: incl/advanced-gutenberg-main.php:6047
 msgid "Block Categories"
 msgstr "Blok Categorieën"
 
-#: incl/advanced-gutenberg-main.php:6023
+#: incl/advanced-gutenberg-main.php:6048
 msgid "All Block Categories"
 msgstr "Alle Blok Categorieën"
 
-#: incl/advanced-gutenberg-main.php:6024
+#: incl/advanced-gutenberg-main.php:6049
 msgid "Edit Block Category"
 msgstr "Blok Categorie Bewerken"
 
-#: incl/advanced-gutenberg-main.php:6025
+#: incl/advanced-gutenberg-main.php:6050
 msgid "View Block Category"
 msgstr "Blok Categorie Bekijken"
 
-#: incl/advanced-gutenberg-main.php:6026
+#: incl/advanced-gutenberg-main.php:6051
 msgid "Update Block Category"
 msgstr "Blok Categorie Bijwerken"
 
-#: incl/advanced-gutenberg-main.php:6027
+#: incl/advanced-gutenberg-main.php:6052
 msgid "Add New Block Category"
 msgstr "Voeg nieuwe blokcategorie toe"
 
-#: incl/advanced-gutenberg-main.php:6028
+#: incl/advanced-gutenberg-main.php:6053
 msgid "New Block Category Name"
 msgstr "Naam van nieuwe blokcategorie"
 
-#: incl/advanced-gutenberg-main.php:6029
+#: incl/advanced-gutenberg-main.php:6054
 msgid "Parent Block Category"
 msgstr "Bovenliggende blokcategorie"
 
-#: incl/advanced-gutenberg-main.php:6030
+#: incl/advanced-gutenberg-main.php:6055
 msgid "Parent Block Category:"
 msgstr "Bovenliggende blokcategorie:"
 
-#: incl/advanced-gutenberg-main.php:6031
+#: incl/advanced-gutenberg-main.php:6056
 msgid "Search Block Categories"
 msgstr "Zoek blokcategorieën"
 
-#: incl/advanced-gutenberg-main.php:6032
+#: incl/advanced-gutenberg-main.php:6057
 msgid "Popular Block Categories"
 msgstr "Populaire blokcategorieën"
 
-#: incl/advanced-gutenberg-main.php:6033
+#: incl/advanced-gutenberg-main.php:6058
 msgid "Separate block categories with commas"
 msgstr "Scheiding blokcategorieën met komma's"
 
-#: incl/advanced-gutenberg-main.php:6034
+#: incl/advanced-gutenberg-main.php:6059
 msgid "Add or remove block categories"
 msgstr "Blokcategorieën toevoegen of verwijderen"
 
-#: incl/advanced-gutenberg-main.php:6035
+#: incl/advanced-gutenberg-main.php:6060
 msgid "Choose from the most used block categories"
 msgstr "Kies uit de meest gebruikte blokcategorieën"
 
-#: incl/advanced-gutenberg-main.php:6036
+#: incl/advanced-gutenberg-main.php:6061
 msgid "No block categories found."
 msgstr "Geen blokcategorieën gevonden."
 
@@ -609,32 +638,40 @@ msgstr "Exclusief bericht-ID's: %s"
 msgid "None"
 msgstr "Geen"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:842
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:846
 msgid "Duplicate this auto insert rule"
 msgstr "Dupliceer deze auto-invoegregel"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:843
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:847
 msgid "Duplicate"
 msgstr "Dupliceren"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:860
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:864
 msgid "Invalid request"
 msgstr "Ongeldig verzoek"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:869
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:873
 msgid "Security check failed"
 msgstr "Beveiligingscontrole mislukt"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:875
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:879
 msgid "You do not have permission to duplicate this item"
 msgstr "U heeft geen toestemming om dit item te dupliceren"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:885
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:889
 #, php-format
+msgid ""
+"Auto insert block duplicated successfully. <a href=\"%s\">Edit the new "
+"rule</a>"
+msgstr ""
+"Automatisch invoegen van blok is succesvol gedupliceerd. <a "
+"href=\"%s\">Bewerk de nieuwe regel</a>"
+
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:895
 msgid "Error duplicating auto insert block"
 msgstr "Fout bij het dupliceren van het auto-invoegblok"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:923
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:927
 #: incl/pages/custom-styles.php:26
 msgid "Copy"
 msgstr "Kopiëren"
@@ -737,6 +774,14 @@ msgstr "Invoegpositie"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:185
 #, php-format
+msgid ""
+"The selected option requires the Pro version. Please select one of the "
+"general options or %1$sUpgrade to Pro%2$s."
+msgstr ""
+"De geselecteerde optie vereist de Pro-versie. Kies een van de algemene "
+"opties of %1$sUpgrade naar Pro%2$s."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:196
 msgid "Position Number"
 msgstr "Positienummer"
 
@@ -804,6 +849,14 @@ msgid "Taxonomies"
 msgstr "Taxonomieën"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:351
+msgid ""
+"You can restrict this block insertion to only post with specific taxonomy "
+"terms."
+msgstr ""
+"Je kunt deze blokinvoeging beperken tot alleen berichten met specifieke "
+"taxonomie-termen."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:359
 msgid "Authors"
 msgstr "Auteurs"
 
@@ -836,6 +889,15 @@ msgid "Target Posts"
 msgstr "Richtberichten"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:445
+msgid ""
+"Search and select posts or enter their IDs to limit this rules to specific "
+"posts."
+msgstr ""
+"Zoek en selecteer berichten of voer hun ID's in om deze regels te beperken "
+"tot specifieke berichten."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:448
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:485
 msgid "Search posts..."
 msgstr "Berichten zoeken..."
 
@@ -871,6 +933,15 @@ msgid "Priority"
 msgstr "Prioriteit"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:537
+msgid ""
+"This option decides which rule runs first if you have multiple rules "
+"targeting the same position in a post. For example, 9 will run before 10."
+msgstr ""
+"Deze optie bepaalt welke regel als eerste wordt uitgevoerd als je meerdere "
+"regels hebt die dezelfde positie in een bericht targeten. Bijvoorbeeld, 9 "
+"zal voor 10 worden uitgevoerd."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:617
 msgid "Search terms..."
 msgstr "Zoektermen..."
 
@@ -2934,6 +3005,14 @@ msgid "Term archives"
 msgstr "Term archieven"
 
 #: incl/pages/block-controls/controls.php:170
+msgid ""
+"Choose on which taxonomies and terms archive pages your blocks can be "
+"displayed."
+msgstr ""
+"Kies op welke taxonomieën en termen archiefpagina's je blokken kunnen "
+"worden weergegeven."
+
+#: incl/pages/block-controls/controls.php:190
 msgid "Pages"
 msgstr "Pagina's"
 
@@ -3094,6 +3173,17 @@ msgid "Edit"
 msgstr "Bewerken"
 
 #: incl/pages/block-settings.php:149
+msgid ""
+"No blocks available. Please go to a post edit (without saving either "
+"modifying anything). Then come back to Block Settings to see the blocks "
+"list."
+msgstr ""
+"Geen blokken beschikbaar. Ga naar een berichtbewerking (zonder iets op te "
+"slaan of te wijzigen). Kom daarna terug naar Blokinstellingen om de lijst "
+"met blokken te zien."
+
+#: incl/pages/block-settings/block-config.php:14
+#: incl/pages/block-settings/block-config.php:30
 msgid "Save"
 msgstr "Opslaan"
 
@@ -3126,6 +3216,17 @@ msgid "Class name"
 msgstr "Klasse naam"
 
 #: incl/pages/custom-styles.php:88
+msgid ""
+"This option help you identify specific custom styles in the list\r\n"
+"                                            (usually set this same as the "
+"custom style's background color)"
+msgstr ""
+"Deze optie helpt je specifieke aangepaste stijlen in de lijst te "
+"identificeren\r\n"
+"                                            (meestal hetzelfde ingesteld "
+"als de achtergrondkleur van de aangepaste stijl)"
+
+#: incl/pages/custom-styles.php:94
 msgid "Identification color"
 msgstr "Identificatiekleur"
 
@@ -3174,6 +3275,30 @@ msgstr ""
 "WordPress-blokken."
 
 #: incl/pages/main.php:32
+msgid ""
+"Enable extra blocks including content displays, sliders, buttons, icons, "
+"tabs, accordions, and more."
+msgstr ""
+"Schakel extra blokken in, inclusief inhoudsweergaven, schuifregelaars, "
+"knoppen, pictogrammen, tabbladen, accordeons en meer."
+
+#: incl/pages/main.php:42
+msgid ""
+"You can add your own CSS styles for your blocks. Anyone editing posts can "
+"quickly add the styles to blocks."
+msgstr ""
+"Je kunt je eigen CSS-stijlen voor je blokken toevoegen. Iedereen die "
+"berichten bewerkt, kan snel de stijlen aan blokken toevoegen."
+
+#: incl/pages/main.php:52
+msgid ""
+"This feature adds display controls for blocks. You can schedule when blocks "
+"are shown, and add user role restrictions."
+msgstr ""
+"Deze functie voegt weergavecontroles voor blokken toe. Je kunt plannen "
+"wanneer blokken worden weergegeven en gebruikersrolbeperkingen toevoegen."
+
+#: incl/pages/main.php:62
 msgid "You can scan the posts on your website for blocks usage."
 msgstr "Je kunt de berichten op je website scannen op gebruik van blokken."
 
@@ -3182,6 +3307,14 @@ msgid "This feature enables a submenu to manage your Reusable Blocks."
 msgstr "Deze functie activeert een submenu om je Herbruikbare Blokken te beheren."
 
 #: incl/pages/main.php:82
+msgid ""
+"Automatically insert reusable blocks into posts based on position, "
+"categories, tags, and other criteria."
+msgstr ""
+"Voeg automatisch herbruikbare blokken in berichten in op basis van positie, "
+"categorieën, tags en andere criteria."
+
+#: incl/pages/main.php:90
 msgid "Core Blocks Features"
 msgstr "Kern Blokken Functies"
 
@@ -3278,6 +3411,14 @@ msgid "Data stored through Newsletter form blocks."
 msgstr "Gegevens opgeslagen via nieuwsbriefformulierblokken."
 
 #: incl/pages/settings/forms.php:38
+msgid ""
+"These email settings apply to messages sent through PublishPress Contact "
+"form block."
+msgstr ""
+"Deze e-mailinstellingen zijn van toepassing op berichten die worden "
+"verzonden via het PublishPress Contactformulier-blok."
+
+#: incl/pages/settings/forms.php:48
 msgid "Sender name"
 msgstr "Afzendernaam"
 
@@ -3390,6 +3531,14 @@ msgid "Reset to default"
 msgstr "Reset naar standaard"
 
 #: incl/pages/settings/images.php:106
+msgid ""
+"Set the default post thumbnail to use in Content Display blocks for posts "
+"without featured image."
+msgstr ""
+"Stel de standaard miniatuurafbeelding in die gebruikt moet worden in "
+"Inhoudsweergave-blokken voor berichten zonder uitgelichte afbeelding."
+
+#: incl/pages/settings/maps.php:15
 msgid "Google API key"
 msgstr "Google API-sleutel"
 
@@ -3409,6 +3558,14 @@ msgstr "Kaartinstellingen opslaan"
 
 #: incl/pages/settings/recaptcha.php:17
 #, php-format
+msgid ""
+"Use the Google reCAPTCHA to avoid spam in PublishPress Blocks forms. Get "
+"credentials for your domain by registering %shere%s."
+msgstr ""
+"Gebruik de Google reCAPTCHA om spam in PublishPress Blocks-formulieren te "
+"voorkomen. Verkrijg referenties voor je domein door %shier%s te registreren."
+
+#: incl/pages/settings/recaptcha.php:30
 msgid "Enable reCAPTCHA"
 msgstr "reCAPTCHA inschakelen"
 
@@ -3450,6 +3607,14 @@ msgid "Invisible"
 msgstr "Onzichtbaar"
 
 #: incl/pages/settings/recaptcha.php:134
+msgid ""
+"We strongly recommend not using Invisible reCAPTCHA if you have more than 1 "
+"Newsletter or Contact forms block in a page."
+msgstr ""
+"We raden ten zeerste aan om geen Invisible reCAPTCHA te gebruiken als je "
+"meer dan 1 Nieuwsbrief of Contactformulieren-blok op een pagina hebt."
+
+#: incl/pages/settings/recaptcha.php:151
 msgid "Save reCAPTCHA Settings"
 msgstr "reCAPTCHA-instellingen opslaan"
 
@@ -3503,10 +3668,26 @@ msgid "Insert Table of Contents"
 msgstr "Inhoudsopgave Invoegen"
 
 #: assets/blocks/summary/block.jsx:72
+msgid ""
+"After manually changing the anchor, remember to refresh Table of Contents "
+"block to make the links work!"
+msgstr ""
+"Vergeet niet de Inhoudsopgave-blok te verversen nadat je handmatig de anker "
+"hebt gewijzigd, zodat de links werken!"
+
+#: assets/blocks/summary/block.jsx:269
 msgid "Table of Contents"
 msgstr "Inhoudsopgave"
 
 #: assets/blocks/summary/block.jsx:274
+msgid ""
+"Your current post/page has no headings. Try add some headings and update "
+"this block later"
+msgstr ""
+"Je huidige bericht/pagina heeft geen koppen. Probeer wat koppen toe te "
+"voegen en werk dit blok later bij"
+
+#: assets/blocks/summary/block.jsx:279
 msgid "Update"
 msgstr "Bijwerken"
 
@@ -3602,6 +3783,16 @@ msgstr "Tab 1"
 #: assets/blocks/tabs/block.jsx:297
 #: assets/blocks/tabs/block.jsx:301
 #: assets/blocks/tabs/block.jsx:305
+msgid ""
+"Filler text (also placeholder text or dummy text) is text that shares some "
+"characteristics of a real written text, but is random or otherwise "
+"generated."
+msgstr ""
+"Vultekst (ook wel placeholdertekst of dummytekst genoemd) is tekst die "
+"enkele kenmerken van een echte geschreven tekst deelt, maar willekeurig of "
+"anderszins gegenereerd is."
+
+#: assets/blocks/tabs/block.jsx:300, fuzzy
 msgid "Tab 2"
 msgstr "Tab 2"
 
@@ -3861,6 +4052,14 @@ msgid "Woo Products Block"
 msgstr "Woo Producten Blok"
 
 #: assets/blocks/woo-products/block.jsx:349
+msgid ""
+"WooCommerce has not been detected, make sure WooCommerce is installed and "
+"activated."
+msgstr ""
+"WooCommerce is niet gedetecteerd, zorg ervoor dat WooCommerce is "
+"geïnstalleerd en geactiveerd."
+
+#: assets/blocks/woo-products/block.jsx:355
 msgid "Try again"
 msgstr "Probeer het opnieuw"
 
@@ -3879,19 +4078,3 @@ msgstr "productenlijst"
 #: assets/blocks/woo-products/block.jsx:415
 msgid "price list"
 msgstr "prijslijst"
-
-#: assets/js/main.js:112
-msgid "Changes saved!"
-msgstr "Wijzigingen opgeslagen!"
-
-#: assets/js/main.js:113
-msgid " Error: changes can't be saved."
-msgstr "Fout: wijzigingen kunnen niet worden opgeslagen."
-
-#: assets/js/settings.js:110
-msgid "Edit block"
-msgstr "Bewerk blok"
-
-#: assets/js/settings.js:110
-msgid "default config"
-msgstr "standaardconfiguratie"

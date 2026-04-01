@@ -1,4 +1,4 @@
-# Copyright (C) 2025 PublishPress
+# Copyright (C) 2026 PublishPress
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
@@ -10,9 +10,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-12-15T13:55:51+00:00\n"
-"PO-Revision-Date: 2026-03-31 11:04+0000\n"
+"PO-Revision-Date: 2026-04-01 14:40+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
+"|| n % 10 == 6 || n % 10 == 9);\n"
 "Language: fil\n"
 "Plural-Forms: nplurals=2; plural=n != 1 && n != 2 && n != 3 && (n % 10 == 4 || n % 10 == 6 || n % 10 == 9);\n"
 
@@ -21,171 +22,191 @@ msgstr ""
 msgid "404"
 msgstr "404"
 
-#: advanced-gutenberg.php
-#: incl/advanced-gutenberg-main.php:175
+#: advanced-gutenberg.php:7
+#: incl/advanced-gutenberg-main.php:176
 #: incl/pages/block-settings.php:95
 #: incl/pages/main.php:8, fuzzy
 #. Plugin Name of the plugin
 msgid "PublishPress Blocks"
 msgstr "PublishPress Blocks"
 
-#: advanced-gutenberg.php, fuzzy
+#: advanced-gutenberg.php:9, fuzzy
 #. Plugin URI of the plugin
 msgid "https://publishpress.com/blocks/"
 msgstr "https://publishpress.com/blocks/"
 
-#: advanced-gutenberg.php
+#: advanced-gutenberg.php:11
 #. Description of the plugin
+msgid ""
+"PublishPress Blocks has everything you need to build professional websites "
+"with the Gutenberg editor."
+msgstr ""
+"Ang PublishPress Blocks ay may lahat ng kailangan mo upang bumuo ng mga "
+"propesyonal na website gamit ang Gutenberg editor."
+
+#: advanced-gutenberg.php:15, fuzzy
+#. Author of the plugin
 msgid "PublishPress"
 msgstr "PublishPress"
 
-#: advanced-gutenberg.php, fuzzy
+#: advanced-gutenberg.php:17, fuzzy
 #. Author URI of the plugin
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
 
-#: incl/advanced-gutenberg-main.php:446
-#: incl/advanced-gutenberg-main.php:915
-#: incl/advanced-gutenberg-main.php:2098
-#: incl/advanced-gutenberg-main.php:3364
-#: incl/advanced-gutenberg-main.php:5969
+#: incl/advanced-gutenberg-main.php:471
+#: incl/advanced-gutenberg-main.php:940
+#: incl/advanced-gutenberg-main.php:2123
+#: incl/advanced-gutenberg-main.php:3389
+#: incl/advanced-gutenberg-main.php:5994
 msgid "Upgrade to Pro"
 msgstr "Mag-upgrade sa Pro"
 
-#: incl/advanced-gutenberg-main.php:447
-#: incl/advanced-gutenberg-main.php:2099
-#: incl/advanced-gutenberg-main.php:3365
+#: incl/advanced-gutenberg-main.php:472
+#: incl/advanced-gutenberg-main.php:2124
+#: incl/advanced-gutenberg-main.php:3390
 #: incl/pages/block-settings.php:133, fuzzy
 msgid "Pro"
 msgstr "Pro"
 
-#: incl/advanced-gutenberg-main.php:889
+#: incl/advanced-gutenberg-main.php:914
 #, php-format
+msgid ""
+"You're using PublishPress Blocks Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"Gumagamit ka ng PublishPress Blocks Free. Ang Pro na bersyon ay may higit "
+"pang mga tampok at suporta. %sMag-upgrade sa Pro%s"
+
+#: incl/advanced-gutenberg-main.php:1149
+#: incl/advanced-gutenberg-main.php:1275
+#: incl/advanced-gutenberg-main.php:1336
+#: incl/block-styles/block-styles.php:234
 msgid "No permission!"
 msgstr "Walang pahintulot!"
 
-#: incl/advanced-gutenberg-main.php:1261
-#: incl/advanced-gutenberg-main.php:1317
-#: incl/advanced-gutenberg-main.php:1377
-#: incl/advanced-gutenberg-main.php:1469
+#: incl/advanced-gutenberg-main.php:1286
+#: incl/advanced-gutenberg-main.php:1342
+#: incl/advanced-gutenberg-main.php:1402
+#: incl/advanced-gutenberg-main.php:1494
 #: incl/block-styles/block-styles.php:241
 msgid "Invalid nonce token!"
 msgstr "Hindi wastong nonce token!"
 
-#: incl/advanced-gutenberg-main.php:1265
+#: incl/advanced-gutenberg-main.php:1290
 msgid "Error: wrong data"
 msgstr "Error: maling data"
 
-#: incl/advanced-gutenberg-main.php:1296
+#: incl/advanced-gutenberg-main.php:1321
 msgid "Error: can't edit this feature"
 msgstr "Error: hindi ma-edit ang tampok na ito"
 
-#: incl/advanced-gutenberg-main.php:1382
-#: incl/advanced-gutenberg-main.php:1474
-#: incl/advanced-gutenberg-main.php:1527
+#: incl/advanced-gutenberg-main.php:1407
+#: incl/advanced-gutenberg-main.php:1499
+#: incl/advanced-gutenberg-main.php:1552
 msgid "Bad Request!"
 msgstr "Masamang Kahilingan!"
 
-#: incl/advanced-gutenberg-main.php:1390
-#: incl/advanced-gutenberg-main.php:1482
-#: incl/advanced-gutenberg-main.php:1535
+#: incl/advanced-gutenberg-main.php:1415
+#: incl/advanced-gutenberg-main.php:1507
+#: incl/advanced-gutenberg-main.php:1560
 msgid "Server error. Try again later!"
 msgstr "Error sa server. Subukan muli mamaya!"
 
-#: incl/advanced-gutenberg-main.php:1398
-#: incl/advanced-gutenberg-main.php:1490
-#: incl/advanced-gutenberg-main.php:1543
+#: incl/advanced-gutenberg-main.php:1423
+#: incl/advanced-gutenberg-main.php:1515
+#: incl/advanced-gutenberg-main.php:1568
 msgid "Cannot validate captcha"
 msgstr "Hindi ma-validate ang captcha"
 
-#: incl/advanced-gutenberg-main.php:1403
-#: incl/advanced-gutenberg-main.php:1495
-#: incl/advanced-gutenberg-main.php:1548
+#: incl/advanced-gutenberg-main.php:1428
+#: incl/advanced-gutenberg-main.php:1520
+#: incl/advanced-gutenberg-main.php:1573
 msgid "Captcha validation error"
 msgstr "Error sa validation ng captcha"
 
-#: incl/advanced-gutenberg-main.php:1428
+#: incl/advanced-gutenberg-main.php:1453
 #: incl/pages/settings/forms.php:24
 msgid "Website Contact"
 msgstr "Kontak sa Website"
 
-#: incl/advanced-gutenberg-main.php:1434
+#: incl/advanced-gutenberg-main.php:1459
 msgid "You have received a contact from your website."
 msgstr "Nakareceive ka ng kontak mula sa iyong website."
 
-#: incl/advanced-gutenberg-main.php:1437
+#: incl/advanced-gutenberg-main.php:1462
 msgid "Name"
 msgstr "Pangalan"
 
-#: incl/advanced-gutenberg-main.php:1439
+#: incl/advanced-gutenberg-main.php:1464
 #: incl/block-settings-main.php:808
 #: incl/block-settings-main.php:849
 #: incl/block-settings-main.php:890, fuzzy
 msgid "Email"
 msgstr "Email"
 
-#: incl/advanced-gutenberg-main.php:1441
+#: incl/advanced-gutenberg-main.php:1466
 msgid "Date"
 msgstr "Petsa"
 
-#: incl/advanced-gutenberg-main.php:1443
+#: incl/advanced-gutenberg-main.php:1468
 msgid "Message"
 msgstr "Mensahe"
 
-#: incl/advanced-gutenberg-main.php:1451
+#: incl/advanced-gutenberg-main.php:1476
 msgid "Error while sending the form. Please try again."
 msgstr "Nagkaroon ng error habang nagpapadala ng form. Pakisubukan muli."
 
-#: incl/advanced-gutenberg-main.php:1551
+#: incl/advanced-gutenberg-main.php:1576
 msgid "Captcha validated"
 msgstr "Napatunayan ang Captcha"
 
-#: incl/advanced-gutenberg-main.php:1554
+#: incl/advanced-gutenberg-main.php:1579
 msgid "Captcha is empty"
 msgstr "Walang laman ang Captcha"
 
-#: incl/advanced-gutenberg-main.php:1869
-#: incl/advanced-gutenberg-main.php:5956, fuzzy
+#: incl/advanced-gutenberg-main.php:1894
+#: incl/advanced-gutenberg-main.php:5981, fuzzy
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: incl/advanced-gutenberg-main.php:1876
-#: incl/advanced-gutenberg-main.php:2189
+#: incl/advanced-gutenberg-main.php:1901
+#: incl/advanced-gutenberg-main.php:2214
 #: incl/pages/main.php:21
 msgid "Block Permissions"
 msgstr "Mga Pahintulot ng Block"
 
-#: incl/advanced-gutenberg-main.php:1883
+#: incl/advanced-gutenberg-main.php:1908
 #: incl/pages/main.php:31
 msgid "Extra Blocks"
 msgstr "Mga Karagdagang Block"
 
-#: incl/advanced-gutenberg-main.php:1890
+#: incl/advanced-gutenberg-main.php:1915
 #: incl/pages/custom-styles.php:9
 #: incl/pages/main.php:41
 msgid "Block Styles"
 msgstr "Mga Estilo ng Block"
 
-#: incl/advanced-gutenberg-main.php:1897
+#: incl/advanced-gutenberg-main.php:1922
 #: incl/pages/block-controls.php:30
 #: incl/pages/main.php:51
 msgid "Block Controls"
 msgstr "Mga Kontrol ng Block"
 
-#: incl/advanced-gutenberg-main.php:1904
-#: incl/advanced-gutenberg-main.php:3675
+#: incl/advanced-gutenberg-main.php:1929
+#: incl/advanced-gutenberg-main.php:3700
 #: incl/pages/main.php:61
 msgid "Block Usage"
 msgstr "Paggamit ng Block"
 
-#: incl/advanced-gutenberg-main.php:1911
-#: incl/advanced-gutenberg-main.php:5988
-#: incl/advanced-gutenberg-main.php:5990
+#: incl/advanced-gutenberg-main.php:1936
+#: incl/advanced-gutenberg-main.php:6013
+#: incl/advanced-gutenberg-main.php:6015
 #: incl/pages/main.php:71
 msgid "Reusable Blocks"
 msgstr "Mga Paulit-ulit na Block"
 
-#: incl/advanced-gutenberg-main.php:1918
+#: incl/advanced-gutenberg-main.php:1943
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:117
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:155
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:156
@@ -193,70 +214,79 @@ msgstr "Mga Paulit-ulit na Block"
 msgid "Auto Insert Blocks"
 msgstr "Awtomatikong Ipasok ang mga Block"
 
-#: incl/advanced-gutenberg-main.php:1925
-#: incl/advanced-gutenberg-main.php:5962
+#: incl/advanced-gutenberg-main.php:1950
+#: incl/advanced-gutenberg-main.php:5987
 #: incl/pages/settings.php:26
 msgid "Settings"
 msgstr "Mga Setting"
 
-#: incl/advanced-gutenberg-main.php:2164
-#: incl/advanced-gutenberg-main.php:2210
-#: incl/advanced-gutenberg-main.php:2254
-#: incl/advanced-gutenberg-main.php:2290
-#: incl/advanced-gutenberg-main.php:2336
+#: incl/advanced-gutenberg-main.php:2189
+#: incl/advanced-gutenberg-main.php:2235
+#: incl/advanced-gutenberg-main.php:2279
+#: incl/advanced-gutenberg-main.php:2315
+#: incl/advanced-gutenberg-main.php:2361
+#, php-format
+msgid ""
+"This feature is disabled. In order to use, please enable back through "
+"%sDashboard%s."
+msgstr ""
+"Naka-disable ang tampok na ito. Upang magamit, mangyaring i-enable muli sa "
+"pamamagitan ng %sDashboard%s."
+
+#: incl/advanced-gutenberg-main.php:2434
 #, php-format
 msgid "If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!"
 msgstr ""
 "Kung gusto mo ang %sPublishPress Blocks%s, mangyaring iwanan kami ng %s "
 "rating. Salamat!"
 
-#: incl/advanced-gutenberg-main.php:2426
+#: incl/advanced-gutenberg-main.php:2451
 msgid "About PublishPress Blocks"
 msgstr "Tungkol sa PublishPress Blocks"
 
-#: incl/advanced-gutenberg-main.php:2429
+#: incl/advanced-gutenberg-main.php:2454
 msgid "About"
 msgstr "Tungkol"
 
-#: incl/advanced-gutenberg-main.php:2436
-#: incl/advanced-gutenberg-main.php:2439
+#: incl/advanced-gutenberg-main.php:2461
+#: incl/advanced-gutenberg-main.php:2464
 msgid "Documentation"
 msgstr "Dokumentasyon"
 
-#: incl/advanced-gutenberg-main.php:2447
+#: incl/advanced-gutenberg-main.php:2472
 msgid "Contact the PublishPress team"
 msgstr "Makipag-ugnayan sa koponan ng PublishPress"
 
-#: incl/advanced-gutenberg-main.php:2450
+#: incl/advanced-gutenberg-main.php:2475
 msgid "Contact"
 msgstr "Makipag-ugnayan"
 
-#: incl/advanced-gutenberg-main.php:2458
+#: incl/advanced-gutenberg-main.php:2483
 msgid "PublishPress Blocks logo"
 msgstr "Logo ng PublishPress Blocks"
 
-#: incl/advanced-gutenberg-main.php:3521
+#: incl/advanced-gutenberg-main.php:3546
 #, php-format
 msgid "%s saved successfully!"
 msgstr "%s ay matagumpay na nai-save!"
 
-#: incl/advanced-gutenberg-main.php:3531
+#: incl/advanced-gutenberg-main.php:3556
 #, php-format
 msgid "%s can't be saved. Please try again."
 msgstr "%s ay hindi ma-save. Pakisubukan muli."
 
-#: incl/advanced-gutenberg-main.php:3587
+#: incl/advanced-gutenberg-main.php:3612
 #: incl/pages/block-controls/blocks.php:13
 #: incl/pages/block-settings.php:102
 msgid "Search blocks"
 msgstr "Maghanap ng mga block"
 
-#: incl/advanced-gutenberg-main.php:3592
+#: incl/advanced-gutenberg-main.php:3617
 msgid "Enable or disable all blocks"
 msgstr "I-enable o i-disable ang lahat ng block"
 
-#: incl/advanced-gutenberg-main.php:3605
-#: incl/advanced-gutenberg-main.php:3651
+#: incl/advanced-gutenberg-main.php:3630
+#: incl/advanced-gutenberg-main.php:3676
 #: incl/pages/block-controls/blocks.php:31
 #: incl/pages/block-controls/blocks.php:79
 msgid "To save this configuration, enable at least one block."
@@ -264,41 +294,41 @@ msgstr ""
 "Upang mai-save ang configuration na ito, i-enable ang hindi bababa sa isang "
 "block."
 
-#: incl/advanced-gutenberg-main.php:3616
-#: incl/advanced-gutenberg-main.php:3640
+#: incl/advanced-gutenberg-main.php:3641
+#: incl/advanced-gutenberg-main.php:3665
 msgid "Save Role Block Permissions"
 msgstr "I-save ang mga Pahintulot sa Role Block"
 
-#: incl/advanced-gutenberg-main.php:3620
-#: incl/advanced-gutenberg-main.php:3644
+#: incl/advanced-gutenberg-main.php:3645
+#: incl/advanced-gutenberg-main.php:3669
 msgid "Save Permission for all Roles"
 msgstr "I-save ang Pahintulot para sa lahat ng Role"
 
-#: incl/advanced-gutenberg-main.php:3629
-#: incl/advanced-gutenberg-main.php:3685
+#: incl/advanced-gutenberg-main.php:3654
+#: incl/advanced-gutenberg-main.php:3710
 #: incl/pages/block-controls/blocks.php:56
 msgid "Loading..."
 msgstr "Naglo-load..."
 
-#: incl/advanced-gutenberg-main.php:3678
+#: incl/advanced-gutenberg-main.php:3703
 msgid "Scan Block Usage"
 msgstr "I-scan ang Paggamit ng Block"
 
-#: incl/advanced-gutenberg-main.php:4021
-#: incl/advanced-gutenberg-main.php:4022
+#: incl/advanced-gutenberg-main.php:4046
+#: incl/advanced-gutenberg-main.php:4047
 msgid "Block Config"
 msgstr "Config ng Block"
 
-#: incl/advanced-gutenberg-main.php:4081
+#: incl/advanced-gutenberg-main.php:4106
 msgid "Default configuration for this block is not available."
 msgstr "Walang available na default na configuration para sa block na ito."
 
-#: incl/advanced-gutenberg-main.php:4147
+#: incl/advanced-gutenberg-main.php:4172
 #, php-format
 msgid "Page not found. Go to %sDashboard%s"
 msgstr "Hindi natagpuan ang pahina. Pumunta sa %sDashboard%s"
 
-#: incl/advanced-gutenberg-main.php:4560
+#: incl/advanced-gutenberg-main.php:4585
 #: incl/block-styles/block-styles.php:977
 #: incl/block-styles/block-styles.php:996
 #: incl/block-styles/block-styles.php:1166
@@ -318,141 +348,141 @@ msgstr "Hindi natagpuan ang pahina. Pumunta sa %sDashboard%s"
 msgid "Default"
 msgstr "Default"
 
-#: incl/advanced-gutenberg-main.php:4574
+#: incl/advanced-gutenberg-main.php:4599
 msgid "Type field not defined"
 msgstr "Hindi natukoy ang uri ng field"
 
-#: incl/advanced-gutenberg-main.php:4849
+#: incl/advanced-gutenberg-main.php:4874
 msgid "User registration is currently not allowed."
 msgstr "Ang pagpaparehistro ng gumagamit ay kasalukuyang hindi pinapayagan."
 
-#: incl/advanced-gutenberg-main.php:4853
+#: incl/advanced-gutenberg-main.php:4878
 msgid "Captcha must be checked!"
 msgstr "Dapat suriin ang Captcha!"
 
-#: incl/advanced-gutenberg-main.php:4854
+#: incl/advanced-gutenberg-main.php:4879
 msgid "Username or password is incorrect!"
 msgstr "Mali ang username o password!"
 
-#: incl/advanced-gutenberg-main.php:5989
+#: incl/advanced-gutenberg-main.php:6014
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:198
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:87
 msgid "Reusable Block"
 msgstr "Muling Magagamit na Block"
 
-#: incl/advanced-gutenberg-main.php:5991
+#: incl/advanced-gutenberg-main.php:6016
 msgid "All Reusable Blocks"
 msgstr "Lahat ng Muling Magagamit na Blocks"
 
-#: incl/advanced-gutenberg-main.php:5992
+#: incl/advanced-gutenberg-main.php:6017
 msgid "Add New"
 msgstr "Magdagdag ng Bago"
 
-#: incl/advanced-gutenberg-main.php:5993
+#: incl/advanced-gutenberg-main.php:6018
 msgid "Add New Reusable Block"
 msgstr "Magdagdag ng Bago Muling Magagamit na Block"
 
-#: incl/advanced-gutenberg-main.php:5994
+#: incl/advanced-gutenberg-main.php:6019
 msgid "Edit Reusable Block"
 msgstr "I-edit ang Muling Magagamit na Block"
 
-#: incl/advanced-gutenberg-main.php:5995
+#: incl/advanced-gutenberg-main.php:6020
 msgid "New Reusable Block"
 msgstr "Bagong Muling Magagamit na Block"
 
-#: incl/advanced-gutenberg-main.php:5996
+#: incl/advanced-gutenberg-main.php:6021
 msgid "View Reusable Block"
 msgstr "Tingnan ang Muling Magagamit na Block"
 
-#: incl/advanced-gutenberg-main.php:5997
+#: incl/advanced-gutenberg-main.php:6022
 msgid "View Reusable Blocks"
 msgstr "Tingnan ang Lahat ng Muling Magagamit na Blocks"
 
-#: incl/advanced-gutenberg-main.php:5998
+#: incl/advanced-gutenberg-main.php:6023
 msgid "Search Reusable Blocks"
 msgstr "Maghanap ng Muling Magagamit na Blocks"
 
-#: incl/advanced-gutenberg-main.php:5999
+#: incl/advanced-gutenberg-main.php:6024
 msgid "No reusable blocks found."
 msgstr "Walang natagpuang mga muling magagamit na blocks."
 
-#: incl/advanced-gutenberg-main.php:6000
+#: incl/advanced-gutenberg-main.php:6025
 msgid "No reusable blocks found in Trash."
 msgstr "Walang natagpuang mga muling magagamit na blocks sa Trash."
 
-#: incl/advanced-gutenberg-main.php:6001
+#: incl/advanced-gutenberg-main.php:6026
 msgid "Parent Reusable Block:"
 msgstr "Magulang na Muling Magagamit na Block:"
 
-#: incl/advanced-gutenberg-main.php:6002
+#: incl/advanced-gutenberg-main.php:6027
 msgid "Reusable Block Archives"
 msgstr "Mga Archive ng Muling Magagamit na Block"
 
-#: incl/advanced-gutenberg-main.php:6020
+#: incl/advanced-gutenberg-main.php:6045
 msgid "Reusable Block Categories"
 msgstr "Mga Kategorya ng Muling Magagamit na Block"
 
-#: incl/advanced-gutenberg-main.php:6021
+#: incl/advanced-gutenberg-main.php:6046
 msgid "Reusable Block Category"
 msgstr "Kategorya ng Muling Magagamit na Block"
 
-#: incl/advanced-gutenberg-main.php:6022
+#: incl/advanced-gutenberg-main.php:6047
 msgid "Block Categories"
 msgstr "Mga Kategorya ng Block"
 
-#: incl/advanced-gutenberg-main.php:6023
+#: incl/advanced-gutenberg-main.php:6048
 msgid "All Block Categories"
 msgstr "Lahat ng Kategorya ng Block"
 
-#: incl/advanced-gutenberg-main.php:6024
+#: incl/advanced-gutenberg-main.php:6049
 msgid "Edit Block Category"
 msgstr "I-edit ang Kategorya ng Block"
 
-#: incl/advanced-gutenberg-main.php:6025
+#: incl/advanced-gutenberg-main.php:6050
 msgid "View Block Category"
 msgstr "Tingnan ang Kategorya ng Block"
 
-#: incl/advanced-gutenberg-main.php:6026
+#: incl/advanced-gutenberg-main.php:6051
 msgid "Update Block Category"
 msgstr "I-update ang Kategorya ng Block"
 
-#: incl/advanced-gutenberg-main.php:6027
+#: incl/advanced-gutenberg-main.php:6052
 msgid "Add New Block Category"
 msgstr "Magdagdag ng Bagong Kategorya ng Block"
 
-#: incl/advanced-gutenberg-main.php:6028
+#: incl/advanced-gutenberg-main.php:6053
 msgid "New Block Category Name"
 msgstr "Pangalan ng Bagong Kategorya ng Block"
 
-#: incl/advanced-gutenberg-main.php:6029
+#: incl/advanced-gutenberg-main.php:6054
 msgid "Parent Block Category"
 msgstr "Kategorya ng Block na Magulang"
 
-#: incl/advanced-gutenberg-main.php:6030
+#: incl/advanced-gutenberg-main.php:6055
 msgid "Parent Block Category:"
 msgstr "Kategorya ng Block na Magulang:"
 
-#: incl/advanced-gutenberg-main.php:6031
+#: incl/advanced-gutenberg-main.php:6056
 msgid "Search Block Categories"
 msgstr "Maghanap ng mga Kategorya ng Block"
 
-#: incl/advanced-gutenberg-main.php:6032
+#: incl/advanced-gutenberg-main.php:6057
 msgid "Popular Block Categories"
 msgstr "Mga Sikat na Kategorya ng Block"
 
-#: incl/advanced-gutenberg-main.php:6033
+#: incl/advanced-gutenberg-main.php:6058
 msgid "Separate block categories with commas"
 msgstr "Paghiwalayin ang mga kategorya ng block gamit ang mga kuwit"
 
-#: incl/advanced-gutenberg-main.php:6034
+#: incl/advanced-gutenberg-main.php:6059
 msgid "Add or remove block categories"
 msgstr "Magdagdag o mag-alis ng mga kategorya ng block"
 
-#: incl/advanced-gutenberg-main.php:6035
+#: incl/advanced-gutenberg-main.php:6060
 msgid "Choose from the most used block categories"
 msgstr "Pumili mula sa pinaka ginagamit na mga kategorya ng block"
 
-#: incl/advanced-gutenberg-main.php:6036
+#: incl/advanced-gutenberg-main.php:6061
 msgid "No block categories found."
 msgstr "Walang natagpuang mga kategorya ng block."
 
@@ -611,32 +641,40 @@ msgstr "I-exclude ang mga ID ng Post: %s"
 msgid "None"
 msgstr "Wala"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:842
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:846
 msgid "Duplicate this auto insert rule"
 msgstr "Gumawa ng kopya ng patakaran sa awtomatikong pagpasok"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:843
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:847
 msgid "Duplicate"
 msgstr "Gumawa ng kopya"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:860
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:864
 msgid "Invalid request"
 msgstr "Di wastong kahilingan"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:869
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:873
 msgid "Security check failed"
 msgstr "Nabigong pagsusuri ng seguridad"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:875
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:879
 msgid "You do not have permission to duplicate this item"
 msgstr "Wala kang pahintulot na kopyahin ang item na ito"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:885
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:889
 #, php-format
+msgid ""
+"Auto insert block duplicated successfully. <a href=\"%s\">Edit the new "
+"rule</a>"
+msgstr ""
+"Automatikong na-insert ang block na matagumpay. <a href=\"%s\">I-edit ang "
+"bagong patakaran</a>"
+
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:895
 msgid "Error duplicating auto insert block"
 msgstr "Nagkaroon ng error sa pagkopya ng awtomatikong bloke ng pagpasok"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:923
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:927
 #: incl/pages/custom-styles.php:26
 msgid "Copy"
 msgstr "Kopyahin"
@@ -739,6 +777,14 @@ msgstr "Posisyon ng Pagpasok"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:185
 #, php-format
+msgid ""
+"The selected option requires the Pro version. Please select one of the "
+"general options or %1$sUpgrade to Pro%2$s."
+msgstr ""
+"Ang napiling opsyon ay nangangailangan ng Pro na bersyon. Mangyaring pumili "
+"ng isa sa mga pangkalahatang opsyon o %1$sMag-upgrade sa Pro%2$s."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:196
 msgid "Position Number"
 msgstr "Numero ng Posisyon"
 
@@ -806,6 +852,14 @@ msgid "Taxonomies"
 msgstr "Mga Taxonomy"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:351
+msgid ""
+"You can restrict this block insertion to only post with specific taxonomy "
+"terms."
+msgstr ""
+"Maaari mong limitahan ang pag-insert ng block na ito sa mga post na may "
+"tiyak na mga termino ng taxonomy."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:359
 msgid "Authors"
 msgstr "Mga May-akda"
 
@@ -838,6 +892,15 @@ msgid "Target Posts"
 msgstr "Mga Target na Post"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:445
+msgid ""
+"Search and select posts or enter their IDs to limit this rules to specific "
+"posts."
+msgstr ""
+"Maghanap at pumili ng mga post o ipasok ang kanilang mga ID upang limitahan "
+"ang mga patakarang ito sa mga tiyak na post."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:448
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:485
 msgid "Search posts..."
 msgstr "Maghanap ng mga post..."
 
@@ -873,6 +936,15 @@ msgid "Priority"
 msgstr "Prayoridad"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:537
+msgid ""
+"This option decides which rule runs first if you have multiple rules "
+"targeting the same position in a post. For example, 9 will run before 10."
+msgstr ""
+"Ang opsyon na ito ay nagpasya kung aling patakaran ang tatakbo nang una "
+"kung mayroon kang maraming patakaran na tumutok sa parehong posisyon sa "
+"isang post. Halimbawa, tatakbo ang 9 bago ang 10."
+
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:617
 msgid "Search terms..."
 msgstr "Mga termino sa paghahanap..."
 
@@ -2936,6 +3008,14 @@ msgid "Term archives"
 msgstr "Mga archive ng termino"
 
 #: incl/pages/block-controls/controls.php:170
+msgid ""
+"Choose on which taxonomies and terms archive pages your blocks can be "
+"displayed."
+msgstr ""
+"Pumili kung aling mga taxonomy at mga page ng terms archive maaaring "
+"ipakita ang iyong mga block."
+
+#: incl/pages/block-controls/controls.php:190
 msgid "Pages"
 msgstr "Mga pahina"
 
@@ -3096,6 +3176,17 @@ msgid "Edit"
 msgstr "I-edit"
 
 #: incl/pages/block-settings.php:149
+msgid ""
+"No blocks available. Please go to a post edit (without saving either "
+"modifying anything). Then come back to Block Settings to see the blocks "
+"list."
+msgstr ""
+"Walang available na blocks. Mangyaring pumunta sa isang post edit (nang "
+"hindi nagse-save o nagmo-modify ng anumang bagay). Pagkatapos, bumalik sa "
+"Block Settings upang makita ang listahan ng mga blocks."
+
+#: incl/pages/block-settings/block-config.php:14
+#: incl/pages/block-settings/block-config.php:30
 msgid "Save"
 msgstr "I-save"
 
@@ -3128,6 +3219,17 @@ msgid "Class name"
 msgstr "Pangalan ng klase"
 
 #: incl/pages/custom-styles.php:88
+msgid ""
+"This option help you identify specific custom styles in the list\r\n"
+"                                            (usually set this same as the "
+"custom style's background color)"
+msgstr ""
+"Ang opsyon na ito ay tumutulong sa iyo na tukuyin ang mga tiyak na custom "
+"na istilo sa listahan\r\n"
+"                                            (karaniwang itinatakda ito "
+"katulad ng kulay ng background ng custom na istilo)"
+
+#: incl/pages/custom-styles.php:94
 msgid "Identification color"
 msgstr "Kulay ng pagkilala"
 
@@ -3176,6 +3278,32 @@ msgstr ""
 "ang mga default na bloke ng WordPress."
 
 #: incl/pages/main.php:32
+msgid ""
+"Enable extra blocks including content displays, sliders, buttons, icons, "
+"tabs, accordions, and more."
+msgstr ""
+"I-enable ang mga karagdagang blocks kasama ang mga content displays, "
+"sliders, buttons, icons, tabs, accordions, at iba pa."
+
+#: incl/pages/main.php:42
+msgid ""
+"You can add your own CSS styles for your blocks. Anyone editing posts can "
+"quickly add the styles to blocks."
+msgstr ""
+"Maaari kang magdagdag ng iyong sariling CSS na istilo para sa iyong mga "
+"block. Ang sinumang nag-e-edit ng mga post ay madaling makakadagdag ng mga "
+"istilo sa mga block."
+
+#: incl/pages/main.php:52
+msgid ""
+"This feature adds display controls for blocks. You can schedule when blocks "
+"are shown, and add user role restrictions."
+msgstr ""
+"Idinadagdag ng tampok na ito ang mga kontrol sa pagpapakita para sa mga "
+"block. Maaari mong i-schedule kung kailan ipapakita ang mga block, at "
+"magdagdag ng mga limitasyon sa papel ng gumagamit."
+
+#: incl/pages/main.php:62
 msgid "You can scan the posts on your website for blocks usage."
 msgstr ""
 "Maaari mong i-scan ang mga post sa iyong website para sa paggamit ng mga "
@@ -3188,6 +3316,14 @@ msgstr ""
 "mga Reusable Blocks."
 
 #: incl/pages/main.php:82
+msgid ""
+"Automatically insert reusable blocks into posts based on position, "
+"categories, tags, and other criteria."
+msgstr ""
+"Awtomatikong i-insert ang mga reusable blocks sa mga post batay sa "
+"posisyon, mga kategorya, mga tag, at iba pang mga pamantayan."
+
+#: incl/pages/main.php:90
 msgid "Core Blocks Features"
 msgstr "Mga Tampok ng Core Blocks"
 
@@ -3286,6 +3422,14 @@ msgid "Data stored through Newsletter form blocks."
 msgstr "Data na nakaimbak sa pamamagitan ng mga block ng form ng Newsletter."
 
 #: incl/pages/settings/forms.php:38
+msgid ""
+"These email settings apply to messages sent through PublishPress Contact "
+"form block."
+msgstr ""
+"Ang mga setting ng email na ito ay nalalapat sa mga mensaheng ipinadala sa "
+"pamamagitan ng PublishPress Contact form block."
+
+#: incl/pages/settings/forms.php:48
 msgid "Sender name"
 msgstr "Pangalan ng nagpadala"
 
@@ -3398,6 +3542,14 @@ msgid "Reset to default"
 msgstr "I-reset sa default"
 
 #: incl/pages/settings/images.php:106
+msgid ""
+"Set the default post thumbnail to use in Content Display blocks for posts "
+"without featured image."
+msgstr ""
+"Itakda ang default na thumbnail ng post na gagamitin sa Content Display "
+"blocks para sa mga post na walang featured image."
+
+#: incl/pages/settings/maps.php:15, fuzzy
 msgid "Google API key"
 msgstr "Google API key"
 
@@ -3417,6 +3569,15 @@ msgstr "I-save ang Mga Setting ng Maps"
 
 #: incl/pages/settings/recaptcha.php:17
 #, php-format
+msgid ""
+"Use the Google reCAPTCHA to avoid spam in PublishPress Blocks forms. Get "
+"credentials for your domain by registering %shere%s."
+msgstr ""
+"Gamitin ang Google reCAPTCHA upang maiwasan ang spam sa mga form ng "
+"PublishPress Blocks. Kumuha ng mga kredensyal para sa iyong domain sa "
+"pamamagitan ng pag-rehistro %shere%s."
+
+#: incl/pages/settings/recaptcha.php:30
 msgid "Enable reCAPTCHA"
 msgstr "I-enable ang reCAPTCHA"
 
@@ -3458,6 +3619,14 @@ msgid "Invisible"
 msgstr "Invisible"
 
 #: incl/pages/settings/recaptcha.php:134
+msgid ""
+"We strongly recommend not using Invisible reCAPTCHA if you have more than 1 "
+"Newsletter or Contact forms block in a page."
+msgstr ""
+"Mahigpit naming inirerekomenda na huwag gumamit ng Invisible reCAPTCHA kung "
+"mayroon kang higit sa 1 Newsletter o Contact forms block sa isang page."
+
+#: incl/pages/settings/recaptcha.php:151
 msgid "Save reCAPTCHA Settings"
 msgstr "I-save ang Mga Setting ng reCAPTCHA"
 
@@ -3513,10 +3682,26 @@ msgid "Insert Table of Contents"
 msgstr "Ipasok ang Talahanayan ng Nilalaman"
 
 #: assets/blocks/summary/block.jsx:72
+msgid ""
+"After manually changing the anchor, remember to refresh Table of Contents "
+"block to make the links work!"
+msgstr ""
+"Matapos manual na baguhin ang anchor, huwag kalimutang i-refresh ang Table "
+"of Contents block upang gumana ang mga link!"
+
+#: assets/blocks/summary/block.jsx:269
 msgid "Table of Contents"
 msgstr "Talahanayan ng Nilalaman"
 
 #: assets/blocks/summary/block.jsx:274
+msgid ""
+"Your current post/page has no headings. Try add some headings and update "
+"this block later"
+msgstr ""
+"Wala pang mga pamagat ang kasalukuyan mong post/pahina. Subukan mong "
+"magdagdag ng ilang mga pamagat at i-update ang block na ito mamaya"
+
+#: assets/blocks/summary/block.jsx:279
 msgid "Update"
 msgstr "I-update"
 
@@ -3612,6 +3797,16 @@ msgstr "Tab 1"
 #: assets/blocks/tabs/block.jsx:297
 #: assets/blocks/tabs/block.jsx:301
 #: assets/blocks/tabs/block.jsx:305
+msgid ""
+"Filler text (also placeholder text or dummy text) is text that shares some "
+"characteristics of a real written text, but is random or otherwise "
+"generated."
+msgstr ""
+"Ang filler text (kilala rin bilang placeholder text o dummy text) ay teksto "
+"na may ilang katangian ng tunay na nakasulat na teksto, ngunit ito ay "
+"random o nilikha sa ibang paraan."
+
+#: assets/blocks/tabs/block.jsx:300, fuzzy
 msgid "Tab 2"
 msgstr "Tab 2"
 
@@ -3871,6 +4066,14 @@ msgid "Woo Products Block"
 msgstr "Woo Products Block"
 
 #: assets/blocks/woo-products/block.jsx:349
+msgid ""
+"WooCommerce has not been detected, make sure WooCommerce is installed and "
+"activated."
+msgstr ""
+"Hindi natukoy ang WooCommerce, siguraduhin na ang WooCommerce ay "
+"naka-install at nakabukas."
+
+#: assets/blocks/woo-products/block.jsx:355
 msgid "Try again"
 msgstr "Subukan muli"
 
@@ -3889,19 +4092,3 @@ msgstr "listahan ng mga produkto"
 #: assets/blocks/woo-products/block.jsx:415
 msgid "price list"
 msgstr "listahan ng presyo"
-
-#: assets/js/main.js:112
-msgid "Changes saved!"
-msgstr "Mga pagbabago ay nai-save!"
-
-#: assets/js/main.js:113
-msgid " Error: changes can't be saved."
-msgstr " Error: hindi ma-save ang mga pagbabago."
-
-#: assets/js/settings.js:110
-msgid "Edit block"
-msgstr "I-edit ang bloke"
-
-#: assets/js/settings.js:110
-msgid "default config"
-msgstr "default na config"

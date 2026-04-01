@@ -18,6 +18,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #. Plugin Name of the plugin
+#. Plugin Name of the plugin
 #: advanced-gutenberg.php incl/advanced-gutenberg-main.php:175
 #: incl/pages/block-settings.php:95 incl/pages/main.php:8
 msgid "PublishPress Blocks"

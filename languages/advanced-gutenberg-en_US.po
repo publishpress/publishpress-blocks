@@ -1,4 +1,4 @@
-# Copyright (C) 2026 PublishPress
+# Copyright (C) 2025 PublishPress
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
@@ -7,321 +7,306 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-12-15T13:55:51+00:00\n"
-"PO-Revision-Date: 2026-04-01 14:43+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
-"Language: yor\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: incl/block-controls-main.php:1743
-#: incl/block-controls-main.php:1743, fuzzy
-msgid "404"
-msgstr "404"
-
-#: advanced-gutenberg.php:7
-#: incl/advanced-gutenberg-main.php:176
-#: incl/pages/block-settings.php:95
-#: incl/pages/main.php:8, fuzzy
 #. Plugin Name of the plugin
+#. Plugin Name of the plugin
+#. Plugin Name of the plugin
+#: advanced-gutenberg.php
+#: incl/advanced-gutenberg-main.php:175
+#: incl/pages/block-settings.php:95
+#: incl/pages/main.php:8
 msgid "PublishPress Blocks"
-msgstr "PublishPress Blocks"
+msgstr ""
 
-#: advanced-gutenberg.php:9, fuzzy
 #. Plugin URI of the plugin
+#: advanced-gutenberg.php
 msgid "https://publishpress.com/blocks/"
-msgstr "https://publishpress.com/blocks/"
+msgstr ""
 
-#: advanced-gutenberg.php:11
 #. Description of the plugin
-msgid ""
-"PublishPress Blocks has everything you need to build professional websites "
-"with the Gutenberg editor."
+#: advanced-gutenberg.php
+msgid "PublishPress Blocks has everything you need to build professional websites with the Gutenberg editor."
 msgstr ""
-"PublishPress Blocks ni gbogbo nkan ti o nilo lati kọ awọn oju opo wẹẹbu "
-"ọjọgbọn pẹlu olootu Gutenberg."
 
-#: advanced-gutenberg.php:15, fuzzy
 #. Author of the plugin
+#: advanced-gutenberg.php
 msgid "PublishPress"
-msgstr "PublishPress"
-
-#: advanced-gutenberg.php:17, fuzzy
-#. Author URI of the plugin
-msgid "https://publishpress.com/"
-msgstr "https://publishpress.com/"
-
-#: incl/advanced-gutenberg-main.php:471
-#: incl/advanced-gutenberg-main.php:940
-#: incl/advanced-gutenberg-main.php:2123
-#: incl/advanced-gutenberg-main.php:3389
-#: incl/advanced-gutenberg-main.php:5994
-msgid "Upgrade to Pro"
-msgstr "Gbadun si Pro"
-
-#: incl/advanced-gutenberg-main.php:472
-#: incl/advanced-gutenberg-main.php:2124
-#: incl/advanced-gutenberg-main.php:3390
-#: incl/pages/block-settings.php:133, fuzzy
-msgid "Pro"
-msgstr "Pro"
-
-#: incl/advanced-gutenberg-main.php:914
-#, php-format
-msgid ""
-"You're using PublishPress Blocks Free. The Pro version has more features "
-"and support. %sUpgrade to Pro%s"
 msgstr ""
-"Iwọ nlo PublishPress Blocks Free. Ẹya Pro ni diẹ ẹ sii awọn ẹya ati "
-"atilẹyin. %sṢatunṣe si Pro%s"
 
-#: incl/advanced-gutenberg-main.php:1149
-#: incl/advanced-gutenberg-main.php:1275
-#: incl/advanced-gutenberg-main.php:1336
+#. Author URI of the plugin
+#: advanced-gutenberg.php
+msgid "https://publishpress.com/"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:446
+#: incl/advanced-gutenberg-main.php:915
+#: incl/advanced-gutenberg-main.php:2098
+#: incl/advanced-gutenberg-main.php:3364
+#: incl/advanced-gutenberg-main.php:5969
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:447
+#: incl/advanced-gutenberg-main.php:2099
+#: incl/advanced-gutenberg-main.php:3365
+#: incl/pages/block-settings.php:133
+msgid "Pro"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:889
+#, php-format
+msgid "You're using PublishPress Blocks Free. The Pro version has more features and support. %sUpgrade to Pro%s"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:1124
+#: incl/advanced-gutenberg-main.php:1250
+#: incl/advanced-gutenberg-main.php:1311
 #: incl/block-styles/block-styles.php:234
 msgid "No permission!"
-msgstr "Ko si igbanilaaye!"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1286
-#: incl/advanced-gutenberg-main.php:1342
-#: incl/advanced-gutenberg-main.php:1402
-#: incl/advanced-gutenberg-main.php:1494
+#: incl/advanced-gutenberg-main.php:1261
+#: incl/advanced-gutenberg-main.php:1317
+#: incl/advanced-gutenberg-main.php:1377
+#: incl/advanced-gutenberg-main.php:1469
 #: incl/block-styles/block-styles.php:241
 msgid "Invalid nonce token!"
-msgstr "Akọkọ nonce ti ko tọ!"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1290
+#: incl/advanced-gutenberg-main.php:1265
 msgid "Error: wrong data"
-msgstr "Aṣiṣe: data ti ko tọ"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1321
+#: incl/advanced-gutenberg-main.php:1296
 msgid "Error: can't edit this feature"
-msgstr "Aṣiṣe: ko le ṣatunkọ ẹya yii"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1407
-#: incl/advanced-gutenberg-main.php:1499
-#: incl/advanced-gutenberg-main.php:1552
+#: incl/advanced-gutenberg-main.php:1382
+#: incl/advanced-gutenberg-main.php:1474
+#: incl/advanced-gutenberg-main.php:1527
 msgid "Bad Request!"
-msgstr "Beere Buruu!"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1415
-#: incl/advanced-gutenberg-main.php:1507
-#: incl/advanced-gutenberg-main.php:1560
+#: incl/advanced-gutenberg-main.php:1390
+#: incl/advanced-gutenberg-main.php:1482
+#: incl/advanced-gutenberg-main.php:1535
 msgid "Server error. Try again later!"
-msgstr "Aṣiṣe olupin. Gbiyanju lẹẹkansii nigbamii!"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1423
-#: incl/advanced-gutenberg-main.php:1515
-#: incl/advanced-gutenberg-main.php:1568
+#: incl/advanced-gutenberg-main.php:1398
+#: incl/advanced-gutenberg-main.php:1490
+#: incl/advanced-gutenberg-main.php:1543
 msgid "Cannot validate captcha"
-msgstr "Ko le jẹrisi captcha"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:1403
+#: incl/advanced-gutenberg-main.php:1495
+#: incl/advanced-gutenberg-main.php:1548
+msgid "Captcha validation error"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1428
-#: incl/advanced-gutenberg-main.php:1520
-#: incl/advanced-gutenberg-main.php:1573
-msgid "Captcha validation error"
-msgstr "Aṣiṣe ijẹrisi captcha"
-
-#: incl/advanced-gutenberg-main.php:1453
 #: incl/pages/settings/forms.php:24
 msgid "Website Contact"
-msgstr "Ibi asopọ oju opo wẹẹbu"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1459
+#: incl/advanced-gutenberg-main.php:1434
 msgid "You have received a contact from your website."
-msgstr "O ti gba asopọ lati oju opo wẹẹbu rẹ."
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1462
+#: incl/advanced-gutenberg-main.php:1437
 msgid "Name"
-msgstr "Orukọ"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1464
+#: incl/advanced-gutenberg-main.php:1439
 #: incl/block-settings-main.php:808
 #: incl/block-settings-main.php:849
 #: incl/block-settings-main.php:890
 msgid "Email"
-msgstr "Imeeli"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1466
+#: incl/advanced-gutenberg-main.php:1441
 msgid "Date"
-msgstr "Ọjọ́"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1468
+#: incl/advanced-gutenberg-main.php:1443
 msgid "Message"
-msgstr "Ifiranṣẹ"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1476
+#: incl/advanced-gutenberg-main.php:1451
 msgid "Error while sending the form. Please try again."
-msgstr "Aṣiṣe nigba ti a ń rán fọọmu. Jọwọ gbiyanju lẹẹkansi."
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1576
+#: incl/advanced-gutenberg-main.php:1551
 msgid "Captcha validated"
-msgstr "Captcha ti ṣayẹwo"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1579
+#: incl/advanced-gutenberg-main.php:1554
 msgid "Captcha is empty"
-msgstr "Captcha ti ṣofo"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1894
-#: incl/advanced-gutenberg-main.php:5981, fuzzy
+#: incl/advanced-gutenberg-main.php:1869
+#: incl/advanced-gutenberg-main.php:5956
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1901
-#: incl/advanced-gutenberg-main.php:2214
+#: incl/advanced-gutenberg-main.php:1876
+#: incl/advanced-gutenberg-main.php:2189
 #: incl/pages/main.php:21
 msgid "Block Permissions"
-msgstr "Iwe-aṣẹ Iṣakoso"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1908
+#: incl/advanced-gutenberg-main.php:1883
 #: incl/pages/main.php:31
 msgid "Extra Blocks"
-msgstr "Awọn Ẹrọ afikun"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1915
+#: incl/advanced-gutenberg-main.php:1890
 #: incl/pages/custom-styles.php:9
 #: incl/pages/main.php:41
 msgid "Block Styles"
-msgstr "Awọn aṣa Ẹrọ"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1922
+#: incl/advanced-gutenberg-main.php:1897
 #: incl/pages/block-controls.php:30
 #: incl/pages/main.php:51
 msgid "Block Controls"
-msgstr "Iṣakoso Ẹrọ"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1929
-#: incl/advanced-gutenberg-main.php:3700
+#: incl/advanced-gutenberg-main.php:1904
+#: incl/advanced-gutenberg-main.php:3675
 #: incl/pages/main.php:61
 msgid "Block Usage"
-msgstr "Ìlò Ẹrọ"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1936
-#: incl/advanced-gutenberg-main.php:6013
-#: incl/advanced-gutenberg-main.php:6015
+#: incl/advanced-gutenberg-main.php:1911
+#: incl/advanced-gutenberg-main.php:5988
+#: incl/advanced-gutenberg-main.php:5990
 #: incl/pages/main.php:71
 msgid "Reusable Blocks"
-msgstr "Awọn Ẹrọ ti a le tun lo"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1943
+#: incl/advanced-gutenberg-main.php:1918
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:117
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:155
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:156
 #: incl/pages/main.php:81
 msgid "Auto Insert Blocks"
-msgstr "Fi awọn Ẹrọ silẹ laifọwọyi"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1950
-#: incl/advanced-gutenberg-main.php:5987
+#: incl/advanced-gutenberg-main.php:1925
+#: incl/advanced-gutenberg-main.php:5962
 #: incl/pages/settings.php:26
 msgid "Settings"
-msgstr "Eto"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2189
-#: incl/advanced-gutenberg-main.php:2235
-#: incl/advanced-gutenberg-main.php:2279
-#: incl/advanced-gutenberg-main.php:2315
-#: incl/advanced-gutenberg-main.php:2361
+#: incl/advanced-gutenberg-main.php:2164
+#: incl/advanced-gutenberg-main.php:2210
+#: incl/advanced-gutenberg-main.php:2254
+#: incl/advanced-gutenberg-main.php:2290
+#: incl/advanced-gutenberg-main.php:2336
 #, php-format
-msgid ""
-"This feature is disabled. In order to use, please enable back through "
-"%sDashboard%s."
-msgstr "Iṣẹ yii ti wa ni pipade. Lati lo, jọwọ mu pada nipasẹ %sDasibodu%s."
+msgid "This feature is disabled. In order to use, please enable back through %sDashboard%s."
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2434
+#: incl/advanced-gutenberg-main.php:2409
 #, php-format
 msgid "If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!"
-msgstr "Ti o ba fẹ %sPublishPress Blocks%s jọwọ fi wa silẹ %s ìdíyelé. E seun!"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2451
+#: incl/advanced-gutenberg-main.php:2426
 msgid "About PublishPress Blocks"
-msgstr "Nipa PublishPress Blocks"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2454
+#: incl/advanced-gutenberg-main.php:2429
 msgid "About"
-msgstr "Nipa"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2461
-#: incl/advanced-gutenberg-main.php:2464
+#: incl/advanced-gutenberg-main.php:2436
+#: incl/advanced-gutenberg-main.php:2439
 msgid "Documentation"
-msgstr "Iwe Itọsọna"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2472
+#: incl/advanced-gutenberg-main.php:2447
 msgid "Contact the PublishPress team"
-msgstr "Kan si ẹgbẹ PublishPress"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2475
+#: incl/advanced-gutenberg-main.php:2450
 msgid "Contact"
-msgstr "Kan si"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2483
+#: incl/advanced-gutenberg-main.php:2458
 msgid "PublishPress Blocks logo"
-msgstr "Logo PublishPress Blocks"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3546
+#: incl/advanced-gutenberg-main.php:3521
 #, php-format
 msgid "%s saved successfully!"
-msgstr "%s ti fipamọ́ pẹ̀lú aṣeyọrí!"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3556
+#: incl/advanced-gutenberg-main.php:3531
 #, php-format
 msgid "%s can't be saved. Please try again."
-msgstr "%s kò le fipamọ́. Jọwọ gbìyànjú lẹ́ẹ̀kansi."
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3612
+#: incl/advanced-gutenberg-main.php:3587
 #: incl/pages/block-controls/blocks.php:13
 #: incl/pages/block-settings.php:102
 msgid "Search blocks"
-msgstr "Wa awọn bọ́ọ̀kù"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3617
+#: incl/advanced-gutenberg-main.php:3592
 msgid "Enable or disable all blocks"
-msgstr "Mu gbogbo awọn bọ́ọ̀kù ṣiṣẹ́ tabi pa wọn"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3630
-#: incl/advanced-gutenberg-main.php:3676
+#: incl/advanced-gutenberg-main.php:3605
+#: incl/advanced-gutenberg-main.php:3651
 #: incl/pages/block-controls/blocks.php:31
 #: incl/pages/block-controls/blocks.php:79
 msgid "To save this configuration, enable at least one block."
-msgstr "Lati fipamọ́ ìtọ́sọ́nà yìí, mu bọ́ọ̀kù kan ṣiṣẹ́ o kere ju."
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3641
-#: incl/advanced-gutenberg-main.php:3665
+#: incl/advanced-gutenberg-main.php:3616
+#: incl/advanced-gutenberg-main.php:3640
 msgid "Save Role Block Permissions"
-msgstr "Fipamọ́ Àṣẹ Bọ́ọ̀kù Role"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3645
-#: incl/advanced-gutenberg-main.php:3669
+#: incl/advanced-gutenberg-main.php:3620
+#: incl/advanced-gutenberg-main.php:3644
 msgid "Save Permission for all Roles"
-msgstr "Fipamọ́ Àṣẹ fún gbogbo Awọn Role"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3654
-#: incl/advanced-gutenberg-main.php:3710
+#: incl/advanced-gutenberg-main.php:3629
+#: incl/advanced-gutenberg-main.php:3685
 #: incl/pages/block-controls/blocks.php:56
 msgid "Loading..."
-msgstr "Nṣiṣẹ́..."
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3703
+#: incl/advanced-gutenberg-main.php:3678
 msgid "Scan Block Usage"
-msgstr "Sìkan Ìlò Bọ́ọ̀kù"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4046
-#: incl/advanced-gutenberg-main.php:4047
+#: incl/advanced-gutenberg-main.php:4021
+#: incl/advanced-gutenberg-main.php:4022
 msgid "Block Config"
-msgstr "Ìtọ́sọ́nà Bọ́ọ̀kù"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4106
+#: incl/advanced-gutenberg-main.php:4081
 msgid "Default configuration for this block is not available."
-msgstr "Ìtọ́sọ́nà àtọkànwá fún bọ́ọ̀kù yìí kò sí."
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4172
+#: incl/advanced-gutenberg-main.php:4147
 #, php-format
 msgid "Page not found. Go to %sDashboard%s"
-msgstr "Ojú-iwe kò rí. Lọ sí %sDashboard%s"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4585
+#: incl/advanced-gutenberg-main.php:4560
 #: incl/block-styles/block-styles.php:977
 #: incl/block-styles/block-styles.php:996
 #: incl/block-styles/block-styles.php:1166
@@ -339,280 +324,280 @@ msgstr "Ojú-iwe kò rí. Lọ sí %sDashboard%s"
 #: incl/block-styles/block-styles.php:1710
 #: incl/pages/settings/general.php:135
 msgid "Default"
-msgstr "Àtọkànwá"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4599
+#: incl/advanced-gutenberg-main.php:4574
 msgid "Type field not defined"
-msgstr "Ibi àkọsílẹ̀ irú kò tíì ṣàpèjúwe"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4874
+#: incl/advanced-gutenberg-main.php:4849
 msgid "User registration is currently not allowed."
-msgstr "Ìforúkọsílẹ̀ Olùsàájú kò tíì jẹ́wọ́."
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4878
+#: incl/advanced-gutenberg-main.php:4853
 msgid "Captcha must be checked!"
-msgstr "Captcha gbọdọ̀ jẹ́ àyẹ̀wò!"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4879
+#: incl/advanced-gutenberg-main.php:4854
 msgid "Username or password is incorrect!"
-msgstr "Orukọ olumulo tàbí ọrọìsirà jẹ́ aṣiṣe!"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6014
+#: incl/advanced-gutenberg-main.php:5989
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:198
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:87
 msgid "Reusable Block"
-msgstr "Bloku ti a le tun lo"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6016
+#: incl/advanced-gutenberg-main.php:5991
 msgid "All Reusable Blocks"
-msgstr "Gbogbo Awọn Bloku ti a le tun lo"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6017
+#: incl/advanced-gutenberg-main.php:5992
 msgid "Add New"
-msgstr "Fi tuntun kun"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6018
+#: incl/advanced-gutenberg-main.php:5993
 msgid "Add New Reusable Block"
-msgstr "Fi Bloku ti a le tun lo tuntun kun"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6019
+#: incl/advanced-gutenberg-main.php:5994
 msgid "Edit Reusable Block"
-msgstr "Ṣatunkọ Bloku ti a le tun lo"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:5995
+msgid "New Reusable Block"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:5996
+msgid "View Reusable Block"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:5997
+msgid "View Reusable Blocks"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:5998
+msgid "Search Reusable Blocks"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:5999
+msgid "No reusable blocks found."
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:6000
+msgid "No reusable blocks found in Trash."
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:6001
+msgid "Parent Reusable Block:"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:6002
+msgid "Reusable Block Archives"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:6020
-msgid "New Reusable Block"
-msgstr "Bloku ti a le tun lo tuntun"
+msgid "Reusable Block Categories"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:6021
-msgid "View Reusable Block"
-msgstr "Wo Bloku ti a le tun lo"
+msgid "Reusable Block Category"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:6022
-msgid "View Reusable Blocks"
-msgstr "Wo Gbogbo Awọn Bloku ti a le tun lo"
+msgid "Block Categories"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:6023
-msgid "Search Reusable Blocks"
-msgstr "Wa Awọn Bloku ti a le tun lo"
+msgid "All Block Categories"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:6024
-msgid "No reusable blocks found."
-msgstr "Ko si awọn bloku ti a le tun lo ti a ri."
+msgid "Edit Block Category"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:6025
-msgid "No reusable blocks found in Trash."
-msgstr "Ko si awọn bloku ti a le tun lo ti a ri ninu Ààlà."
+msgid "View Block Category"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:6026
-msgid "Parent Reusable Block:"
-msgstr "Bloku ti a le tun lo obi:"
+msgid "Update Block Category"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:6027
-msgid "Reusable Block Archives"
-msgstr "Àkọsílẹ Bloku ti a le tun lo"
-
-#: incl/advanced-gutenberg-main.php:6045
-msgid "Reusable Block Categories"
-msgstr "Ẹka Bloku ti a le tun lo"
-
-#: incl/advanced-gutenberg-main.php:6046
-msgid "Reusable Block Category"
-msgstr "Ẹka Bloku ti a le tun lo"
-
-#: incl/advanced-gutenberg-main.php:6047
-msgid "Block Categories"
-msgstr "Ẹka Bloku"
-
-#: incl/advanced-gutenberg-main.php:6048
-msgid "All Block Categories"
-msgstr "Gbogbo Ẹka Bloku"
-
-#: incl/advanced-gutenberg-main.php:6049
-msgid "Edit Block Category"
-msgstr "Ṣatunkọ Ẹka Bloku"
-
-#: incl/advanced-gutenberg-main.php:6050
-msgid "View Block Category"
-msgstr "Wo Ẹka Bloku"
-
-#: incl/advanced-gutenberg-main.php:6051
-msgid "Update Block Category"
-msgstr "Ṣe imudojuiwọn Ẹka Bloku"
-
-#: incl/advanced-gutenberg-main.php:6052
 msgid "Add New Block Category"
-msgstr "Fi Kategori Blọku Tuntun Kun"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6053
+#: incl/advanced-gutenberg-main.php:6028
 msgid "New Block Category Name"
-msgstr "Orukọ Kategori Blọku Tuntun"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6054
+#: incl/advanced-gutenberg-main.php:6029
 msgid "Parent Block Category"
-msgstr "Kategori Blọku Obi"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6055
+#: incl/advanced-gutenberg-main.php:6030
 msgid "Parent Block Category:"
-msgstr "Kategori Blọku Obi:"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6056
+#: incl/advanced-gutenberg-main.php:6031
 msgid "Search Block Categories"
-msgstr "Wa Kategori Blọku"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6057
+#: incl/advanced-gutenberg-main.php:6032
 msgid "Popular Block Categories"
-msgstr "Kategori Blọku Ti o Gbajumo"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6058
+#: incl/advanced-gutenberg-main.php:6033
 msgid "Separate block categories with commas"
-msgstr "Ya Kategori Blọku pẹlu awọn koma"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6059
+#: incl/advanced-gutenberg-main.php:6034
 msgid "Add or remove block categories"
-msgstr "Fi tabi yọ Kategori Blọku"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6060
+#: incl/advanced-gutenberg-main.php:6035
 msgid "Choose from the most used block categories"
-msgstr "Yan lati inu awọn Kategori Blọku ti a lo julọ"
+msgstr ""
 
-#: incl/advanced-gutenberg-main.php:6061
+#: incl/advanced-gutenberg-main.php:6036
 msgid "No block categories found."
-msgstr "Ko si Kategori Blọku ti a ri."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:118
 msgid "Auto Insert Block"
-msgstr "Fi Blọku Tuntun Kun laifọwọyi"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:119
 msgid "Add New Rule"
-msgstr "Fi Ofin Tuntun Kun"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:120
 msgid "Add New Auto Insert Block"
-msgstr "Fi Blọku Tuntun laifọwọyi Kun"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:121
 msgid "Edit Auto Insert Block"
-msgstr "Ṣatunkọ Blọku laifọwọyi"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:122
 msgid "New Auto Insert Block"
-msgstr "Blọku Tuntun laifọwọyi"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:123
 msgid "View Auto Insert Block"
-msgstr "Wo Blọku laifọwọyi"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:124
 msgid "Search Auto Insert Blocks"
-msgstr "Wa Awọn Blọku laifọwọyi"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:125
 msgid "No auto insert blocks found"
-msgstr "Ko si awọn blọku laifọwọyi ti a ri"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:126
 msgid "No auto insert blocks found in trash"
-msgstr "Ko si awọn blọku laifọwọyi ti a ri ninu ikọsilẹ"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:199
 #: incl/block-styles/block-styles.php:1273
 msgid "Position"
-msgstr "Ipo"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:200
 msgid "Targeting"
-msgstr "Ìtọ́kasí"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:216
 msgid "Block not found"
-msgstr "Blọ́kù kò rí"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:265
 #, php-format
 msgid "Post Types: %s"
-msgstr "Iru Ifiweranṣẹ: %s"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:283
 #, php-format
 msgid "Authors: %s"
-msgstr "Awon Onkọwe: %s"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:324
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:407
 msgid "January"
-msgstr "Oṣù kinni"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:325
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:408
 msgid "February"
-msgstr "Oṣù kejì"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:326
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:409
 msgid "March"
-msgstr "Oṣù kẹta"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:327
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:410
 msgid "April"
-msgstr "Oṣù kẹrin"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:328
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:411
 msgid "May"
-msgstr "Oṣù karun"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:329
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:412
 msgid "June"
-msgstr "Oṣù kẹfa"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:330
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:413
 msgid "July"
-msgstr "Oṣù keje"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:331
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:414
 msgid "August"
-msgstr "Oṣù kẹjọ"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:332
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:415
 msgid "September"
-msgstr "Oṣù kẹsan"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:333
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:416
 msgid "October"
-msgstr "Oṣù kẹwàá"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:334
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:417
 msgid "November"
-msgstr "Oṣù kẹdun"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:335
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:418
 msgid "December"
-msgstr "Oṣù kẹrindinlogun"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:342
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:349
 #, php-format
 msgid "Post Created in: %s"
-msgstr "Ifiweranṣẹ Ti Ṣẹda Ní: %s"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:364
 #, php-format
 msgid "Specific Post IDs: %s"
-msgstr "ID Ifiweranṣẹ Pataki: %s"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:379
 #, php-format
 msgid "Exclude Post IDs: %s"
-msgstr "Yọ ID Ifiweranṣẹ: %s"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:384
 #: incl/block-settings-main.php:344
@@ -632,158 +617,150 @@ msgstr "Yọ ID Ifiweranṣẹ: %s"
 #: incl/block-styles/block-styles.php:1473
 #: incl/block-styles/block-styles.php:2134
 msgid "None"
-msgstr "Kò sí"
-
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:846
-msgid "Duplicate this auto insert rule"
-msgstr "Daakọ ofin aiyipada yii"
-
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:847
-msgid "Duplicate"
-msgstr "Daakọ"
-
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:864
-msgid "Invalid request"
-msgstr "Ìbéèrè tí kò tọ́"
-
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:873
-msgid "Security check failed"
-msgstr "Ìdánwò ààbò kọ́"
-
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:879
-msgid "You do not have permission to duplicate this item"
-msgstr "Iwọ kò ní àṣẹ láti daakọ ohun èlò yìí"
-
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:889
-#, php-format
-msgid ""
-"Auto insert block duplicated successfully. <a href=\"%s\">Edit the new "
-"rule</a>"
 msgstr ""
-"A ti fi sinu bulọọki laifọwọyi ni aṣeyọri. <a href=\"%s\">Ṣatunkọ ofin "
-"tuntun</a>"
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:895
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:842
+msgid "Duplicate this auto insert rule"
+msgstr ""
+
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:843
+msgid "Duplicate"
+msgstr ""
+
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:860
+msgid "Invalid request"
+msgstr ""
+
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:869
+msgid "Security check failed"
+msgstr ""
+
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:875
+msgid "You do not have permission to duplicate this item"
+msgstr ""
+
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:885
+#, php-format
+msgid "Auto insert block duplicated successfully. <a href=\"%s\">Edit the new rule</a>"
+msgstr ""
+
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:891
 msgid "Error duplicating auto insert block"
-msgstr "Aṣiṣe nípa dákọ bulọọku aiyipada"
+msgstr ""
 
-#: incl/auto-insert-blocks/class-auto-insert-blocks.php:927
+#: incl/auto-insert-blocks/class-auto-insert-blocks.php:923
 #: incl/pages/custom-styles.php:26
 msgid "Copy"
-msgstr "Daakọ"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:42
 msgid "Block Selection"
-msgstr "Yiyan Bulọọku"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:51
 msgid "Position Settings"
-msgstr "Ìtọ́sọ́nà Ipò"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:60
 msgid "Targeting Options"
-msgstr "Àṣàyàn Tààrà"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:69
 msgid "Rule Settings"
-msgstr "Ìtọ́sọ́nà Ofin"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:92
 msgid "You do not have any reusable blocks."
-msgstr "Iwọ kò ní àwọn bulọọku tó le lo lẹ́ẹ̀kan si."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:94
 msgid "Click here to add new reusable block"
-msgstr "Tẹ nibi láti ṣàfikún bulọọku tó le lo lẹ́ẹ̀kan si tuntun"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:101
 msgid "Select a reusable block..."
-msgstr "Yan bulọọku tó le lo lẹ́ẹ̀kan si..."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:135
 #: incl/pages/settings.php:33
 msgid "General"
-msgstr "Gbogbogbo"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:136
 msgid "Beginning of post"
-msgstr "Ibẹrẹ ìkàwé"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:137
 msgid "End of post"
-msgstr "Ìparí ìkàwé"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:139
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:217
 #: incl/block-styles/block-styles.php:1497
 msgid "Paragraph"
-msgstr "Paragirafi"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:140
 msgid "After Nth paragraph"
-msgstr "Lẹ́yìn paragrafi Nth"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:141
 msgid "Before Nth paragraph"
-msgstr "Ṣaaju ẹsẹ Nth"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:143
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:218
 msgid "Heading"
-msgstr "Àkọlé"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:144
 msgid "After Nth heading"
-msgstr "Lẹhin àkọlé Nth"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:145
 msgid "Before Nth heading"
-msgstr "Ṣaaju àkọlé Nth"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:147
 msgid "Any Block"
-msgstr "Iwọn Block eyikeyi"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:148
 msgid "After Nth block"
-msgstr "Lẹhin block Nth"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:149
 msgid "Before Nth block"
-msgstr "Ṣaaju block Nth"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:151
 msgid "Specific Block"
-msgstr "Block pataki"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:152
 msgid "After specific Nth block"
-msgstr "Lẹhin block Nth pataki"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:153
 msgid "Before specific Nth block"
-msgstr "Ṣaaju block Nth pataki"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:165
 msgid "Insert Position"
-msgstr "Ipo ti a fi kun"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:185
 #, php-format
-msgid ""
-"The selected option requires the Pro version. Please select one of the "
-"general options or %1$sUpgrade to Pro%2$s."
+msgid "The selected option requires the Pro version. Please select one of the general options or %1$sUpgrade to Pro%2$s."
 msgstr ""
-"Yan aṣayan ti a yan nilo ẹda Pro. Jọwọ yan ọkan ninu awọn aṣayan gbogbogbo "
-"tabi %1$sṢatunṣe si Pro%2$s."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:196
 msgid "Position Number"
-msgstr "Nọmba ipo"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:201
 msgid "Enter the number (e.g., 3 for \"after 3rd heading\")."
-msgstr "Tẹ nọmba naa (e.g., 3 fun \"lẹhin àkọlé 3rd\")."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:206
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:391
@@ -792,177 +769,169 @@ msgstr "Tẹ nọmba naa (e.g., 3 fun \"lẹhin àkọlé 3rd\")."
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:644
 #: incl/block-styles/block-styles.php:961
 msgid "Pro feature"
-msgstr "Ẹya Pro"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:213
 msgid "Exclude from counting"
-msgstr "Yọkuro lati iṣiro"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:219
 msgid "Image"
-msgstr "Àwòrán"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:220
 msgid "List"
-msgstr "Àkópọ"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:221
 msgid "Quote"
-msgstr "Iwoye"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:222
 msgid "Separator"
-msgstr "Asọtọ"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:223
 msgid "Spacer"
-msgstr "Ibi idaduro"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:233
 msgid "Selected blocks will not be counted when determining position."
-msgstr "Awọn bulọọki ti a yan kii yoo ka nigbati a ba n pinnu ipo."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:238
 msgid "Search Block"
-msgstr "Ṣawari Bulọọki"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:241
 msgid "Search and select blocks after this reusable block should be inserted."
-msgstr "Ṣawari ati yan awọn bulọọki lẹhin bulọọki to ṣee lo yii."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:257
 msgid "Search blocks..."
-msgstr "Ṣawari awọn bulọọki..."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:319
 msgid "Post Types"
-msgstr "Iru Ifiweranṣẹ"
+msgstr ""
 
-#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:347, fuzzy
+#: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:347
 msgid "Taxonomies"
-msgstr "Taxonomies"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:351
-msgid ""
-"You can restrict this block insertion to only post with specific taxonomy "
-"terms."
+msgid "You can restrict this block insertion to only post with specific taxonomy terms."
 msgstr ""
-"O le ṣe idiwọ ifisilẹ bulọọki yii si awọn ifiweranṣẹ pẹlu awọn ọrọ taxonomy "
-"pato nikan."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:359
 msgid "Authors"
-msgstr "Awọn Onkowe"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:362
 msgid "Only target posts from specific authors."
-msgstr "Kan awọn ifiweranṣẹ ti o ni awọn onkowe pato."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:366
 msgid "Search author..."
-msgstr "Ṣawari onkowe..."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:399
 msgid "Post Created in Months"
-msgstr "Ifiweranṣẹ ti a ṣẹda ni Awọn Oṣu"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:402
 msgid "Target posts created in specific months of the year."
-msgstr "Awọn ifiweranṣẹ ti a fojusi ti a ṣẹda ni awọn oṣu pato ti ọdun."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:431
 msgid "Post Created in Years"
-msgstr "Ifiweranṣẹ ti a ṣẹda ni Awọn ọdun"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:434
 msgid "Comma-separated list of years (e.g., 2023,2024,2025)."
-msgstr "Akojọ awọn ọdun ti a yapa pẹlu koma (e.g., 2023,2024,2025)."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:442
 msgid "Target Posts"
-msgstr "Awọn Ifiweranṣẹ ti a fojusi"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:445
-msgid ""
-"Search and select posts or enter their IDs to limit this rules to specific "
-"posts."
+msgid "Search and select posts or enter their IDs to limit this rules to specific posts."
 msgstr ""
-"Wa ki o yan awọn ifiweranṣẹ tabi tẹ awọn ID wọn lati dènà awọn ofin wọnyi "
-"si awọn ifiweranṣẹ pato."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:448
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:485
 msgid "Search posts..."
-msgstr "Ṣawari awọn ifiweranṣẹ..."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:464
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:501
 msgid "OR"
-msgstr "TABI"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:466
 msgid "Enter comma-separated list of post IDs to include (e.g., 123,456,789)."
-msgstr "Tẹ akojọ ID ifiweranṣẹ ti a yapa pẹlu koma lati fi kun (e.g., 123,456,789)."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:479
 msgid "Exclude Posts"
-msgstr "Yọkúrò nínú Àwọn Ìkọ̀wé"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:482
 msgid "Search and select posts or enter their IDs to exclude them from auto insert."
-msgstr "Wá àti yan àwọn ìkọ̀wé tàbí tẹ ID wọn láti yọkúrò nínú àfiwé àtọka."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:503
 msgid "Enter comma-separated post IDs to exclude (e.g., 123,456,789)."
-msgstr "Tẹ ID àwọn ìkọ̀wé tí a yọkúrò pẹ̀lú kóma (àpẹẹrẹ, 123,456,789)."
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:533
 msgid "Priority"
-msgstr "Àkànṣe"
+msgstr ""
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:537
-msgid ""
-"This option decides which rule runs first if you have multiple rules "
-"targeting the same position in a post. For example, 9 will run before 10."
+msgid "This option decides which rule runs first if you have multiple rules targeting the same position in a post. For example, 9 will run before 10."
 msgstr ""
-"Aṣayan yii pinnu eyiti ofin yoo ṣiṣẹ akọkọ ti o ba ni ọpọlọpọ awọn ofin ti "
-"n fojusi ipo kanna ni ifiweranṣẹ. Fun apẹẹrẹ, 9 yoo ṣiṣẹ ṣaaju 10."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:617
 msgid "Search terms..."
-msgstr "Àwọn ọrọ ìwádìí..."
+msgstr ""
 
 #: incl/block-controls-main.php:1727
 msgid "Home"
-msgstr "Ilé"
+msgstr ""
 
 #: incl/block-controls-main.php:1731
 msgid "Blog"
-msgstr "Bọ́ọ̀gì"
+msgstr ""
 
 #: incl/block-controls-main.php:1735
 msgid "Archive"
-msgstr "Àkójọ"
+msgstr ""
 
 #: incl/block-controls-main.php:1739
 msgid "Search"
-msgstr "Wá"
+msgstr ""
+
+#: incl/block-controls-main.php:1743
+msgid "404"
+msgstr ""
 
 #: incl/block-settings-main.php:16
 msgid "Accordion Settings"
-msgstr "Àwọn Ìtọ́sọ́nà Àkòrí"
+msgstr ""
 
 #: incl/block-settings-main.php:19
 msgid "Bottom spacing"
-msgstr "Ààyè isalẹ"
+msgstr ""
 
 #: incl/block-settings-main.php:26
 msgid "Initial Collapsed"
-msgstr "Ìbẹrẹ ti a ti dín kù"
+msgstr ""
 
 #: incl/block-settings-main.php:33
 msgid "Header Settings"
-msgstr "Àwọn Ìtọ́sọ́nà Àkọ́lé"
+msgstr ""
 
 #: incl/block-settings-main.php:36
 #: incl/block-settings-main.php:91
@@ -989,7 +958,7 @@ msgstr "Àwọn Ìtọ́sọ́nà Àkọ́lé"
 #: assets/blocks/tabs/block.jsx:142
 #: assets/blocks/testimonial/block.jsx:368
 msgid "Background Color"
-msgstr "Àwọ̀ Abẹ́lẹ̀"
+msgstr ""
 
 #: incl/block-settings-main.php:41
 #: incl/block-settings-main.php:96
@@ -1016,49 +985,49 @@ msgstr "Àwọ̀ Abẹ́lẹ̀"
 #: assets/blocks/tabs/block.jsx:121
 #: assets/blocks/tabs/block.jsx:147
 msgid "Text Color"
-msgstr "Àwọ̀ Téksítì"
+msgstr ""
 
 #: incl/block-settings-main.php:46
 msgid "Header Icon"
-msgstr "Àkíyèsí Àkọ́lé"
+msgstr ""
 
 #: incl/block-settings-main.php:51
 #: incl/block-settings-main.php:502
 msgid "Plus"
-msgstr "Pẹ̀lú"
+msgstr ""
 
 #: incl/block-settings-main.php:55
 msgid "Plus Circle"
-msgstr "Pẹ̀lú Àyíká"
+msgstr ""
 
 #: incl/block-settings-main.php:59
 msgid "Plus Circle Outline"
-msgstr "Pẹ̀lú Àyíká Àtàwọn Ìlà"
+msgstr ""
 
 #: incl/block-settings-main.php:63
 msgid "Plus Square Outline"
-msgstr "Àwọn Kìlọ̀ Ọjọ́pọ̀"
+msgstr ""
 
 #: incl/block-settings-main.php:67
 msgid "Unfold Arrow"
-msgstr "Ìtúnkò Ọkùn"
+msgstr ""
 
 #: incl/block-settings-main.php:71
 msgid "Horizontal Dots"
-msgstr "Àwọn Dọ́tì Hórizóntàlì"
+msgstr ""
 
 #: incl/block-settings-main.php:75
 msgid "Arrow Down"
-msgstr "Ọkùn Sìkà"
+msgstr ""
 
 #: incl/block-settings-main.php:81
 msgid "Header Icon Color"
-msgstr "Àwọ̀ Àkọ́lé Àkíyèsí"
+msgstr ""
 
 #: incl/block-settings-main.php:88
 #: incl/block-settings-main.php:1026
 msgid "Body Settings"
-msgstr "Ìṣètò Ara"
+msgstr ""
 
 #: incl/block-settings-main.php:103
 #: incl/block-settings-main.php:170
@@ -1068,7 +1037,7 @@ msgstr "Ìṣètò Ara"
 #: incl/block-settings-main.php:1720
 #: assets/blocks/tabs/block.jsx:153
 msgid "Border Settings"
-msgstr "Ìṣètò Ààlà"
+msgstr ""
 
 #: incl/block-settings-main.php:106
 #: incl/block-settings-main.php:173
@@ -1077,7 +1046,7 @@ msgstr "Ìṣètò Ààlà"
 #: incl/block-settings-main.php:1382
 #: assets/blocks/tabs/block.jsx:155
 msgid "Border Style"
-msgstr "Àṣà Ààlà"
+msgstr ""
 
 #: incl/block-settings-main.php:111
 #: incl/block-settings-main.php:178
@@ -1091,7 +1060,7 @@ msgstr "Àṣà Ààlà"
 #: incl/block-styles/block-styles.php:1474
 #: assets/blocks/tabs/block.jsx:158
 msgid "Solid"
-msgstr "Tìtì"
+msgstr ""
 
 #: incl/block-settings-main.php:115
 #: incl/block-settings-main.php:182
@@ -1105,7 +1074,7 @@ msgstr "Tìtì"
 #: incl/block-styles/block-styles.php:1475
 #: assets/blocks/tabs/block.jsx:159
 msgid "Dashed"
-msgstr "Tìtì Pẹ́lẹ́"
+msgstr ""
 
 #: incl/block-settings-main.php:119
 #: incl/block-settings-main.php:186
@@ -1119,7 +1088,7 @@ msgstr "Tìtì Pẹ́lẹ́"
 #: incl/block-styles/block-styles.php:1476
 #: assets/blocks/tabs/block.jsx:160
 msgid "Dotted"
-msgstr "Dọ́tì"
+msgstr ""
 
 #: incl/block-settings-main.php:125
 #: incl/block-settings-main.php:192
@@ -1136,7 +1105,7 @@ msgstr "Dọ́tì"
 #: assets/blocks/tabs/block.jsx:169
 #: assets/blocks/testimonial/block.jsx:373
 msgid "Border Color"
-msgstr "Àwọ̀ Ààlà"
+msgstr ""
 
 #: incl/block-settings-main.php:130
 #: incl/block-settings-main.php:197
@@ -1148,7 +1117,7 @@ msgstr "Àwọ̀ Ààlà"
 #: incl/block-styles/block-styles.php:1095
 #: assets/blocks/testimonial/block.jsx:387
 msgid "Border Width"
-msgstr "Iwọn Ààlà"
+msgstr ""
 
 #: incl/block-settings-main.php:137
 #: incl/block-settings-main.php:204
@@ -1162,52 +1131,52 @@ msgstr "Iwọn Ààlà"
 #: incl/block-settings-main.php:1897
 #: incl/block-styles/block-styles.php:1125
 msgid "Border Radius"
-msgstr "Rádiùs Ààlà"
+msgstr ""
 
 #: incl/block-settings-main.php:148
 msgid "Text and Color"
-msgstr "Text àti Àwọ̀"
+msgstr ""
 
 #: incl/block-settings-main.php:151
 #: incl/block-settings-main.php:457
 msgid "Text Size"
-msgstr "Iwọn Text"
+msgstr ""
 
 #: incl/block-settings-main.php:213
 msgid "Margin Settings"
-msgstr "Ìṣètò Márgìn"
+msgstr ""
 
 #: incl/block-settings-main.php:216
 #: incl/block-settings-main.php:1932
 #: incl/block-settings-main.php:2043
 #: incl/block-settings-main.php:2123
 msgid "Margin Top"
-msgstr "Márgìn Òkè"
+msgstr ""
 
 #: incl/block-settings-main.php:223
 #: incl/block-settings-main.php:1953
 #: incl/block-settings-main.php:2064
 #: incl/block-settings-main.php:2144
 msgid "Margin Right"
-msgstr "Márgìn Ọ́tún"
+msgstr ""
 
 #: incl/block-settings-main.php:230
 #: incl/block-settings-main.php:1939
 #: incl/block-settings-main.php:2050
 #: incl/block-settings-main.php:2130
 msgid "Margin Bottom"
-msgstr "Márgìn Isalẹ"
+msgstr ""
 
 #: incl/block-settings-main.php:237
 #: incl/block-settings-main.php:1946
 #: incl/block-settings-main.php:2057
 #: incl/block-settings-main.php:2137
 msgid "Margin Left"
-msgstr "Ẹgbẹ̀ Ọtun"
+msgstr ""
 
 #: incl/block-settings-main.php:246
 msgid "Padding Settings"
-msgstr "Ẹ̀tọ́ Padding"
+msgstr ""
 
 #: incl/block-settings-main.php:249
 #: incl/block-settings-main.php:1835
@@ -1215,7 +1184,7 @@ msgstr "Ẹ̀tọ́ Padding"
 #: incl/block-settings-main.php:2015
 #: incl/block-settings-main.php:2095
 msgid "Padding Top"
-msgstr "Padding Àtẹ̀lẹwọ́"
+msgstr ""
 
 #: incl/block-settings-main.php:256
 #: incl/block-settings-main.php:1856
@@ -1223,7 +1192,7 @@ msgstr "Padding Àtẹ̀lẹwọ́"
 #: incl/block-settings-main.php:2036
 #: incl/block-settings-main.php:2116
 msgid "Padding Right"
-msgstr "Padding Ọtun"
+msgstr ""
 
 #: incl/block-settings-main.php:263
 #: incl/block-settings-main.php:1842
@@ -1231,7 +1200,7 @@ msgstr "Padding Ọtun"
 #: incl/block-settings-main.php:2022
 #: incl/block-settings-main.php:2102
 msgid "Padding Bottom"
-msgstr "Padding Isalẹ"
+msgstr ""
 
 #: incl/block-settings-main.php:270
 #: incl/block-settings-main.php:1849
@@ -1239,114 +1208,114 @@ msgstr "Padding Isalẹ"
 #: incl/block-settings-main.php:2029
 #: incl/block-settings-main.php:2109
 msgid "Padding Left"
-msgstr "Padding Ọtún"
+msgstr ""
 
 #: incl/block-settings-main.php:279
 msgid "Hover Settings"
-msgstr "Ẹ̀tọ́ Hover"
+msgstr ""
 
 #: incl/block-settings-main.php:292
 msgid "Shadow Color"
-msgstr "Color Iboju"
+msgstr ""
 
 #: incl/block-settings-main.php:297
 msgid "Shadow H Offset"
-msgstr "Iboju H Ọfseti"
+msgstr ""
 
 #: incl/block-settings-main.php:304
 msgid "Shadow V Offset"
-msgstr "Iboju V Ọfseti"
+msgstr ""
 
 #: incl/block-settings-main.php:311
 msgid "Shadow Blur"
-msgstr "Iboju Blur"
+msgstr ""
 
 #: incl/block-settings-main.php:318
 msgid "Shadow Spread"
-msgstr "Iboju Sọ́ọ̀dù"
+msgstr ""
 
 #: incl/block-settings-main.php:325
 msgid "Transition Speed"
-msgstr "Iyara Iṣipopada"
+msgstr ""
 
 #: incl/block-settings-main.php:336
 msgid "Click action"
-msgstr "Iṣe tẹ"
+msgstr ""
 
 #: incl/block-settings-main.php:339
 #: incl/block-settings-main.php:1437
 msgid "Action on click"
-msgstr "Iṣe lori tẹ"
+msgstr ""
 
 #: incl/block-settings-main.php:348
 msgid "Open image in a lightbox"
-msgstr "Ṣí àwòrán ninu àgbohunsilẹ́"
+msgstr ""
 
 #: incl/block-settings-main.php:352
 msgid "Open custom URL"
-msgstr "Ṣí URL àdáni"
+msgstr ""
 
 #: incl/block-settings-main.php:358
 msgid "Open link in a new tab"
-msgstr "Ṣí ìjápọ̀ ninu taabu tuntun"
+msgstr ""
 
 #: incl/block-settings-main.php:365
 msgid "Image Size"
-msgstr "Iwọn Àwòrán"
+msgstr ""
 
 #: incl/block-settings-main.php:368
 #: incl/block-settings-main.php:595
 #: incl/block-settings-main.php:1452
 #: incl/pages/settings/general.php:145
 msgid "Full width"
-msgstr "Gbogbo ìwọn"
+msgstr ""
 
 #: incl/block-settings-main.php:373
 #: incl/block-settings-main.php:756
 #: incl/block-settings-main.php:1469
 msgid "Height"
-msgstr "Iga"
+msgstr ""
 
 #: incl/block-settings-main.php:380
 #: incl/block-settings-main.php:1462
 msgid "Width"
-msgstr "Iwọn"
+msgstr ""
 
 #: incl/block-settings-main.php:389
-#: incl/block-settings-main.php:2076, fuzzy
+#: incl/block-settings-main.php:2076
 msgid "Color"
-msgstr "Color"
+msgstr ""
 
 #: incl/block-settings-main.php:392
 #: incl/block-settings-main.php:1491
 #: incl/block-settings-main.php:1965
 msgid "Title Color"
-msgstr "Color Akọle"
+msgstr ""
 
 #: incl/block-settings-main.php:397
 msgid "Subtitle Color"
-msgstr "Color Akojọ"
+msgstr ""
 
 #: incl/block-settings-main.php:402
 msgid "Overlay Color"
-msgstr "Color Iboju"
+msgstr ""
 
 #: incl/block-settings-main.php:409
 #: incl/block-settings-main.php:1503
 msgid "Text Alignment"
-msgstr "Isopọ Ọrọ"
+msgstr ""
 
 #: incl/block-settings-main.php:412
 #: incl/block-settings-main.php:1506
 msgid "Vertical Alignment"
-msgstr "Isopọ Inaro"
+msgstr ""
 
 #: incl/block-settings-main.php:417
 #: incl/block-settings-main.php:1511
 #: incl/block-settings-main.php:1644
 #: assets/blocks/testimonial/block.jsx:404
 msgid "Top"
-msgstr "Oke"
+msgstr ""
 
 #: incl/block-settings-main.php:421
 #: incl/block-settings-main.php:440
@@ -1360,7 +1329,7 @@ msgstr "Oke"
 #: incl/block-styles/block-styles.php:1534
 #: incl/block-styles/block-styles.php:1712
 msgid "Center"
-msgstr "Aarin"
+msgstr ""
 
 #: incl/block-settings-main.php:425
 #: incl/block-settings-main.php:1519
@@ -1368,12 +1337,12 @@ msgstr "Aarin"
 #: incl/pages/settings/images.php:60
 #: assets/blocks/testimonial/block.jsx:405
 msgid "Bottom"
-msgstr "Isalẹ"
+msgstr ""
 
 #: incl/block-settings-main.php:431
 #: incl/block-settings-main.php:1525
 msgid "Horizontal Alignment"
-msgstr "Isopọ O horizontal"
+msgstr ""
 
 #: incl/block-settings-main.php:436
 #: incl/block-settings-main.php:925
@@ -1388,7 +1357,7 @@ msgstr "Isopọ O horizontal"
 #: incl/block-styles/block-styles.php:1711
 #: assets/blocks/testimonial/block.jsx:406
 msgid "Left"
-msgstr "Otun"
+msgstr ""
 
 #: incl/block-settings-main.php:444
 #: incl/block-settings-main.php:927
@@ -1402,84 +1371,84 @@ msgstr "Otun"
 #: incl/block-styles/block-styles.php:1535
 #: incl/block-styles/block-styles.php:1713
 msgid "Right"
-msgstr "Osi"
+msgstr ""
 
 #: incl/block-settings-main.php:454
 #: incl/block-settings-main.php:1125
 #: incl/block-settings-main.php:2073
 msgid "Text Settings"
-msgstr "Eto Ọrọ"
+msgstr ""
 
 #: incl/block-settings-main.php:466
 #: incl/block-settings-main.php:1865
 msgid "Icon Settings"
-msgstr "Eto Aami"
+msgstr ""
 
 #: incl/block-settings-main.php:469
 msgid "Icon style"
-msgstr "Àṣà Aami"
+msgstr ""
 
 #: incl/block-settings-main.php:478
 msgid "Pushpin"
-msgstr "Pin"
+msgstr ""
 
 #: incl/block-settings-main.php:482
 msgid "Configuration"
-msgstr "Iṣeto"
+msgstr ""
 
 #: incl/block-settings-main.php:486
 msgid "Flag"
-msgstr "Aami"
+msgstr ""
 
 #: incl/block-settings-main.php:490
 msgid "Star"
-msgstr "Iròyìn"
+msgstr ""
 
 #: incl/block-settings-main.php:494
 msgid "Checkmark"
-msgstr "Aami Ṣayẹwo"
+msgstr ""
 
 #: incl/block-settings-main.php:498
 msgid "Minus"
-msgstr "Kekere"
+msgstr ""
 
 #: incl/block-settings-main.php:506
 msgid "Play"
-msgstr "Ṣere"
+msgstr ""
 
 #: incl/block-settings-main.php:510
 msgid "Arrow Right"
-msgstr "Ọpa Otun"
+msgstr ""
 
 #: incl/block-settings-main.php:514
 msgid "X Cross"
-msgstr "X Ika"
+msgstr ""
 
 #: incl/block-settings-main.php:518
 msgid "Warning"
-msgstr "Ikilọ"
+msgstr ""
 
 #: incl/block-settings-main.php:522
 msgid "Help"
-msgstr "Iranlọwọ"
+msgstr ""
 
 #: incl/block-settings-main.php:526
 msgid "Info"
-msgstr "Alaye"
+msgstr ""
 
 #: incl/block-settings-main.php:530
 msgid "Circle"
-msgstr "Ibi"
+msgstr ""
 
 #: incl/block-settings-main.php:536
 msgid "Icon color"
-msgstr "Color aami"
+msgstr ""
 
 #: incl/block-settings-main.php:541
 #: incl/block-settings-main.php:931
 #: incl/block-settings-main.php:1873
 msgid "Icon Size"
-msgstr "Iwọn aami"
+msgstr ""
 
 #: incl/block-settings-main.php:548
 #: incl/block-styles/block-styles.php:1205
@@ -1488,92 +1457,92 @@ msgstr "Iwọn aami"
 #: incl/block-styles/block-styles.php:1754
 #: incl/block-styles/block-styles.php:1797
 msgid "Line Height"
-msgstr "Giga ila"
+msgstr ""
 
 #: incl/block-settings-main.php:555
 #: incl/block-styles/block-styles.php:1069
 msgid "Margin"
-msgstr "Ihò"
+msgstr ""
 
 #: incl/block-settings-main.php:562
 #: incl/block-styles/block-styles.php:1039
 msgid "Padding"
-msgstr "Ipo"
+msgstr ""
 
 #: incl/block-settings-main.php:573
 msgid "Table Settings"
-msgstr "Iwọn Tabili"
+msgstr ""
 
 #: incl/block-settings-main.php:576
 msgid "Max width"
-msgstr "Max iwọn"
+msgstr ""
 
 #: incl/block-settings-main.php:587
 msgid "Video Settings"
-msgstr "Iwọn Fidio"
+msgstr ""
 
 #: incl/block-settings-main.php:590
 msgid "Open video in lightbox"
-msgstr "Ṣii fidio ni lightbox"
+msgstr ""
 
 #: incl/block-settings-main.php:600
 msgid "Video Width"
-msgstr "Iwọn Fidio"
+msgstr ""
 
 #: incl/block-settings-main.php:607
 msgid "Video Height"
-msgstr "Giga fidio"
+msgstr ""
 
 #: incl/block-settings-main.php:612
 msgid "Custom Height"
-msgstr "Giga aṣa"
+msgstr ""
 
 #: incl/block-settings-main.php:619
 msgid "Overlay color"
-msgstr "Àwọ̀ àtẹ́wọ́"
+msgstr ""
 
 #: incl/block-settings-main.php:626
 msgid "Play Button Settings"
-msgstr "Àwọn eto bọtini ṣiṣere"
+msgstr ""
 
 #: incl/block-settings-main.php:629
 msgid "Button Icon"
-msgstr "Àkọsílẹ̀ bọtini"
+msgstr ""
 
 #: incl/block-settings-main.php:634
 #: incl/block-settings-main.php:1305
 #: incl/block-styles/block-styles.php:978
 #: incl/block-styles/block-styles.php:1188
 msgid "Normal"
-msgstr "Ìpẹ̀yà"
+msgstr ""
 
 #: incl/block-settings-main.php:638
 msgid "Filled Circle"
-msgstr "Ayika ti a kún"
+msgstr ""
 
 #: incl/block-settings-main.php:642
 msgid "Outline Circle"
-msgstr "Ayika àtẹ̀jáde"
+msgstr ""
 
 #: incl/block-settings-main.php:646
 msgid "Video Camera"
-msgstr "Kamẹra fidio"
+msgstr ""
 
 #: incl/block-settings-main.php:650
 msgid "Filled Square"
-msgstr "Igbà ti a kún"
+msgstr ""
 
 #: incl/block-settings-main.php:654
 msgid "Star Sticker"
-msgstr "Stika irawọ"
+msgstr ""
 
 #: incl/block-settings-main.php:660
 msgid "Button Size"
-msgstr "Iwọn bọtini"
+msgstr ""
 
 #: incl/block-settings-main.php:667
 msgid "Button Color"
-msgstr "Àwọ̀ bọtini"
+msgstr ""
 
 #: incl/block-settings-main.php:676
 #: incl/block-settings-main.php:918
@@ -1581,543 +1550,543 @@ msgstr "Àwọ̀ bọtini"
 #: incl/block-settings-main.php:1077
 #: incl/block-settings-main.php:1793
 msgid "General Settings"
-msgstr "Àwọn eto gbogbogbo"
+msgstr ""
 
 #: incl/block-settings-main.php:679
 msgid "Number of columns"
-msgstr "Iye àwọn kọlàmù"
+msgstr ""
 
 #: incl/block-settings-main.php:688
 #: incl/block-settings-main.php:1483
 msgid "Color Settings"
-msgstr "Àwọn eto àwọ̀"
+msgstr ""
 
 #: incl/block-settings-main.php:691
 msgid "Header Color"
-msgstr "Àwọ̀ akọ́lé"
+msgstr ""
 
 #: incl/block-settings-main.php:696
 msgid "Count Up Color"
-msgstr "Àwọ̀ ìká soke"
+msgstr ""
 
 #: incl/block-settings-main.php:701
 #: incl/block-settings-main.php:1138
 #: assets/blocks/testimonial/block.jsx:429
 msgid "Description Color"
-msgstr "Àwọ̀ àpejuwe"
+msgstr ""
 
 #: incl/block-settings-main.php:708
 msgid "Count Up Settings"
-msgstr "Àwọn eto ìká soke"
+msgstr ""
 
 #: incl/block-settings-main.php:711
 msgid "Count Up Number Size"
-msgstr "Iwọn Nọ́mbà Iṣiro"
+msgstr ""
 
 #: incl/block-settings-main.php:722
 msgid "Location Settings"
-msgstr "Ẹ̀tọ́ Ibi"
+msgstr ""
 
 #: incl/block-settings-main.php:730
 msgid "Latitude"
-msgstr "Ìgbàgbọ́"
+msgstr ""
 
 #: incl/block-settings-main.php:737
 msgid "Longitude"
-msgstr "Ìpẹ̀yà"
+msgstr ""
 
 #: incl/block-settings-main.php:746
 msgid "Map Settings"
-msgstr "Ẹ̀tọ́ Mápù"
+msgstr ""
 
 #: incl/block-settings-main.php:749
 msgid "Zoom Level"
-msgstr "Ipele Zoom"
+msgstr ""
 
 #: incl/block-settings-main.php:763
 msgid "Map style"
-msgstr "Àṣà Mápù"
+msgstr ""
 
 #: incl/block-settings-main.php:767
 msgid "Silver"
-msgstr "Fadaka"
+msgstr ""
 
-#: incl/block-settings-main.php:768, fuzzy
+#: incl/block-settings-main.php:768
 msgid "Retro"
-msgstr "Retro"
+msgstr ""
 
 #: incl/block-settings-main.php:769
 #: incl/pages/settings/recaptcha.php:123
 msgid "Dark"
-msgstr "Dudu"
+msgstr ""
 
 #: incl/block-settings-main.php:770
 msgid "Night"
-msgstr "Oru"
+msgstr ""
 
-#: incl/block-settings-main.php:771, fuzzy
+#: incl/block-settings-main.php:771
 msgid "Aubergine"
-msgstr "Aubergine"
+msgstr ""
 
 #: incl/block-settings-main.php:772
 msgid "Custom"
-msgstr "Adani"
+msgstr ""
 
 #: incl/block-settings-main.php:778
 msgid "Marker Settings"
-msgstr "Ẹ̀tọ́ Marker"
+msgstr ""
 
 #: incl/block-settings-main.php:781
 msgid "Marker Title"
-msgstr "Àkọ́lé Marker"
+msgstr ""
 
 #: incl/block-settings-main.php:786
 msgid "Marker Description"
-msgstr "Àpejuwe Marker"
+msgstr ""
 
 #: incl/block-settings-main.php:795
 msgid "Icon 1 Settings"
-msgstr "Ẹ̀tọ́ Àmi 1"
+msgstr ""
 
 #: incl/block-settings-main.php:798
 #: incl/block-settings-main.php:839
 #: incl/block-settings-main.php:880
 msgid "Icon"
-msgstr "Àmi"
+msgstr ""
 
 #: incl/block-settings-main.php:802
 #: incl/block-settings-main.php:843
-#: incl/block-settings-main.php:884, fuzzy
+#: incl/block-settings-main.php:884
 msgid "Blogger"
-msgstr "Blogger"
+msgstr ""
 
 #: incl/block-settings-main.php:803
 #: incl/block-settings-main.php:844
-#: incl/block-settings-main.php:885, fuzzy
+#: incl/block-settings-main.php:885
 msgid "Facebook"
-msgstr "Facebook"
+msgstr ""
 
 #: incl/block-settings-main.php:804
 #: incl/block-settings-main.php:845
-#: incl/block-settings-main.php:886, fuzzy
+#: incl/block-settings-main.php:886
 msgid "Flickr"
-msgstr "Flickr"
+msgstr ""
 
 #: incl/block-settings-main.php:805
 #: incl/block-settings-main.php:846
-#: incl/block-settings-main.php:887, fuzzy
+#: incl/block-settings-main.php:887
 msgid "Google Plus"
-msgstr "Google Plus"
+msgstr ""
 
 #: incl/block-settings-main.php:806
 #: incl/block-settings-main.php:847
-#: incl/block-settings-main.php:888, fuzzy
+#: incl/block-settings-main.php:888
 msgid "Instagram"
-msgstr "Instagram"
+msgstr ""
 
 #: incl/block-settings-main.php:807
 #: incl/block-settings-main.php:848
-#: incl/block-settings-main.php:889, fuzzy
+#: incl/block-settings-main.php:889
 msgid "LinkedIn"
-msgstr "LinkedIn"
+msgstr ""
 
 #: incl/block-settings-main.php:809
 #: incl/block-settings-main.php:850
-#: incl/block-settings-main.php:891, fuzzy
+#: incl/block-settings-main.php:891
 msgid "Picasa"
-msgstr "Picasa"
+msgstr ""
 
 #: incl/block-settings-main.php:810
 #: incl/block-settings-main.php:851
-#: incl/block-settings-main.php:892, fuzzy
+#: incl/block-settings-main.php:892
 msgid "Pinterest"
-msgstr "Pinterest"
+msgstr ""
 
 #: incl/block-settings-main.php:811
 #: incl/block-settings-main.php:852
-#: incl/block-settings-main.php:893, fuzzy
+#: incl/block-settings-main.php:893
 msgid "Reddit"
-msgstr "Reddit"
+msgstr ""
 
 #: incl/block-settings-main.php:812
 #: incl/block-settings-main.php:853
-#: incl/block-settings-main.php:894, fuzzy
+#: incl/block-settings-main.php:894
 msgid "Skype"
-msgstr "Skype"
+msgstr ""
 
 #: incl/block-settings-main.php:814
 #: incl/block-settings-main.php:855
-#: incl/block-settings-main.php:896, fuzzy
+#: incl/block-settings-main.php:896
 msgid "Sound Cloud"
-msgstr "Sound Cloud"
+msgstr ""
 
 #: incl/block-settings-main.php:817
 #: incl/block-settings-main.php:858
-#: incl/block-settings-main.php:899, fuzzy
+#: incl/block-settings-main.php:899
 msgid "Tumblr"
-msgstr "Tumblr"
+msgstr ""
 
 #: incl/block-settings-main.php:818
 #: incl/block-settings-main.php:859
-#: incl/block-settings-main.php:900, fuzzy
+#: incl/block-settings-main.php:900
 msgid "Twitter"
-msgstr "Twitter"
+msgstr ""
 
 #: incl/block-settings-main.php:819
 #: incl/block-settings-main.php:860
-#: incl/block-settings-main.php:901, fuzzy
+#: incl/block-settings-main.php:901
 msgid "Vimeo"
-msgstr "Vimeo"
+msgstr ""
 
 #: incl/block-settings-main.php:820
 #: incl/block-settings-main.php:861
-#: incl/block-settings-main.php:902, fuzzy
+#: incl/block-settings-main.php:902
 msgid "Youtube"
-msgstr "Youtube"
+msgstr ""
 
 #: incl/block-settings-main.php:824
 #: incl/block-settings-main.php:865
 #: incl/block-settings-main.php:906
 #: incl/block-settings-main.php:1868
 msgid "Icon Color"
-msgstr "Àwọ́ aami"
+msgstr ""
 
 #: incl/block-settings-main.php:829
 #: incl/block-settings-main.php:870
 #: incl/block-settings-main.php:911
 msgid "Icon Link"
-msgstr "Ìjápọ̀ aami"
+msgstr ""
 
 #: incl/block-settings-main.php:836
 msgid "Icon 2 Settings"
-msgstr "Ìtọ́sọ́nà aami 2"
+msgstr ""
 
 #: incl/block-settings-main.php:877
 msgid "Icon 3 Settings"
-msgstr "Ìtọ́sọ́nà aami 3"
+msgstr ""
 
 #: incl/block-settings-main.php:921
 msgid "Icon Alignment"
-msgstr "Ìkànsí aami"
+msgstr ""
 
 #: incl/block-settings-main.php:938
 msgid "Icon Space"
-msgstr "Ààyè aami"
+msgstr ""
 
 #: incl/block-settings-main.php:952
 #: assets/blocks/summary/block.jsx:325
 msgid "Load minimized"
-msgstr "Gbe e silẹ ni aijẹ́"
+msgstr ""
 
 #: incl/block-settings-main.php:957
 #: assets/blocks/summary/block.jsx:331
 msgid "Table of Contents header title"
-msgstr " akọle akọsori akojọpọ "
+msgstr ""
 
 #: incl/block-settings-main.php:962
 msgid "Anchor color"
-msgstr " awọ ìkànsí "
+msgstr ""
 
 #: incl/block-settings-main.php:967
 msgid "Table of Contents Alignment"
-msgstr " Ipo Akojọpọ "
+msgstr ""
 
 #: incl/block-settings-main.php:981
 msgid "Tab Settings"
-msgstr " Eto Tab "
+msgstr ""
 
 #: incl/block-settings-main.php:984
 msgid "Tabs Style"
-msgstr " Ara Tabs "
+msgstr ""
 
 #: incl/block-settings-main.php:989
 msgid "Horizontal"
-msgstr " Iwọn-ìtò "
+msgstr ""
 
 #: incl/block-settings-main.php:993
 msgid "Vertical"
-msgstr " Igbàlódé "
+msgstr ""
 
 #: incl/block-settings-main.php:1011
 msgid "Active Tab Settings"
-msgstr " Eto Tab Ti n ṣiṣẹ "
+msgstr ""
 
 #: incl/block-settings-main.php:1080
 #: incl/block-settings-main.php:1150
 #: assets/blocks/testimonial/block.jsx:241
 #: assets/blocks/woo-products/block.jsx:281
 msgid "Columns"
-msgstr " Àwọn Kólọ́mù "
+msgstr ""
 
 #: incl/block-settings-main.php:1089
 msgid "Avatar Settings"
-msgstr " Eto Avatar "
+msgstr ""
 
 #: incl/block-settings-main.php:1102
 #: assets/blocks/testimonial/block.jsx:380
 msgid "Border Radius (%)"
-msgstr " Iwọn Ààlà (%) "
+msgstr ""
 
 #: incl/block-settings-main.php:1116
 #: assets/blocks/testimonial/block.jsx:394
 msgid "Avatar Size"
-msgstr " Iwọn Avatar "
+msgstr ""
 
 #: incl/block-settings-main.php:1128
 #: assets/blocks/testimonial/block.jsx:419
 msgid "Name Color"
-msgstr " Awọ Orukọ "
+msgstr ""
 
 #: incl/block-settings-main.php:1133
 #: assets/blocks/testimonial/block.jsx:424
 msgid "Position Color"
-msgstr " Awọ Ipo "
+msgstr ""
 
 #: incl/block-settings-main.php:1147
 #: assets/blocks/woo-products/block.jsx:278
 msgid "Layout Settings"
-msgstr " Eto Ilana "
+msgstr ""
 
 #: incl/block-settings-main.php:1157
 #: assets/blocks/woo-products/block.jsx:289
 msgid "Number of Products"
-msgstr " Iye Awọn Ọja "
+msgstr ""
 
 #: incl/block-settings-main.php:1168
 #: incl/block-settings-main.php:1324
 msgid "Text Label"
-msgstr " Aami Ọrọ "
+msgstr ""
 
 #: incl/block-settings-main.php:1171
 msgid "Name placeholder"
-msgstr " iboju orukọ "
+msgstr ""
 
 #: incl/block-settings-main.php:1176
 #: incl/block-settings-main.php:1337
 msgid "Email placeholder"
-msgstr " iboju imeeli "
+msgstr ""
 
 #: incl/block-settings-main.php:1181
 msgid "Message placeholder"
-msgstr " iboju ifiranṣẹ "
+msgstr ""
 
 #: incl/block-settings-main.php:1186
 #: incl/block-settings-main.php:1342
 msgid "Submit label"
-msgstr "Firanse aami"
+msgstr ""
 
 #: incl/block-settings-main.php:1191
 #: incl/block-settings-main.php:1347
 msgid "Success text"
-msgstr "Àṣeyọrí ọrọ"
+msgstr ""
 
 #: incl/block-settings-main.php:1196
 #: incl/block-settings-main.php:1352
 msgid "Error text"
-msgstr "Aṣiṣe ọrọ"
+msgstr ""
 
 #: incl/block-settings-main.php:1203
 #: incl/block-settings-main.php:1359
 msgid "Input Color"
-msgstr "Àwọ̀ Ẹ̀rọ"
+msgstr ""
 
 #: incl/block-settings-main.php:1254
 #: incl/block-settings-main.php:1410
 msgid "Submit Button Settings"
-msgstr "Ìtọ́sọ́nà Bọtini Firanse"
+msgstr ""
 
 #: incl/block-settings-main.php:1257
 #: incl/block-settings-main.php:1413
 msgid "Border and Text Color"
-msgstr "Àwọ̀ Ààrẹ àti Ọrọ"
+msgstr ""
 
 #: incl/block-settings-main.php:1274
 msgid "Button Position"
-msgstr "Ipò Bọtini"
+msgstr ""
 
 #: incl/block-settings-main.php:1297
 msgid "Form Settings"
-msgstr "Ìtọ́sọ́nà Fọ́ọ̀mù"
+msgstr ""
 
 #: incl/block-settings-main.php:1300
 msgid "Form style"
-msgstr "Àṣà fọ́ọ̀mù"
+msgstr ""
 
 #: incl/block-settings-main.php:1309
 msgid "Alternative"
-msgstr "Àtọkànwá"
+msgstr ""
 
 #: incl/block-settings-main.php:1315
 msgid "Form width"
-msgstr "Ìwọ̀n fọ́ọ̀mù"
+msgstr ""
 
 #: incl/block-settings-main.php:1327
 msgid "First Name placeholder"
-msgstr "Àkọ́kọ́ Orukọ àpẹẹrẹ"
+msgstr ""
 
 #: incl/block-settings-main.php:1332
 msgid "Last Name placeholder"
-msgstr "Orukọ ìkẹyìn àpẹẹrẹ"
+msgstr ""
 
 #: incl/block-settings-main.php:1434
 msgid "Images Settings"
-msgstr "Ìtọ́sọ́nà Aworan"
+msgstr ""
 
 #: incl/block-settings-main.php:1442
 msgid "Open image in lightbox"
-msgstr "Ṣí aworan nínú àyè imọ́lẹ̀"
+msgstr ""
 
 #: incl/block-settings-main.php:1446
 msgid "Open custom link"
-msgstr "Ṣí ìjápọ̀ aṣa"
+msgstr ""
 
 #: incl/block-settings-main.php:1457
 msgid "Auto Height"
-msgstr "Giga Àtúnṣe"
+msgstr ""
 
 #: incl/block-settings-main.php:1476
 msgid "Always show overlay"
-msgstr "Fi àfihàn hàn nígbà gbogbo"
+msgstr ""
 
 #: incl/block-settings-main.php:1486
 #: incl/block-styles/block-styles.php:1992
 msgid "Hover Color"
-msgstr "Àwọ̀ Ìfọwọ́ra"
+msgstr ""
 
 #: incl/block-settings-main.php:1548
 msgid "Columns Settings"
-msgstr "Ìtọ́sọ́nà Ọwọn"
+msgstr ""
 
 #: incl/block-settings-main.php:1551
 msgid "Space between column"
-msgstr "Ibẹ̀ ààrín àkóónú"
+msgstr ""
 
 #: incl/block-settings-main.php:1560
-#: incl/block-settings-main.php:1599, fuzzy
+#: incl/block-settings-main.php:1599
 msgid "10px"
-msgstr "10px"
+msgstr ""
 
 #: incl/block-settings-main.php:1564
-#: incl/block-settings-main.php:1603, fuzzy
+#: incl/block-settings-main.php:1603
 msgid "20px"
-msgstr "20px"
+msgstr ""
 
 #: incl/block-settings-main.php:1568
-#: incl/block-settings-main.php:1607, fuzzy
+#: incl/block-settings-main.php:1607
 msgid "30px"
-msgstr "30px"
+msgstr ""
 
 #: incl/block-settings-main.php:1572
-#: incl/block-settings-main.php:1611, fuzzy
+#: incl/block-settings-main.php:1611
 msgid "40px"
-msgstr "40px"
+msgstr ""
 
 #: incl/block-settings-main.php:1576
-#: incl/block-settings-main.php:1615, fuzzy
+#: incl/block-settings-main.php:1615
 msgid "50px"
-msgstr "50px"
+msgstr ""
 
 #: incl/block-settings-main.php:1580
-#: incl/block-settings-main.php:1619, fuzzy
+#: incl/block-settings-main.php:1619
 msgid "70px"
-msgstr "70px"
+msgstr ""
 
 #: incl/block-settings-main.php:1584
-#: incl/block-settings-main.php:1623, fuzzy
+#: incl/block-settings-main.php:1623
 msgid "90px"
-msgstr "90px"
+msgstr ""
 
 #: incl/block-settings-main.php:1590
 msgid "Vertical space when collapsed"
-msgstr "Ààrín àgbègbè nígbà tí a bá dínkù"
+msgstr ""
 
 #: incl/block-settings-main.php:1629
 msgid "Collapsed order RTL"
-msgstr "Àṣẹ dínkù RTL"
+msgstr ""
 
 #: incl/block-settings-main.php:1636
 msgid "Row Settings"
-msgstr "Ẹ̀ka Àtúnṣe"
+msgstr ""
 
 #: incl/block-settings-main.php:1639
 msgid "Vertical Align"
-msgstr "Ìtọ́ka Àtòpọ́"
+msgstr ""
 
 #: incl/block-settings-main.php:1648
 msgid "Middle"
-msgstr "Àárín"
+msgstr ""
 
 #: incl/block-settings-main.php:1656
 msgid "Full Height"
-msgstr "Gbogbo Ìga"
+msgstr ""
 
 #: incl/block-settings-main.php:1662
 msgid "Columns Wrapped"
-msgstr "Àkóónú tí a fi soke"
+msgstr ""
 
 #: incl/block-settings-main.php:1667
 msgid "Wrapper Tag"
-msgstr "Àkọsílẹ̀ Wrapper"
+msgstr ""
 
-#: incl/block-settings-main.php:1672, fuzzy
+#: incl/block-settings-main.php:1672
 msgid "Div"
-msgstr "Div"
+msgstr ""
 
 #: incl/block-settings-main.php:1676
 msgid "Header"
-msgstr "Àkọ́lé"
+msgstr ""
 
 #: incl/block-settings-main.php:1680
 msgid "Section"
-msgstr "Ẹ̀ka"
+msgstr ""
 
 #: incl/block-settings-main.php:1684
 msgid "Main"
-msgstr "Pataki"
+msgstr ""
 
 #: incl/block-settings-main.php:1688
 msgid "Article"
-msgstr "Àpilẹ̀kọ"
+msgstr ""
 
 #: incl/block-settings-main.php:1692
 msgid "Aside"
-msgstr "Kàkà"
+msgstr ""
 
 #: incl/block-settings-main.php:1696
 msgid "Footer"
-msgstr "Ìpẹ̀yà"
+msgstr ""
 
 #: incl/block-settings-main.php:1702
 msgid "Content Max Width"
-msgstr "Ìwọn Max Akọkọ"
+msgstr ""
 
 #: incl/block-settings-main.php:1709
 msgid "Content Min Height"
-msgstr "Ìwọn Min Giga"
+msgstr ""
 
 #: incl/block-settings-main.php:1723
 msgid "Border style"
-msgstr "Àṣà ààlà"
+msgstr ""
 
 #: incl/block-settings-main.php:1767
 msgid "Column Settings"
-msgstr "Àtúnṣe Kólọmù"
+msgstr ""
 
 #: incl/block-settings-main.php:1770
 msgid "Text alignment"
-msgstr "Ìtòsọ́nà ọrọ"
+msgstr ""
 
 #: incl/block-settings-main.php:1796
 msgid "Number of icons"
-msgstr "Iye awọn aami"
+msgstr ""
 
 #: incl/block-settings-main.php:1808
 msgid "Container Settings"
-msgstr "Àtúnṣe Àpamọ́"
+msgstr ""
 
 #: incl/block-settings-main.php:1962
 msgid "Title Settings"
-msgstr "Àtúnṣe Àkọlé"
+msgstr ""
 
 #: incl/block-settings-main.php:1970
 #: incl/block-settings-main.php:2081
@@ -2133,127 +2102,127 @@ msgstr "Àtúnṣe Àkọlé"
 #: incl/block-styles/block-styles.php:1884
 #: incl/block-styles/block-styles.php:1977
 msgid "Font Size (px)"
-msgstr "Iwọn Fọ́ńtì (px)"
+msgstr ""
 
 #: incl/block-settings-main.php:1977
 #: incl/block-settings-main.php:2088
 msgid "Line Height (px)"
-msgstr "Giga Òtítọ́ (px)"
+msgstr ""
 
 #: incl/block-settings-main.php:1984
 msgid "HTML Tag"
-msgstr "Àkọsílẹ́ HTML"
+msgstr ""
 
-#: incl/block-settings-main.php:1989, fuzzy
+#: incl/block-settings-main.php:1989
 msgid "H1"
-msgstr "H1"
+msgstr ""
 
-#: incl/block-settings-main.php:1993, fuzzy
+#: incl/block-settings-main.php:1993
 msgid "H2"
-msgstr "H2"
+msgstr ""
 
-#: incl/block-settings-main.php:1997, fuzzy
+#: incl/block-settings-main.php:1997
 msgid "H3"
-msgstr "H3"
+msgstr ""
 
-#: incl/block-settings-main.php:2001, fuzzy
+#: incl/block-settings-main.php:2001
 msgid "H4"
-msgstr "H4"
+msgstr ""
 
-#: incl/block-settings-main.php:2005, fuzzy
+#: incl/block-settings-main.php:2005
 msgid "H5"
-msgstr "H5"
+msgstr ""
 
-#: incl/block-settings-main.php:2009, fuzzy
+#: incl/block-settings-main.php:2009
 msgid "H6"
-msgstr "H6"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:220
 msgid "Your styles have been saved!"
-msgstr "Àwọn aṣa rẹ ti fipamọ!"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:260
 #: incl/pages/custom-styles.php:72
 msgid "Style title"
-msgstr "Orukọ aṣa"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:296
 msgid "copy"
-msgstr "daakọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:979
 msgid "Bold"
-msgstr "Kíkọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:980
 msgid "Lighter"
-msgstr "Dínkù"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:998
 msgid "Underline"
-msgstr "Kọ́tọ́"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:999
 msgid "Overline"
-msgstr "Láti lórí"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1000
 msgid "Line Through"
-msgstr "Láti kọja"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1008
 msgid "Scale Up"
-msgstr "Ṣe àgbà"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1009
 msgid "Scale Down"
-msgstr "Ṣe dínkù"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1010
 msgid "Lift Up"
-msgstr "Gbé soke"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1011
 msgid "Shift Right"
-msgstr "Yí padà si ọtun"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1012
 msgid "Rotate"
-msgstr "Yí padà"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1020
 #: incl/pages/custom-styles.php:149
 msgid "Colors"
-msgstr "Àwọ̀"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1035
 #: incl/pages/custom-styles.php:152
 msgid "Spacing"
-msgstr "Ààlà"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1042
 msgid "Padding Top (px)"
-msgstr "Iboju Ọ̀hún (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1048
 msgid "Padding Right (px)"
-msgstr "Iboju Ọ̀tún (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1054
 msgid "Padding Bottom (px)"
-msgstr "Iboju Isalẹ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1060
 msgid "Padding Left (px)"
-msgstr "Iboju Òsì (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1072
 msgid "Margin Top (px)"
-msgstr "Ààrin Ọ̀hún (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1077
 msgid "Margin Right (px)"
-msgstr "Ààlà Ọtun (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1082
 #: incl/block-styles/block-styles.php:1523
@@ -2264,68 +2233,68 @@ msgstr "Ààlà Ọtun (px)"
 #: incl/block-styles/block-styles.php:1870
 #: incl/block-styles/block-styles.php:1906
 msgid "Margin Bottom (px)"
-msgstr "Ààlà Isalẹ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1087
 msgid "Margin Left (px)"
-msgstr "Ààlà Ọtún (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1098
 msgid "Border Top Width (px)"
-msgstr "Iwọn Ààlà Ọtọ́ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1104
 msgid "Border Right Width (px)"
-msgstr "Iwọn Ààlà Ọtun (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1110
 msgid "Border Bottom Width (px)"
-msgstr "Iwọn Ààlà Isalẹ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1116
 msgid "Border Left Width (px)"
-msgstr "Iwọn Ààlà Ọtún (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1128
 msgid "Border Top Left Radius (px)"
-msgstr "Iwọn Ààlà Oṣùmàrè Ọtun (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1134
 msgid "Border Top Right Radius (px)"
-msgstr "Iwọn Ààlà Oṣùmàrè Ọtún (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1140
 msgid "Border Bottom Right Radius (px)"
-msgstr "Iwọn Ààlà Isalẹ Ọtun (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1146
 msgid "Border Bottom Left Radius (px)"
-msgstr "Iwọn Ààlà Isalẹ Ọtún (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1156
 #: incl/pages/custom-styles.php:155
 msgid "Typography"
-msgstr "Ìtànkálẹ̀"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1160
 msgid "Font"
-msgstr "Fọ́ntì"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1163
 msgid "Font Family"
-msgstr "Ẹbí Fọ́ntì"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1184
 msgid "Font Style"
-msgstr "Àṣà Fọ́ntì"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1189
 msgid "Italic"
-msgstr "Ìtálíìkì"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1190
 msgid "Oblique"
-msgstr "Ọbílíìkì"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1194
 #: incl/block-styles/block-styles.php:1565
@@ -2338,174 +2307,174 @@ msgstr "Ọbílíìkì"
 #: incl/block-styles/block-styles.php:1971
 #: incl/block-styles/block-styles.php:2335
 msgid "Font Weight"
-msgstr "Iwọn Fọ́ntì"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1202
 #: incl/pages/custom-styles.php:164
 msgid "Text"
-msgstr "Ọrọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1212
 msgid "Letter Spacing (px)"
-msgstr "Ìkànsí Ọ̀rọ̀ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1217
 #: incl/block-styles/block-styles.php:1529
 #: incl/block-styles/block-styles.php:1707
 msgid "Text Align"
-msgstr "Iwọn Ọrọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1224
 #: incl/block-styles/block-styles.php:1536
 msgid "Justify"
-msgstr "Dájọ́"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1228
 #: incl/block-styles/block-styles.php:1961
 msgid "Text Decoration"
-msgstr "Ìsọ̀kan Ọrọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1233
 msgid "Text Transform"
-msgstr "Ìyípadà Ọrọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1238
 msgid "Capitalize"
-msgstr "Túbọ̀"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1239
 msgid "Uppercase"
-msgstr "Ọrọ Nla"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1240
 msgid "Lowercase"
-msgstr "Ọrọ Kekere"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1244
 msgid "Text Shadow"
-msgstr "Àwọ̀ Ọrọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1253
 #: incl/pages/custom-styles.php:158
 msgid "Layout"
-msgstr "Àtẹ̀jáde"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1257
 msgid "Display & Position"
-msgstr "Àfihàn & Ipo"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1260
 msgid "Display"
-msgstr "Àfihàn"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1264
 msgid "Block"
-msgstr "Ìpò"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1265
 msgid "Inline"
-msgstr "Ìnàlà"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1266
 msgid "Inline Block"
-msgstr "Ìnàlà Ìpò"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1267
 msgid "Flex"
-msgstr "Fẹ́lìkṣ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1268
 msgid "Grid"
-msgstr "Gíríìdì"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1277
 msgid "Static"
-msgstr "Títọ́"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1278
 msgid "Relative"
-msgstr "Tíí ṣe"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1279
 msgid "Absolute"
-msgstr "Àbsolut"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1280
 msgid "Fixed"
-msgstr "Títọ́"
+msgstr ""
 
-#: incl/block-styles/block-styles.php:1281, fuzzy
+#: incl/block-styles/block-styles.php:1281
 msgid "Sticky"
-msgstr "Sticky"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1288
 msgid "Sizing"
-msgstr "Iwọn"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1291
 #: incl/block-styles/block-styles.php:2157
 msgid "Width (%)"
-msgstr "Iwọn (%)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1298
 msgid "Height (px)"
-msgstr "Giga (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1304
 msgid "Max Width (px)"
-msgstr "Iwọn Max (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1310
 msgid "Min Width (px)"
-msgstr "Iwọn Min (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1316
 msgid "Max Height (px)"
-msgstr "Giga Max (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1322
 msgid "Min Height (px)"
-msgstr "Giga Min (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1331
 msgid "Flow"
-msgstr "Sisan"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1334
 msgid "Float"
-msgstr "Fọtu"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1343
 msgid "Clear"
-msgstr "Cle"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1349
 msgid "Both"
-msgstr "Mejeeji"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1353
 msgid "Overflow"
-msgstr "Irun"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1357
 msgid "Visible"
-msgstr "Han"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1358
 msgid "Hidden"
-msgstr "Fihankalẹ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1359
 msgid "Scroll"
-msgstr "Rò"
+msgstr ""
 
-#: incl/block-styles/block-styles.php:1360, fuzzy
+#: incl/block-styles/block-styles.php:1360
 msgid "Auto"
-msgstr "Auto"
+msgstr ""
 
-#: incl/block-styles/block-styles.php:1364, fuzzy
+#: incl/block-styles/block-styles.php:1364
 msgid "Z-Index"
-msgstr "Z-Index"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1372
 #: incl/block-styles/block-styles.php:2218
@@ -2514,90 +2483,90 @@ msgstr "Z-Index"
 #: incl/block-styles/block-styles.php:2398
 #: incl/pages/custom-styles.php:161
 msgid "Border"
-msgstr "Ààlà"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1376
 msgid "Left Border"
-msgstr "Ààlà Ibè"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1379
 msgid "Left Border Width (px)"
-msgstr "Iwọn Ààlà Ọtún (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1385
 msgid "Left Border Style"
-msgstr "Ààlà Ọtún Àṣà"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1393
 #: incl/block-styles/block-styles.php:1421
 #: incl/block-styles/block-styles.php:1449
 #: incl/block-styles/block-styles.php:1477
 msgid "Double"
-msgstr "Mejeji"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1397
 msgid "Left Border Color"
-msgstr "Àwọ Ààlà Ọtún"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1404
 msgid "Right Border"
-msgstr "Ààlà Otun"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1407
 msgid "Right Border Width (px)"
-msgstr "Iwọn Ààlà Otun (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1413
 msgid "Right Border Style"
-msgstr "Ààlà Otun Àṣà"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1425
 msgid "Right Border Color"
-msgstr "Àwọ Ààlà Otun"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1432
 msgid "Top Border"
-msgstr "Ààlà Ọbẹ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1435
 msgid "Top Border Width (px)"
-msgstr "Iwọn Ààlà Ọbẹ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1441
 msgid "Top Border Style"
-msgstr "Ààlà Ọbẹ Àṣà"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1453
 msgid "Top Border Color"
-msgstr "Àwọ Ààlà Ọbẹ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1460
 msgid "Bottom Border"
-msgstr "Ààlà Isalẹ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1463
 msgid "Bottom Border Width (px)"
-msgstr "Iwọn Ààlà Isalẹ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1469
 msgid "Bottom Border Style"
-msgstr "Ààlà Isalẹ Àṣà"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1481
 msgid "Bottom Border Color"
-msgstr "Àwọ Ààlà Isalẹ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1492
 msgid "Text Elements"
-msgstr "Àwọn Ẹlẹsẹ̀"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1546
 msgid "Span"
-msgstr "Ika"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1581
 msgid "Blockquote"
-msgstr "Ìtànkálẹ̀"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1610
 #: incl/block-styles/block-styles.php:2194
@@ -2605,138 +2574,138 @@ msgstr "Ìtànkálẹ̀"
 #: incl/block-styles/block-styles.php:2322
 #: incl/block-styles/block-styles.php:2415
 msgid "Padding (px)"
-msgstr "Iṣan (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1617
 #: incl/block-styles/block-styles.php:2237
 msgid "Margin (px)"
-msgstr "Ààlà (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1628
 msgid "Lists"
-msgstr "Àtòjọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1631
 msgid "List Margin (px)"
-msgstr "Ààlà Àtòjọ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1637
 msgid "List Padding (px)"
-msgstr "Ìtòsọna Àtòjọ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1648
 msgid "Item Margin Bottom (px)"
-msgstr "Ààlà Ẹ̀ka Isalẹ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1654
 msgid "Item Text Color"
-msgstr "Color Téèxt Ẹ̀ka"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1664
 msgid "Heading Elements"
-msgstr "Àwọn Ẹ̀ka Ẹ̀kọ́"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1669
 msgid "H1 Heading"
-msgstr "H1 Ẹ̀kọ́"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1723
 msgid "H2 Heading"
-msgstr "H2 Ẹ̀kọ́"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1766
 msgid "H3 Heading"
-msgstr "H3 Ẹ̀kọ́"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1809
 msgid "H4 Heading"
-msgstr "H4 Ẹ̀kọ́"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1845
 msgid "H5 Heading"
-msgstr "H5 Ẹ̀kọ́"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1881
 msgid "H6 Heading"
-msgstr "H6 Ẹ̀kọ́"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1917
 msgid "Heading Hover Effects"
-msgstr "Àwọn Ẹ̀ka Ẹ̀kọ́ Hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1920
 msgid "H1 Hover Color"
-msgstr "H1 Color Hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1925
 msgid "H2 Hover Color"
-msgstr "H2 Color Hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1934
 msgid "H3 Hover Color"
-msgstr "H3 Color Hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1948
 msgid "Link Elements"
-msgstr "Àwọn Ẹ̀ka Ìjápọ̀"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1953
 msgid "Link Base Styles"
-msgstr "Àwọn Àṣà Ìjápọ̀"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1956
 msgid "Link Color"
-msgstr "Color Ìjápọ̀"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1989
 msgid "Link Hover States"
-msgstr "Ipo Hover Asopọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:1997
 msgid "Hover Text Decoration"
-msgstr "Akọsílẹ Ọrọ Hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2007
 #: incl/block-styles/block-styles.php:2349
 msgid "Hover Background"
-msgstr "Abẹlẹ Hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2012
 msgid "Hover Font Weight"
-msgstr "Iwọn Fọn Hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2023
 msgid "Links in Headings"
-msgstr "Asopọ ninu Awọn akọle"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2026
 msgid "H1 Link Color"
-msgstr "Awọ Asopọ H1"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2031
 msgid "H2 Link Color"
-msgstr "Awọ Asopọ H2"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2036
 msgid "H3 Link Color"
-msgstr "Awọ Asopọ H3"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2045
 msgid "H1 Link Hover Color"
-msgstr "Awọ Hover Asopọ H1"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2050
 msgid "H2 Link Hover Color"
-msgstr "Awọ Hover Asopọ H2"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2060
 msgid "Media Elements"
-msgstr "Ẹlẹsẹ Media"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2065
 #: incl/pages/settings.php:46
 msgid "Images"
-msgstr "Aworan"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2068
 #: incl/block-styles/block-styles.php:2169
@@ -2744,160 +2713,160 @@ msgstr "Aworan"
 #: incl/block-styles/block-styles.php:2311
 #: incl/block-styles/block-styles.php:2408
 msgid "Border Radius (px)"
-msgstr "Iwọn Ààrẹ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2075
 msgid "Border Width (px)"
-msgstr "Iwọn Ààrẹ (px)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2091
 msgid "Max Width (%)"
-msgstr "Iwọn Max (%)"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2099
 #: incl/block-styles/block-styles.php:2212
 msgid "Box Shadow"
-msgstr "Ariwo Apoti"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2110
 msgid "Image Hover Effects"
-msgstr "Awọn ipa Hover Aworan"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2113
 #: incl/block-styles/block-styles.php:2363
 msgid "Hover Transform"
-msgstr "Iyipada Hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2119
 msgid "Hover Opacity"
-msgstr "Opacity Hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2131
 msgid "Hover Filter"
-msgstr "Fọto Hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2135
 msgid "Grayscale"
-msgstr "Awọ grẹy"
+msgstr ""
 
-#: incl/block-styles/block-styles.php:2136, fuzzy
+#: incl/block-styles/block-styles.php:2136
 msgid "Sepia"
-msgstr "Sepia"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2137
 msgid "Blur"
-msgstr "Fọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2138
 msgid "Brightness"
-msgstr "Ilọsiwaju"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2139
 msgid "Contrast"
-msgstr "Iyatọ"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2144
 #: incl/block-styles/block-styles.php:2369
 msgid "Hover Border Color"
-msgstr "Awọ ẹgbẹ hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2154
 msgid "Videos"
-msgstr "Fídíò"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2181
 msgid "Container Elements"
-msgstr "Àwọn eroja apoti"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2186
 msgid "Div Containers"
-msgstr "Àwọn apoti div"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2229
 msgid "Sections"
-msgstr "Ibi"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2265
 msgid "Container Hover Effects"
-msgstr "Awọn ipa hover apoti"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2268
 msgid "Div Hover Background"
-msgstr "Abẹ́lẹ hover div"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2273
 msgid "Div Hover Shadow"
-msgstr "Ọrẹ hover div"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2283
 msgid "Section Hover Background"
-msgstr "Abẹ́lẹ hover apakan"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2293
 msgid "Interactive Elements"
-msgstr "Àwọn eroja ibaraenisepo"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2298
 msgid "Buttons"
-msgstr "Bọtini"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2346
 msgid "Button Hover States"
-msgstr "Awọn ipo hover bọtini"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2354
 msgid "Hover Text Color"
-msgstr "Awọ ọrọ hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2374
 msgid "Hover Shadow"
-msgstr "Ọrẹ hover"
+msgstr ""
 
 #: incl/block-styles/block-styles.php:2384
 msgid "Form Inputs"
-msgstr "Awọn ifaṣẹ silẹ"
+msgstr ""
 
 #: incl/pages/block-controls.php:14
 msgid "Controls saved successfully!"
-msgstr "Awọn iṣakoso ti fipamọ tẹlẹ!"
+msgstr ""
 
 #: incl/pages/block-controls.php:16
 msgid "Blocks saved successfully!"
-msgstr "Awọn bulọọki ti fipamọ tẹlẹ!"
+msgstr ""
 
 #: incl/pages/block-controls.php:18
 #: incl/pages/settings.php:19
 msgid "Settings saved successfully!"
-msgstr "Awọn eto ti fipamọ tẹlẹ!"
+msgstr ""
 
 #: incl/pages/block-controls.php:37
 msgid "Presets"
-msgstr "Awọn iṣeto"
+msgstr ""
 
 #: incl/pages/block-controls.php:41
 msgid "Controls"
-msgstr "Awọn iṣakoso"
+msgstr ""
 
 #: incl/pages/block-controls.php:45
 msgid "Blocks"
-msgstr "Awọn bulọọki"
+msgstr ""
 
 #: incl/pages/block-controls/blocks.php:18
 msgid "Enable or disable controls for all blocks"
-msgstr "Mú ṣiṣẹ tabi pa iṣakoso fun gbogbo awọn bulọọki"
+msgstr ""
 
 #: incl/pages/block-controls/blocks.php:46
 #: incl/pages/block-controls/blocks.php:71
 msgid "Save Blocks"
-msgstr "Fipamọ Awọn Bulọọki"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:27
 msgid "Schedule"
-msgstr "Akọsilẹ"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:38
 msgid "Choose when to start showing and/or stop showing your blocks."
-msgstr "Yan igba ti o fẹ lati bẹrẹ fihan ati/tabi da fihan awọn bulọọki rẹ duro."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:46
 #: incl/pages/block-controls/controls.php:79
@@ -2913,7 +2882,7 @@ msgstr "Yan igba ti o fẹ lati bẹrẹ fihan ati/tabi da fihan awọn bulọ�
 #: incl/pages/block-controls/controls.php:318
 #: incl/pages/block-controls/controls.php:336
 msgid "This block control is available on:"
-msgstr "Iṣakoso bulọọki yii wa lori:"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:48
 #: incl/pages/block-controls/controls.php:81
@@ -2927,7 +2896,7 @@ msgstr "Iṣakoso bulọọki yii wa lori:"
 #: incl/pages/block-controls/controls.php:319
 #: incl/pages/block-controls/controls.php:337
 msgid "Post"
-msgstr "Ifiweranṣẹ"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:50
 #: incl/pages/block-controls/controls.php:83
@@ -2943,7 +2912,7 @@ msgstr "Ifiweranṣẹ"
 #: incl/pages/block-controls/controls.php:320
 #: incl/pages/block-controls/controls.php:338
 msgid "Widgets"
-msgstr "Awọn ohun elo"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:52
 #: incl/pages/block-controls/controls.php:85
@@ -2959,1102 +2928,1048 @@ msgstr "Awọn ohun elo"
 #: incl/pages/block-controls/controls.php:321
 #: incl/pages/block-controls/controls.php:339
 msgid "Site Editor"
-msgstr "Olùkọ́ ọ̀rẹ́"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:60
 msgid "User roles"
-msgstr "Ipa olumulo"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:71
 msgid "Choose which users can see your blocks."
-msgstr "Yan awọn olumulo wo ni o le rii awọn bulọọki rẹ."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:93
 msgid "Device Type"
-msgstr "Iru Ẹrọ"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:104
 msgid "Choose the device type to show your blocks on."
-msgstr "Yan iru ẹrọ lati fihan awọn bulọọki rẹ lori."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:126
 msgid "Device Width"
-msgstr "Iwọn Ẹrọ"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:137
 msgid "Choose the device width to show your blocks on."
-msgstr "Yan iwọn ẹrọ lati fihan awọn bulọọki rẹ lori."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:159
 msgid "Term archives"
-msgstr "Àkọsílẹ̀ àkópọ̀"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:170
-msgid ""
-"Choose on which taxonomies and terms archive pages your blocks can be "
-"displayed."
-msgstr "Yan lori awọn taxonomy ati awọn oju-iwe ipamọ ọrọ ti bulọọki rẹ le farahan."
+msgid "Choose on which taxonomies and terms archive pages your blocks can be displayed."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:190
 msgid "Pages"
-msgstr "Àwọn Ojú-ìwé"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:201
 msgid "Choose in which pages your blocks can be displayed."
-msgstr "Yan níbi tí àwọn bulọọki rẹ le han."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:220
 msgid "Browser & Device"
-msgstr "Báwọ & Ẹrọ"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:225
 msgid "Choose which browsers and devices can see your blocks."
-msgstr "Yan ẹniti awọn báwọ ati awọn ẹrọ le rii awọn bulọọki rẹ."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:238
 msgid "Operating System"
-msgstr "Eto Isẹ"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:243
 msgid "Choose which operating systems can see your blocks."
-msgstr "Yan awọn eto isẹ tí le rii awọn bulọọki rẹ."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:256
 msgid "Cookie"
-msgstr "Kuki"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:261
 msgid "Show or hide blocks based on cookie values."
-msgstr "Fihan tàbí pa àwọn bulọọki da lori iye kuki."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:274
 msgid "User Meta"
-msgstr "Meta Olumulo"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:279
 msgid "Show or hide blocks based on user meta values."
-msgstr "Fihan tàbí pa àwọn bulọọki da lori iye meta olumulo."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:292
 msgid "Post Meta"
-msgstr "Meta Ifiweranṣẹ"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:297
 msgid "Show or hide blocks based on post meta values."
-msgstr "Fihan tàbí pa àwọn bulọọki da lori iye meta ifiweranṣẹ."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:310
 msgid "Query String"
-msgstr "Ọrọ ìbéèrè"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:315
 msgid "Show or hide blocks based on URL query parameters."
-msgstr "Fihan tàbí pa àwọn bulọọki da lori awọn paramita ìbéèrè URL."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:328
 msgid "Capabilities"
-msgstr "Agbara"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:333
 msgid "Show or hide blocks based on user capabilities."
-msgstr "Fihan tàbí pa àwọn bulọọki da lori awọn agbara olumulo."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:353
 msgid "Save Controls"
-msgstr "Fipamọ Àwọn Iṣakoso"
+msgstr ""
 
-#: incl/pages/block-controls/presets-admin.php:12, fuzzy
+#: incl/pages/block-controls/presets-admin.php:12
 msgid "Loading presets..."
-msgstr "Loading presets..."
+msgstr ""
 
-#: incl/pages/block-settings.php:57, fuzzy
+#: incl/pages/block-settings.php:57
 msgid "Accordion - PublishPress"
-msgstr "Accordion - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:58
 msgid "Button - PublishPress"
-msgstr "Bọtini - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:59
 msgid "Icon - PublishPress"
-msgstr "Aami - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:60
 msgid "Image - PublishPress"
-msgstr "Aworan - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:61
 msgid "List - PublishPress"
-msgstr "Atokọ - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:62
 msgid "Table - PublishPress"
-msgstr "Tebulu - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:63
 msgid "Tabs - PublishPress"
-msgstr "Tẹbẹs - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:64
 msgid "Video - PublishPress"
-msgstr "Fidio - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:65
 msgid "Columns - PublishPress"
-msgstr "Kólọmù - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:66
 msgid "Column - PublishPress"
-msgstr "Kólọmù - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:67
 msgid "Contact Form - PublishPress"
-msgstr "Fọọmu Ibaṣepọ - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:68
 msgid "Count Up - PublishPress"
-msgstr "Ka Soke - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:69
 msgid "Images Slider - PublishPress"
-msgstr "Aworan Slider - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:70
 msgid "Info Box - PublishPress"
-msgstr "Apoti Alaye - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:71
 msgid "Map - PublishPress"
-msgstr "Maapu - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:72
 msgid "Newsletter - PublishPress"
-msgstr "Iwe iroyin - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:73
 msgid "Social Links - PublishPress"
-msgstr "Awọn ọna asopọ Awujọ - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:74
 #: assets/blocks/summary/block.jsx:22
 msgid "Table of Contents - PublishPress"
-msgstr "Tebulu Awọn akoonu - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:75
 #: assets/blocks/testimonial/block.jsx:672
 msgid "Testimonial - PublishPress"
-msgstr "Ẹri - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:76
 #: assets/blocks/woo-products/block.jsx:408
 msgid "Woo Products - PublishPress"
-msgstr "Awọn ọja Woo - PublishPress"
+msgstr ""
 
 #: incl/pages/block-settings.php:138
 #: incl/pages/settings/images.php:99
 msgid "Edit"
-msgstr "Ṣatunkọ"
+msgstr ""
 
 #: incl/pages/block-settings.php:149
-msgid ""
-"No blocks available. Please go to a post edit (without saving either "
-"modifying anything). Then come back to Block Settings to see the blocks "
-"list."
+msgid "No blocks available. Please go to a post edit (without saving either modifying anything). Then come back to Block Settings to see the blocks list."
 msgstr ""
-"Ko si awọn bulọọki ti o wa. Jọwọ lọ si ṣiṣatunkọ ifiweranṣẹ (lai fipamọ "
-"tabi yipada ohunkohun). Lẹhinna pada si Eto Bulọọki lati wo atokọ bulọọki."
 
 #: incl/pages/block-settings/block-config.php:14
 #: incl/pages/block-settings/block-config.php:30
 msgid "Save"
-msgstr "Fipamọ"
+msgstr ""
 
 #: incl/pages/block-settings/block-config.php:18
 msgid "block"
-msgstr "bulọọki"
+msgstr ""
 
 #: incl/pages/custom-styles.php:12
 msgid "Add new style"
-msgstr "Fi aṣa tuntun kun"
+msgstr ""
 
 #: incl/pages/custom-styles.php:27
 msgid "Delete"
-msgstr "Pa"
+msgstr ""
 
 #: incl/pages/custom-styles.php:43
 msgid "Preview"
-msgstr "Iworan"
+msgstr ""
 
 #: incl/pages/custom-styles.php:47
 msgid "Example text with this style"
-msgstr "Apeere ọrọ pẹlu aṣa yii"
+msgstr ""
 
 #: incl/pages/custom-styles.php:55
 msgid "View Extended Preview"
-msgstr "Wo Iworan Gbooro"
+msgstr ""
 
 #: incl/pages/custom-styles.php:79
 msgid "Class name"
-msgstr "Orukọ kilasi"
+msgstr ""
 
 #: incl/pages/custom-styles.php:88
 msgid ""
 "This option help you identify specific custom styles in the list\r\n"
-"                                            (usually set this same as the "
-"custom style's background color)"
+"                                            (usually set this same as the custom style's background color)"
 msgstr ""
-"Aṣayan yii ṣe iranlọwọ fun ọ lati ṣe idanimọ awọn aṣa aṣa pato ninu atokọ\r\n"
-"                                            (nigbagbogbo ṣeto eyi ni kanna "
-"bi awọ abẹlẹ aṣa)"
 
 #: incl/pages/custom-styles.php:94
 msgid "Identification color"
-msgstr "Awọ idanimọ"
+msgstr ""
 
 #: incl/pages/custom-styles.php:111
 #: incl/pages/custom-styles.php:143
 msgid "Style Builder"
-msgstr "Olùkó àṣà"
+msgstr ""
 
 #: incl/pages/custom-styles.php:114
 #: incl/pages/custom-styles.php:125
 msgid "Custom CSS"
-msgstr "CSS Aṣa"
+msgstr ""
 
 #: incl/pages/custom-styles.php:131
 msgid "Hint: Use \"Ctrl + Space\" for auto completion"
-msgstr "Iṣeduro: Lo \"Ctrl + Space\" fun ipari aifọwọyi"
+msgstr ""
 
 #: incl/pages/custom-styles.php:167
 msgid "Headings"
-msgstr "Awọn akọle"
+msgstr ""
 
 #: incl/pages/custom-styles.php:170
 msgid "Links"
-msgstr "Awọn ọna asopọ"
+msgstr ""
 
-#: incl/pages/custom-styles.php:173, fuzzy
+#: incl/pages/custom-styles.php:173
 msgid "Media"
-msgstr "Media"
+msgstr ""
 
 #: incl/pages/custom-styles.php:176
 msgid "Containers"
-msgstr "Awọn apoti"
+msgstr ""
 
 #: incl/pages/custom-styles.php:179
 msgid "Interactive"
-msgstr "Ibi iṣẹ"
+msgstr ""
 
 #: incl/pages/custom-styles.php:217
 msgid "Save styles"
-msgstr "Fipamọ awọn aṣa"
+msgstr ""
 
 #: incl/pages/main.php:22
 msgid "You can control who can use each block, including default WordPress blocks."
 msgstr ""
-"O le ṣakoso ẹni ti o le lo ọkọọkan awọn bulọọki, pẹlu awọn bulọọki "
-"WordPress aiyipada."
 
 #: incl/pages/main.php:32
-msgid ""
-"Enable extra blocks including content displays, sliders, buttons, icons, "
-"tabs, accordions, and more."
+msgid "Enable extra blocks including content displays, sliders, buttons, icons, tabs, accordions, and more."
 msgstr ""
-"Mu awọn bulọọki afikun ṣiṣẹ pẹlu awọn ifihan akoonu, awọn olutọpa, awọn "
-"bọtini, awọn aami, awọn taabu, awọn akordeon, ati diẹ sii."
 
 #: incl/pages/main.php:42
-msgid ""
-"You can add your own CSS styles for your blocks. Anyone editing posts can "
-"quickly add the styles to blocks."
+msgid "You can add your own CSS styles for your blocks. Anyone editing posts can quickly add the styles to blocks."
 msgstr ""
-"O le fi awọn aṣa CSS ti tirẹ kun fun awọn bulọọki rẹ. Ẹnikẹni ti o n "
-"ṣatunkọ awọn ifiweranṣẹ le ni kiakia ṣafikun awọn aṣa si awọn bulọọki."
 
 #: incl/pages/main.php:52
-msgid ""
-"This feature adds display controls for blocks. You can schedule when blocks "
-"are shown, and add user role restrictions."
+msgid "This feature adds display controls for blocks. You can schedule when blocks are shown, and add user role restrictions."
 msgstr ""
-"Iṣẹ yii nfi awọn iṣakoso ifihan kun fun awọn bulọọki. O le ṣeto nigbati "
-"awọn bulọọki han, ati fi awọn ihamọ ipa olumulo kun."
 
 #: incl/pages/main.php:62
 msgid "You can scan the posts on your website for blocks usage."
-msgstr "O le ṣawari awọn ifiweranṣẹ lori oju opo wẹẹbu rẹ fun lilo awọn bulọọki."
+msgstr ""
 
 #: incl/pages/main.php:72
 msgid "This feature enables a submenu to manage your Reusable Blocks."
-msgstr "Ẹya yii n mu submenu wa lati ṣakoso Awọn Bulọọki Tuntun rẹ."
+msgstr ""
 
 #: incl/pages/main.php:82
-msgid ""
-"Automatically insert reusable blocks into posts based on position, "
-"categories, tags, and other criteria."
+msgid "Automatically insert reusable blocks into posts based on position, categories, tags, and other criteria."
 msgstr ""
-"Fi awọn bulọọki ti a tun lo laifọwọyi sinu awọn ifiweranṣẹ da lori ipo, "
-"awọn ẹka, awọn aami, ati awọn itọkasi miiran."
 
 #: incl/pages/main.php:90
 msgid "Core Blocks Features"
-msgstr "Awọn ẹya Bulọọki Pataki"
+msgstr ""
 
 #: incl/pages/main.php:91
 msgid "Add Google Fonts support to core blocks including paragraphs and headings."
 msgstr ""
-"Fi atilẹyin Fonts Google kun si awọn bulọọki pataki pẹlu awọn paragirafi "
-"ati awọn akọle."
 
 #: incl/pages/settings.php:37
 msgid "Block Features"
-msgstr "Awọn ẹya Bulọọki"
+msgstr ""
 
 #: incl/pages/settings.php:50
 msgid "Maps"
-msgstr "Awọn maapu"
+msgstr ""
 
 #: incl/pages/settings.php:54
 msgid "Email & Forms"
-msgstr "Imeeli & Awọn fọọmu"
+msgstr ""
 
-#: incl/pages/settings.php:58, fuzzy
+#: incl/pages/settings.php:58
 msgid "reCAPTCHA"
-msgstr "reCAPTCHA"
+msgstr ""
 
 #: incl/pages/settings.php:62
 msgid "Data Export"
-msgstr "Gbigbe Data"
+msgstr ""
 
 #: incl/pages/settings.php:72
 msgid "License"
-msgstr "Iwe-aṣẹ"
+msgstr ""
 
 #: incl/pages/settings/block-features.php:17
 msgid "Select Role"
-msgstr "Yan Ipa"
+msgstr ""
 
 #: incl/pages/settings/block-features.php:57
 msgid "Disable all block adding"
-msgstr "Dena gbogbo fifi bulọọki kun"
+msgstr ""
 
 #: incl/pages/settings/block-features.php:67
 #, php-format
 msgid "Prevent users in %1s role from adding new block to posts."
 msgstr ""
-"Ṣe idiwọ awọn olumulo ninu ipa %1s lati fi bulọọki tuntun kun si awọn "
-"ifiweranṣẹ."
 
 #: incl/pages/settings/block-features.php:79
 msgid "Disable the Pattern Directory"
-msgstr "Dena Awọn itọsọna Àpẹẹrẹ"
+msgstr ""
 
 #: incl/pages/settings/block-features.php:89
 #, php-format
 msgid "Disable the pattern directory for users in %1s role."
-msgstr "Pa ọna àkọsílẹ́ fún àwọn olumulo ní ipa %1s."
+msgstr ""
 
 #: incl/pages/settings/block-features.php:101
 msgid "Disable the Openverse"
-msgstr "Pa Openverse"
+msgstr ""
 
 #: incl/pages/settings/block-features.php:111
 #, php-format
 msgid "Disable Openverse for users in %1s role."
-msgstr "Pa Openverse fún àwọn olumulo ní ipa %1s."
+msgstr ""
 
 #: incl/pages/settings/block-features.php:127
 #: incl/pages/settings/images.php:122
 msgid "Save Image Settings"
-msgstr "Fipamọ́ Àwọn Eto Àwòrán"
+msgstr ""
 
 #: incl/pages/settings/data.php:18
 msgid "Download Contacts Form data"
-msgstr "Gbigba data Fọọmu Awọn olubasọrọ"
+msgstr ""
 
 #: incl/pages/settings/data.php:24
 msgid "Data stored through Contact form blocks."
-msgstr "Data tí a fipamọ́ nipasẹ awọn bulọọki fọọmu olubasọrọ."
+msgstr ""
 
 #: incl/pages/settings/data.php:38
-#: incl/pages/settings/data.php:78, fuzzy
+#: incl/pages/settings/data.php:78
 msgid "CSV"
-msgstr "CSV"
+msgstr ""
 
 #: incl/pages/settings/data.php:49
-#: incl/pages/settings/data.php:89, fuzzy
+#: incl/pages/settings/data.php:89
 msgid "JSON"
-msgstr "JSON"
+msgstr ""
 
 #: incl/pages/settings/data.php:58
 msgid "Download Newsletter Form data"
-msgstr "Gbigba data Fọọmu Iwe iroyin"
+msgstr ""
 
 #: incl/pages/settings/data.php:64
 msgid "Data stored through Newsletter form blocks."
-msgstr "Data tí a fipamọ́ nipasẹ awọn bulọọki fọọmu iwe iroyin."
+msgstr ""
 
 #: incl/pages/settings/forms.php:38
-msgid ""
-"These email settings apply to messages sent through PublishPress Contact "
-"form block."
+msgid "These email settings apply to messages sent through PublishPress Contact form block."
 msgstr ""
-"Awọn eto imeeli wọnyi lo si awọn ifiranṣẹ ti a firanṣẹ nipasẹ bulọọki fọọmu "
-"olubasọrọ PublishPress."
 
 #: incl/pages/settings/forms.php:48
 msgid "Sender name"
-msgstr "Orukọ oluranse"
+msgstr ""
 
 #: incl/pages/settings/forms.php:65
 msgid "Sender email"
-msgstr "Imeeli oluranse"
+msgstr ""
 
 #: incl/pages/settings/forms.php:82
 msgid "Email title"
-msgstr "Akọle imeeli"
+msgstr ""
 
 #: incl/pages/settings/forms.php:99
 msgid "Email receiver"
-msgstr "Olugba imeeli"
+msgstr ""
 
 #: incl/pages/settings/forms.php:122
 msgid "Save Form Settings"
-msgstr "Fipamọ́ Àwọn Eto Fọọmu"
+msgstr ""
 
 #: incl/pages/settings/general.php:49
 msgid "Display PublishPress branding"
-msgstr "Fihan ami iyasọtọ PublishPress"
+msgstr ""
 
 #: incl/pages/settings/general.php:50
 msgid "PublishPress logo and links in the footer of the admin pages"
-msgstr "Ami PublishPress ati awọn ìjápọ̀ ní ipari awọn oju-iwe alakoso"
+msgstr ""
 
 #: incl/pages/settings/general.php:59
 msgid "Enable blocks spacing"
-msgstr "Mu aaye awọn bulọọki ṣiṣẹ"
+msgstr ""
 
 #: incl/pages/settings/general.php:70
 msgid "Vertical spacing between blocks"
-msgstr "Ibi tí ó gíga láàárín awọn bulọọki"
+msgstr ""
 
 #: incl/pages/settings/general.php:81
 msgid "Blocks spacing"
-msgstr "Ibi ààlà àwọn bulọọki"
+msgstr ""
 
 #: incl/pages/settings/general.php:101
 msgid "Blocks icon color"
-msgstr "Àwọ́ àwòrán bulọọki"
+msgstr ""
 
 #: incl/pages/settings/general.php:116
 msgid "Apply in admin to blocks from PublishPress Blocks plugin."
-msgstr "Lo ninu iṣakoso si awọn bulọọki lati PublishPress Blocks plugin."
+msgstr ""
 
 #: incl/pages/settings/general.php:127
 msgid "Gutenberg editor width"
-msgstr "Iwọn olootu Gutenberg"
+msgstr ""
 
 #: incl/pages/settings/general.php:140
 msgid "Large"
-msgstr "Nla"
+msgstr ""
 
 #: incl/pages/settings/general.php:155
 msgid "Enable columns visual guide"
-msgstr "Mú itọsọna àwòrán àpò-ọpọlọ ṣiṣẹ"
+msgstr ""
 
 #: incl/pages/settings/general.php:166
 msgid "Visual guide for PublishPress Blocks Columns block"
-msgstr "Itọsọna àwòrán fun PublishPress Bulọọki Àwọn Bulọọki"
+msgstr ""
 
 #: incl/pages/settings/general.php:177
 msgid "Remove autop"
-msgstr "Yọ autop"
+msgstr ""
 
 #: incl/pages/settings/general.php:188
 msgid "Autop WordPress function is used to prevent unwanted paragraphs to be added"
 msgstr ""
-"Iṣẹ autop WordPress ni a lo lati ṣe idiwọ awọn paragirafi ti a ko fẹ lati "
-"wa ni afikun"
 
 #: incl/pages/settings/general.php:204
 msgid "Save General Settings"
-msgstr "Fipamọ Eto Gbogbogbo"
+msgstr ""
 
 #: incl/pages/settings/images.php:25
 msgid "Open galleries in lightbox"
-msgstr "Ṣí àwọn àwòrán àwòrán ni lightbox"
+msgstr ""
 
 #: incl/pages/settings/images.php:36
 msgid "Open gallery images as a lightbox style popup"
-msgstr "Ṣí awọn aworan àwòrán gẹgẹbi popup aṣa lightbox"
+msgstr ""
 
 #: incl/pages/settings/images.php:47
 msgid "Image caption"
-msgstr "Àkíyèsí aworan"
+msgstr ""
 
 #: incl/pages/settings/images.php:55
 msgid "Disabled"
-msgstr "Ti pa"
+msgstr ""
 
 #: incl/pages/settings/images.php:65
 msgid "Overlay"
-msgstr "Ẹ̀ka àfihàn"
+msgstr ""
 
 #: incl/pages/settings/images.php:71
 msgid "Display caption text on images loaded as lightbox in galleries."
 msgstr ""
-"Fihan ọrọ àkíyèsí lori awọn aworan ti a gbe wọle gẹgẹbi lightbox ni awọn "
-"àwòrán àwòrán."
 
 #: incl/pages/settings/images.php:82
 msgid "Default thumbnail"
-msgstr "Àtọkànwá àwòrán kekere"
+msgstr ""
 
 #: incl/pages/settings/images.php:101
 msgid "Reset to default"
-msgstr "Tun ṣeto si àtọkànwá"
+msgstr ""
 
 #: incl/pages/settings/images.php:106
-msgid ""
-"Set the default post thumbnail to use in Content Display blocks for posts "
-"without featured image."
+msgid "Set the default post thumbnail to use in Content Display blocks for posts without featured image."
 msgstr ""
-"Ṣeto aworan akọsilẹ ifiweranṣẹ aiyipada lati lo ninu awọn bulọọki Ifihan "
-"Akoonu fun awọn ifiweranṣẹ laisi aworan ti a ṣe afihan."
 
 #: incl/pages/settings/maps.php:15
 msgid "Google API key"
-msgstr "Bọtini Google API"
+msgstr ""
 
 #: incl/pages/settings/maps.php:31
 msgid "How to create a Google API Key"
-msgstr "Báwo ni a ṣe lè dá Google API Key ṣẹ"
+msgstr ""
 
 #: incl/pages/settings/maps.php:38
 msgid "A Google API key is required to use the Map block without any warning."
-msgstr "A nilo Google API key lati lo àpótí Map láìṣe ìkìlọ̀ kankan."
+msgstr ""
 
 #: incl/pages/settings/maps.php:54
 msgid "Save Maps Settings"
-msgstr "Fipamọ́ Àtọ́kànwá Maps"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:17
 #, php-format
-msgid ""
-"Use the Google reCAPTCHA to avoid spam in PublishPress Blocks forms. Get "
-"credentials for your domain by registering %shere%s."
+msgid "Use the Google reCAPTCHA to avoid spam in PublishPress Blocks forms. Get credentials for your domain by registering %shere%s."
 msgstr ""
-"Lo Google reCAPTCHA lati yago fun spam ni awọn fọọmu PublishPress Blocks. "
-"Gba awọn iwe-ẹri fun agbegbe rẹ nipa iforukọsilẹ %shere%s."
 
 #: incl/pages/settings/recaptcha.php:30
 msgid "Enable reCAPTCHA"
-msgstr "Mú reCAPTCHA ṣiṣẹ"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:47
 msgid "Site key"
-msgstr "Bọtìnì aaye"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:49
 #: incl/pages/settings/recaptcha.php:68
 msgid "required"
-msgstr "nilo"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:66
 msgid "Secret key"
-msgstr "Bọtìnì aṣírí"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:85
 msgid "Language"
-msgstr "Èdè"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:93
 msgid "Auto detect"
-msgstr "Ìmúlẹ̀ àautomátíkì"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:102
 msgid "Language codes list"
-msgstr "Àtòjọ kóòdù èdè"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:110
 msgid "Theme"
-msgstr "Kíkọ́"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:118
 msgid "Light"
-msgstr "Fọ́tò"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:128
 msgid "Invisible"
-msgstr "Kò hàn"
+msgstr ""
 
 #: incl/pages/settings/recaptcha.php:134
-msgid ""
-"We strongly recommend not using Invisible reCAPTCHA if you have more than 1 "
-"Newsletter or Contact forms block in a page."
+msgid "We strongly recommend not using Invisible reCAPTCHA if you have more than 1 Newsletter or Contact forms block in a page."
 msgstr ""
-"A ni imọran gidigidi pe ki o ma lo Invisible reCAPTCHA ti o ba ni diẹ sii "
-"ju 1 bulọọki Iwe iroyin tabi Fọọmu olubasọrọ ninu oju-iwe kan."
 
 #: incl/pages/settings/recaptcha.php:151
 msgid "Save reCAPTCHA Settings"
-msgstr "Fipamọ́ Àtọ́kànwá reCAPTCHA"
+msgstr ""
 
 #: incl/utilities-main.php:40
 msgid "Countdown"
-msgstr "Ìkànsí"
+msgstr ""
 
 #: incl/utilities-main.php:41
 msgid "Easily create a customizable countdown."
-msgstr "Rọrun láti dá ìkànsí kan ti a lè ṣe àtúnṣe."
+msgstr ""
 
 #: incl/utilities-main.php:50
 msgid "Pricing Table"
-msgstr "Tábìlì Iye"
+msgstr ""
 
 #: incl/utilities-main.php:51
 msgid "Easily create a customizable pricing table."
-msgstr "Rọrun láti dá tábìlì iye kan ti a lè ṣe àtúnṣe."
+msgstr ""
 
 #: incl/utilities-main.php:60
 msgid "Feature"
-msgstr "Àmì"
+msgstr ""
 
 #: incl/utilities-main.php:61
 #: incl/utilities-main.php:72
 msgid "Use block to create a list inside the Feature List\" block."
-msgstr "Lo àkóónú láti dá àkójọpọ̀ nínú àkóónú Àmì\" àkóónú."
+msgstr ""
 
 #: incl/utilities-main.php:71
 msgid "Feature List"
-msgstr "Àkójọpọ̀ Àmì"
+msgstr ""
 
 #: install.php:23
 msgid "Gutenberg is not detected! Activate it or"
-msgstr "Gutenberg kò rí! Mu un ṣiṣẹ́ tàbí"
+msgstr ""
 
 #: install.php:24
 msgid "Install Gutenberg Now!"
-msgstr "Fi Gutenberg sílẹ̀ Ní báyìí!"
+msgstr ""
 
 #: install.php:35
 msgid "We require at least Gutenberg version "
-msgstr "A nílò o kere ju ẹya Gutenberg "
+msgstr ""
 
 #: install.php:37
 msgid "Please update Gutenberg then comeback later!"
-msgstr "Jọ̀wọ́ ṣe imudojuiwọn Gutenberg lẹ́yìn náà padà wa!"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:43
 msgid "Insert Table of Contents"
-msgstr "Fi Àkójọpọ̀ Àkóónú sílẹ̀"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:72
-msgid ""
-"After manually changing the anchor, remember to refresh Table of Contents "
-"block to make the links work!"
+msgid "After manually changing the anchor, remember to refresh Table of Contents block to make the links work!"
 msgstr ""
-"Lẹhin ti o ti yipada akopọ ni ọwọ, ranti lati tunṣe Bulọọki Atokọ Awọn "
-"akoonu lati jẹ ki awọn ọna asopọ ṣiṣẹ!"
 
 #: assets/blocks/summary/block.jsx:269
 msgid "Table of Contents"
-msgstr "Àkójọpọ̀ Àkóónú"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:274
-msgid ""
-"Your current post/page has no headings. Try add some headings and update "
-"this block later"
+msgid "Your current post/page has no headings. Try add some headings and update this block later"
 msgstr ""
-"Iwe/ibi ti o wa lọwọlọwọ ko ni akọle. Gbiyanju lati fi diẹ ninu awọn akọle "
-"kun ati tun ṣe imudojuiwọn bulọọki yii nigbamii"
 
 #: assets/blocks/summary/block.jsx:279
 msgid "Update"
-msgstr "Ṣe imudojuiwọn"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:316
 msgid "Update Table of Contents"
-msgstr "Ṣe imudojuiwọn Àkójọpọ̀ Àkóónú"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:323
 msgid "Table of Contents settings"
-msgstr "Àwọn àtọka Àkójọpọ̀ Àkóónú"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:333
 msgid "Enter header…"
-msgstr "Tẹ akọ́lé…"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:338
 #: assets/blocks/summary/block.jsx:342
 msgid "Anchor Color"
-msgstr "Àwọ̀ ìkànsí"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:393
 msgid "Show the table of contents of current post/page."
-msgstr "Fihan àkójọpọ̀ àkóónú ìwé/ìkà lọwọlọwọ."
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:399
 msgid "summary"
-msgstr "akopọ"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:399
 msgid "table of content"
-msgstr "àkójọpọ̀ àkóónú"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:399
 msgid "table of contents"
-msgstr "àkójọpọ̀ àkóónú"
+msgstr ""
 
 #: assets/blocks/summary/block.jsx:399
 msgid "list"
-msgstr "atokọ"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:112
 msgid "Tab Colors"
-msgstr "Awọ Tabi"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:126
 msgid "Active Tab Background Color"
-msgstr "Awọ Abẹ Tabi Tí ń ṣiṣẹ"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:131
 msgid "Active Tab Text Color"
-msgstr "Awọ Ẹrọ Tabi Tí ń ṣiṣẹ"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:138
 msgid "Body Colors"
-msgstr "Awọ Ara"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:176
 msgid "Border width"
-msgstr "iwọn ààlà"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:183
 msgid "Border radius"
-msgstr "ìkànsí ààlà"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:213
 msgid "Title…"
-msgstr "Akọle…"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:216
 msgid "Remove tab"
-msgstr "Yọ tabí"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:234
 msgid "Add tab"
-msgstr "Fikun tabí"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:238
 msgid "New Tab"
-msgstr "Tabi Tuntun"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:238
 msgid "Enter your content."
-msgstr "Tẹ ọrọ rẹ nibi."
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:263
 msgid "Enter text…"
-msgstr "Tẹ ọrọ…"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:296
 msgid "Tab 1"
-msgstr "Tabi 1"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:297
 #: assets/blocks/tabs/block.jsx:301
 #: assets/blocks/tabs/block.jsx:305
-msgid ""
-"Filler text (also placeholder text or dummy text) is text that shares some "
-"characteristics of a real written text, but is random or otherwise "
-"generated."
+msgid "Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated."
 msgstr ""
-"Ọrọ idapọ (pẹlupẹlu ọrọ aaye tabi ọrọ aiyede) jẹ ọrọ ti o pin diẹ ninu awọn "
-"abuda ti ọrọ ti a kọ gangan, ṣugbọn o jẹ aifọwọyi tabi ni a ṣe lati inu. "
 
 #: assets/blocks/tabs/block.jsx:300
 msgid "Tab 2"
-msgstr "Tabi 2"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:304
 msgid "Tab 3"
-msgstr "Tabi 3"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:354
 msgid "Tabs (deprecated) - PublishPress"
-msgstr "Tabs (ti a ti fi silẹ) - PublishPress"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:355
 msgid "Create horizontal or vertical tabs to display your content."
-msgstr "Ṣẹda awọn tabí àtọka tabi inaro lati ṣafihan akoonu rẹ."
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:361
 msgid "tabs"
-msgstr "tabí"
+msgstr ""
 
 #: assets/blocks/tabs/block.jsx:361
 msgid "cards"
-msgstr "kaadi"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:230
 msgid "Testimonial"
-msgstr "Ìjẹrisi"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:234
 msgid "Testimonial Settings"
-msgstr "Àwọn ìtọ́sọ́nà ìjẹrisi"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:236
 msgid "Slider view"
-msgstr "Ìwò slider"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:241
 msgid "Number of items"
-msgstr "Iye àwọn nkan"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:242
 msgid "Range in Normal view is 1-3, and in Slider view is 4-10."
-msgstr "Iwọn ni ìwò Aládàáṣe jẹ́ 1-3, àti ni ìwò slider jẹ́ 4-10."
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:251
 msgid "Items to show"
-msgstr "Àwọn nkan láti fi hàn"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:258
 msgid "Items to scroll"
-msgstr "Àwọn nkan láti yíyí"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:264
 msgid "Slider Settings"
-msgstr "Àwọn ìtọ́sọ́nà slider"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:266
 msgid "Center mode"
-msgstr "Ipo aarin"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:271
 msgid "Pause on hover"
-msgstr "Dákẹ́ nígbà tó bá wa lórí"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:276
 msgid "Auto play"
-msgstr "Ṣiṣẹ́ aifọwọyi"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:282
 msgid "Autoplay speed (ms)"
-msgstr "Iyara ṣiṣiṣẹ́ aifọwọyi (ms)"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:290
 msgid "Infinite Loop"
-msgstr "Iwọn Aifọwọyi"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:295
 msgid "Transition speed (ms)"
-msgstr "Iyara iyipada (ms)"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:302
 msgid "Show dots"
-msgstr "Fi àwọn dot hàn"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:307
 msgid "Show arrows"
-msgstr "Fi àwọn àfihàn hàn"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:314
 msgid "Arrow size"
-msgstr "Iwọn àfihàn"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:321
 msgid "Arrow border size"
-msgstr "Iwọn ààlà àfihàn"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:328
 msgid "Arrow border radius (%)"
-msgstr "Iwọn iwọn ààlà àfihàn (%)"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:338
 msgid "Slider Colors"
-msgstr "Awọ Slider"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:342
 msgid "Arrow and Border Color"
-msgstr "Awọ Aami ati Ààlà"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:347
 msgid "Dots Color"
-msgstr "Awọ Dots"
+msgstr ""
 
-#: assets/blocks/testimonial/block.jsx:355, fuzzy
+#: assets/blocks/testimonial/block.jsx:355
 msgid "Avatar"
-msgstr "Avatar"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:357
 msgid "Display Avatar"
-msgstr "Fi Avatar hàn"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:364
 msgid "Avatar Colors"
-msgstr "Awọ Avatar"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:401
 msgid "Avatar Position"
-msgstr "Ipo Avatar"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:407
 msgid "right"
-msgstr "otun"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:415
 msgid "Text Colors"
-msgstr "Awọ Tekiti"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:454
 msgid "Click to change avatar"
-msgstr "Tẹ láti yipada avatar"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:468
 msgid "Show default avatar"
-msgstr "Fihan avatar aiyipada"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:486
 #: assets/blocks/testimonial/block.jsx:497
 #: assets/blocks/testimonial/block.jsx:508
 msgid "Text…"
-msgstr "Tekiti…"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:673
 msgid "Block for creating personal or team/group information."
-msgstr "Ibi fun ṣẹda alaye ẹni kọọkan tabi ẹgbẹ/egbe."
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:679
 msgid "testimonial"
-msgstr "ẹri"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:679
 msgid "personal"
-msgstr "eni kọọkan"
+msgstr ""
 
 #: assets/blocks/testimonial/block.jsx:679
 msgid "about"
-msgstr "nipa"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:209
 msgid "Normal View"
-msgstr "Iwo Àtọkànwá"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:215
 msgid "Slider View"
-msgstr "Iwo Slider"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:233
 msgid "Woo Products"
-msgstr "Woo Awọn ọja"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:240
 msgid "Products Settings"
-msgstr "Àwọn Eto Ọjà"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:242
 msgid "Product Status"
-msgstr "Ipo Ọja"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:245
 #: assets/blocks/woo-products/block.jsx:255
 msgid "All"
-msgstr "Gbogbo"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:246
 msgid "Featured"
-msgstr "Ti a ṣe afihan"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:247
 msgid "On Sale"
-msgstr "N'iyalo"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:252
 msgid "Category"
-msgstr "Ẹka"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:256
 msgid "Selected"
-msgstr "Ti a yan"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:296
 msgid "Order"
-msgstr "Ibere"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:299
 msgid "Newest to oldest"
-msgstr "Titun si atijọ"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:300
 msgid "Oldest to newest"
-msgstr "Atijọ si titun"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:301
 msgid "Price: high to low"
-msgstr "Iye: giga si kekere"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:302
 msgid "Price: low to high"
-msgstr "Iye: kekere si giga"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:303
 msgid "Highest Rating first"
-msgstr "Iye ti o ga julọ akọkọ"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:304
 msgid "Most sale first"
-msgstr "Ita ti o pọ julọ akọkọ"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:305
 msgid "Title: Alphabetical"
-msgstr "Ak title: Ato"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:306
 msgid "Title: Alphabetical reversed"
-msgstr "Ak title: Ato ti a yipada"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:329
 msgid "Add to cart"
-msgstr "Fi kun si kẹti"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:335
 msgid "No products found."
-msgstr "Ko si awọn ọja ti a ri."
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:339
 msgid "Loading"
-msgstr "Nṣiṣẹ"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:346
 msgid "Woo Products Block"
-msgstr "Woo Awọn ọja Ipa"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:349
-msgid ""
-"WooCommerce has not been detected, make sure WooCommerce is installed and "
-"activated."
+msgid "WooCommerce has not been detected, make sure WooCommerce is installed and activated."
 msgstr ""
-"A ko ti ri WooCommerce, rii daju pe WooCommerce ti fi sori ẹrọ ati pe o ti "
-"mu ṣiṣẹ."
 
 #: assets/blocks/woo-products/block.jsx:355
 msgid "Try again"
-msgstr "Gbiyanju lẹẹkansi"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:409
 msgid "Listing your products in a easy way."
-msgstr "Atokọ awọn ọja rẹ ni ọna ti o rọrun."
+msgstr ""
 
-#: assets/blocks/woo-products/block.jsx:415, fuzzy
+#: assets/blocks/woo-products/block.jsx:415
 msgid "woo commerce"
-msgstr "woo commerce"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:415
 msgid "products list"
-msgstr "atokọ awọn ọja"
+msgstr ""
 
 #: assets/blocks/woo-products/block.jsx:415
 msgid "price list"
-msgstr "atokọ owo"
+msgstr ""
+
+#: assets/js/main.js:112
+msgid "Changes saved!"
+msgstr ""
+
+#: assets/js/main.js:113
+msgid " Error: changes can't be saved."
+msgstr ""
+
+#: assets/js/settings.js:110
+msgid "Edit block"
+msgstr ""
+
+#: assets/js/settings.js:110
+msgid "default config"
+msgstr ""
