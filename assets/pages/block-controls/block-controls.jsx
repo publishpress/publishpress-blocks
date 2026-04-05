@@ -1,10 +1,10 @@
-import classnames from 'classnames';
-import { AdvDateTimeControl, AdvDaysControl, AdvTimeControl, AdvTimezoneControl } from "../0-adv-components/datetime.jsx";
-import {
+const classnames = require('classnames');
+const { AdvDateTimeControl, AdvDaysControl, AdvTimeControl, AdvTimezoneControl } = require('../../blocks/0-adv-components/datetime.jsx');
+const {
     getOptionSuggestions,
     getOptionTitles,
     getOptionSlugs
-} from "../0-adv-components/utils.jsx";
+} = require('../../blocks/0-adv-components/utils.jsx');
 
 (function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose, wpElement) {
     wpBlockEditor = wp.blockEditor || wp.editor;

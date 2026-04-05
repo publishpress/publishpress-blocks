@@ -31,54 +31,58 @@
         });
     };
 
-    const getFromCache = async (key) => {
-        try {
-            const db = await openDatabase();
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readonly');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.get(key);
+    const getFromCache = (key) => {
+        return openDatabase()
+            .then((db) => {
+                return new Promise((resolve, reject) => {
+                    const transaction = db.transaction([STORE_NAME], 'readonly');
+                    const store = transaction.objectStore(STORE_NAME);
+                    const request = store.get(key);
 
-                request.onerror = () => reject('Error reading from cache');
-                request.onsuccess = () => resolve(request.result ? request.result.value : null);
+                    request.onerror = () => reject('Error reading from cache');
+                    request.onsuccess = () => resolve(request.result ? request.result.value : null);
+                });
+            })
+            .catch((error) => {
+                console.error('Cache error:', error);
+                return null;
             });
-        } catch (error) {
-            console.error('Cache error:', error);
-            return null;
-        }
     };
 
-    const saveToCache = async (key, value) => {
-        try {
-            const db = await openDatabase();
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readwrite');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.put({ key, value });
+    const saveToCache = (key, value) => {
+        return openDatabase()
+            .then((db) => {
+                return new Promise((resolve, reject) => {
+                    const transaction = db.transaction([STORE_NAME], 'readwrite');
+                    const store = transaction.objectStore(STORE_NAME);
+                    const request = store.put({ key, value });
 
-                request.onerror = () => reject('Error saving to cache');
-                request.onsuccess = () => resolve();
+                    request.onerror = () => reject('Error saving to cache');
+                    request.onsuccess = () => resolve();
+                });
+            })
+            .catch((error) => {
+                console.error('Cache error:', error);
+                throw error;
             });
-        } catch (error) {
-            console.error('Cache error:', error);
-        }
     };
 
-    const clearCache = async () => {
-        try {
-            const db = await openDatabase();
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readwrite');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.clear();
+    const clearCache = () => {
+        return openDatabase()
+            .then((db) => {
+                return new Promise((resolve, reject) => {
+                    const transaction = db.transaction([STORE_NAME], 'readwrite');
+                    const store = transaction.objectStore(STORE_NAME);
+                    const request = store.clear();
 
-                request.onerror = () => reject('Error clearing cache');
-                request.onsuccess = () => resolve();
+                    request.onerror = () => reject('Error clearing cache');
+                    request.onsuccess = () => resolve();
+                });
+            })
+            .catch((error) => {
+                console.error('Cache error:', error);
+                throw error;
             });
-        } catch (error) {
-            console.error('Cache error:', error);
-            throw error;
-        }
     };
 
     const getBlocks = () => {
@@ -224,7 +228,7 @@
 
     const WelcomeIntro = ({ onScanClick, loadingAll, data }) => {
         const totalBlocks = Object.keys(data.usage || {}).length;
-        const totalPosts = data.posts?.length || 0;
+        const totalPosts = (data.posts && data.posts.length) || 0;
         const lastScanDate = data.lastScanDate;
 
         return (
@@ -284,7 +288,7 @@
 
                     <div className="pp-blocks-usage-welcome-scan-button">
                         <button
-                            class="button button-secondary"
+                            className="button button-secondary"
                             onClick={onScanClick}
                             disabled={loadingAll}
                         >
@@ -300,7 +304,8 @@
         const [expandedPost, setExpandedPost] = useState(null);
         const { usage = {}, posts = [] } = data;
 
-        const blockData = usage[selected?.name] || { posts: {}, total: 0 };
+        const selectedName = selected && selected.name ? selected.name : null;
+        const blockData = usage[selectedName] || { posts: {}, total: 0 };
         const postIds = Object.keys(blockData.posts);
 
         // Get posts that contain this block
@@ -313,8 +318,9 @@
             const groups = {};
 
             blockPosts.forEach(post => {
-                const count = blockData.posts[post.post_id]?.count || 0;
-                const scanned = blockData.posts[post.post_id]?.scanned || '';
+                const postUsage = blockData.posts[post.post_id] || {};
+                const count = postUsage.count || 0;
+                const scanned = postUsage.scanned || '';
 
                 const key = `${post.post_title}-${post.post_id}`;
 
@@ -465,7 +471,7 @@
                                                     </div>
                                                     <div className="pp-blocks-usage-post-blocks">
                                                         <h4>{__('Blocks in this post:', 'advanced-gutenberg')}</h4>
-                                                        {post.blocks?.length > 0 ? (
+                                                        {(post.blocks && post.blocks.length > 0) ? (
                                                             groupBlocksByName(post.blocks).map(block => renderBlockItem(block))
                                                         ) : (
                                                             <p>{__('No blocks found in this post.', 'advanced-gutenberg')}</p>
@@ -540,11 +546,11 @@
 
         // Load data from IndexedDB on initial render
         useEffect(() => {
-            const loadData = async () => {
-                try {
-                    const cachedData = await getFromCache('block_usage_data');
-                    const cachedSettings = await getFromCache('block_usage_settings');
-
+            Promise.all([
+                getFromCache('block_usage_data'),
+                getFromCache('block_usage_settings')
+            ])
+                .then(([cachedData, cachedSettings]) => {
                     if (cachedData) {
                         setData(cachedData);
                     }
@@ -563,15 +569,14 @@
                             setSelectedPostTypes(cachedSettings.selectedPostTypes);
                         }
                     }
-                    setInitialLoadComplete(true);
-                } catch (error) {
+                })
+                .catch((error) => {
                     console.error('Failed to load data from IndexedDB:', error);
                     setDbError(__('Failed to load data from local storage. Please refresh the page.', 'advanced-gutenberg'));
+                })
+                .finally(() => {
                     setInitialLoadComplete(true);
-                }
-            };
-
-            loadData();
+                });
         }, [blocksData.blocks]);
 
         const postAjax = (action, data = {}) => {
@@ -583,34 +588,32 @@
             }).then(r => r.json());
         };
 
-        const handleToggleChange = async (value) => {
+        const handleToggleChange = (value) => {
             setShowEmptyBlocks(value);
-            try {
-                await saveToCache('block_usage_settings', {
+            saveToCache('block_usage_settings', {
                     showEmptyBlocks: value,
-                    lastSelectedBlock: selected?.name || '',
+                    lastSelectedBlock: (selected && selected.name) ? selected.name : '',
                     selectedPostTypes: selectedPostTypes
+                })
+                .catch((error) => {
+                    console.error('Failed to save showEmptyBlocks setting:', error);
                 });
-            } catch (error) {
-                console.error('Failed to save showEmptyBlocks setting:', error);
-            }
         };
 
-        const handlePostTypeChange = async (newPostTypes) => {
+        const handlePostTypeChange = (newPostTypes) => {
             if (!window.advgb_block_usage_data.isProActive) {
                 return;
             }
 
             setSelectedPostTypes(newPostTypes);
-            try {
-                await saveToCache('block_usage_settings', {
+            saveToCache('block_usage_settings', {
                     showEmptyBlocks,
-                    lastSelectedBlock: selected?.name || '',
+                    lastSelectedBlock: (selected && selected.name) ? selected.name : '',
                     selectedPostTypes: newPostTypes
+                })
+                .catch((error) => {
+                    console.error('Failed to save post types:', error);
                 });
-            } catch (error) {
-                console.error('Failed to save post types:', error);
-            }
         };
 
         const categories = useMemo(() => {
@@ -716,7 +719,7 @@
             }
         }, [filteredCategories, blocksData.blocks, initialLoadComplete]);
 
-        const scanAll = async () => {
+        const scanAll = () => {
             setLoadingAll(true);
             setScanProgress({
                 current: 0,
@@ -725,18 +728,21 @@
                 completed: false
             });
 
-            try {
-                let offset = 0;
-                const batchSize = 20;
-                let newData = {
-                    usage: {},
-                    posts: [],
-                    lastScanDate: ''
-                };
-                let totalPosts = 0;
-                let hasMorePosts = true;
+            let offset = 0;
+            const batchSize = 20;
+            let newData = {
+                usage: {},
+                posts: [],
+                lastScanDate: ''
+            };
+            let totalPosts = 0;
+            let hasMorePosts = true;
 
-                while (hasMorePosts) {
+            const processBatch = () => {
+                if (!hasMorePosts) {
+                    return Promise.resolve();
+                }
+
                     setScanProgress(prev => ({
                         ...prev,
                         status: sprintf(
@@ -746,126 +752,130 @@
                         )
                     }));
 
-                    const batchResponse = await postAjax('pp_blocks-usage_scan_batch', {
+                    return postAjax('pp_blocks-usage_scan_batch', {
                         offset,
                         batch_size: batchSize,
                         post_types: selectedPostTypes
-                    });
+                    })
+                        .then((batchResponse) => {
+                            if (!batchResponse.success) {
+                                throw new Error(__('Batch scan failed', 'advanced-gutenberg'));
+                            }
 
-                    if (!batchResponse.success) {
-                        throw new Error(__('Batch scan failed', 'advanced-gutenberg'));
-                    }
+                            if (batchResponse.data.total) {
+                                totalPosts = batchResponse.data.total;
+                            }
 
-                    if (batchResponse.data.total) {
-                        totalPosts = batchResponse.data.total;
-                    }
+                            // Merge usage data
+                            Object.entries(batchResponse.data.usage || {}).forEach(([blockName, blockData]) => {
+                                if (!newData.usage[blockName]) {
+                                    newData.usage[blockName] = {
+                                        posts: {},
+                                        total: 0
+                                    };
+                                }
 
-                    // Merge usage data
-                    Object.entries(batchResponse.data.usage || {}).forEach(([blockName, blockData]) => {
-                        if (!newData.usage[blockName]) {
-                            newData.usage[blockName] = {
-                                posts: {},
-                                total: 0
-                            };
-                        }
+                                Object.entries(blockData.posts || {}).forEach(([postId, entry]) => {
+                                    newData.usage[blockName].posts[postId] = entry;
+                                });
 
-                        Object.entries(blockData.posts || {}).forEach(([postId, entry]) => {
-                            newData.usage[blockName].posts[postId] = entry;
+                                newData.usage[blockName].total += blockData.total || 0;
+                            });
+
+                            // Merge posts
+                            newData.posts = [...newData.posts, ...(batchResponse.data.posts || [])];
+                            newData.lastScanDate = batchResponse.data.lastScanDate || newData.lastScanDate;
+
+                            offset += batchResponse.data.processed || 0;
+                            hasMorePosts = offset < totalPosts;
+
+                            setScanProgress(prev => ({
+                                ...prev,
+                                current: offset,
+                                total: totalPosts
+                            }));
+
+                            // Update local state with the new data
+                            setData(newData);
+
+                            return saveToCache('block_usage_data', newData)
+                                .catch((error) => {
+                                    console.error('Failed to save batch to IndexedDB:', error);
+                                })
+                                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
+                                .then(processBatch);
                         });
+            };
 
-                        newData.usage[blockName].total += blockData.total || 0;
-                    });
-
-                    // Merge posts
-                    newData.posts = [...newData.posts, ...(batchResponse.data.posts || [])];
-                    newData.lastScanDate = batchResponse.data.lastScanDate || newData.lastScanDate;
-
-                    offset += batchResponse.data.processed || 0;
-                    hasMorePosts = offset < totalPosts;
-
+            processBatch()
+                .then(() => {
                     setScanProgress(prev => ({
                         ...prev,
-                        current: offset,
-                        total: totalPosts
+                        completed: true,
+                        status: __('Scan completed successfully!', 'advanced-gutenberg')
                     }));
-
-                    // Update local state with the new data
-                    setData(newData);
-
-                    // Save to IndexedDB after each batch
-                    try {
-                        await saveToCache('block_usage_data', newData);
-                    } catch (error) {
-                        console.error('Failed to save batch to IndexedDB:', error);
-                        // Continue with next batch even if save fails
-                    }
-
-                    await new Promise(resolve => setTimeout(resolve, 100));
-                }
-
-                setScanProgress(prev => ({
-                    ...prev,
-                    completed: true,
-                    status: __('Scan completed successfully!', 'advanced-gutenberg')
-                }));
-            } catch (error) {
-                console.error('Scan error:', error);
-                setScanProgress(prev => ({
-                    ...prev,
-                    status: __('Scan failed: ', 'advanced-gutenberg') + error.message
-                }));
-            } finally {
-                setTimeout(() => {
-                    setLoadingAll(false);
-                    setScanProgress({
-                        current: 0,
-                        total: 0,
-                        status: '',
-                        completed: false
-                    });
-                }, 2000);
-            }
+                })
+                .catch((error) => {
+                    console.error('Scan error:', error);
+                    setScanProgress(prev => ({
+                        ...prev,
+                        status: __('Scan failed: ', 'advanced-gutenberg') + error.message
+                    }));
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        setLoadingAll(false);
+                        setScanProgress({
+                            current: 0,
+                            total: 0,
+                            status: '',
+                            completed: false
+                        });
+                    }, 2000);
+                });
         };
 
-        const clearAllData = async () => {
+        const clearAllData = () => {
             setLoadingClearAll(true);
-            try {
-                await clearCache();
-                setData({
-                    usage: {},
-                    posts: [],
-                    lastScanDate: ''
-                });
-                setShowEmptyBlocks(false);
-                setSelected(null);
+            clearCache()
+                .then(() => {
+                    setData({
+                        usage: {},
+                        posts: [],
+                        lastScanDate: ''
+                    });
+                    setShowEmptyBlocks(false);
+                    setSelected(null);
 
-                // Clear settings as well
-                await saveToCache('block_usage_settings', {
-                    showEmptyBlocks: false,
-                    lastSelectedBlock: ''
+                    // Clear settings as well
+                    return saveToCache('block_usage_settings', {
+                        showEmptyBlocks: false,
+                        lastSelectedBlock: ''
+                    });
+                })
+                .catch((error) => {
+                    console.error('Failed to clear data:', error);
+                    setDbError(__('Failed to clear data. Please try again.', 'advanced-gutenberg'));
+                })
+                .finally(() => {
+                    setLoadingClearAll(false);
                 });
-            } catch (error) {
-                console.error('Failed to clear data:', error);
-                setDbError(__('Failed to clear data. Please try again.', 'advanced-gutenberg'));
-            } finally {
-                setLoadingClearAll(false);
-            }
         };
 
-        const handleDetailsClick = async (bt) => {
-            const newSelected = selected?.name === bt.name ? null : bt;
+        const handleDetailsClick = (bt) => {
+            const isSameSelected = selected && selected.name === bt.name;
+            const newSelected = isSameSelected ? null : bt;
             setSelected(newSelected);
 
             // Save the last selected block
             if (newSelected) {
-                try {
-                    await saveToCache('block_usage_settings', {
+                saveToCache('block_usage_settings', {
                         showEmptyBlocks,
                         lastSelectedBlock: newSelected.name
+                    })
+                    .catch((error) => {
+                        console.error('Failed to save last selected block:', error);
                     });
-                } catch (error) {
-                    console.error('Failed to save last selected block:', error);
-                }
             }
         };
 
@@ -909,7 +919,7 @@
                         <FlexItem>
                             <div className={`${wrapperCalss} pp-blocks-usage-controls`}>
                                 {proHtml}
-                                {window.advgb_block_usage_data?.postTypes && (
+                                {window.advgb_block_usage_data && window.advgb_block_usage_data.postTypes && (
                                     <div className={`${blurClass} pp-blocks-usage-post-type-filter`}>
                                         <FormTokenField
                                             label={__('Limit Scan to Post Types:', 'advanced-gutenberg')}
@@ -1019,12 +1029,13 @@
                                                     const blockData = data.usage[bt.name] || { posts: {}, total: 0 };
                                                     const postCount = Object.keys(blockData.posts).length;
                                                     const useCount = blockData.total;
-                                                    const lastScanned = Object.values(blockData.posts)[0]?.scanned || '';
+                                                    const firstBlockPost = Object.values(blockData.posts)[0] || {};
+                                                    const lastScanned = firstBlockPost.scanned || '';
 
                                                     return (
                                                         <Card
                                                             key={bt.name}
-                                                            className={`pp-blocks-usage-block-tile ${selected?.name === bt.name ? 'active' : ''}`}
+                                                            className={`pp-blocks-usage-block-tile ${(selected && selected.name === bt.name) ? 'active' : ''}`}
                                                             onClick={() => handleDetailsClick(bt)}
                                                         >
                                                             <div className="pp-blocks-usage-tile-main">
@@ -1076,7 +1087,7 @@
                                     selected={selected}
                                     data={data}
                                     onClose={() => setSelected(null)}
-                                    canEditPosts={currentUser?.canEditPosts || false}
+                                    canEditPosts={(currentUser && currentUser.canEditPosts) || false}
                                 />
                             )}
                         </>

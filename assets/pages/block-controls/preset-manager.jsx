@@ -1,9 +1,9 @@
-import { AdvDateTimeControl, AdvDaysControl, AdvTimeControl, AdvTimezoneControl } from "../0-adv-components/datetime.jsx";
+import { AdvDateTimeControl, AdvDaysControl, AdvTimeControl, AdvTimezoneControl } from "../../blocks/0-adv-components/datetime.jsx";
 import {
     getOptionSuggestions,
     getOptionTitles,
     getOptionSlugs
-} from "../0-adv-components/utils.jsx";
+} from "../../blocks/0-adv-components/utils.jsx";
 
 (function (wpI18n, wpComponents, wpElement, wpData) {
     const { __, sprintf } = wpI18n;
