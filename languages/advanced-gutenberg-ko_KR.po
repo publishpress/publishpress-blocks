@@ -17,6 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: assets/blocks/columns/block.jsx:13
+#: assets/blocks/columns/block.jsx:13
 #: assets/blocks/columns/block.jsx:13, fuzzy
 msgid "100"
 msgstr "100"
