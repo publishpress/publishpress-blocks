@@ -3405,7 +3405,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 $localize_data
             );
 
-			wp_set_script_translations( 'advgb_block_usage', 'advanced-gutenberg' );
+            wp_set_script_translations(
+                'advgb_block_usage',
+                'advanced-gutenberg',
+                plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
+            );
         }
 
         public function get_editor_post_types()

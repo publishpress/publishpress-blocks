@@ -1546,7 +1546,21 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                     true
                 );
 
-                wp_set_script_translations( 'advgb_block_controls', 'advanced-gutenberg' );
+                wp_set_script_translations(
+                    'advgb_preset_data_manager',
+                    'advanced-gutenberg',
+                    plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
+                );
+                wp_set_script_translations(
+                    'advgb-preset-manager',
+                    'advanced-gutenberg',
+                    plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
+                );
+                wp_set_script_translations(
+                    'advgb_block_controls',
+                    'advanced-gutenberg',
+                    plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
+                );
             }
         }
 
