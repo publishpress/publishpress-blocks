@@ -17,7 +17,6 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: assets/blocks/columns/block.jsx:13
-#: assets/blocks/columns/block.jsx:13
 #: assets/blocks/columns/block.jsx:13, fuzzy
 msgid "100"
 msgstr "100"
@@ -293,7 +292,7 @@ msgstr "Captcha ti ṣofo"
 #: incl/advanced-gutenberg-main.php:5981
 #: assets/blocks/login-form/block.jsx:512, fuzzy
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Dasiboodu"
 
 #: incl/advanced-gutenberg-main.php:1901
 #: incl/advanced-gutenberg-main.php:2214
@@ -3567,7 +3566,7 @@ msgstr "Fipamọ Àwọn Iṣakoso"
 #: incl/pages/block-controls/presets-admin.php:12
 #: assets/pages/block-controls/preset-manager.jsx:1809, fuzzy
 msgid "Loading presets..."
-msgstr "Loading presets..."
+msgstr "Ń gba awọn preset..."
 
 #: incl/pages/block-settings.php:57
 #: assets/blocks/advaccordion/block.jsx:418, fuzzy
