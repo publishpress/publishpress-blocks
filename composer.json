@@ -69,7 +69,7 @@
         "translate:pot": "wp i18n make-pot . ./languages/advanced-gutenberg.pot --domain=advanced-gutenberg --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js.map --allow-root",
         "translate:mo": "wp i18n make-mo ./languages ./languages --allow-root",
         "translate:json": "bash ./dev-workspace/scripts/lang-make-json.sh",
-        "translate:php": "wp i18n make-php ./languages --allow-root",
+        "translate:php": "bash ./dev-workspace/scripts/lang-make-php.sh",
         "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
         "pre-update-cmd": "composer update --working-dir=./lib",
         "pre-install-cmd": "composer install --working-dir=./lib"

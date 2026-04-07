@@ -19,13 +19,14 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #. Plugin Name of the plugin
+#. Plugin Name of the plugin
 #: advanced-gutenberg.php:7 incl/advanced-gutenberg-main.php:176
-#: incl/pages/block-settings.php:95 incl/pages/main.php:8
+#: incl/pages/block-settings.php:95 incl/pages/main.php:8, fuzzy
 msgid "PublishPress Blocks"
 msgstr "PublishPress Blocks"
 
 #. Plugin URI of the plugin
-#: advanced-gutenberg.php:9
+#: advanced-gutenberg.php:9, fuzzy
 msgid "https://publishpress.com/blocks/"
 msgstr "https://publishpress.com/blocks/"
 
@@ -39,12 +40,12 @@ msgstr ""
 "profesionales con el editor de Gutenberg."
 
 #. Author of the plugin
-#: advanced-gutenberg.php:15 assets/blocks/pro-ad/shared/index.jsx:130
+#: advanced-gutenberg.php:15 assets/blocks/pro-ad/shared/index.jsx:130, fuzzy
 msgid "PublishPress"
 msgstr "PublishPress"
 
 #. Author URI of the plugin
-#: advanced-gutenberg.php:17
+#: advanced-gutenberg.php:17, fuzzy
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
 
@@ -173,7 +174,7 @@ msgstr "Actualizar a Pro"
 #: assets/blocks/recent-posts/block.jsx:921
 #: assets/blocks/recent-posts/block.jsx:1221
 #: assets/blocks/recent-posts/block.jsx:1466
-#: assets/blocks/recent-posts/block.jsx:1515
+#: assets/blocks/recent-posts/block.jsx:1515, fuzzy
 msgid "Pro"
 msgstr "Pro"
 
@@ -802,7 +803,7 @@ msgid "Select a reusable block..."
 msgstr "Selecciona un bloque reutilizable…"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:135
-#: incl/pages/settings.php:33
+#: incl/pages/settings.php:33, fuzzy
 msgid "General"
 msgstr "General"
 
@@ -1008,7 +1009,7 @@ msgstr "Buscar entradas…"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:464
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:501
-#: assets/pages/block-controls/preset-manager.jsx:800
+#: assets/pages/block-controls/preset-manager.jsx:800, fuzzy
 msgid "OR"
 msgstr "OR"
 
@@ -1056,7 +1057,7 @@ msgstr "Buscar términos…"
 msgid "Home"
 msgstr "Inicio"
 
-#: incl/block-controls-main.php:1731
+#: incl/block-controls-main.php:1731, fuzzy
 msgid "Blog"
 msgstr "Blog"
 
@@ -1071,7 +1072,7 @@ msgstr "Archivo"
 msgid "Search"
 msgstr "Buscar"
 
-#: incl/block-controls-main.php:1743
+#: incl/block-controls-main.php:1743, fuzzy
 msgid "404"
 msgstr "404"
 
@@ -1165,7 +1166,7 @@ msgid "Header Icon"
 msgstr "Icono de la cabecera"
 
 #: incl/block-settings-main.php:51 incl/block-settings-main.php:502
-#: assets/blocks/advlist/block.jsx:215
+#: assets/blocks/advlist/block.jsx:215, fuzzy
 msgid "Plus"
 msgstr "Plus"
 
@@ -1461,7 +1462,7 @@ msgstr "Ancho"
 #: assets/blocks/pro-ad/recent-posts-promo.jsx:71
 #: assets/blocks/pro-ad/recent-posts-promo.jsx:193
 #: assets/blocks/pro-ad/recent-posts-promo.jsx:241
-#: assets/blocks/pro-ad/recent-posts-promo.jsx:276
+#: assets/blocks/pro-ad/recent-posts-promo.jsx:276, fuzzy
 msgid "Color"
 msgstr "Color"
 
@@ -1709,7 +1710,7 @@ msgstr "Icono del botón"
 
 #: incl/block-settings-main.php:634 incl/block-settings-main.php:1305
 #: incl/block-styles/block-styles.php:978
-#: incl/block-styles/block-styles.php:1188
+#: incl/block-styles/block-styles.php:1188, fuzzy
 msgid "Normal"
 msgstr "Normal"
 
@@ -1815,7 +1816,7 @@ msgstr "Estilo de mapa"
 msgid "Silver"
 msgstr "Plata"
 
-#: incl/block-settings-main.php:768
+#: incl/block-settings-main.php:768, fuzzy
 msgid "Retro"
 msgstr "Retro"
 
@@ -1859,77 +1860,77 @@ msgid "Icon"
 msgstr "Icono"
 
 #: incl/block-settings-main.php:802 incl/block-settings-main.php:843
-#: incl/block-settings-main.php:884
+#: incl/block-settings-main.php:884, fuzzy
 msgid "Blogger"
 msgstr "Blogger"
 
 #: incl/block-settings-main.php:803 incl/block-settings-main.php:844
-#: incl/block-settings-main.php:885
+#: incl/block-settings-main.php:885, fuzzy
 msgid "Facebook"
 msgstr "Facebook"
 
 #: incl/block-settings-main.php:804 incl/block-settings-main.php:845
-#: incl/block-settings-main.php:886
+#: incl/block-settings-main.php:886, fuzzy
 msgid "Flickr"
 msgstr "Flickr"
 
 #: incl/block-settings-main.php:805 incl/block-settings-main.php:846
-#: incl/block-settings-main.php:887
+#: incl/block-settings-main.php:887, fuzzy
 msgid "Google Plus"
 msgstr "Google Plus"
 
 #: incl/block-settings-main.php:806 incl/block-settings-main.php:847
-#: incl/block-settings-main.php:888
+#: incl/block-settings-main.php:888, fuzzy
 msgid "Instagram"
 msgstr "Instagram"
 
 #: incl/block-settings-main.php:807 incl/block-settings-main.php:848
-#: incl/block-settings-main.php:889
+#: incl/block-settings-main.php:889, fuzzy
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
 #: incl/block-settings-main.php:809 incl/block-settings-main.php:850
-#: incl/block-settings-main.php:891
+#: incl/block-settings-main.php:891, fuzzy
 msgid "Picasa"
 msgstr "Picasa"
 
 #: incl/block-settings-main.php:810 incl/block-settings-main.php:851
-#: incl/block-settings-main.php:892
+#: incl/block-settings-main.php:892, fuzzy
 msgid "Pinterest"
 msgstr "Pinterest"
 
 #: incl/block-settings-main.php:811 incl/block-settings-main.php:852
-#: incl/block-settings-main.php:893
+#: incl/block-settings-main.php:893, fuzzy
 msgid "Reddit"
 msgstr "Reddit"
 
 #: incl/block-settings-main.php:812 incl/block-settings-main.php:853
-#: incl/block-settings-main.php:894
+#: incl/block-settings-main.php:894, fuzzy
 msgid "Skype"
 msgstr "Skype"
 
 #: incl/block-settings-main.php:814 incl/block-settings-main.php:855
-#: incl/block-settings-main.php:896
+#: incl/block-settings-main.php:896, fuzzy
 msgid "Sound Cloud"
 msgstr "Sound Cloud"
 
 #: incl/block-settings-main.php:817 incl/block-settings-main.php:858
-#: incl/block-settings-main.php:899
+#: incl/block-settings-main.php:899, fuzzy
 msgid "Tumblr"
 msgstr "Tumblr"
 
 #: incl/block-settings-main.php:818 incl/block-settings-main.php:859
-#: incl/block-settings-main.php:900
+#: incl/block-settings-main.php:900, fuzzy
 msgid "Twitter"
 msgstr "Twitter"
 
 #: incl/block-settings-main.php:819 incl/block-settings-main.php:860
-#: incl/block-settings-main.php:901
+#: incl/block-settings-main.php:901, fuzzy
 msgid "Vimeo"
 msgstr "Vimeo"
 
 #: incl/block-settings-main.php:820 incl/block-settings-main.php:861
-#: incl/block-settings-main.php:902
+#: incl/block-settings-main.php:902, fuzzy
 msgid "Youtube"
 msgstr "Youtube"
 
@@ -1988,11 +1989,11 @@ msgstr "Ajustes de pestaña"
 msgid "Tabs Style"
 msgstr "Estilos de pestañas"
 
-#: incl/block-settings-main.php:989 assets/blocks/advtabs/block.jsx:37
+#: incl/block-settings-main.php:989 assets/blocks/advtabs/block.jsx:37, fuzzy
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: incl/block-settings-main.php:993 assets/blocks/advtabs/block.jsx:38
+#: incl/block-settings-main.php:993 assets/blocks/advtabs/block.jsx:38, fuzzy
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -2147,31 +2148,31 @@ msgstr "Ajustes de columnas"
 msgid "Space between column"
 msgstr "Espacio entre columnas"
 
-#: incl/block-settings-main.php:1560 incl/block-settings-main.php:1599
+#: incl/block-settings-main.php:1560 incl/block-settings-main.php:1599, fuzzy
 msgid "10px"
 msgstr "10px"
 
-#: incl/block-settings-main.php:1564 incl/block-settings-main.php:1603
+#: incl/block-settings-main.php:1564 incl/block-settings-main.php:1603, fuzzy
 msgid "20px"
 msgstr "20px"
 
-#: incl/block-settings-main.php:1568 incl/block-settings-main.php:1607
+#: incl/block-settings-main.php:1568 incl/block-settings-main.php:1607, fuzzy
 msgid "30px"
 msgstr "30px"
 
-#: incl/block-settings-main.php:1572 incl/block-settings-main.php:1611
+#: incl/block-settings-main.php:1572 incl/block-settings-main.php:1611, fuzzy
 msgid "40px"
 msgstr "40px"
 
-#: incl/block-settings-main.php:1576 incl/block-settings-main.php:1615
+#: incl/block-settings-main.php:1576 incl/block-settings-main.php:1615, fuzzy
 msgid "50px"
 msgstr "50px"
 
-#: incl/block-settings-main.php:1580 incl/block-settings-main.php:1619
+#: incl/block-settings-main.php:1580 incl/block-settings-main.php:1619, fuzzy
 msgid "70px"
 msgstr "70px"
 
-#: incl/block-settings-main.php:1584 incl/block-settings-main.php:1623
+#: incl/block-settings-main.php:1584 incl/block-settings-main.php:1623, fuzzy
 msgid "90px"
 msgstr "90px"
 
@@ -2208,7 +2209,7 @@ msgstr "Columnas envueltas"
 msgid "Wrapper Tag"
 msgstr "Etiqueta de envoltura"
 
-#: incl/block-settings-main.php:1672
+#: incl/block-settings-main.php:1672, fuzzy
 msgid "Div"
 msgstr "Div"
 
@@ -2294,27 +2295,27 @@ msgstr "Alto de línea (px)"
 msgid "HTML Tag"
 msgstr "Etiqueta HTML"
 
-#: incl/block-settings-main.php:1989 assets/blocks/infobox/block.jsx:465
+#: incl/block-settings-main.php:1989 assets/blocks/infobox/block.jsx:465, fuzzy
 msgid "H1"
 msgstr "H1"
 
-#: incl/block-settings-main.php:1993 assets/blocks/infobox/block.jsx:466
+#: incl/block-settings-main.php:1993 assets/blocks/infobox/block.jsx:466, fuzzy
 msgid "H2"
 msgstr "H2"
 
-#: incl/block-settings-main.php:1997 assets/blocks/infobox/block.jsx:467
+#: incl/block-settings-main.php:1997 assets/blocks/infobox/block.jsx:467, fuzzy
 msgid "H3"
 msgstr "H3"
 
-#: incl/block-settings-main.php:2001 assets/blocks/infobox/block.jsx:468
+#: incl/block-settings-main.php:2001 assets/blocks/infobox/block.jsx:468, fuzzy
 msgid "H4"
 msgstr "H4"
 
-#: incl/block-settings-main.php:2005 assets/blocks/infobox/block.jsx:469
+#: incl/block-settings-main.php:2005 assets/blocks/infobox/block.jsx:469, fuzzy
 msgid "H5"
 msgstr "H5"
 
-#: incl/block-settings-main.php:2009 assets/blocks/infobox/block.jsx:470
+#: incl/block-settings-main.php:2009 assets/blocks/infobox/block.jsx:470, fuzzy
 msgid "H6"
 msgstr "H6"
 
@@ -2568,7 +2569,7 @@ msgstr "Integrado"
 msgid "Inline Block"
 msgstr "Bloque integrado"
 
-#: incl/block-styles/block-styles.php:1267
+#: incl/block-styles/block-styles.php:1267, fuzzy
 msgid "Flex"
 msgstr "Flex"
 
@@ -2647,7 +2648,7 @@ msgstr "Ambos"
 msgid "Overflow"
 msgstr "Desbordamiento"
 
-#: incl/block-styles/block-styles.php:1357
+#: incl/block-styles/block-styles.php:1357, fuzzy
 msgid "Visible"
 msgstr "Visible"
 
@@ -2753,7 +2754,7 @@ msgstr "Color del borde inferior"
 msgid "Text Elements"
 msgstr "Elementos de texto"
 
-#: incl/block-styles/block-styles.php:1546
+#: incl/block-styles/block-styles.php:1546, fuzzy
 msgid "Span"
 msgstr "Span"
 
@@ -2943,7 +2944,7 @@ msgstr "Filtre al pasar el cursor"
 msgid "Grayscale"
 msgstr "Escala de grises"
 
-#: incl/block-styles/block-styles.php:2136
+#: incl/block-styles/block-styles.php:2136, fuzzy
 msgid "Sepia"
 msgstr "Sepia"
 
@@ -3107,7 +3108,7 @@ msgstr "Entrada"
 #: incl/pages/block-controls/controls.php:284
 #: incl/pages/block-controls/controls.php:302
 #: incl/pages/block-controls/controls.php:320
-#: incl/pages/block-controls/controls.php:338
+#: incl/pages/block-controls/controls.php:338, fuzzy
 msgid "Widgets"
 msgstr "Widgets"
 
@@ -3199,7 +3200,7 @@ msgstr "Elige qué sistemas operativos pueden ver tus bloques."
 
 #: incl/pages/block-controls/controls.php:256
 #: assets/pages/block-controls/block-controls.jsx:1799
-#: assets/pages/block-controls/preset-manager.jsx:672
+#: assets/pages/block-controls/preset-manager.jsx:672, fuzzy
 msgid "Cookie"
 msgstr "Cookie"
 
@@ -3517,7 +3518,7 @@ msgstr "Mapas"
 msgid "Email & Forms"
 msgstr "Correo electrónico y formularios"
 
-#: incl/pages/settings.php:58
+#: incl/pages/settings.php:58, fuzzy
 msgid "reCAPTCHA"
 msgstr "reCAPTCHA"
 
@@ -3575,11 +3576,11 @@ msgstr "Descargar datos de formularios de contacto"
 msgid "Data stored through Contact form blocks."
 msgstr "Datos almacenados a través de bloques de formularios de contacto."
 
-#: incl/pages/settings/data.php:38 incl/pages/settings/data.php:78
+#: incl/pages/settings/data.php:38 incl/pages/settings/data.php:78, fuzzy
 msgid "CSV"
 msgstr "CSV"
 
-#: incl/pages/settings/data.php:49 incl/pages/settings/data.php:89
+#: incl/pages/settings/data.php:49 incl/pages/settings/data.php:89, fuzzy
 msgid "JSON"
 msgstr "JSON"
 
@@ -3790,7 +3791,7 @@ msgstr "Tema"
 msgid "Light"
 msgstr "Claro"
 
-#: incl/pages/settings/recaptcha.php:128
+#: incl/pages/settings/recaptcha.php:128, fuzzy
 msgid "Invisible"
 msgstr "Invisible"
 
@@ -3883,16 +3884,16 @@ msgstr "J"
 msgid "F"
 msgstr "V"
 
-#: assets/blocks/0-adv-components/datetime.jsx:94
+#: assets/blocks/0-adv-components/datetime.jsx:94, fuzzy
 msgctxt "Saturday first letter"
 msgid "S"
 msgstr "S"
 
-#: assets/blocks/0-adv-components/datetime.jsx:367
+#: assets/blocks/0-adv-components/datetime.jsx:367, fuzzy
 msgid "AM"
 msgstr "AM"
 
-#: assets/blocks/0-adv-components/datetime.jsx:380
+#: assets/blocks/0-adv-components/datetime.jsx:380, fuzzy
 msgid "PM"
 msgstr "PM"
 
@@ -4051,7 +4052,7 @@ msgstr "lista"
 #: assets/blocks/advaccordion/accordion.jsx:343
 #: assets/blocks/advaccordion/block.jsx:425
 #: assets/blocks/login-form/block.jsx:984
-#: assets/blocks/search-bar/block.jsx:439
+#: assets/blocks/search-bar/block.jsx:439, fuzzy
 msgid "faq"
 msgstr "faq"
 
@@ -4938,7 +4939,7 @@ msgstr "medios"
 msgid "One column"
 msgstr "Una columna"
 
-#: assets/blocks/columns/block.jsx:13
+#: assets/blocks/columns/block.jsx:13, fuzzy
 msgid "100"
 msgstr "100"
 
@@ -4946,7 +4947,7 @@ msgstr "100"
 msgid "Two columns; equal split"
 msgstr "Dos columnas; partes iguales"
 
-#: assets/blocks/columns/block.jsx:14
+#: assets/blocks/columns/block.jsx:14, fuzzy
 msgid "50 / 50"
 msgstr "50 / 50"
 
@@ -4954,7 +4955,7 @@ msgstr "50 / 50"
 msgid "Two columns; two-thirds, one-third split"
 msgstr "Dos columnas; dividido entre dos tercios y un tercio"
 
-#: assets/blocks/columns/block.jsx:15
+#: assets/blocks/columns/block.jsx:15, fuzzy
 msgid "66 / 33"
 msgstr "66 / 33"
 
@@ -4962,7 +4963,7 @@ msgstr "66 / 33"
 msgid "Two columns; one-third, two-thirds split"
 msgstr "Dos columnas; dividido entre un tercio y dos tercios"
 
-#: assets/blocks/columns/block.jsx:16
+#: assets/blocks/columns/block.jsx:16, fuzzy
 msgid "33 / 66"
 msgstr "33 / 66"
 
@@ -4970,7 +4971,7 @@ msgstr "33 / 66"
 msgid "Two columns; one-quarter, three-quarters split"
 msgstr "Dos columnas; dividido entre un cuarto y tres cuartos"
 
-#: assets/blocks/columns/block.jsx:17
+#: assets/blocks/columns/block.jsx:17, fuzzy
 msgid "25 / 75"
 msgstr "25 / 75"
 
@@ -4978,7 +4979,7 @@ msgstr "25 / 75"
 msgid "Two columns; three-quarters, one-quarter split"
 msgstr "Dos columnas; dividido entre tres cuarto y un cuarto"
 
-#: assets/blocks/columns/block.jsx:18
+#: assets/blocks/columns/block.jsx:18, fuzzy
 msgid "75 / 25"
 msgstr "75 / 25"
 
@@ -4986,7 +4987,7 @@ msgstr "75 / 25"
 msgid "Two columns; one-fifth, four-fifths split"
 msgstr "Dos columnas; dividido entre un quinto y cuatro quintos"
 
-#: assets/blocks/columns/block.jsx:19
+#: assets/blocks/columns/block.jsx:19, fuzzy
 msgid "20 / 80"
 msgstr "20 / 80"
 
@@ -4994,7 +4995,7 @@ msgstr "20 / 80"
 msgid "Two columns; four-fifths, one-fifth split"
 msgstr "Dos columnas; dividido entre cuatro quintos y un quinto"
 
-#: assets/blocks/columns/block.jsx:20
+#: assets/blocks/columns/block.jsx:20, fuzzy
 msgid "80 / 20"
 msgstr "80 / 20"
 
@@ -5002,7 +5003,7 @@ msgstr "80 / 20"
 msgid "Three columns; equal split"
 msgstr "Tres columnas; partes iguales"
 
-#: assets/blocks/columns/block.jsx:21
+#: assets/blocks/columns/block.jsx:21, fuzzy
 msgid "33 / 33 / 33"
 msgstr "33 / 33 / 33"
 
@@ -5010,7 +5011,7 @@ msgstr "33 / 33 / 33"
 msgid "Three columns; wider one-half left column"
 msgstr "Tres columnas; la columna izquierda es más ancha"
 
-#: assets/blocks/columns/block.jsx:22
+#: assets/blocks/columns/block.jsx:22, fuzzy
 msgid "50 / 25 / 25"
 msgstr "50 / 25 / 25"
 
@@ -5018,7 +5019,7 @@ msgstr "50 / 25 / 25"
 msgid "Three columns; wider one-half right column"
 msgstr "Tres columnas; la columna derecha es más ancha"
 
-#: assets/blocks/columns/block.jsx:23
+#: assets/blocks/columns/block.jsx:23, fuzzy
 msgid "25 / 25 / 50"
 msgstr "25 / 25 / 50"
 
@@ -5026,7 +5027,7 @@ msgstr "25 / 25 / 50"
 msgid "Three columns; wider one-half center column"
 msgstr "Tres columnas; la columna central es más ancha"
 
-#: assets/blocks/columns/block.jsx:24
+#: assets/blocks/columns/block.jsx:24, fuzzy
 msgid "25 / 50 / 25"
 msgstr "25 / 50 / 25"
 
@@ -5034,7 +5035,7 @@ msgstr "25 / 50 / 25"
 msgid "Three columns; wider three-fifths center column"
 msgstr "Tres columnas; la columna central es de tres quintos"
 
-#: assets/blocks/columns/block.jsx:25
+#: assets/blocks/columns/block.jsx:25, fuzzy
 msgid "20 / 60 / 20"
 msgstr "20 / 60 / 20"
 
@@ -5042,7 +5043,7 @@ msgstr "20 / 60 / 20"
 msgid "Three columns; wider three-fifths left column"
 msgstr "Tres columnas; la columna izquierda es de tres quintos"
 
-#: assets/blocks/columns/block.jsx:26
+#: assets/blocks/columns/block.jsx:26, fuzzy
 msgid "60 / 20 / 20"
 msgstr "60 / 20 / 20"
 
@@ -5050,7 +5051,7 @@ msgstr "60 / 20 / 20"
 msgid "Three columns; wider three-fifths right column"
 msgstr "Tres columnas; la columna derecha es de tres quintos"
 
-#: assets/blocks/columns/block.jsx:27
+#: assets/blocks/columns/block.jsx:27, fuzzy
 msgid "20 / 20 / 60"
 msgstr "20 / 20 / 60"
 
@@ -5058,7 +5059,7 @@ msgstr "20 / 20 / 60"
 msgid "Three columns; wider four-sixths center column"
 msgstr "Tres columnas; la columna central es de cuatro quintos"
 
-#: assets/blocks/columns/block.jsx:28
+#: assets/blocks/columns/block.jsx:28, fuzzy
 msgid "16.6 / 66.6 / 16.6"
 msgstr "16.6 / 66.6 / 16.6"
 
@@ -5066,7 +5067,7 @@ msgstr "16.6 / 66.6 / 16.6"
 msgid "Four columns; equal split"
 msgstr "Cuatro columnas; partes iguales"
 
-#: assets/blocks/columns/block.jsx:29
+#: assets/blocks/columns/block.jsx:29, fuzzy
 msgid "25 / 25 / 25 / 25"
 msgstr "25 / 25 / 25 / 25"
 
@@ -5074,7 +5075,7 @@ msgstr "25 / 25 / 25 / 25"
 msgid "Four columns; wider one-half left column"
 msgstr "Cuatro columnas; la columna izquierda es más ancha"
 
-#: assets/blocks/columns/block.jsx:30
+#: assets/blocks/columns/block.jsx:30, fuzzy
 msgid "50 / 16.6 / 16.6 / 16.6"
 msgstr "50 / 16.6 / 16.6 / 16.6"
 
@@ -5082,7 +5083,7 @@ msgstr "50 / 16.6 / 16.6 / 16.6"
 msgid "Four columns; wider one-half right column"
 msgstr "Cuatro columnas; la columna derecha es más ancha"
 
-#: assets/blocks/columns/block.jsx:31
+#: assets/blocks/columns/block.jsx:31, fuzzy
 msgid "16.6 / 16.6 / 16.6 / 50"
 msgstr "16.6 / 16.6 / 16.6 / 50"
 
@@ -5090,7 +5091,7 @@ msgstr "16.6 / 16.6 / 16.6 / 50"
 msgid "Four columns; wider two-fifths right column"
 msgstr "Cuatro columnas; la columna derecha es de dos quintos"
 
-#: assets/blocks/columns/block.jsx:32
+#: assets/blocks/columns/block.jsx:32, fuzzy
 msgid "20 / 20 / 20 / 40"
 msgstr "20 / 20 / 20 / 40"
 
@@ -5098,7 +5099,7 @@ msgstr "20 / 20 / 20 / 40"
 msgid "Four columns; wider two-fifths left column"
 msgstr "Cuatro columnas; la columna izquierda es de dos quintos"
 
-#: assets/blocks/columns/block.jsx:33
+#: assets/blocks/columns/block.jsx:33, fuzzy
 msgid "40 / 20 / 20 / 20"
 msgstr "40 / 20 / 20 / 20"
 
@@ -5106,7 +5107,7 @@ msgstr "40 / 20 / 20 / 20"
 msgid "Five columns; equal split"
 msgstr "Cinco columnas; partes iguales"
 
-#: assets/blocks/columns/block.jsx:34
+#: assets/blocks/columns/block.jsx:34, fuzzy
 msgid "20 / 20 / 20 / 20 / 20"
 msgstr "20 / 20 / 20 / 20 / 20"
 
@@ -5114,7 +5115,7 @@ msgstr "20 / 20 / 20 / 20 / 20"
 msgid "Six columns; equal split"
 msgstr "Seis columnas; partes iguales"
 
-#: assets/blocks/columns/block.jsx:35
+#: assets/blocks/columns/block.jsx:35, fuzzy
 msgid "16.6 / 16.6 / 16.6 / 16.6 / 16.6 / 16.6"
 msgstr "16.6 / 16.6 / 16.6 / 16.6 / 16.6 / 16.6"
 
@@ -5470,7 +5471,7 @@ msgstr "Activado"
 msgid "Disable"
 msgstr "Desactivado"
 
-#: assets/blocks/editor-sidebar/post-sidebar.jsx:21
+#: assets/blocks/editor-sidebar/post-sidebar.jsx:21, fuzzy
 msgid "Original"
 msgstr "Original"
 
@@ -6651,7 +6652,7 @@ msgid "Enter post IDs separated by commas (e.g., 123, 456, 789)"
 msgstr ""
 "Introduce los IDs de las entradas separados por comas (p. ej., 123,456,789)"
 
-#: assets/blocks/recent-posts/block.jsx:878
+#: assets/blocks/recent-posts/block.jsx:878, fuzzy
 msgid "123, 456, 789"
 msgstr "123, 456, 789"
 
@@ -7049,13 +7050,13 @@ msgstr "Creación: de antiguas a nuevas"
 
 #. translators: label for ordering posts by title in ascending order
 #: assets/blocks/recent-posts/query-controls.jsx:111
-#: assets/blocks/recent-posts/query-controls.jsx:120
+#: assets/blocks/recent-posts/query-controls.jsx:120, fuzzy
 msgid "A → Z"
 msgstr "A → Z"
 
 #. translators: label for ordering posts by title in descending order
 #: assets/blocks/recent-posts/query-controls.jsx:116
-#: assets/blocks/recent-posts/query-controls.jsx:124
+#: assets/blocks/recent-posts/query-controls.jsx:124, fuzzy
 msgid "Z → A"
 msgstr "Z → A"
 
@@ -7388,7 +7389,7 @@ msgstr "Color de flecha y borde"
 msgid "Dots Color"
 msgstr "Color de puntos"
 
-#: assets/blocks/testimonial/block.jsx:355
+#: assets/blocks/testimonial/block.jsx:355, fuzzy
 msgid "Avatar"
 msgstr "Avatar"
 
@@ -7428,7 +7429,7 @@ msgstr "Bloque para crear información personal o de equipo/grupo."
 msgid "testimonial"
 msgstr "recomendación"
 
-#: assets/blocks/testimonial/block.jsx:679
+#: assets/blocks/testimonial/block.jsx:679, fuzzy
 msgid "personal"
 msgstr "personal"
 
@@ -7532,7 +7533,7 @@ msgstr "Intentálo de nuevo"
 msgid "Listing your products in a easy way."
 msgstr "Lista tus productos de una manera sencilla."
 
-#: assets/blocks/woo-products/block.jsx:415
+#: assets/blocks/woo-products/block.jsx:415, fuzzy
 msgid "woo commerce"
 msgstr "woo commerce"
 
@@ -7735,7 +7736,7 @@ msgstr "Tableta"
 msgid "Mobile"
 msgstr "Móvil"
 
-#: assets/pages/block-controls/block-controls.jsx:1694
+#: assets/pages/block-controls/block-controls.jsx:1694, fuzzy
 msgid "Bot"
 msgstr "Bot"
 
@@ -8134,7 +8135,7 @@ msgstr "¿Seguro que quieres borrar el conjunto?"
 msgid "Yes, Delete Set."
 msgstr "Sí, borra conjunto."
 
-#: assets/pages/block-controls/preset-manager.jsx:954
+#: assets/pages/block-controls/preset-manager.jsx:954, fuzzy
 msgid "AND"
 msgstr "AND"
 

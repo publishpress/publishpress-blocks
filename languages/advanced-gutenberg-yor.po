@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-12-15T13:55:51+00:00\n"
-"PO-Revision-Date: 2026-04-05 01:27+0000\n"
+"PO-Revision-Date: 2026-04-06 13:40+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
 "Language: yor\n"
@@ -292,7 +292,7 @@ msgstr "Captcha ti ṣofo"
 #: incl/advanced-gutenberg-main.php:5981
 #: assets/blocks/login-form/block.jsx:512, fuzzy
 msgid "Dashboard"
-msgstr "Dasiboodu"
+msgstr "Dashboard"
 
 #: incl/advanced-gutenberg-main.php:1901
 #: incl/advanced-gutenberg-main.php:2214
@@ -3566,7 +3566,7 @@ msgstr "Fipamọ Àwọn Iṣakoso"
 #: incl/pages/block-controls/presets-admin.php:12
 #: assets/pages/block-controls/preset-manager.jsx:1809, fuzzy
 msgid "Loading presets..."
-msgstr "Ń gba awọn preset..."
+msgstr "Loading presets..."
 
 #: incl/pages/block-settings.php:57
 #: assets/blocks/advaccordion/block.jsx:418, fuzzy

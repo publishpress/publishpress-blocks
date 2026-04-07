@@ -1,7 +1,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-[3.7.0] - 06 April, 2026
+[3.7.0] - 07 April, 2026
 
 - Fixed: Lightbox feature in PublishPress Image-block does not work, #1717
 - Fixed: Auto Insert Block bypassing Password Protected post, #1719

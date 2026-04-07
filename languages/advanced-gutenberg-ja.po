@@ -10,12 +10,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2022-10-25 14:40-0500\n"
-"PO-Revision-Date: 2026-04-05 01:05+0000\n"
+"PO-Revision-Date: 2026-04-06 13:40+0000\n"
 "X-Generator: Poedit 3.2\n"
 "X-Domain: advanced-gutenberg\n"
 "Language: ja\n"
 
-#: assets/blocks/columns/block.jsx:13
 #: assets/blocks/columns/block.jsx:13
 #: assets/blocks/columns/block.jsx:13, fuzzy
 msgid "100"
