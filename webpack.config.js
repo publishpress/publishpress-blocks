@@ -7,8 +7,8 @@ module.exports = [
             "./assets/**/*.jsx",
             {ignore: [
                 "./assets/blocks/customstyles/*.jsx",
-                "./assets/blocks/block-controls/*.jsx",
-                "./assets/blocks/block-usage/*.jsx",
+                "./assets/pages/block-controls/*.jsx",
+                "./assets/pages/block-usage/*.jsx",
                 "./assets/blocks/pro-ad/*.jsx",
                 "./assets/blocks/editor-sidebar/*.jsx",
                 "./assets/blocks/**/*.frontend.jsx",
@@ -97,11 +97,11 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./assets/blocks/block-controls/block-controls.jsx",
+            "./assets/pages/block-controls/block-controls.jsx",
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "assets", "blocks"),
+            path: path.join(__dirname, "assets", "pages"),
             filename: "block-controls.js"
         },
         module: {
@@ -118,11 +118,11 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./assets/blocks/block-controls/preset-manager.jsx",
+            "./assets/pages/block-controls/preset-manager.jsx",
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "assets", "blocks"),
+            path: path.join(__dirname, "assets", "pages"),
             filename: "preset-manager.js"
         },
         module: {
@@ -139,11 +139,11 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./assets/blocks/block-controls/preset-data-manager.jsx",
+            "./assets/pages/block-controls/preset-data-manager.jsx",
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "assets", "blocks"),
+            path: path.join(__dirname, "assets", "pages"),
             filename: "preset-data-manager.js"
         },
         module: {
@@ -160,11 +160,11 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./assets/blocks/block-usage/block-usage.jsx",
+            "./assets/pages/block-usage/block-usage.jsx",
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "assets", "blocks"),
+            path: path.join(__dirname, "assets", "pages"),
             filename: "block-usage.js"
         },
         module: {

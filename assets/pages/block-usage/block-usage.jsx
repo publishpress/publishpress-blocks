@@ -1,0 +1,1110 @@
+(function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose, wpElement) {
+    const { render, useState, useEffect, useRef, useMemo } = wpElement;
+    const { PanelBody, Button, Card, Spinner, Flex, FlexItem, ProgressBar, Notice, FormTokenField } = wpComponents;
+    const { __, sprintf } = wpI18n;
+
+    // IndexedDB setup
+    const DB_NAME = 'publishpress_blocks';
+    const STORE_NAME = 'block_usage_data';
+    const DB_VERSION = 1;
+    const EXCLUDED_BLOCKS = ['advgb/accordion'];
+
+    const openDatabase = () => {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+            request.onerror = (event) => {
+                console.error('Database error:', event.target.error);
+                reject(event.target.error);
+            };
+
+            request.onsuccess = (event) => {
+                resolve(event.target.result);
+            };
+
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
+                    db.createObjectStore(STORE_NAME, { keyPath: 'key' });
+                }
+            };
+        });
+    };
+
+    const getFromCache = (key) => {
+        return openDatabase()
+            .then((db) => {
+                return new Promise((resolve, reject) => {
+                    const transaction = db.transaction([STORE_NAME], 'readonly');
+                    const store = transaction.objectStore(STORE_NAME);
+                    const request = store.get(key);
+
+                    request.onerror = () => reject('Error reading from cache');
+                    request.onsuccess = () => resolve(request.result ? request.result.value : null);
+                });
+            })
+            .catch((error) => {
+                console.error('Cache error:', error);
+                return null;
+            });
+    };
+
+    const saveToCache = (key, value) => {
+        return openDatabase()
+            .then((db) => {
+                return new Promise((resolve, reject) => {
+                    const transaction = db.transaction([STORE_NAME], 'readwrite');
+                    const store = transaction.objectStore(STORE_NAME);
+                    const request = store.put({ key, value });
+
+                    request.onerror = () => reject('Error saving to cache');
+                    request.onsuccess = () => resolve();
+                });
+            })
+            .catch((error) => {
+                console.error('Cache error:', error);
+                throw error;
+            });
+    };
+
+    const clearCache = () => {
+        return openDatabase()
+            .then((db) => {
+                return new Promise((resolve, reject) => {
+                    const transaction = db.transaction([STORE_NAME], 'readwrite');
+                    const store = transaction.objectStore(STORE_NAME);
+                    const request = store.clear();
+
+                    request.onerror = () => reject('Error clearing cache');
+                    request.onsuccess = () => resolve();
+                });
+            })
+            .catch((error) => {
+                console.error('Cache error:', error);
+                throw error;
+            });
+    };
+
+    const getBlocks = () => {
+        if (typeof wp.blocks === 'undefined') {
+            return { blocks: [], categories: [] };
+        }
+
+        // Register core blocks if available
+        if (wp.blockLibrary && typeof wp.blockLibrary.registerCoreBlocks === 'function') {
+            wp.blockLibrary.registerCoreBlocks();
+        }
+
+        let allBlocks = wp.blocks.getBlockTypes();
+        let allCategories = wp.blocks.getCategories();
+        let listBlocks = [];
+
+        // Get the category titles from localized data if available
+        const localizedCategories = (window.advgb_block_usage_data || {}).blockCategories || [];
+        const categoryTitleMap = localizedCategories.reduce((map, cat) => {
+            map[cat.slug] = cat.title;
+            return map;
+        }, {});
+
+        // Get blocks saved in advgb_block_usage_data.saved_blocks option
+        const { saved_blocks = [] } = window.advgb_block_usage_data || {};
+        if (saved_blocks.length > 0) {
+            const diff_blocks = saved_blocks.filter(
+                blocksA => !allBlocks.some(blocksB => blocksA.name === blocksB.name)
+            );
+            if (diff_blocks.length > 0) {
+                allBlocks = [...allBlocks, ...diff_blocks];
+            }
+        }
+
+        // Force activate blocks (like widget blocks)
+        const force_activate_blocks = [
+            {
+                'name': 'core/widget-group',
+                'icon': 'block-default',
+                'title': 'Widget Group',
+                'category': 'widgets'
+            },
+        ];
+        allBlocks = [...allBlocks, ...force_activate_blocks];
+
+        // Additional blocks to include
+        const include_blocks = [
+            {
+                'name': 'core/legacy-widget',
+                'icon': 'block-default',
+                'title': 'Legacy Widget',
+                'category': 'widgets'
+            }
+        ];
+        allBlocks = [...allBlocks, ...include_blocks];
+
+        // Process all blocks to standardize the format
+        allBlocks.forEach(function (block) {
+            // Skip excluded blocks
+            if (EXCLUDED_BLOCKS.includes(block.name)) {
+                return;
+            }
+            var blockItemIcon = '';
+            const blockItem = {
+                name: block.name,
+                icon: block.icon.src || block.icon,
+                title: block.title,
+                category: block.category || 'common',
+                parent: block.parent,
+                description: block.description || ''
+            };
+
+            // Use the localized category title if available
+            if (categoryTitleMap[blockItem.category]) {
+                blockItem.categoryTitle = categoryTitleMap[blockItem.category];
+            }
+
+            const savedIcon = !!block.icon.src ? block.icon.src : block.icon;
+
+            if (block.icon.foreground !== undefined) blockItem.iconColor = block.icon.foreground;
+
+            if (typeof savedIcon === 'function') {
+                if (typeof savedIcon.prototype !== 'undefined') {
+                    blockItem.icon = wp.element.renderToString(wp.element.createElement(savedIcon));
+                    blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
+                    blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
+                } else {
+                    blockItemIcon = wp.element.createElement(wp.components.Dashicon, { icon: 'block-default' });
+                    blockItem.icon = wp.element.renderToString(blockItemIcon);
+                }
+            } else if (typeof savedIcon === 'object') {
+                blockItem.icon = wp.element.renderToString(savedIcon);
+                blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
+                blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
+            } else if (
+                typeof savedIcon === 'string'
+                && !savedIcon.includes('<span') // Merged blocks icons from 'advgb_blocks_list' are stored as html
+                && !savedIcon.includes('<svg') // Merged blocks icons from 'advgb_blocks_list' are stored as html
+            ) {
+                blockItemIcon = wp.element.createElement(wp.components.Dashicon, { icon: savedIcon });
+                blockItem.icon = wp.element.renderToString(blockItemIcon);
+            } else {
+                blockItem.icon = savedIcon; // Pure html for merged blocks icons from 'advgb_blocks_list'
+            }
+
+            listBlocks.push(blockItem);
+        });
+
+        // Remove duplicated blocks by block name
+        const uniqueNames = [];
+        let i = listBlocks.length;
+        while (i--) {
+            const name = listBlocks[i].name;
+            if (uniqueNames.includes(name)) {
+                listBlocks.splice(i, 1);
+            } else {
+                uniqueNames.push(name);
+            }
+        }
+
+        // Sort categories to show "advgb-category" first
+        allCategories.sort((a, b) => {
+            if (a.slug === 'advgb-category') return -1;
+            if (b.slug === 'advgb-category') return 1;
+            return 0;
+        });
+
+        // Add any missing categories from localized data
+        localizedCategories.forEach(localizedCat => {
+            if (!allCategories.some(cat => cat.slug === localizedCat.slug)) {
+                allCategories.push({
+                    slug: localizedCat.slug,
+                    title: localizedCat.title
+                });
+            }
+        });
+
+        return {
+            blocks: listBlocks,
+            categories: allCategories
+        };
+    };
+
+    const WelcomeIntro = ({ onScanClick, loadingAll, data }) => {
+        const totalBlocks = Object.keys(data.usage || {}).length;
+        const totalPosts = (data.posts && data.posts.length) || 0;
+        const lastScanDate = data.lastScanDate;
+
+        return (
+            <div className="pp-blocks-usage-welcome-intro">
+                <div className="pp-blocks-usage-welcome-card">
+                    <div className="pp-blocks-usage-welcome-icon">
+                        <span className="dashicons dashicons-block-default"></span>
+                    </div>
+
+                    <h2>{__('Welcome to Block Usage', 'advanced-gutenberg')}</h2>
+                    <p>{__('This screen allows you to search for and find any usage of blocks on your site.', 'advanced-gutenberg')}</p>
+
+                    {lastScanDate && (
+                        <div className="pp-blocks-usage-stats-overview">
+                            <div className="pp-blocks-usage-stat-card">
+                                <span className="pp-blocks-usage-stat-number">{totalBlocks}</span>
+                                <span className="pp-blocks-usage-stat-label">{__('Blocks Found', 'advanced-gutenberg')}</span>
+                            </div>
+                            <div className="pp-blocks-usage-stat-card">
+                                <span className="pp-blocks-usage-stat-number">{totalPosts}</span>
+                                <span className="pp-blocks-usage-stat-label">{__('Posts Scanned', 'advanced-gutenberg')}</span>
+                            </div>
+                            <div className="pp-blocks-usage-stat-card">
+                                <span className="pp-blocks-usage-stat-label">{__('Last Scan', 'advanced-gutenberg')}</span>
+                                <span className="pp-blocks-usage-stat-number" style={{ fontSize: '0.9em' }}>
+                                    {new Date(lastScanDate).toLocaleDateString()}
+                                </span>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="pp-blocks-usage-features-grid">
+                        <div className="pp-blocks-usage-feature-card">
+                            <div className="pp-blocks-usage-feature-icon">
+                                <span className="dashicons dashicons-search"></span>
+                            </div>
+                            <h3>{__('Scan Content', 'advanced-gutenberg')}</h3>
+                            <p>{__('Find all blocks used across your posts, pages, and custom post types', 'advanced-gutenberg')}</p>
+                        </div>
+
+                        <div className="pp-blocks-usage-feature-card">
+                            <div className="pp-blocks-usage-feature-icon">
+                                <span className="dashicons dashicons-analytics"></span>
+                            </div>
+                            <h3>{__('Usage Analytics', 'advanced-gutenberg')}</h3>
+                            <p>{__('See detailed statistics about block usage and locations', 'advanced-gutenberg')}</p>
+                        </div>
+
+                        <div className="pp-blocks-usage-feature-card">
+                            <div className="pp-blocks-usage-feature-icon">
+                                <span className="dashicons dashicons-admin-links"></span>
+                            </div>
+                            <h3>{__('Quick Navigation', 'advanced-gutenberg')}</h3>
+                            <p>{__('Jump directly to posts containing specific blocks for editing', 'advanced-gutenberg')}</p>
+                        </div>
+                    </div>
+
+                    <div className="pp-blocks-usage-welcome-scan-button">
+                        <button
+                            className="button button-secondary"
+                            onClick={onScanClick}
+                            disabled={loadingAll}
+                        >
+                            {loadingAll ? <Spinner /> : __('Scan Block Usage', 'advanced-gutenberg')}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const Sidebar = React.memo(({ selected, data, onClose, canEditPosts }) => {
+        const [expandedPost, setExpandedPost] = useState(null);
+        const { usage = {}, posts = [] } = data;
+
+        const selectedName = selected && selected.name ? selected.name : null;
+        const blockData = usage[selectedName] || { posts: {}, total: 0 };
+        const postIds = Object.keys(blockData.posts);
+
+        // Get posts that contain this block
+        const blockPosts = useMemo(() => {
+            return posts.filter(post => postIds.includes(post.post_id.toString()));
+        }, [posts, postIds]);
+
+        // Group posts by title (for multiple instances in same post)
+        const groupedPosts = useMemo(() => {
+            const groups = {};
+
+            blockPosts.forEach(post => {
+                const postUsage = blockData.posts[post.post_id] || {};
+                const count = postUsage.count || 0;
+                const scanned = postUsage.scanned || '';
+
+                const key = `${post.post_title}-${post.post_id}`;
+
+                if (!groups[key]) {
+                    groups[key] = {
+                        ...post,
+                        totalCount: 0,
+                        scanned
+                    };
+                }
+
+                groups[key].totalCount += count;
+            });
+
+            return Object.values(groups);
+        }, [blockPosts, blockData]);
+
+        const groupBlocksByName = (blocks) => {
+            const grouped = {};
+
+            blocks.forEach(block => {
+                if (!block.name) return;
+
+                const key = block.name;
+                if (!grouped[key]) {
+                    grouped[key] = {
+                        ...block,
+                        count: 0,
+                        innerBlocks: []
+                    };
+                }
+                grouped[key].count += 1;
+
+                if (block.innerBlocks && block.innerBlocks.length > 0) {
+                    grouped[key].innerBlocks.push(...block.innerBlocks);
+                }
+            });
+
+            return Object.values(grouped);
+        };
+
+        const renderBlockItem = (block, depth = 0) => {
+            if (!block.name) return null;
+
+            const groupedInnerBlocks = block.innerBlocks && block.innerBlocks.length > 0
+                ? groupBlocksByName(block.innerBlocks)
+                : [];
+
+            return (
+                <div
+                    key={block.clientId || `${block.name}-${depth}-${Math.random().toString(36).substr(2, 9)}`}
+                    className="pp-blocks-usage-post-block-item"
+                    style={{ marginLeft: `${depth * 15}px` }}
+                >
+                    <div className="pp-blocks-usage-block-name">
+                        {block.icon && (
+                            <span className="block-icon" style={block.iconColor ? { color: block.iconColor } : {}}>
+                                {typeof block.icon === 'string' && !block.icon.includes('<') ? (
+                                    <span className={`dashicons dashicons-${block.icon}`}></span>
+                                ) : (
+                                    <span dangerouslySetInnerHTML={{ __html: block.icon }} />
+                                )}
+                            </span>
+                        )}
+                        {block.name}
+                        {block.count > 1 && (
+                            <span className="pp-blocks-usage-block-count">×{block.count}</span>
+                        )}
+                    </div>
+                    {groupedInnerBlocks.map(innerBlock => renderBlockItem(innerBlock, depth + 1))}
+                </div>
+            );
+        };
+
+        return (
+            <div className="pp-blocks-usage-sidebar" ref={useRef(null)}>
+                <div className="pp-blocks-usage-sidebar-header">
+                    <h2>
+                        <div className="pp-blocks-usage-tile-main">
+                            <span>{selected.title}</span>
+                        </div>
+                        <span className="pp-blocks-usage-panel-subtitle">
+                            {groupedPosts.length} {__('locations', 'advanced-gutenberg')} | {blockData.total} {__('instances', 'advanced-gutenberg')}
+                        </span>
+                    </h2>
+                </div>
+                <div className="pp-blocks-usage-sidebar-content">
+                    <div className="pp-blocks-usage-block-meta">
+                        <p><strong>{__('Name:', 'advanced-gutenberg')}</strong> {selected.title}</p>
+                        <p><strong>{__('Description:', 'advanced-gutenberg')}</strong> {selected.description}</p>
+                        <p><strong>{__('Category:', 'advanced-gutenberg')}</strong> {selected.category}</p>
+                    </div>
+
+                    {groupedPosts.length > 0 ? (
+                        <>
+                            <div className="pp-blocks-usage-usage-stats">
+                                <span><strong>{__('Locations:', 'advanced-gutenberg')}</strong> {groupedPosts.length}</span>
+                                <span><strong>{__('Total instances:', 'advanced-gutenberg')}</strong> {blockData.total}</span>
+                            </div>
+
+                            <div className="pp-blocks-usage-post-list">
+                                {groupedPosts.map((post) => {
+                                    const isExpanded = expandedPost === post.post_id;
+                                    const postTypeLabel = post.post_type;
+
+                                    return (
+                                        <div key={post.post_id} className={`pp-blocks-usage-post-item ${isExpanded ? 'expanded' : ''}`}>
+                                            <div
+                                                className="pp-blocks-usage-post-header"
+                                                onClick={() => setExpandedPost(isExpanded ? null : post.post_id)}
+                                            >
+                                                <div className="pp-blocks-usage-post-title">
+                                                    {post.post_title}
+                                                </div>
+                                                <div className="pp-blocks-usage-post-meta">
+                                                    <span className="pp-blocks-usage-post-type">
+                                                        {postTypeLabel}
+                                                    </span>
+                                                </div>
+                                                <Button
+                                                    size="small"
+                                                    icon={isExpanded ? 'arrow-up-alt2' : 'arrow-down-alt2'}
+                                                    className="pp-blocks-usage-expand-button"
+                                                />
+                                            </div>
+
+                                            {isExpanded && (
+                                                <div className="pp-blocks-usage-post-content">
+                                                    <div className="pp-blocks-usage-post-actions">
+                                                        {post.edit_link && canEditPosts && (
+                                                            <Button
+                                                                variant="secondary"
+                                                                isSmall
+                                                                href={post.edit_link}
+                                                                target="_blank"
+                                                            >
+                                                                {__('Edit Post', 'advanced-gutenberg')}
+                                                            </Button>
+                                                        )}
+                                                        <Button
+                                                            variant="secondary"
+                                                            size="small"
+                                                            href={post.view_link}
+                                                            target="_blank"
+                                                        >
+                                                            {__('View Post', 'advanced-gutenberg')}
+                                                        </Button>
+                                                    </div>
+                                                    <div className="pp-blocks-usage-post-blocks">
+                                                        <h4>{__('Blocks in this post:', 'advanced-gutenberg')}</h4>
+                                                        {(post.blocks && post.blocks.length > 0) ? (
+                                                            groupBlocksByName(post.blocks).map(block => renderBlockItem(block))
+                                                        ) : (
+                                                            <p>{__('No blocks found in this post.', 'advanced-gutenberg')}</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </>
+                    ) : (
+                        <div className="pp-blocks-usage-no-results">
+                            {data.lastScanDate ? (
+                                <>
+                                    <p><em>{__('This block was not found in any posts.', 'advanced-gutenberg')}</em></p>
+                                    <p>{__('Last scan:', 'advanced-gutenberg')} {new Date(data.lastScanDate).toLocaleString()}</p>
+                                </>
+                            ) : (
+                                <>
+                                    <p><em>{__('No scan history available for this block.', 'advanced-gutenberg')}</em></p>
+                                    <p>{__('Click the Scan button to check for usage.', 'advanced-gutenberg')}</p>
+                                </>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+    });
+
+    const App = () => {
+        const {
+            ajaxUrl = '',
+            nonce = '',
+            initialData,
+            currentUser
+        } = window.advgb_block_usage_data || {};
+
+        const [blocksData, setBlocksData] = useState(() => getBlocks());
+        const [data, setData] = useState(initialData);
+        const [loadingAll, setLoadingAll] = useState(false);
+        const [loadingClearAll, setLoadingClearAll] = useState(false);
+        const [selected, setSelected] = useState(null);
+        const [showEmptyBlocks, setShowEmptyBlocks] = useState(false);
+        const [selectedPostTypes, setSelectedPostTypes] = useState(['post', 'page']);
+        const [scanProgress, setScanProgress] = useState({
+            current: 0,
+            total: 0,
+            status: '',
+            completed: false
+        });
+        const [dbError, setDbError] = useState(null);
+        const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+
+        // Enable header scan button when component mounts
+        useEffect(() => {
+            if (initialLoadComplete) {
+                const headerButton = document.getElementById('header-scan-button');
+                if (headerButton) {
+                    headerButton.disabled = false;
+                    headerButton.style.opacity = '1';
+                    headerButton.style.cursor = 'pointer';
+                    headerButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        scanAll();
+                    });
+                }
+            }
+        }, [initialLoadComplete]);
+
+        // Load data from IndexedDB on initial render
+        useEffect(() => {
+            Promise.all([
+                getFromCache('block_usage_data'),
+                getFromCache('block_usage_settings')
+            ])
+                .then(([cachedData, cachedSettings]) => {
+                    if (cachedData) {
+                        setData(cachedData);
+                    }
+
+                    if (cachedSettings) {
+                        setShowEmptyBlocks(cachedSettings.showEmptyBlocks !== false);
+
+                        if (cachedSettings.lastSelectedBlock) {
+                            const lastSelected = blocksData.blocks.find(b => b.name === cachedSettings.lastSelectedBlock);
+                            if (lastSelected) {
+                                setSelected(lastSelected);
+                            }
+                        }
+
+                        if (cachedSettings.selectedPostTypes) {
+                            setSelectedPostTypes(cachedSettings.selectedPostTypes);
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.error('Failed to load data from IndexedDB:', error);
+                    setDbError(__('Failed to load data from local storage. Please refresh the page.', 'advanced-gutenberg'));
+                })
+                .finally(() => {
+                    setInitialLoadComplete(true);
+                });
+        }, [blocksData.blocks]);
+
+        const postAjax = (action, data = {}) => {
+            const body = new URLSearchParams({ action, nonce, ...data });
+            return fetch(ajaxUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body,
+            }).then(r => r.json());
+        };
+
+        const handleToggleChange = (value) => {
+            setShowEmptyBlocks(value);
+            saveToCache('block_usage_settings', {
+                    showEmptyBlocks: value,
+                    lastSelectedBlock: (selected && selected.name) ? selected.name : '',
+                    selectedPostTypes: selectedPostTypes
+                })
+                .catch((error) => {
+                    console.error('Failed to save showEmptyBlocks setting:', error);
+                });
+        };
+
+        const handlePostTypeChange = (newPostTypes) => {
+            if (!window.advgb_block_usage_data.isProActive) {
+                return;
+            }
+
+            setSelectedPostTypes(newPostTypes);
+            saveToCache('block_usage_settings', {
+                    showEmptyBlocks,
+                    lastSelectedBlock: (selected && selected.name) ? selected.name : '',
+                    selectedPostTypes: newPostTypes
+                })
+                .catch((error) => {
+                    console.error('Failed to save post types:', error);
+                });
+        };
+
+        const categories = useMemo(() => {
+            const cats = {};
+
+            // First create the advgb-category if it exists
+            const advgbCategory = blocksData.categories.find(cat => cat.slug === 'advgb-category');
+            if (advgbCategory) {
+                cats[advgbCategory.slug] = {
+                    title: advgbCategory.title,
+                    blocks: []
+                };
+            }
+
+            // Then add all other categories
+            blocksData.categories.forEach(cat => {
+                if (cat.slug !== 'advgb-category') {
+                    cats[cat.slug] = {
+                        title: cat.title,
+                        blocks: []
+                    };
+                }
+            });
+
+            // Assign blocks to categories
+            blocksData.blocks.forEach(block => {
+                const catSlug = block.category || 'common';
+                if (!cats[catSlug]) {
+                    cats[catSlug] = {
+                        title: block.categoryTitle || catSlug,
+                        blocks: []
+                    };
+                }
+                cats[catSlug].blocks.push(block);
+            });
+
+            return cats;
+        }, [blocksData.categories, blocksData.blocks]);
+
+        const filteredCategories = useMemo(() => {
+            if (showEmptyBlocks) return categories;
+
+            const filtered = {};
+            Object.entries(categories).forEach(([slug, category]) => {
+                const filteredBlocks = category.blocks.filter(bt => {
+                    return data.usage[bt.name] && Object.keys(data.usage[bt.name].posts).length > 0;
+                });
+
+                if (filteredBlocks.length > 0) {
+                    filtered[slug] = {
+                        ...category,
+                        blocks: filteredBlocks
+                    };
+                }
+            });
+
+            return filtered;
+        }, [categories, data.usage, showEmptyBlocks]);
+
+        const categoryStats = useMemo(() => {
+            const stats = {};
+
+            Object.entries(filteredCategories).forEach(([slug, category]) => {
+                let totalBlocks = category.blocks.length;
+                let totalLocations = 0;
+                let totalInstances = 0;
+
+                category.blocks.forEach(block => {
+                    const blockData = data.usage[block.name];
+                    if (blockData && blockData.posts) {
+                        totalLocations += Object.keys(blockData.posts).length;
+                        totalInstances += blockData.total || 0;
+                    }
+                });
+
+                stats[slug] = {
+                    blocks: totalBlocks,
+                    locations: totalLocations,
+                    instances: totalInstances
+                };
+            });
+
+            return stats;
+        }, [filteredCategories, data.usage]);
+
+        // Check if we should show the welcome intro
+        const shouldShowWelcomeIntro = useMemo(() => {
+            // Show intro if no scan data exists or if there are no blocks with usage data
+            const hasScanData = data.lastScanDate && Object.keys(data.usage).length > 0;
+            const hasBlocksWithUsage = Object.values(data.usage).some(blockData =>
+                blockData.posts && Object.keys(blockData.posts).length > 0
+            );
+
+            return !hasScanData || !hasBlocksWithUsage;
+        }, [data]);
+
+        useEffect(() => {
+            if (!selected && blocksData.blocks.length > 0 && initialLoadComplete) {
+                const firstCategory = Object.values(filteredCategories)[0];
+                if (firstCategory && firstCategory.blocks.length > 0) {
+                    setSelected(firstCategory.blocks[0]);
+                }
+            }
+        }, [filteredCategories, blocksData.blocks, initialLoadComplete]);
+
+        const scanAll = () => {
+            setLoadingAll(true);
+            setScanProgress({
+                current: 0,
+                total: 0,
+                status: __('Initializing scan...', 'advanced-gutenberg'),
+                completed: false
+            });
+
+            let offset = 0;
+            const batchSize = 20;
+            let newData = {
+                usage: {},
+                posts: [],
+                lastScanDate: ''
+            };
+            let totalPosts = 0;
+            let hasMorePosts = true;
+
+            const processBatch = () => {
+                if (!hasMorePosts) {
+                    return Promise.resolve();
+                }
+
+                    setScanProgress(prev => ({
+                        ...prev,
+                        status: sprintf(
+                            __('Processing posts (%1$s/%2$s)', 'advanced-gutenberg'),
+                            offset.toLocaleString(),
+                            totalPosts.toLocaleString()
+                        )
+                    }));
+
+                    return postAjax('pp_blocks-usage_scan_batch', {
+                        offset,
+                        batch_size: batchSize,
+                        post_types: selectedPostTypes
+                    })
+                        .then((batchResponse) => {
+                            if (!batchResponse.success) {
+                                throw new Error(__('Batch scan failed', 'advanced-gutenberg'));
+                            }
+
+                            if (batchResponse.data.total) {
+                                totalPosts = batchResponse.data.total;
+                            }
+
+                            // Merge usage data
+                            Object.entries(batchResponse.data.usage || {}).forEach(([blockName, blockData]) => {
+                                if (!newData.usage[blockName]) {
+                                    newData.usage[blockName] = {
+                                        posts: {},
+                                        total: 0
+                                    };
+                                }
+
+                                Object.entries(blockData.posts || {}).forEach(([postId, entry]) => {
+                                    newData.usage[blockName].posts[postId] = entry;
+                                });
+
+                                newData.usage[blockName].total += blockData.total || 0;
+                            });
+
+                            // Merge posts
+                            newData.posts = [...newData.posts, ...(batchResponse.data.posts || [])];
+                            newData.lastScanDate = batchResponse.data.lastScanDate || newData.lastScanDate;
+
+                            offset += batchResponse.data.processed || 0;
+                            hasMorePosts = offset < totalPosts;
+
+                            setScanProgress(prev => ({
+                                ...prev,
+                                current: offset,
+                                total: totalPosts
+                            }));
+
+                            // Update local state with the new data
+                            setData(newData);
+
+                            return saveToCache('block_usage_data', newData)
+                                .catch((error) => {
+                                    console.error('Failed to save batch to IndexedDB:', error);
+                                })
+                                .then(() => new Promise(resolve => setTimeout(resolve, 100)))
+                                .then(processBatch);
+                        });
+            };
+
+            processBatch()
+                .then(() => {
+                    setScanProgress(prev => ({
+                        ...prev,
+                        completed: true,
+                        status: __('Scan completed successfully!', 'advanced-gutenberg')
+                    }));
+                })
+                .catch((error) => {
+                    console.error('Scan error:', error);
+                    setScanProgress(prev => ({
+                        ...prev,
+                        status: __('Scan failed: ', 'advanced-gutenberg') + error.message
+                    }));
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        setLoadingAll(false);
+                        setScanProgress({
+                            current: 0,
+                            total: 0,
+                            status: '',
+                            completed: false
+                        });
+                    }, 2000);
+                });
+        };
+
+        const clearAllData = () => {
+            setLoadingClearAll(true);
+            clearCache()
+                .then(() => {
+                    setData({
+                        usage: {},
+                        posts: [],
+                        lastScanDate: ''
+                    });
+                    setShowEmptyBlocks(false);
+                    setSelected(null);
+
+                    // Clear settings as well
+                    return saveToCache('block_usage_settings', {
+                        showEmptyBlocks: false,
+                        lastSelectedBlock: ''
+                    });
+                })
+                .catch((error) => {
+                    console.error('Failed to clear data:', error);
+                    setDbError(__('Failed to clear data. Please try again.', 'advanced-gutenberg'));
+                })
+                .finally(() => {
+                    setLoadingClearAll(false);
+                });
+        };
+
+        const handleDetailsClick = (bt) => {
+            const isSameSelected = selected && selected.name === bt.name;
+            const newSelected = isSameSelected ? null : bt;
+            setSelected(newSelected);
+
+            // Save the last selected block
+            if (newSelected) {
+                saveToCache('block_usage_settings', {
+                        showEmptyBlocks,
+                        lastSelectedBlock: newSelected.name
+                    })
+                    .catch((error) => {
+                        console.error('Failed to save last selected block:', error);
+                    });
+            }
+        };
+
+        if (!initialLoadComplete) {
+            return (
+                <div className="pp-blocks-usage-wrapper">
+                    <div className="advgb-block-feature-loading-msg" style={{ display: 'block' }}>
+                        {__('Loading...', 'advanced-gutenberg')} <Spinner />
+                    </div>
+                </div>
+            );
+        }
+
+        let proHtml = '';
+        let wrapperCalss = '';
+        let blurClass = '';
+
+        if (!window.advgb_block_usage_data.isProActive) {
+            wrapperCalss = 'advgb-promo-overlay-area';
+            blurClass = 'advgb-blur';
+            proHtml = (
+                <div className="advgb-pro-small-overlay-text">
+                    <a className="advgb-pro-link clickable" href={window.advgb_block_usage_data.promoLink} target="_blank" rel="noopener noreferrer">
+                        <span className="dashicons dashicons-lock"></span>
+                        {window.advgb_block_usage_data.proText}
+                    </a>
+                </div>
+            );
+        }
+
+        return (
+            <div className={`pp-blocks-usage-wrapper ${selected ? 'has-sidebar' : ''}`}>
+                {dbError && (
+                    <Notice status="error" onRemove={() => setDbError(null)}>
+                        {dbError}
+                    </Notice>
+                )}
+
+                <div className="pp-blocks-usage-header">
+                    <Flex justify="space-between" align="center">
+                        <FlexItem>
+                            <div className={`${wrapperCalss} pp-blocks-usage-controls`}>
+                                {proHtml}
+                                {window.advgb_block_usage_data && window.advgb_block_usage_data.postTypes && (
+                                    <div className={`${blurClass} pp-blocks-usage-post-type-filter`}>
+                                        <FormTokenField
+                                            label={__('Limit Scan to Post Types:', 'advanced-gutenberg')}
+                                            value={selectedPostTypes}
+                                            suggestions={Object.keys(window.advgb_block_usage_data.postTypes)}
+                                            onChange={(newPostTypes) => handlePostTypeChange(newPostTypes)}
+                                            displayTransform={(postType) => window.advgb_block_usage_data.postTypes[postType] || postType}
+                                            tokenizeOnSpace={false}
+                                            __experimentalExpandOnFocus={true}
+                                            __experimentalShowHowTo={false}
+                                            style={{ minWidth: '300px', marginRight: '12px' }}
+                                        />
+                                        <Button
+                                            style={{ marginTop: '13px' }}
+                                            className="button"
+                                            onClick={scanAll}
+                                            disabled={loadingAll}
+                                        >
+                                            {loadingAll ? <Spinner /> : __('Filter', 'advanced-gutenberg')}
+                                        </Button>
+                                    </div>
+                                )}
+                            </div>
+                        </FlexItem>
+                        <FlexItem>
+                            <div className="advgb-toggle-wrapper">
+                                {__('Show Empty Blocks', 'advanced-gutenberg')}
+                                <div className="advgb-switch-button">
+                                    <label className="switch">
+                                        <input
+                                            type="checkbox"
+                                            name="toggle_empty_blocks"
+                                            id="toggle_empty_blocks"
+                                            checked={showEmptyBlocks}
+                                            onChange={(e) => handleToggleChange(e.target.checked)}
+                                        />
+                                        <span className="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </FlexItem>
+                    </Flex>
+                </div>
+
+                {loadingAll && (
+                    <div className="scan-progress-container">
+                        <div className="scan-progress">
+                            <p>{scanProgress.status}</p>
+                            <div className="progress-wrap"><ProgressBar
+                                value={scanProgress.total > 0 ? (scanProgress.current / scanProgress.total) * 100 : 0}
+                            /></div>
+                        </div>
+                    </div>
+                )}
+
+                {data.lastScanDate && (
+                    <div className="pp-blocks-usage-last-scan">
+                        <span>{__('Last scan:', 'advanced-gutenberg')} {new Date(data.lastScanDate).toLocaleString()}</span>
+                        <div className="ppb-tooltips-library" data-toggle="ppbtooltip" data-placement="left">
+                            {!loadingClearAll &&
+                                <span className="dashicons dashicons-editor-help" style={{ verticalAlign: 'sub', lineHeight: 'inherit' }}></span>
+                            }
+                            <button className="button button-secondary advgb-destructive-button"
+                                onClick={clearAllData}
+                                disabled={loadingAll || loadingClearAll}
+                                style={{ marginLeft: '8px' }}
+                            >
+                                {loadingClearAll ? <Spinner /> : __('Clear All Data', 'advanced-gutenberg')}
+                            </button>
+                            {!loadingClearAll &&
+                                <span className="tooltip-text">
+                                    <span>{__('Scan data is stored in your browser to improve performance and handle large datasets. This keeps your WordPress database clean. Click to permanently delete all stored data.', 'advanced-gutenberg')}</span>
+                                    <i></i>
+                                </span>
+                            }
+                        </div>
+                    </div>
+                )}
+
+                <div className="pp-blocks-usage-container">
+                    {shouldShowWelcomeIntro ? (
+                        <WelcomeIntro onScanClick={scanAll} loadingAll={loadingAll} data={data} />
+                    ) : (
+                        <>
+                            <div className="pp-blocks-usage-categories">
+                                {Object.entries(filteredCategories).map(([slug, { title, blocks }]) => {
+                                    const stats = categoryStats[slug] || { blocks: 0, locations: 0, instances: 0 };
+
+                                    const pluralize = (count, singular, plural) => {
+                                        return count === 1 ? singular : plural;
+                                    };
+
+                                    const categoryTitle = (
+                                        <span className="pp-blocks-usage-category-title">
+                                            <span className="category-name">{title}</span>
+                                            <span className="category-stats">
+                                                ({stats.blocks} {pluralize(stats.blocks, __('block', 'advanced-gutenberg'), __('blocks', 'advanced-gutenberg'))}, {stats.locations} {pluralize(stats.locations, __('location', 'advanced-gutenberg'), __('locations', 'advanced-gutenberg'))}, {stats.instances} {pluralize(stats.instances, __('instance', 'advanced-gutenberg'), __('instances', 'advanced-gutenberg'))})
+                                            </span>
+                                        </span>
+                                    );
+                                    return (
+
+                                        <PanelBody key={slug} title={categoryTitle} initialOpen>
+                                            <div className="pp-blocks-usage-block-grid">
+                                                {blocks.map(bt => {
+                                                    const hasData = data.usage[bt.name] && Object.keys(data.usage[bt.name].posts).length > 0;
+                                                    const blockData = data.usage[bt.name] || { posts: {}, total: 0 };
+                                                    const postCount = Object.keys(blockData.posts).length;
+                                                    const useCount = blockData.total;
+                                                    const firstBlockPost = Object.values(blockData.posts)[0] || {};
+                                                    const lastScanned = firstBlockPost.scanned || '';
+
+                                                    return (
+                                                        <Card
+                                                            key={bt.name}
+                                                            className={`pp-blocks-usage-block-tile ${(selected && selected.name === bt.name) ? 'active' : ''}`}
+                                                            onClick={() => handleDetailsClick(bt)}
+                                                        >
+                                                            <div className="pp-blocks-usage-tile-main">
+                                                                {bt.icon && (
+                                                                    <span className="block-icon" style={bt.iconColor ? { color: bt.iconColor } : {}}>
+                                                                        {typeof bt.icon === 'string' && !bt.icon.includes('<') ? (
+                                                                            <span className={`dashicons dashicons-${bt.icon}`}></span>
+                                                                        ) : (
+                                                                            <span dangerouslySetInnerHTML={{ __html: bt.icon }} />
+                                                                        )}
+                                                                    </span>
+                                                                )}
+                                                                <span>{bt.title}</span>
+                                                            </div>
+                                                            {hasData ? (
+                                                                <div className="pp-blocks-usage-tile-counts">
+                                                                    <div>{__('Locations:', 'advanced-gutenberg')} {postCount}</div>
+                                                                    <div>{__('Instances:', 'advanced-gutenberg')} {useCount}</div>
+                                                                </div>
+                                                            ) : (
+                                                                <div className="pp-blocks-usage-tile-counts">
+                                                                    <div className="no-scan">
+                                                                        {data.lastScanDate
+                                                                            ? __('Not found in any posts', 'advanced-gutenberg')
+                                                                            : __('No scan history', 'advanced-gutenberg')}
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                            <div className="pp-blocks-usage-tile-actions">
+                                                                <Button variant="secondary" size="small" onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    handleDetailsClick(bt);
+                                                                }}>
+                                                                    {__('Details', 'advanced-gutenberg')}
+                                                                </Button>
+                                                            </div>
+                                                        </Card>
+                                                    );
+                                                })}
+                                            </div>
+                                        </PanelBody>
+                                    );
+                                })}
+                            </div>
+
+                            {selected && (
+                                <Sidebar
+                                    key={selected.name}
+                                    selected={selected}
+                                    data={data}
+                                    onClose={() => setSelected(null)}
+                                    canEditPosts={(currentUser && currentUser.canEditPosts) || false}
+                                />
+                            )}
+                        </>
+                    )}
+                </div>
+            </div>
+        );
+    };
+
+    // Only render the app if wp.blocks is available
+    if (typeof wp !== 'undefined' && typeof wp.blocks !== 'undefined') {
+        render(<App />, document.getElementById('advgb-block-usage-app'));
+    } else {
+        const appContainer = document.getElementById('advgb-block-usage-app');
+        if (appContainer) {
+            appContainer.innerHTML = '<p>' + __('Error Loading blocks data...', 'advanced-gutenberg') + '</p>';
+        }
+    }
+
+})(wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components, wp.compose, wp.element);

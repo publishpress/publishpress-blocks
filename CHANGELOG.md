@@ -1,6 +1,16 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[3.7.0] - 07 April, 2026
+
+- Fixed: Lightbox feature in PublishPress Image-block does not work, #1717
+- Fixed: Auto Insert Block bypassing Password Protected post, #1719
+- Fixed: Adding custom CSS in Block Style failed, #1720
+- Update: Add "Free" to name of the Free plugin in the "Plugins" area, #1726
+- Update: Update reviews library, #1716
+- Update: Connect the plugin to Weblate, #1722
+- Update: Translation update
+
 [3.6.2] - 16 December, 2025
 
 - Fixed: Tables and some other publishpress blocks not working after 3.6.1 update, #1709

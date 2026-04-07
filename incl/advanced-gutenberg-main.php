@@ -1972,8 +1972,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             if (empty($GLOBALS['admin_page_hooks']['advgb_main'])) {
                 add_menu_page(
-                    'Blocks',
-                    'Blocks',
+                    esc_html__('Blocks', 'advanced-gutenberg'),
+                    esc_html__('Blocks', 'advanced-gutenberg'),
                     'manage_options',
                     'advgb_main',
                     [ $this, 'loadMainPage' ],
@@ -3371,7 +3371,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             wp_enqueue_script(
                 'advgb_block_usage',
-                ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/block-usage.js',
+                ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/pages/block-usage.js',
                 ['wp-element', 'wp-components', 'wp-api-fetch', 'wp-i18n'],
                 ADVANCED_GUTENBERG_VERSION,
                 true
@@ -3405,7 +3405,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 $localize_data
             );
 
-			wp_set_script_translations( 'advgb_block_usage', 'advanced-gutenberg' );
+            wp_set_script_translations(
+                'advgb_block_usage',
+                'advanced-gutenberg',
+                plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
+            );
         }
 
         public function get_editor_post_types()
