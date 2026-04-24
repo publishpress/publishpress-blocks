@@ -67,7 +67,7 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
 if (! defined('ADVANCED_GUTENBERG_LOADED')) {
     define('ADVANCED_GUTENBERG_LOADED', true);
     if (! defined('ADVANCED_GUTENBERG_VERSION')) {
-        define('ADVANCED_GUTENBERG_VERSION', '3.7.0.2');
+        define('ADVANCED_GUTENBERG_VERSION', '3.7.0');
     }
 
     if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
