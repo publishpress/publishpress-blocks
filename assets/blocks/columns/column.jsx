@@ -354,6 +354,19 @@
         }
     };
 
+    // Legacy attribute set that reads colId from the saved HTML id attribute.
+    // Covers old column blocks where colId was never stored in the block JSON
+    // but the serialised HTML was written with an id (e.g. id="advgb-col-<uuid>").
+    const legacyColumnAttrs = {
+        ...blockAttrs,
+        colId: {
+            type: 'string',
+            source: 'attribute',
+            selector: '.advgb-column',
+            attribute: 'id',
+        },
+    };
+
     registerBlockType( 'advgb/column', {
         title: __( 'Column - PublishPress', 'advanced-gutenberg' ),
         parent: [ 'advgb/columns' ],
@@ -399,6 +412,40 @@
             );
         },
         deprecated: [
+            {
+                attributes: legacyColumnAttrs,
+                migrate: function ( attributes, innerBlocks ) {
+                    const migratedAttributes = { ...attributes };
+                    return [ migratedAttributes, innerBlocks ];
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        width,
+                        columnClasses, colId,
+                        borderColor, borderStyle, borderWidth, borderRadius,
+                    } = attributes;
+
+                    const blockClasses = [
+                        'advgb-column',
+                        columnClasses,
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={ blockClasses }
+                             id={ colId }
+                             style={ {
+                                 flex: width ? 'none' : undefined,
+                             } }
+                        >
+                            <div className="advgb-column-inner"
+                                 style={ { borderStyle, borderColor, borderWidth, borderRadius, } }
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                },
+            },
             {
                 attributes: blockAttrs,
                 save: function ( { attributes } ) {

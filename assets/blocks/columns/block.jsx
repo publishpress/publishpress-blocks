@@ -862,6 +862,75 @@
         },
     };
 
+    const legacyClassBasedAttrs = {
+        ...blockAttrs,
+        legacyWrapperClassName: {
+            type: 'string',
+            source: 'attribute',
+            selector: '.wp-block-advgb-columns',
+            attribute: 'class',
+        },
+        legacyWrapperId: {
+            type: 'string',
+            source: 'attribute',
+            selector: '.wp-block-advgb-columns',
+            attribute: 'id',
+        },
+        legacyColumnsClassName: {
+            type: 'string',
+            source: 'attribute',
+            selector: '.advgb-columns',
+            attribute: 'class',
+        },
+    };
+
+    const parseLegacyClassToken = ( className, tokenPattern ) => {
+        if ( typeof className !== 'string' || !className.length ) {
+            return undefined;
+        }
+
+        const match = className.match( tokenPattern );
+
+        if ( !match || typeof match[1] === 'undefined' ) {
+            return undefined;
+        }
+
+        return match[1];
+    };
+
+    const parseLegacyClassTokenNumber = ( className, tokenPattern ) => {
+        const parsedToken = parseLegacyClassToken( className, tokenPattern );
+
+        if ( typeof parsedToken === 'undefined' ) {
+            return undefined;
+        }
+
+        const parsedNumber = parseInt( parsedToken, 10 );
+
+        return Number.isNaN( parsedNumber ) ? undefined : parsedNumber;
+    };
+
+    const resolveLegacyColumnsAttributes = ( attributes ) => {
+        const legacyColumnsClassName = attributes.legacyColumnsClassName || '';
+
+        return {
+            columns: attributes.columns || parseLegacyClassTokenNumber( legacyColumnsClassName, /\badvgb-columns-(\d+)\b/ ),
+            columnsLayout: attributes.columnsLayout || parseLegacyClassToken( legacyColumnsClassName, /\blayout-([^\s]+)\b/ ),
+            columnsLayoutT: attributes.columnsLayoutT || parseLegacyClassToken( legacyColumnsClassName, /\btbl-layout-([^\s]+)\b/ ),
+            columnsLayoutM: attributes.columnsLayoutM || parseLegacyClassToken( legacyColumnsClassName, /\bmbl-layout-([^\s]+)\b/ ),
+            vAlign: attributes.vAlign || parseLegacyClassToken( legacyColumnsClassName, /\bcolumns-valign-([^\s]+)\b/ ),
+            gutter: ( typeof attributes.gutter === 'number' && attributes.gutter > 0 )
+                ? attributes.gutter
+                : parseLegacyClassTokenNumber( legacyColumnsClassName, /\bgutter-(\d+)\b/ ),
+            collapsedGutter: ( typeof attributes.collapsedGutter === 'number' && attributes.collapsedGutter > 0 )
+                ? attributes.collapsedGutter
+                : parseLegacyClassTokenNumber( legacyColumnsClassName, /\bvgutter-(\d+)\b/ ),
+            collapsedRtl: attributes.collapsedRtl || /\border-rtl\b/.test( legacyColumnsClassName ),
+            columnsWrapped: attributes.columnsWrapped || /\bcolumns-wrapped\b/.test( legacyColumnsClassName ),
+            colId: attributes.colId || attributes.legacyWrapperId,
+        };
+    };
+
     registerBlockType( 'advgb/columns', {
         title: __( 'Columns - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create flexible layouts for your content with advanced options and styles.', 'advanced-gutenberg' ),
@@ -934,6 +1003,78 @@
             );
         },
         deprecated: [
+            {
+                attributes: legacyClassBasedAttrs,
+                migrate: function ( attributes, innerBlocks ) {
+                    const migratedAttributes = {
+                        ...attributes,
+                        ...resolveLegacyColumnsAttributes( attributes ),
+                    };
+
+                    delete migratedAttributes.legacyWrapperClassName;
+                    delete migratedAttributes.legacyWrapperId;
+                    delete migratedAttributes.legacyColumnsClassName;
+
+                    return [ migratedAttributes, innerBlocks ];
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        contentMaxWidth,
+                        contentMaxWidthUnit,
+                        contentMinHeight,
+                        contentMinHeightUnit,
+                        contentMaxHeight,
+                        contentMaxHeightUnit,
+                        wrapperTag,
+                        legacyWrapperClassName,
+                        legacyColumnsClassName,
+                    } = attributes;
+                    const {
+                        columns,
+                        columnsLayout,
+                        columnsLayoutT,
+                        columnsLayoutM,
+                        vAlign,
+                        gutter,
+                        collapsedGutter,
+                        collapsedRtl,
+                        columnsWrapped,
+                        colId,
+                    } = resolveLegacyColumnsAttributes( attributes );
+                    const Tag = wrapperTag || 'div';
+
+                    const blockClasses = legacyColumnsClassName || [
+                        'advgb-columns',
+                        'advgb-columns-row',
+                        'advgb-is-mobile',
+                        vAlign && `columns-valign-${vAlign}`,
+                        columns && `advgb-columns-${columns}`,
+                        columnsLayout && `layout-${columnsLayout}`,
+                        columnsLayoutT && `tbl-layout-${columnsLayoutT}`,
+                        columnsLayoutM && `mbl-layout-${columnsLayoutM}`,
+                        !!gutter && `gutter-${gutter}`,
+                        !!collapsedGutter && `vgutter-${collapsedGutter}`,
+                        collapsedRtl && 'order-rtl',
+                        columnsWrapped && 'columns-wrapped',
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <Tag className={ legacyWrapperClassName || 'wp-block-advgb-columns advgb-columns-wrapper' } id={ colId }>
+                            <div className="advgb-columns-container">
+                                <div className={ blockClasses }
+                                     style={ {
+                                         maxWidth: !!contentMaxWidth ? `${contentMaxWidth}${contentMaxWidthUnit}` : undefined,
+                                         minHeight: !!contentMinHeight ? `${contentMinHeight}${contentMinHeightUnit}` : undefined,
+                                         maxHeight: !!contentMaxHeight ? `${contentMaxHeight}${contentMaxHeightUnit}` : undefined,
+                                     } }
+                                >
+                                    <InnerBlocks.Content />
+                                </div>
+                            </div>
+                        </Tag>
+                    );
+                }
+            },
             {
                 attributes: blockAttrs,
                 save: function ( { attributes } ) {
