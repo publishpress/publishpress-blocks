@@ -192,6 +192,7 @@
                 borderRadius,
                 marginBottom,
                 collapsedAll,
+                expandAll,
                 isPreview,
             } = attributes;
 
@@ -229,8 +230,29 @@
                                 help={ __( 'Make all accordions collapsed by default.', 'advanced-gutenberg' ) }
                                 checked={ collapsedAll }
                                 onChange={ () => {
-                                    setAttributes( { collapsedAll: !collapsedAll } );
-                                    this.props.updateAccordionAttributes( {collapsedAll: !collapsedAll} );
+                                    const newCollapsedAll = !collapsedAll;
+                                    const attrs = {
+                                        collapsedAll: newCollapsedAll,
+                                        expandAll: newCollapsedAll ? false : expandAll,
+                                    };
+
+                                    setAttributes( attrs );
+                                    this.props.updateAccordionAttributes( attrs );
+                                } }
+                            />
+                            <ToggleControl
+                                label={ __( 'Expand All', 'advanced-gutenberg' ) }
+                                help={ __( 'Make all accordions expanded by default.', 'advanced-gutenberg' ) }
+                                checked={ expandAll }
+                                onChange={ () => {
+                                    const newExpandAll = !expandAll;
+                                    const attrs = {
+                                        expandAll: newExpandAll,
+                                        collapsedAll: newExpandAll ? false : collapsedAll,
+                                    };
+
+                                    setAttributes( attrs );
+                                    this.props.updateAccordionAttributes( attrs );
                                 } }
                             />
                         </PanelBody>
@@ -396,6 +418,10 @@
             type: 'boolean',
             default: false,
         },
+        expandAll: {
+            type: 'boolean',
+            default: false,
+        },
         changed: {
             type: 'boolean',
             default: false,
@@ -413,6 +439,12 @@
             default: ''
         }
     };
+
+    const deprecatedBlockAttrs = {
+        ...blockAttrs,
+    };
+
+    delete deprecatedBlockAttrs.expandAll;
 
     registerBlockType( 'advgb/accordions', {
         title: __( 'Accordion - PublishPress', 'advanced-gutenberg' ),
@@ -448,7 +480,7 @@
             })
         )(AccordionsEdit),
         save: function ( { attributes } ) {
-            const { collapsedAll, id } = attributes;
+            const { collapsedAll, expandAll, id } = attributes;
 
             const accordionsClassName = [
                 id,
@@ -456,12 +488,33 @@
             ].filter(Boolean).join(' ');
 
             return (
-                <div className={ accordionsClassName } data-collapsed={ collapsedAll ? collapsedAll : undefined }>
+                <div
+                    className={ accordionsClassName }
+                    data-collapsed={ collapsedAll ? collapsedAll : undefined }
+                    data-expand-all={ expandAll ? expandAll : undefined }
+                >
                     <InnerBlocks.Content />
                 </div>
             );
         },
         deprecated: [
+            {
+                attributes: deprecatedBlockAttrs,
+                save: function ( { attributes } ) {
+                    const { collapsedAll, id } = attributes;
+
+                    const accordionsClassName = [
+                        id,
+                        'advgb-accordion-wrapper'
+                    ].filter(Boolean).join(' ');
+
+                    return (
+                        <div className={ accordionsClassName } data-collapsed={ collapsedAll ? collapsedAll : undefined }>
+                            <InnerBlocks.Content />
+                        </div>
+                    );
+                },
+            },
             {
                 attributes: {
                     headerBgColor: {

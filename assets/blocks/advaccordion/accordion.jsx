@@ -143,6 +143,7 @@
                 borderRadius,
                 marginBottom,
                 collapsedAll,
+                expandAll,
                 headerTag,
             } = attributes;
 
@@ -171,7 +172,25 @@
                                 label={ __( 'Initial Collapsed', 'advanced-gutenberg' ) }
                                 help={ __( 'Make all accordions collapsed by default.', 'advanced-gutenberg' ) }
                                 checked={ collapsedAll }
-                                onChange={ () => this.props.updateRootBlockAttrs({ collapsedAll: !collapsedAll })}
+                                onChange={ () => {
+                                    const newCollapsedAll = !collapsedAll;
+                                    this.props.updateRootBlockAttrs({
+                                        collapsedAll: newCollapsedAll,
+                                        expandAll: newCollapsedAll ? false : expandAll,
+                                    });
+                                }}
+                            />
+                            <ToggleControl
+                                label={ __( 'Expand All', 'advanced-gutenberg' ) }
+                                help={ __( 'Make all accordions expanded by default.', 'advanced-gutenberg' ) }
+                                checked={ expandAll }
+                                onChange={ () => {
+                                    const newExpandAll = !expandAll;
+                                    this.props.updateRootBlockAttrs({
+                                        expandAll: newExpandAll,
+                                        collapsedAll: newExpandAll ? false : collapsedAll,
+                                    });
+                                }}
                             />
                             <SelectControl
                                 label={ __( 'Header Tag', 'advanced-gutenberg' ) }
@@ -388,6 +407,10 @@
                 default: 15,
             },
             collapsedAll: {
+                type: 'boolean',
+                default: false,
+            },
+            expandAll: {
                 type: 'boolean',
                 default: false,
             },
