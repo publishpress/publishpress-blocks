@@ -1,6 +1,13 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[3.7.1] - 30 April, 2026
+
+- Update: Add "Expand all" settings on load to accordions block, #1749
+- Fixed: Block validation: Block validation failed for advgb/columns, #1753
+- Update: Migrate to shared dev-workspace v6, #1746
+- Update: Add remaining languages to make 26 on weblate, #1758
+
 [3.7.0] - 07 April, 2026
 
 - Fixed: Lightbox feature in PublishPress Image-block does not work, #1717

@@ -7,7 +7,7 @@ node_modules/
 report.csv
 /dist
 
-/dev-workspace/.cache/
+dev-workspace-cache/
 .env
 .phplint-cache
 .phplint.cache

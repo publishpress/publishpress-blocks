@@ -1,11 +1,12 @@
 {
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
         "vendor-dir": "vendor",
         "preferred-install": {
             "*": "dist"
         },
+        "process-timeout": 0,
         "platform-check": false,
         "autoloader-suffix": "PPBlocks"
     },
