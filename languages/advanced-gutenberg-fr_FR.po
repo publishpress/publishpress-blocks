@@ -18,8 +18,6 @@ msgstr ""
 "X-Generator: Weblate 5.14.3\n"
 
 #. Plugin Name of the plugin
-#. Plugin Name of the plugin
-#. Plugin Name of the plugin
 #: advanced-gutenberg.php:7 incl/advanced-gutenberg-main.php:176
 #: incl/pages/block-settings.php:95 incl/pages/main.php:8, fuzzy
 msgid "PublishPress Blocks"
@@ -35,12 +33,10 @@ msgstr "https://publishpress.com/blocks/"
 msgid ""
 "PublishPress Blocks has everything you need to build professional websites "
 "with the Gutenberg editor."
-msgstr ""
-"PublishPress Blocks a tout ce dont vous avez besoin pour créer des sites web "
-"professionnels avec l’éditeur Gutenberg."
+msgstr "PublishPress Blocks a tout ce dont vous avez besoin pour créer des sites web professionnels avec l’éditeur Gutenberg."
 
 #. Author of the plugin
-#: advanced-gutenberg.php:15 assets/blocks/pro-ad/shared/index.jsx:130, fuzzy
+#: advanced-gutenberg.php:15 assets/blocks/pro-ad/shared/index.jsx:130
 msgid "PublishPress"
 msgstr "PublishPress"
 
@@ -143,7 +139,7 @@ msgstr "Lire la suite"
 #: assets/blocks/recent-posts/block.jsx:1474
 #: assets/blocks/recent-posts/block.jsx:1523
 msgid "Upgrade to Pro"
-msgstr "Mettre à niveau vers Pro"
+msgstr "Passer à la version Pro"
 
 #: incl/advanced-gutenberg-main.php:472 incl/advanced-gutenberg-main.php:2124
 #: incl/advanced-gutenberg-main.php:3390 incl/pages/block-settings.php:133
@@ -183,9 +179,7 @@ msgstr "Pro"
 msgid ""
 "You're using PublishPress Blocks Free. The Pro version has more features and "
 "support. %sUpgrade to Pro%s"
-msgstr ""
-"Vous utilisez PublishPress Blocks Free. La version Pro offre plus de "
-"fonctionnalités et de support. %sPasser à la version Pro%s"
+msgstr "Vous utilisez PublishPress Blocks Free. La version Pro offre plus de fonctionnalités et de support. %sPasser à la version Pro%s"
 
 #: incl/advanced-gutenberg-main.php:1149 incl/advanced-gutenberg-main.php:1275
 #: incl/advanced-gutenberg-main.php:1336 incl/block-styles/block-styles.php:234
@@ -318,17 +312,13 @@ msgstr "Réglages"
 msgid ""
 "This feature is disabled. In order to use, please enable back through "
 "%sDashboard%s."
-msgstr ""
-"Cette fonctionnalité est désactivée. Afin de l’utiliser, veuillez la "
-"réactiver via le %sTableau de bord%s."
+msgstr "Cette fonctionnalité est désactivée. Afin de l’utiliser, veuillez la réactiver via le %stableau de bord%s."
 
 #: incl/advanced-gutenberg-main.php:2434
 #, php-format
 msgid ""
 "If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!"
-msgstr ""
-"Si vous aimez %sPublishPress Blocks%s, veuillez nous laisser une note de %s. "
-"Merci !"
+msgstr "Si vous aimez %sPublishPress Blocks%s, veuillez nous laisser une note de %s. Merci !"
 
 #: incl/advanced-gutenberg-main.php:2451
 msgid "About PublishPress Blocks"
@@ -367,7 +357,7 @@ msgstr "%s ne peut pas être enregistré. Veuillez réessayer."
 #: incl/advanced-gutenberg-main.php:3612
 #: incl/pages/block-controls/blocks.php:13 incl/pages/block-settings.php:102
 msgid "Search blocks"
-msgstr "Blocs de recherche"
+msgstr "Rechercher les blocs"
 
 #: incl/advanced-gutenberg-main.php:3617
 msgid "Enable or disable all blocks"
@@ -409,7 +399,7 @@ msgstr "La configuration par défaut de ce bloc n’est pas disponible."
 #: incl/advanced-gutenberg-main.php:4172
 #, php-format
 msgid "Page not found. Go to %sDashboard%s"
-msgstr "Page non trouvée. Aller au %sTableau_de_bord%s"
+msgstr "Page non trouvée. Aller au %sTableau de bord%s"
 
 #: incl/advanced-gutenberg-main.php:4585 incl/block-styles/block-styles.php:977
 #: incl/block-styles/block-styles.php:996
@@ -495,7 +485,7 @@ msgstr "Rechercher les blocs réutilisables"
 
 #: incl/advanced-gutenberg-main.php:6024
 msgid "No reusable blocks found."
-msgstr "Aucun bloc réutilisable trouvé."
+msgstr "Aucun bloc réutilisable trouvé"
 
 #: incl/advanced-gutenberg-main.php:6025
 msgid "No reusable blocks found in Trash."
@@ -754,16 +744,14 @@ msgstr "Contrôle de sécurité échoué"
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:879
 msgid "You do not have permission to duplicate this item"
-msgstr "Vou n’avez le droit à dupliquer cet élément"
+msgstr "Vou n’avez le droit à dupliquer cet élément."
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:889
 #, php-format
 msgid ""
 "Auto insert block duplicated successfully. <a href=\"%s\">Edit the new rule</"
 "a>"
-msgstr ""
-"Le bloc d’insertion automatique a bien été dupliqué. <a href=\"%s\">Modifier "
-"la nouvelle règle</a>"
+msgstr "Le bloc d’insertion automatique a bien été dupliqué. <a href=\"%s\">Modifier la nouvelle règle</a>"
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:895
 msgid "Error duplicating auto insert block"
@@ -848,7 +836,7 @@ msgstr "Tout bloc"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:148
 msgid "After Nth block"
-msgstr "Après le bloc N"
+msgstr "Après le le bloc N"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:149
 msgid "Before Nth block"
@@ -875,9 +863,7 @@ msgstr "Insérer une position"
 msgid ""
 "The selected option requires the Pro version. Please select one of the "
 "general options or %1$sUpgrade to Pro%2$s."
-msgstr ""
-"Pour l’option sélectionnée, la version Pro est obligatoire. Veuillez "
-"sélectionner l’une des options générales ou %1$sPasser à la version Pro%2$s."
+msgstr "Pour l’option sélectionnée, la version Pro est obligatoire. Veuillez sélectionner l’une des options générales ou %1$sPasser à la version Pro%2$s."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:196
 msgid "Position Number"
@@ -926,9 +912,7 @@ msgstr "Espaceur"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:233
 msgid "Selected blocks will not be counted when determining position."
-msgstr ""
-"Les blocs sélectionnés ne seront pas pris en compte pour déterminer la "
-"position."
+msgstr "Les blocs sélectionnés ne seront pas pris en compte pour déterminer la position."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:238
 msgid "Search Block"
@@ -936,9 +920,7 @@ msgstr "Rechercher le bloc"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:241
 msgid "Search and select blocks after this reusable block should be inserted."
-msgstr ""
-"Rechercher et sélectionner les blocs après lesquels ce bloc réutilisable "
-"doit être inséré."
+msgstr "Rechercher et sélectionner les blocs après lesquels ce bloc réutilisable doit être inséré."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:257
 msgid "Search blocks..."
@@ -949,7 +931,7 @@ msgid "Post Types"
 msgstr "Types de publication"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:347
-#: assets/blocks/pro-ad/recent-posts-promo.jsx:234, fuzzy
+#: assets/blocks/pro-ad/recent-posts-promo.jsx:234
 msgid "Taxonomies"
 msgstr "Taxonomies"
 
@@ -957,9 +939,7 @@ msgstr "Taxonomies"
 msgid ""
 "You can restrict this block insertion to only post with specific taxonomy "
 "terms."
-msgstr ""
-"Vous pouvez limiter l’insertion de ce bloc uniquement aux publications ayant "
-"des termes taxonomiques spécifiques."
+msgstr "Vous pouvez limiter l’insertion de ce bloc uniquement aux publications ayant des termes taxonomiques spécifiques."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:359
 msgid "Authors"
@@ -987,8 +967,7 @@ msgstr "Publications créées au cours des années"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:434
 msgid "Comma-separated list of years (e.g., 2023,2024,2025)."
-msgstr ""
-"Liste d’années séparées par des virgules (par exemple, 2023,2024,2025)."
+msgstr "Liste d’années séparées par des virgules (par exemple, 2023,2024,2025)."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:442
 msgid "Target Posts"
@@ -998,9 +977,7 @@ msgstr "Publications cibles"
 msgid ""
 "Search and select posts or enter their IDs to limit this rules to specific "
 "posts."
-msgstr ""
-"Rechercher et sélectionner des publications ou saisir leurs IDs pour limiter "
-"ces règles à des publications spécifiques."
+msgstr "Rechercher et sélectionner des publications ou saisir leurs IDs pour limiter ces règles à des publications spécifiques."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:448
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:485
@@ -1015,9 +992,7 @@ msgstr "OR"
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:466
 msgid "Enter comma-separated list of post IDs to include (e.g., 123,456,789)."
-msgstr ""
-"Saisir la liste des IDs des publications à inclure, séparés par des virgules "
-"(par exemple, 123,456,789)."
+msgstr "Saisir la liste des IDs des publications à inclure, séparés par des virgules (par exemple, 123,456,789)."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:479
 msgid "Exclude Posts"
@@ -1026,15 +1001,11 @@ msgstr "Exclure les publications"
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:482
 msgid ""
 "Search and select posts or enter their IDs to exclude them from auto insert."
-msgstr ""
-"Rechercher et sélectionner des publications ou saisir leurs IDs pour les "
-"exclure de l’insertion automatique."
+msgstr "Rechercher et sélectionner des publications ou saisir leurs IDs pour les exclure de l’insertion automatique."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:503
 msgid "Enter comma-separated post IDs to exclude (e.g., 123,456,789)."
-msgstr ""
-"Saisir les IDs des publications à exclure, séparés par des virgules (par "
-"exemple, 123,456,789)."
+msgstr "Saisir les IDs des publications à exclure, séparés par des virgules (par exemple, 123,456,789)."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:533
 msgid "Priority"
@@ -1044,10 +1015,7 @@ msgstr "Priorité"
 msgid ""
 "This option decides which rule runs first if you have multiple rules "
 "targeting the same position in a post. For example, 9 will run before 10."
-msgstr ""
-"Cette option détermine quelle règle s’applique en premier lorsque plusieurs "
-"règles ciblent la même position dans une publication. Par exemple, la règle "
-"9 s’appliquera avant la règle 10."
+msgstr "Cette option détermine quelle règle s’applique en premier lorsque plusieurs règles ciblent la même position dans une publication. Par exemple, la règle 9 s’appliquera avant la règle 10."
 
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:617
 msgid "Search terms..."
@@ -1178,9 +1146,9 @@ msgstr "Cercle plus"
 msgid "Plus Circle Outline"
 msgstr "Contour de cercle plus"
 
-#: incl/block-settings-main.php:63
+#: incl/block-settings-main.php:63, fuzzy
 msgid "Plus Square Outline"
-msgstr "Plus contour carré"
+msgstr "Plus Square Outline"
 
 #: incl/block-settings-main.php:67
 msgid "Unfold Arrow"
@@ -1310,7 +1278,7 @@ msgstr "Couleur de la bordure"
 #: incl/block-settings-main.php:1890 incl/block-styles/block-styles.php:1095
 #: assets/blocks/testimonial/block.jsx:387
 msgid "Border Width"
-msgstr "Largeur de la bordure"
+msgstr "Epaisseur de la bordure"
 
 #: incl/block-settings-main.php:137 incl/block-settings-main.php:204
 #: incl/block-settings-main.php:1066 incl/block-settings-main.php:1245
@@ -1319,7 +1287,7 @@ msgstr "Largeur de la bordure"
 #: incl/block-settings-main.php:1828 incl/block-settings-main.php:1897
 #: incl/block-styles/block-styles.php:1125
 msgid "Border Radius"
-msgstr "Coins arrondis"
+msgstr "Rayon de la bordure"
 
 #: incl/block-settings-main.php:148
 msgid "Text and Color"
@@ -1361,25 +1329,25 @@ msgstr "Réglages des marges internes"
 #: incl/block-settings-main.php:1904 incl/block-settings-main.php:2015
 #: incl/block-settings-main.php:2095 assets/blocks/advtable/block.jsx:1314
 msgid "Padding Top"
-msgstr "Marge interne du haut"
+msgstr "Marge interne supérieure"
 
 #: incl/block-settings-main.php:256 incl/block-settings-main.php:1856
 #: incl/block-settings-main.php:1925 incl/block-settings-main.php:2036
 #: incl/block-settings-main.php:2116 assets/blocks/advtable/block.jsx:1321
 msgid "Padding Right"
-msgstr "Marge interne Droite"
+msgstr "Marge interne droite"
 
 #: incl/block-settings-main.php:263 incl/block-settings-main.php:1842
 #: incl/block-settings-main.php:1911 incl/block-settings-main.php:2022
 #: incl/block-settings-main.php:2102 assets/blocks/advtable/block.jsx:1328
 msgid "Padding Bottom"
-msgstr "Marge interne basse"
+msgstr "Marge interne inférieure"
 
 #: incl/block-settings-main.php:270 incl/block-settings-main.php:1849
 #: incl/block-settings-main.php:1918 incl/block-settings-main.php:2029
 #: incl/block-settings-main.php:2109 assets/blocks/advtable/block.jsx:1335
 msgid "Padding Left"
-msgstr "Marge interne Gauche"
+msgstr "Marge interne gauche"
 
 #: incl/block-settings-main.php:279
 msgid "Hover Settings"
@@ -1448,7 +1416,7 @@ msgstr "Pleine largeur"
 #: incl/block-settings-main.php:1469 assets/blocks/advimage/block.jsx:145
 #: assets/blocks/images-slider/block.jsx:284 assets/blocks/map/block.jsx:1291
 msgid "Height"
-msgstr "Taille"
+msgstr "Hauteur"
 
 #: incl/block-settings-main.php:380 incl/block-settings-main.php:1462
 #: assets/blocks/advimage/block.jsx:153
@@ -1778,7 +1746,7 @@ msgstr "Compteur de couleur"
 #: incl/block-settings-main.php:701 incl/block-settings-main.php:1138
 #: assets/blocks/count-up/block.jsx:107 assets/blocks/testimonial/block.jsx:429
 msgid "Description Color"
-msgstr "Description Couleur"
+msgstr "Couleur de la description"
 
 #: incl/block-settings-main.php:708 assets/blocks/count-up/block.jsx:91
 msgid "Count Up Settings"
@@ -1930,9 +1898,9 @@ msgid "Vimeo"
 msgstr "Vimeo"
 
 #: incl/block-settings-main.php:820 incl/block-settings-main.php:861
-#: incl/block-settings-main.php:902, fuzzy
+#: incl/block-settings-main.php:902
 msgid "Youtube"
-msgstr "Youtube"
+msgstr "YouTube"
 
 #: incl/block-settings-main.php:824 incl/block-settings-main.php:865
 #: incl/block-settings-main.php:906 incl/block-settings-main.php:1868
@@ -1967,7 +1935,7 @@ msgstr "Espace d’icônes"
 
 #: incl/block-settings-main.php:952 assets/blocks/summary/block.jsx:325
 msgid "Load minimized"
-msgstr "Chargement minimisé"
+msgstr "Chargement  minimisé"
 
 #: incl/block-settings-main.php:957 assets/blocks/summary/block.jsx:331
 msgid "Table of Contents header title"
@@ -2092,7 +2060,7 @@ msgstr "Position du bouton"
 #: incl/block-settings-main.php:1297 assets/blocks/contact-form/block.jsx:71
 #: assets/blocks/newsletter/block.jsx:81
 msgid "Form Settings"
-msgstr "Réglages de formulaires"
+msgstr "Réglages du formulaire"
 
 #: incl/block-settings-main.php:1300 assets/blocks/newsletter/block.jsx:83
 msgid "Form style"
@@ -2789,7 +2757,7 @@ msgstr "Marge interne de liste (px)"
 
 #: incl/block-styles/block-styles.php:1648
 msgid "Item Margin Bottom (px)"
-msgstr "Marge inférieure de l’élément (px)"
+msgstr "Marge externe inférieure de l’élément (px)"
 
 #: incl/block-styles/block-styles.php:1654
 msgid "Item Text Color"
@@ -2912,7 +2880,7 @@ msgstr "Rayon de la bordure (px)"
 #: incl/block-styles/block-styles.php:2075 assets/blocks/infobox/block.jsx:248
 #: assets/blocks/infobox/block.jsx:334
 msgid "Border Width (px)"
-msgstr "Largeur de la bordure (px)"
+msgstr "Epaisseur de la bordure (px)"
 
 #: incl/block-styles/block-styles.php:2091
 msgid "Max Width (%)"
@@ -3064,8 +3032,7 @@ msgstr "Planifier"
 
 #: incl/pages/block-controls/controls.php:38
 msgid "Choose when to start showing and/or stop showing your blocks."
-msgstr ""
-"Choisissez quand commencer à afficher et/ou arrêter de afficher vos blocs."
+msgstr "Choisir quand commencer à afficher et/ou arrêter de afficher vos blocs."
 
 #: incl/pages/block-controls/controls.php:46
 #: incl/pages/block-controls/controls.php:79
@@ -3095,7 +3062,7 @@ msgstr "Ce contrôle de bloc est disponible sur :"
 #: incl/pages/block-controls/controls.php:319
 #: incl/pages/block-controls/controls.php:337
 msgid "Post"
-msgstr "Publié"
+msgstr "Publication"
 
 #: incl/pages/block-controls/controls.php:50
 #: incl/pages/block-controls/controls.php:83
@@ -3136,7 +3103,7 @@ msgstr "Rôles des comptes"
 
 #: incl/pages/block-controls/controls.php:71
 msgid "Choose which users can see your blocks."
-msgstr "Choisissez les utilisateur·ice·s qui peuvent voir vos blocs."
+msgstr "Choisir les utilisateurs/utilisatrices qui peuvent voir vos blocs."
 
 #: incl/pages/block-controls/controls.php:93
 #: assets/pages/block-controls/block-controls.jsx:1649
@@ -3168,9 +3135,7 @@ msgstr "Archives de termes"
 msgid ""
 "Choose on which taxonomies and terms archive pages your blocks can be "
 "displayed."
-msgstr ""
-"Choisissez sur quelles taxonomies et pages d’archives de termes vos blocs "
-"peuvent être affichés."
+msgstr "Choisir sur quelles taxonomies et pages d’archives de termes vos blocs peuvent être affichés."
 
 #: incl/pages/block-controls/controls.php:190
 #: assets/pages/block-controls/block-controls.jsx:2119, fuzzy
@@ -3179,7 +3144,7 @@ msgstr "Pages"
 
 #: incl/pages/block-controls/controls.php:201
 msgid "Choose in which pages your blocks can be displayed."
-msgstr "Choisissez dans quelles pages vos blocs peuvent être affichés."
+msgstr "Choisir dans quelles pages vos blocs peuvent être affichés."
 
 #: incl/pages/block-controls/controls.php:220
 msgid "Browser & Device"
@@ -3217,9 +3182,7 @@ msgstr "Méta du compte"
 
 #: incl/pages/block-controls/controls.php:279
 msgid "Show or hide blocks based on user meta values."
-msgstr ""
-"Afficher ou masquer les blocs en fonction des valeurs des métadonnées de "
-"l’utilisateur/utilisatrice."
+msgstr "Afficher ou masquer les blocs en fonction des valeurs des métadonnées de l’utilisateur/utilisatrice."
 
 #: incl/pages/block-controls/controls.php:292
 #: assets/pages/block-controls/block-controls.jsx:1885
@@ -3229,9 +3192,7 @@ msgstr "Métadonnées de la publication"
 
 #: incl/pages/block-controls/controls.php:297
 msgid "Show or hide blocks based on post meta values."
-msgstr ""
-"Afficher ou masquer les blocs en fonction des valeurs des métadonnées de "
-"publication."
+msgstr "Afficher ou masquer les blocs en fonction des valeurs des métadonnées de publication."
 
 #: incl/pages/block-controls/controls.php:310
 #: assets/pages/block-controls/block-controls.jsx:1928
@@ -3241,8 +3202,7 @@ msgstr "Chaîne de requête"
 
 #: incl/pages/block-controls/controls.php:315
 msgid "Show or hide blocks based on URL query parameters."
-msgstr ""
-"Afficher ou masquer les blocs en fonction des paramètres de requête URL."
+msgstr "Afficher ou masquer les blocs en fonction des paramètres de requête URL."
 
 #: incl/pages/block-controls/controls.php:328
 #: assets/pages/block-controls/block-controls.jsx:1973
@@ -3252,9 +3212,7 @@ msgstr "Permissions"
 
 #: incl/pages/block-controls/controls.php:333
 msgid "Show or hide blocks based on user capabilities."
-msgstr ""
-"Afficher ou masquer les blocs en fonction des permissions de l’utilisateur/"
-"utilisatrice."
+msgstr "Afficher ou masquer les blocs en fonction des permissions de l’utilisateur/utilisatrice."
 
 #: incl/pages/block-controls/controls.php:353
 msgid "Save Controls"
@@ -3354,10 +3312,7 @@ msgstr "Modifier"
 msgid ""
 "No blocks available. Please go to a post edit (without saving either "
 "modifying anything). Then come back to Block Settings to see the blocks list."
-msgstr ""
-"Aucun bloc disponible. Veuillez aller à une modification de publication "
-"(sans enregistrer ni modifier quoi que ce soit). Revenez ensuite aux "
-"réglages de bloc pour voir la liste des blocs."
+msgstr "Aucun bloc disponible. Veuillez aller à une modification de publication (sans enregistrer ni modifier quoi que ce soit). Revenez ensuite aux réglages de bloc pour voir la liste des blocs."
 
 #: incl/pages/block-settings/block-config.php:14
 #: incl/pages/block-settings/block-config.php:30
@@ -3367,7 +3322,7 @@ msgstr "Sauvegarder"
 #: incl/pages/block-settings/block-config.php:18
 #: assets/pages/block-usage/block-usage.jsx:1019
 msgid "block"
-msgstr "bloc"
+msgstr " bloc"
 
 #: incl/pages/custom-styles.php:12
 msgid "Add new style"
@@ -3448,53 +3403,39 @@ msgstr "Enregistrer les styles"
 #: incl/pages/main.php:22
 msgid ""
 "You can control who can use each block, including default WordPress blocks."
-msgstr ""
-"Vous pouvez contrôler qui peut utiliser chaque bloc, y compris les blocs "
-"WordPress par défaut."
+msgstr "Vous pouvez contrôler qui peut utiliser chaque bloc, y compris les blocs WordPress par défaut."
 
 #: incl/pages/main.php:32
 msgid ""
 "Enable extra blocks including content displays, sliders, buttons, icons, "
 "tabs, accordions, and more."
-msgstr ""
-"Activez des blocs supplémentaires, y compris des affichages de contenu, des "
-"diaporamas, des boutons, des icônes, des onglets, des accordéons, etc."
+msgstr "Activez des blocs supplémentaires, y compris des affichages de contenu, des diaporamas, des boutons, des icônes, des onglets, des accordéons, etc."
 
 #: incl/pages/main.php:42
 msgid ""
 "You can add your own CSS styles for your blocks. Anyone editing posts can "
 "quickly add the styles to blocks."
-msgstr ""
-"Vous pouvez ajouter vos propres styles CSS pour vos blocs. Toute personne "
-"modifiant des publications peut rapidement ajouter les styles aux blocs."
+msgstr "Vous pouvez ajouter vos propres styles CSS pour vos blocs. Toute personne modifiant des publications peut rapidement ajouter les styles aux blocs."
 
 #: incl/pages/main.php:52
 msgid ""
 "This feature adds display controls for blocks. You can schedule when blocks "
 "are shown, and add user role restrictions."
-msgstr ""
-"Cette fonctionnalité ajoute des contrôles pour les blocs. Vous pouvez "
-"planifier quand afficher les blocs, et ajouter des restrictions pour les "
-"rôles utilisateur·ice·s."
+msgstr "Cette fonctionnalité ajoute des contrôles pour les blocs. Vous pouvez planifier quand afficher les blocs, et ajouter des restrictions pour les rôles du compte."
 
 #: incl/pages/main.php:62
 msgid "You can scan the posts on your website for blocks usage."
-msgstr ""
-"Vous pouvez analyser les publications sur votre site pour vérifier "
-"l’utilisation des blocs."
+msgstr "Vous pouvez analyser les publications sur votre site pour vérifier l’utilisation des blocs."
 
 #: incl/pages/main.php:72
 msgid "This feature enables a submenu to manage your Reusable Blocks."
-msgstr ""
-"Cette fonctionnalité active un sous-menu pour gérer vos blocs réutilisables."
+msgstr "Cette fonctionnalité active un sous-menu pour gérer vos blocs réutilisables."
 
 #: incl/pages/main.php:82
 msgid ""
 "Automatically insert reusable blocks into posts based on position, "
 "categories, tags, and other criteria."
-msgstr ""
-"Insérer automatiquement des blocs réutilisables dans les publications en "
-"fonction de la position, des catégories, des étiquettes et d’autres critères."
+msgstr "Insérer automatiquement des blocs réutilisables dans les publications en fonction de la position, des catégories, des étiquettes et d’autres critères."
 
 #: incl/pages/main.php:90
 msgid "Core Blocks Features"
@@ -3503,9 +3444,7 @@ msgstr "Fonctionnalités des blocs du cœur"
 #: incl/pages/main.php:91
 msgid ""
 "Add Google Fonts support to core blocks including paragraphs and headings."
-msgstr ""
-"Ajouter la prise en charge de Google Fonts aux cœur de blocs, y compris les "
-"paragraphes et les titres."
+msgstr "Ajouter la prise en charge de Google Fonts aux cœur de blocs, y compris les paragraphes et les titres."
 
 #: incl/pages/settings.php:37
 msgid "Block Features"
@@ -3542,9 +3481,7 @@ msgstr "Désactiver l’ajout de tous les blocs"
 #: incl/pages/settings/block-features.php:67
 #, php-format
 msgid "Prevent users in %1s role from adding new block to posts."
-msgstr ""
-"Empêcher les utilisateurs/utilisatrices ayant le rôle %1s d’ajouter de "
-"nouveaux blocs aux publications."
+msgstr "Empêcher les utilisateurs/utilisatrices ayant le rôle %1s d’ajouter de nouveaux blocs aux publications."
 
 #: incl/pages/settings/block-features.php:79
 msgid "Disable the Pattern Directory"
@@ -3553,9 +3490,7 @@ msgstr "Désactiver le répertoire des compositions"
 #: incl/pages/settings/block-features.php:89
 #, php-format
 msgid "Disable the pattern directory for users in %1s role."
-msgstr ""
-"Désactiver le répertoire des compositions pour les utilisateurs/"
-"utilisatrices du rôle %1s."
+msgstr "Désactiver le répertoire des compositions pour les utilisateurs/utilisatrices du rôle %1s."
 
 #: incl/pages/settings/block-features.php:101
 msgid "Disable the Openverse"
@@ -3599,9 +3534,7 @@ msgstr "Données stockées par les blocs de formulaires de la newsletter."
 msgid ""
 "These email settings apply to messages sent through PublishPress Contact "
 "form block."
-msgstr ""
-"Ces réglages d’e-mail s’appliquent aux messages envoyés par le bloc du "
-"formulaire de contact de PublishPress."
+msgstr "Ces réglages d’e-mail s’appliquent aux messages envoyés par le bloc du formulaire de contact de PublishPress."
 
 #: incl/pages/settings/forms.php:48
 msgid "Sender name"
@@ -3629,8 +3562,7 @@ msgstr "Afficher la marque PublishPress"
 
 #: incl/pages/settings/general.php:50
 msgid "PublishPress logo and links in the footer of the admin pages"
-msgstr ""
-"Logo et liens PublishPress dans le pied de page des pages d’administration"
+msgstr "Logo et liens PublishPress dans le pied de page des pages d’administration"
 
 #: incl/pages/settings/general.php:59
 msgid "Enable blocks spacing"
@@ -3676,9 +3608,7 @@ msgstr "Retirer l’autop"
 #: incl/pages/settings/general.php:188
 msgid ""
 "Autop WordPress function is used to prevent unwanted paragraphs to be added"
-msgstr ""
-"La fonction WordPress « Autop » est utilisée pour empêcher l’ajout de "
-"paragraphes non désirés"
+msgstr "La fonction WordPress « Autop » est utilisée pour empêcher l’ajout de paragraphes non désirés."
 
 #: incl/pages/settings/general.php:204
 msgid "Save General Settings"
@@ -3690,9 +3620,7 @@ msgstr "Ouvrir les galeries dans une visionneuse"
 
 #: incl/pages/settings/images.php:36
 msgid "Open gallery images as a lightbox style popup"
-msgstr ""
-"Ouvrez les images de la galerie dans une fenêtre surgissante de type "
-"« visionneuse »"
+msgstr "Ouvrez les images de la galerie dans une fenêtre surgissante de type « visionneuse »"
 
 #: incl/pages/settings/images.php:47
 msgid "Image caption"
@@ -3708,9 +3636,7 @@ msgstr "Superposition"
 
 #: incl/pages/settings/images.php:71
 msgid "Display caption text on images loaded as lightbox in galleries."
-msgstr ""
-"Afficher le texte de la légende sur les images chargées comme visionneuse "
-"dans les galeries."
+msgstr "Afficher le texte de la légende sur les images chargées comme visionneuse dans les galeries."
 
 #: incl/pages/settings/images.php:82
 msgid "Default thumbnail"
@@ -3724,9 +3650,7 @@ msgstr "Réinitialiser aux valeurs par défaut"
 msgid ""
 "Set the default post thumbnail to use in Content Display blocks for posts "
 "without featured image."
-msgstr ""
-"Définir la miniature de publication par défaut à utiliser dans les blocs "
-"d’affichage du contenu pour les publications sans image mise en avant."
+msgstr "Définissez la miniature de publication par défaut à utiliser dans les blocs d’affichage du contenu pour les publications sans image mise en avant."
 
 #: incl/pages/settings/maps.php:15
 msgid "Google API key"
@@ -3738,9 +3662,7 @@ msgstr "Comment créer une clé API Google"
 
 #: incl/pages/settings/maps.php:38
 msgid "A Google API key is required to use the Map block without any warning."
-msgstr ""
-"Une clé API Google est requise pour utiliser le bloc Carte sans "
-"avertissement."
+msgstr "Une clé API Google est requise pour utiliser le bloc Carte sans avertissement."
 
 #: incl/pages/settings/maps.php:54
 msgid "Save Maps Settings"
@@ -3751,10 +3673,7 @@ msgstr "Enregistrer les réglages des cartes"
 msgid ""
 "Use the Google reCAPTCHA to avoid spam in PublishPress Blocks forms. Get "
 "credentials for your domain by registering %shere%s."
-msgstr ""
-"Utilisez Google reCaptcha pour éviter les indésirables dans les formulaires "
-"de PublishPress Blocks. Obtenez des infos de connexion pour votre domaine en "
-"vous inscrivant %sici%s."
+msgstr "Utilisez Google reCaptcha pour éviter les indésirables dans les formulaires de PublishPress Blocks. Obtenez des infos de connexion pour votre domaine en vous inscrivant %sici%s."
 
 #: incl/pages/settings/recaptcha.php:30
 msgid "Enable reCAPTCHA"
@@ -3766,7 +3685,7 @@ msgstr "Clé du site"
 
 #: incl/pages/settings/recaptcha.php:49 incl/pages/settings/recaptcha.php:68
 msgid "required"
-msgstr "Champs obligatoires"
+msgstr "obligatoire"
 
 #: incl/pages/settings/recaptcha.php:66
 msgid "Secret key"
@@ -3800,10 +3719,7 @@ msgstr "Invisible"
 msgid ""
 "We strongly recommend not using Invisible reCAPTCHA if you have more than 1 "
 "Newsletter or Contact forms block in a page."
-msgstr ""
-"Nous vous recommandons vivement de ne pas utiliser Invisible reCAPTCHA si "
-"vous avez plus d’un bloc de formulaire de lettre d’information ou de contact "
-"dans une page."
+msgstr "Nous vous recommandons vivement de ne pas utiliser Invisible reCAPTCHA si vous avez plus d’un bloc de formulaire de lettre d’information ou de contact dans une page."
 
 #: incl/pages/settings/recaptcha.php:151
 msgid "Save reCAPTCHA Settings"
@@ -3831,9 +3747,7 @@ msgstr "Fonctionnalité"
 
 #: incl/utilities-main.php:61 incl/utilities-main.php:72
 msgid "Use block to create a list inside the Feature List\" block."
-msgstr ""
-"Utiliser le bloc pour créer une liste à l’intérieur du bloc « Liste des "
-"fonctionnalités »."
+msgstr "Utiliser le bloc pour créer une liste à l’intérieur du bloc « Liste des fonctionnalités »."
 
 #: incl/utilities-main.php:71
 msgid "Feature List"
@@ -3841,7 +3755,7 @@ msgstr "Liste des fonctionnalités"
 
 #: install.php:23
 msgid "Gutenberg is not detected! Activate it or"
-msgstr "Gutenberg n’est pas détecté ! L’activer ou"
+msgstr "Gutenberg n’est pas détecté ! L’activer ou "
 
 #: install.php:24
 msgid "Install Gutenberg Now!"
