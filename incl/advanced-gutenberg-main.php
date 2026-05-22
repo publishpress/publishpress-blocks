@@ -5470,7 +5470,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_AdvancedColumnsStyles($blockAttrs, $blockName)
         {
-            $colID       = esc_html($blockAttrs['colId']);
+            $colID       = esc_html($blockAttrs['colId'] ?? '');
             $marginUnit  = 'px';
             $paddingUnit = 'px';
             if ($blockName === 'advgb/column') {
