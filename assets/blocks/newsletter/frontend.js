@@ -64,7 +64,9 @@ jQuery(document).ready(function ($) {
                 $thisForm.find('.advgb-form-sending').remove();
                 var successText = $thisForm.find('.advgb-form-submit').data('success');
                 successText = successText ? successText : __('Submitted with success!', 'advanced-gutenberg');
-                $thisForm.append('<div class="advgb-form-submit-success">'+ successText +'</div>');
+                $thisForm.append(
+                    $('<div/>', { class: 'advgb-form-submit-success' }).text(successText)
+                );
             },
             error: function ( jqxhr, textStatus, error ) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
