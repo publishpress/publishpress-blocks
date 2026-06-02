@@ -1681,7 +1681,18 @@ if (! class_exists('AdvancedGutenbergMain')) {
          */
         public function validateLoresForm()
         {
-			// phpcs:disable -- WordPress.Security.NonceVerification.Recommended - frontend form, no nonce
+			if (
+				! isset( $_POST['nonce'] )
+				|| ! wp_verify_nonce(
+					sanitize_text_field( wp_unslash( $_POST['nonce'] ) ),
+					'advgb_blockform_nonce_field'
+				)
+			) {
+				wp_send_json( __( 'Invalid nonce token!', 'advanced-gutenberg' ), 400 );
+
+				return false;
+			}
+
 			if ( ! isset( $_POST['action'] ) ) {
 				wp_send_json( __( 'Bad Request!', 'advanced-gutenberg' ), 400 );
 
@@ -4511,9 +4522,17 @@ if (! class_exists('AdvancedGutenbergMain')) {
          */
         public function addNonceToFormBlocks($block)
         {
+            $nonce_field = '<input type="hidden" name="advgb_blockform_nonce_field" value="' . wp_create_nonce('advgb_blockform_nonce_field') . '">';
+
             $block = str_replace(
                 '<div class="advgb-form-submit-wrapper"',
-                '<input type="hidden" name="advgb_blockform_nonce_field" value="' . wp_create_nonce('advgb_blockform_nonce_field') . '"><div class="advgb-form-submit-wrapper"',
+                $nonce_field . '<div class="advgb-form-submit-wrapper"',
+                $block
+            );
+
+            $block = str_replace(
+                '<div class="advgb-lores-field advgb-lores-submit-wrapper"',
+                $nonce_field . '<div class="advgb-lores-field advgb-lores-submit-wrapper"',
                 $block
             );
 
