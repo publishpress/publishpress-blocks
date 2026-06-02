@@ -1409,6 +1409,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
 				return false;
 			}
 
+			$this->rateLimitFormSubmission( 'contact_form' );
+
 			if ( isset( $_POST['captcha'] ) ) {
 				$recaptcha_config = get_option( 'advgb_recaptcha_config' );
 				if ( ! isset( $recaptcha_config['recaptcha_secret_key'] ) || ! isset( $recaptcha_config['recaptcha_site_key'] ) ) {
@@ -1430,18 +1432,19 @@ if (! class_exists('AdvancedGutenbergMain')) {
 			}
 
 			$contacts_saved = get_option( 'advgb_contacts_saved' );
-			if ( ! $contacts_saved ) {
+			if ( ! is_array( $contacts_saved ) ) {
 				$contacts_saved = array();
 			}
 
 			$contact_data = array(
-				'date'  => sanitize_text_field( $_POST['submit_date'] ),
-				'name'  => sanitize_text_field( $_POST['contact_name'] ),
-				'email' => sanitize_email( $_POST['contact_email'] ),
-				'msg'   => sanitize_textarea_field( $_POST['contact_msg'] ),
+				'date'  => $this->sanitizeFormPostField( 'submit_date', 'text', 100, 'contact_form' ),
+				'name'  => $this->sanitizeFormPostField( 'contact_name', 'text', 200, 'contact_form' ),
+				'email' => $this->sanitizeFormPostField( 'contact_email', 'email', 254, 'contact_form' ),
+				'msg'   => $this->sanitizeFormPostField( 'contact_msg', 'textarea', 5000, 'contact_form' ),
 			);
 
 			array_push( $contacts_saved, $contact_data );
+			$contacts_saved = $this->limitSavedFormEntries( $contacts_saved, 'advgb_contacts_saved' );
 
 			$saved = update_option( 'advgb_contacts_saved', $contacts_saved, false );
 			if ( $saved ) {
@@ -1501,6 +1504,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
 				return false;
 			}
 
+			$this->rateLimitFormSubmission( 'newsletter' );
+
 			if ( isset( $_POST['captcha'] ) ) {
 				$recaptcha_config = get_option( 'advgb_recaptcha_config' );
 				if ( ! isset( $recaptcha_config['recaptcha_secret_key'] ) || ! isset( $recaptcha_config['recaptcha_site_key'] ) ) {
@@ -1522,22 +1527,151 @@ if (! class_exists('AdvancedGutenbergMain')) {
 			}
 
 			$newsletter_saved = get_option( 'advgb_newsletter_saved' );
-			if ( ! $newsletter_saved ) {
+			if ( ! is_array( $newsletter_saved ) ) {
 				$newsletter_saved = array();
 			}
 
 			$newsletter_data = array(
-				'date'  => sanitize_text_field( $_POST['submit_date'] ),
-				'fname' => sanitize_text_field( $_POST['f_name'] ),
-				'lname' => sanitize_text_field( $_POST['l_name'] ),
-				'email' => sanitize_email( $_POST['email'] ),
+				'date'  => $this->sanitizeFormPostField( 'submit_date', 'text', 100, 'newsletter' ),
+				'fname' => $this->sanitizeFormPostField( 'f_name', 'text', 200, 'newsletter' ),
+				'lname' => $this->sanitizeFormPostField( 'l_name', 'text', 200, 'newsletter' ),
+				'email' => $this->sanitizeFormPostField( 'email', 'email', 254, 'newsletter' ),
 			);
 
 			array_push( $newsletter_saved, $newsletter_data );
+			$newsletter_saved = $this->limitSavedFormEntries( $newsletter_saved, 'advgb_newsletter_saved' );
 
 			update_option( 'advgb_newsletter_saved', $newsletter_saved, false );
 			wp_send_json( $newsletter_data, 200 );
 			// phpcs:enable
+        }
+
+        /**
+         * Rate limit public form submissions by visitor.
+         *
+         * @param string $form_type Form type.
+         *
+         * @return void
+         */
+        private function rateLimitFormSubmission( $form_type )
+        {
+            $limit  = (int) apply_filters( 'advgb_form_submission_rate_limit_count', 5, $form_type );
+            $window = (int) apply_filters( 'advgb_form_submission_rate_limit_window', 5 * MINUTE_IN_SECONDS, $form_type );
+
+            if ( $limit < 1 || $window < 1 ) {
+                return;
+            }
+
+            $fingerprint = $this->getFormSubmissionFingerprint();
+            if ( $fingerprint === '' ) {
+                return;
+            }
+
+            $transient_key = 'advgb_form_rate_' . md5( $form_type . '|' . $fingerprint );
+            $attempts      = (int) get_transient( $transient_key );
+
+            if ( $attempts >= $limit ) {
+                wp_send_json( __( 'Too many submissions. Please try again later.', 'advanced-gutenberg' ), 429 );
+            }
+
+            set_transient( $transient_key, $attempts + 1, $window );
+        }
+
+        /**
+         * Get a stable visitor fingerprint for public form rate limiting.
+         *
+         * @return string
+         */
+        private function getFormSubmissionFingerprint()
+        {
+            if ( is_user_logged_in() ) {
+                return 'user:' . get_current_user_id();
+            }
+
+            if ( empty( $_SERVER['REMOTE_ADDR'] ) ) {
+                return '';
+            }
+
+            $remote_addr = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
+            if ( ! filter_var( $remote_addr, FILTER_VALIDATE_IP ) ) {
+                return '';
+            }
+
+            return 'ip:' . $remote_addr;
+        }
+
+        /**
+         * Sanitize and size-limit a public form POST field.
+         *
+         * @param string $field      Field name.
+         * @param string $type       Sanitizer type.
+         * @param int    $max_length Maximum retained length.
+         * @param string $form_type  Form type.
+         *
+         * @return string
+         */
+        private function sanitizeFormPostField( $field, $type, $max_length, $form_type )
+        {
+            $value = isset( $_POST[ $field ] ) ? wp_unslash( $_POST[ $field ] ) : '';
+            if ( is_array( $value ) ) {
+                $value = '';
+            }
+
+            if ( $type === 'email' ) {
+                $value = sanitize_email( $value );
+            } elseif ( $type === 'textarea' ) {
+                $value = sanitize_textarea_field( $value );
+            } else {
+                $value = sanitize_text_field( $value );
+            }
+
+            $max_length = absint(
+                apply_filters( 'advgb_form_field_max_length', $max_length, $field, $form_type )
+            );
+
+            if ( $max_length < 1 ) {
+                return $value;
+            }
+
+            if ( function_exists( 'mb_substr' ) ) {
+                return mb_substr( $value, 0, $max_length );
+            }
+
+            return substr( $value, 0, $max_length );
+        }
+
+        /**
+         * Keep saved form options bounded while preserving the newest entries.
+         *
+         * @param array  $entries     Saved entries.
+         * @param string $option_name Option name.
+         *
+         * @return array
+         */
+        private function limitSavedFormEntries( $entries, $option_name )
+        {
+            if ( ! is_array( $entries ) ) {
+                return array();
+            }
+
+            $max_entries = absint( apply_filters( 'advgb_form_saved_entries_limit', 1000, $option_name ) );
+            if ( $max_entries < 1 ) {
+                $max_entries = 1;
+            }
+
+            if ( count( $entries ) > $max_entries ) {
+                $entries = array_slice( $entries, -$max_entries );
+            }
+
+            $max_bytes = absint(
+                apply_filters( 'advgb_form_saved_option_max_bytes', 5 * MB_IN_BYTES, $option_name )
+            );
+
+            while ( $max_bytes > 0 && count( $entries ) > 1 && strlen( maybe_serialize( $entries ) ) > $max_bytes ) {
+                array_shift( $entries );
+            }
+
+            return $entries;
         }
 
         /**
@@ -2885,84 +3019,21 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 $postValue  = explode('.', $postValue);
                 $dataExport = $postValue[0];
                 $dataType   = $postValue[1];
-                $data       = '';
 
                 if ($dataExport === 'contact_form') {
                     $dataSaved = get_option('advgb_contacts_saved');
-                    if (! $dataSaved) {
+                    if (! is_array($dataSaved) || ! $dataSaved) {
                         return false;
                     }
 
-                    switch ($dataType) {
-                        case 'csv':
-                            $data .= '"#","Date","Name","Email","Message"' . PHP_EOL;
-                            $tab  = ',';
-                            $int  = 1;
-                            foreach ($dataSaved as $dataVal) {
-                                $data .= '"' . $int . '"' . $tab;
-                                $data .= '"' . $dataVal['date'] . '"' . $tab;
-                                $data .= '"' . $dataVal['name'] . '"' . $tab;
-                                $data .= '"' . $dataVal['email'] . '"' . $tab;
-                                $data .= '"' . $dataVal['msg'] . '"';
-                                $data .= PHP_EOL;
-                                $int++;
-                            }
-                            $data = trim($data);
-
-                            header('Content-Type: text/csv; charset=utf-8');
-                            header('Content-Disposition: attachment; filename=advgb_contact_form-' . date('m-d-Y') . '.csv');
-                            header('Pragma: no-cache');
-                            header('Expires: 0');
-
-							echo $data; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
-                            exit;
-                        case 'json':
-                            header('Content-Type: application/json; charset=utf-8');
-                            header('Content-Disposition: attachment; filename=advgb_contact_form-' . date('m-d-Y') . '.json');
-                            header('Pragma: no-cache');
-                            header('Expires: 0');
-
-                            echo json_encode($dataSaved);
-                            exit;
-                    }
+                    return $this->downloadContactFormData( $dataSaved, $dataType );
                 } elseif ($dataExport === 'newsletter') {
                     $dataSaved = get_option('advgb_newsletter_saved');
-                    if (! $dataSaved) {
+                    if (! is_array($dataSaved) || ! $dataSaved) {
                         return false;
                     }
 
-                    switch ($dataType) {
-                        case 'csv':
-                            $data .= '"#","Date","First Name","Last Name","Email",' . PHP_EOL;
-                            $tab  = ',';
-                            $int  = 1;
-                            foreach ($dataSaved as $dataVal) {
-                                $data .= '"' . $int . '"' . $tab;
-                                $data .= '"' . $dataVal['date'] . '"' . $tab;
-                                $data .= '"' . $dataVal['fname'] . '"' . $tab;
-                                $data .= '"' . $dataVal['lname'] . '"' . $tab;
-                                $data .= '"' . $dataVal['email'] . '"';
-                                $data .= PHP_EOL;
-                                $int++;
-                            }
-                            $data = trim($data);
-
-                            header('Content-Type: text/csv; charset=utf-8');
-                            header('Content-Disposition: attachment; filename=advgb_newsletter-' . date('m-d-Y') . '.csv');
-                            header('Pragma: no-cache');
-                            header('Expires: 0');
-
-							echo $data; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
-                            exit;
-                        case 'json':
-                            header('Content-Type: application/json; charset=utf-8');
-                            header('Content-Disposition: attachment; filename=advgb_newsletter-' . date('m-d-Y') . '.json');
-                            header('Pragma: no-cache');
-                            header('Expires: 0');
-
-                            echo json_encode($dataSaved);
-                            exit;
-                    }
+                    return $this->downloadNewsletterData( $dataSaved, $dataType );
                 }
 
                 return false;
@@ -3740,87 +3811,217 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $postValue  = explode('.', $postValue);
             $dataExport = $postValue[0];
             $dataType   = $postValue[1];
-            $data       = '';
 
             if ($dataExport === 'contact_form') {
                 $dataSaved = get_option('advgb_contacts_saved');
-                if (! $dataSaved) {
+                if (! is_array($dataSaved) || ! $dataSaved) {
                     return false;
                 }
 
-                switch ($dataType) {
-                    case 'csv':
-                        $data .= '"#","Date","Name","Email","Message"' . PHP_EOL;
-                        $tab  = ',';
-                        $int  = 1;
-                        foreach ($dataSaved as $dataVal) {
-                            $data .= '"' . $int . '"' . $tab;
-                            $data .= '"' . $dataVal['date'] . '"' . $tab;
-                            $data .= '"' . $dataVal['name'] . '"' . $tab;
-                            $data .= '"' . $dataVal['email'] . '"' . $tab;
-                            $data .= '"' . $dataVal['msg'] . '"';
-                            $data .= PHP_EOL;
-                            $int++;
-                        }
-                        $data = trim($data);
-
-                        header('Content-Type: text/csv; charset=utf-8');
-                        header('Content-Disposition: attachment; filename=advgb_contact_form-' . date('m-d-Y') . '.csv');
-                        header('Pragma: no-cache');
-                        header('Expires: 0');
-
-						echo $data; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
-                        exit;
-                    case 'json':
-                        header('Content-Type: application/json; charset=utf-8');
-                        header('Content-Disposition: attachment; filename=advgb_contact_form-' . date('m-d-Y') . '.json');
-                        header('Pragma: no-cache');
-                        header('Expires: 0');
-
-                        echo json_encode($dataSaved);
-                        exit;
-                }
+                return $this->downloadContactFormData( $dataSaved, $dataType );
             } elseif ($dataExport === 'newsletter') {
                 $dataSaved = get_option('advgb_newsletter_saved');
-                if (! $dataSaved) {
+                if (! is_array($dataSaved) || ! $dataSaved) {
                     return false;
                 }
 
-                switch ($dataType) {
-                    case 'csv':
-                        $data .= '"#","Date","First Name","Last Name","Email",' . PHP_EOL;
-                        $tab  = ',';
-                        $int  = 1;
-                        foreach ($dataSaved as $dataVal) {
-                            $data .= '"' . $int . '"' . $tab;
-                            $data .= '"' . $dataVal['date'] . '"' . $tab;
-                            $data .= '"' . $dataVal['fname'] . '"' . $tab;
-                            $data .= '"' . $dataVal['lname'] . '"' . $tab;
-                            $data .= '"' . $dataVal['email'] . '"';
-                            $data .= PHP_EOL;
-                            $int++;
-                        }
-                        $data = trim($data);
-
-                        header('Content-Type: text/csv; charset=utf-8');
-                        header('Content-Disposition: attachment; filename=advgb_newsletter-' . date('m-d-Y') . '.csv');
-                        header('Pragma: no-cache');
-                        header('Expires: 0');
-
-						echo $data; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
-                        exit;
-                    case 'json':
-                        header('Content-Type: application/json; charset=utf-8');
-                        header('Content-Disposition: attachment; filename=advgb_newsletter-' . date('m-d-Y') . '.json');
-                        header('Pragma: no-cache');
-                        header('Expires: 0');
-
-                        echo json_encode($dataSaved);
-                        exit;
-                }
+                return $this->downloadNewsletterData( $dataSaved, $dataType );
             }
 
             return false;
+        }
+
+        /**
+         * Download saved contact form entries.
+         *
+         * @param array  $data_saved Saved data.
+         * @param string $data_type  Export type.
+         *
+         * @return false
+         */
+        private function downloadContactFormData( $data_saved, $data_type )
+        {
+            switch ( $data_type ) {
+                case 'csv':
+                    $rows = array();
+                    $int  = 1;
+
+                    foreach ( $data_saved as $data_val ) {
+                        $rows[] = array(
+                            $int,
+                            $this->getSavedFormField( $data_val, 'date' ),
+                            $this->getSavedFormField( $data_val, 'name' ),
+                            $this->getSavedFormField( $data_val, 'email' ),
+                            $this->getSavedFormField( $data_val, 'msg' ),
+                        );
+                        $int++;
+                    }
+
+                    $this->sendCsvDownload(
+                        'advgb_contact_form-' . date( 'm-d-Y' ) . '.csv',
+                        array( '#', 'Date', 'Name', 'Email', 'Message' ),
+                        $rows
+                    );
+                    break;
+
+                case 'json':
+                    $this->sendJsonDownload( 'advgb_contact_form-' . date( 'm-d-Y' ) . '.json', $data_saved );
+                    break;
+            }
+
+            return false;
+        }
+
+        /**
+         * Download saved newsletter entries.
+         *
+         * @param array  $data_saved Saved data.
+         * @param string $data_type  Export type.
+         *
+         * @return false
+         */
+        private function downloadNewsletterData( $data_saved, $data_type )
+        {
+            switch ( $data_type ) {
+                case 'csv':
+                    $rows = array();
+                    $int  = 1;
+
+                    foreach ( $data_saved as $data_val ) {
+                        $rows[] = array(
+                            $int,
+                            $this->getSavedFormField( $data_val, 'date' ),
+                            $this->getSavedFormField( $data_val, 'fname' ),
+                            $this->getSavedFormField( $data_val, 'lname' ),
+                            $this->getSavedFormField( $data_val, 'email' ),
+                        );
+                        $int++;
+                    }
+
+                    $this->sendCsvDownload(
+                        'advgb_newsletter-' . date( 'm-d-Y' ) . '.csv',
+                        array( '#', 'Date', 'First Name', 'Last Name', 'Email' ),
+                        $rows
+                    );
+                    break;
+
+                case 'json':
+                    $this->sendJsonDownload( 'advgb_newsletter-' . date( 'm-d-Y' ) . '.json', $data_saved );
+                    break;
+            }
+
+            return false;
+        }
+
+        /**
+         * Send a CSV download using fputcsv.
+         *
+         * @param string $filename Download filename.
+         * @param array  $headers  CSV headers.
+         * @param array  $rows     CSV rows.
+         *
+         * @return void
+         */
+        private function sendCsvDownload( $filename, $headers, $rows )
+        {
+            header( 'Content-Type: text/csv; charset=utf-8' );
+            header( 'Content-Disposition: attachment; filename=' . $filename );
+            header( 'Pragma: no-cache' );
+            header( 'Expires: 0' );
+
+            $output = fopen( 'php://output', 'w' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+            if ( $output === false ) {
+                exit;
+            }
+
+            fputcsv( $output, $headers, ',', '"', '\\' );
+
+            foreach ( $rows as $row ) {
+                fputcsv( $output, $this->neutralizeCsvRow( $row ), ',', '"', '\\' );
+            }
+
+            fclose( $output ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+            exit;
+        }
+
+        /**
+         * Send a JSON download.
+         *
+         * @param string $filename Download filename.
+         * @param array  $data     Export data.
+         *
+         * @return void
+         */
+        private function sendJsonDownload( $filename, $data )
+        {
+            header( 'Content-Type: application/json; charset=utf-8' );
+            header( 'Content-Disposition: attachment; filename=' . $filename );
+            header( 'Pragma: no-cache' );
+            header( 'Expires: 0' );
+
+            echo wp_json_encode( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            exit;
+        }
+
+        /**
+         * Get a saved form field without raising notices for legacy malformed rows.
+         *
+         * @param mixed  $entry Saved entry.
+         * @param string $field Field name.
+         *
+         * @return string
+         */
+        private function getSavedFormField( $entry, $field )
+        {
+            if ( ! is_array( $entry ) || ! isset( $entry[ $field ] ) ) {
+                return '';
+            }
+
+            return $entry[ $field ];
+        }
+
+        /**
+         * Neutralize each CSV cell that spreadsheet apps may evaluate as a formula.
+         *
+         * @param array $row CSV row.
+         *
+         * @return array
+         */
+        private function neutralizeCsvRow( $row )
+        {
+            $neutralized = array();
+
+            foreach ( $row as $value ) {
+                $neutralized[] = $this->neutralizeCsvCell( $value );
+            }
+
+            return $neutralized;
+        }
+
+        /**
+         * Prefix spreadsheet formula-leading CSV cells with a single quote.
+         *
+         * @param mixed $value CSV cell value.
+         *
+         * @return string
+         */
+        private function neutralizeCsvCell( $value )
+        {
+            if ( is_array( $value ) || is_object( $value ) ) {
+                $value = wp_json_encode( $value );
+                $value = $value === false ? '' : $value;
+            }
+
+            $value = (string) $value;
+            if ( $value === '' ) {
+                return '';
+            }
+
+            if ( preg_match( '/^[\t\r\n]/', $value ) || preg_match( '/^[\s]*[=+\-@]/', $value ) ) {
+                return "'" . $value;
+            }
+
+            return $value;
         }
 
         /**
