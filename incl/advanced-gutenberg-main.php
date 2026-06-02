@@ -3124,7 +3124,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 }
 
                 if (!empty($css)) {
-                    echo '<style type="text/css">' . strip_tags($css) . '</style>';
+                    echo '<style type="text/css">' . AdvancedGutenbergBlockStyles::sanitize_css($css) . '</style>';
                 }
             }
         }
@@ -3169,7 +3169,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $custom_styles = $this->getAdminEditorCustomStyles();
 
             if (!empty($custom_styles)) {
-                echo '<style type="text/css">' . strip_tags($custom_styles) . '</style>';
+                echo '<style type="text/css">' . AdvancedGutenbergBlockStyles::sanitize_css($custom_styles) . '</style>';
             }
         }
 
