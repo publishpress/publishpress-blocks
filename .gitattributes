@@ -71,3 +71,6 @@ webpack.dev.js export-ignore
 webpack.prod.js export-ignore
 wp-cli.local.yml export-ignore
 .wordpress-org export-ignore
+DOCKER_ENV export-ignore
+docker_tag export-ignore
+output.log export-ignore
