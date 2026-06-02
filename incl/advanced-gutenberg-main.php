@@ -1338,29 +1338,66 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            if (! wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_block_config_nonce')) {
+            if (
+                ! isset($_POST['nonce'])
+                || is_array($_POST['nonce'])
+                || ! wp_verify_nonce(
+                    sanitize_text_field(wp_unslash($_POST['nonce'])),
+                    'advgb_block_config_nonce'
+                )
+            ) {
                 wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
             }
 
             $blocks_config_saved = get_option('advgb_blocks_default_config');
-            if ($blocks_config_saved === false) {
+            if (! is_array($blocks_config_saved)) {
                 $blocks_config_saved = array();
             }
 
-            $blockType = sanitize_text_field($_POST['blockType']);
-            $settings  = $_POST['settings']; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $blockType            = isset($_POST['blockType']) && ! is_array($_POST['blockType'])
+                ? sanitize_text_field(wp_unslash($_POST['blockType']))
+                : '';
+            $blocks_settings_list = PublishPress\Blocks\Configuration::defaultConfig();
 
-            foreach ($settings as $key => $setting) {
-                foreach ($setting as $k => $option) {
-                    $option = sanitize_text_field($option);
-                    if (is_numeric($option)) {
-                        if ($k !== 'lat' && $k !== 'lng') {
-                            $option = floatval($option);
-                        }
-                    }
+            if (! isset($blocks_settings_list[ $blockType ])) {
+                wp_send_json(__('Error: wrong block type', 'advanced-gutenberg'), 400);
 
-                    $settings[ $key ][ $k ] = $option;
+                return false;
+            }
+
+            $raw_settings = isset($_POST['settings']) && is_array($_POST['settings'])
+                ? wp_unslash($_POST['settings'])
+                : array();
+
+            if (! isset($raw_settings[ $blockType ]) || ! is_array($raw_settings[ $blockType ])) {
+                wp_send_json(__('Error: wrong data', 'advanced-gutenberg'), 400);
+
+                return false;
+            }
+
+            $allowed_setting_names = $this->getBlockConfigSettingNames($blocks_settings_list[ $blockType ]);
+            $settings              = array(
+                $blockType => array(),
+            );
+
+            foreach ($raw_settings[ $blockType ] as $key => $option) {
+                $setting_key = (string) $key;
+                if (
+                    ! isset($allowed_setting_names[ $setting_key ])
+                    || is_array($option)
+                    || is_object($option)
+                ) {
+                    continue;
                 }
+
+                $option = sanitize_text_field((string) $option);
+                if (is_numeric($option)) {
+                    if ($setting_key !== 'lat' && $setting_key !== 'lng') {
+                        $option = floatval($option);
+                    }
+                }
+
+                $settings[ $blockType ][ $setting_key ] = $option;
             }
 
             // Modify settings for social links blocks config
@@ -1369,8 +1406,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 $settings[ $blockType ]['items'] = array();
 
                 foreach ($settings[ $blockType ] as $k => $option) {
-                    if (strpos($k, '.')) {
-                        $item                          = explode('.', $k);
+                    if (strpos($k, '.') !== false) {
+                        $item                          = explode('.', $k, 2);
                         $items[ $item[0] ][ $item[1] ] = $option;
                     }
                 }
@@ -1384,6 +1421,34 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             update_option('advgb_blocks_default_config', $blocks_config_saved, false);
             wp_send_json(true, 200);
+        }
+
+        /**
+         * Get allowed default config setting names for a block.
+         *
+         * @param array $block_settings Block settings definition.
+         *
+         * @return array
+         */
+        private function getBlockConfigSettingNames(array $block_settings)
+        {
+            $setting_names = array();
+
+            foreach ($block_settings as $category) {
+                if (empty($category['settings']) || ! is_array($category['settings'])) {
+                    continue;
+                }
+
+                foreach ($category['settings'] as $setting) {
+                    if (empty($setting['name']) || ! is_string($setting['name'])) {
+                        continue;
+                    }
+
+                    $setting_names[ $setting['name'] ] = true;
+                }
+            }
+
+            return $setting_names;
         }
 
         /**
