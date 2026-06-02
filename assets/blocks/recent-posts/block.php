@@ -225,7 +225,7 @@ function advgbRenderBlockRecentPosts($attributes)
                 $infoItems = array();
                 $separator = isset($attributes['hideInfoSeparators']) && $attributes['hideInfoSeparators']
                     ? ''
-                    : (isset($attributes['infoSectionSeparator']) ? $attributes['infoSectionSeparator'] : ' ');
+                    : esc_html(isset($attributes['infoSectionSeparator']) ? $attributes['infoSectionSeparator'] : ' ');
 
                 // Build info items based on order
                 $order = isset($attributes['infoSectionOrder']) ? $attributes['infoSectionOrder'] : array('author', 'date', 'comments');
@@ -294,7 +294,7 @@ function advgbRenderBlockRecentPosts($attributes)
                                     }
                                 }
 
-                                $infoItems[] = sprintf('<span class="advgb-post-datetime">%1$s</span>', $dateDisplay);
+                                $infoItems[] = sprintf('<span class="advgb-post-datetime">%1$s</span>', esc_html($dateDisplay));
                             }
                             break;
 
