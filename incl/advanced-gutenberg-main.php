@@ -443,7 +443,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         true
                     );
 
-					wp_set_script_translations( 'advgb_blocks', 'advanced-gutenberg' );
+                    wp_set_script_translations(
+                        'advgb_blocks',
+                        'advanced-gutenberg',
+                        plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
+                    );
 
                     // Pro Ads in some blocks for free version
                     if (! defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
@@ -473,7 +477,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             ]
                         );
 
-						wp_set_script_translations( 'advgb_pro_ad_js', 'advanced-gutenberg' );
+                        wp_set_script_translations(
+                            'advgb_pro_ad_js',
+                            'advanced-gutenberg',
+                            plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
+                        );
                     }
                 }
 
@@ -1917,7 +1925,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     array( 'wp-i18n' ),
                     ADVANCED_GUTENBERG_VERSION
                 );
-				wp_set_script_translations( 'advgb_settings_js', 'advanced-gutenberg' );
+				wp_set_script_translations(
+                    'advgb_settings_js',
+                    'advanced-gutenberg',
+                    plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
+                );
                 wp_register_script(
                     'advgb_custom_styles_js',
                     ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/js/custom-styles.js',
@@ -5473,7 +5485,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     );
                     $this->loadRecaptchaApi();
 
-                    wp_set_script_translations( 'advgbNewsletter_js', 'advanced-gutenberg' );
+                    wp_set_script_translations(
+                        'advgbNewsletter_js',
+                        'advanced-gutenberg',
+                        plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
+                    );
 
                     break;
 

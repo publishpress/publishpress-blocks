@@ -1,6 +1,8 @@
 var glob = require("glob");
 var path = require("path");
 
+const i18nExternals = { '@wordpress/i18n': 'wp.i18n' };
+
 module.exports = [
     {
         entry: glob.sync(
@@ -20,6 +22,7 @@ module.exports = [
             path: path.join(__dirname, "assets", "blocks"),
             filename: "blocks.js"
         },
+        externals: i18nExternals,
         module: {
             rules: [
                 {
@@ -41,6 +44,7 @@ module.exports = [
             path: path.join(__dirname, "assets", "blocks"),
             filename: "custom-styles.js"
         },
+        externals: i18nExternals,
         module: {
             rules: [
                 {
@@ -62,6 +66,7 @@ module.exports = [
             path: path.join(__dirname, "assets", "blocks"),
             filename: "pro-ad.js"
         },
+        externals: i18nExternals,
         module: {
             rules: [
                 {
@@ -83,6 +88,7 @@ module.exports = [
             path: path.join(__dirname, "assets", "blocks"),
             filename: "post-sidebar.js"
         },
+        externals: i18nExternals,
         module: {
             rules: [
                 {
@@ -104,6 +110,7 @@ module.exports = [
             path: path.join(__dirname, "assets", "pages"),
             filename: "block-controls.js"
         },
+        externals: i18nExternals,
         module: {
             rules: [
                 {
@@ -125,6 +132,7 @@ module.exports = [
             path: path.join(__dirname, "assets", "pages"),
             filename: "preset-manager.js"
         },
+        externals: i18nExternals,
         module: {
             rules: [
                 {
@@ -146,6 +154,7 @@ module.exports = [
             path: path.join(__dirname, "assets", "pages"),
             filename: "preset-data-manager.js"
         },
+        externals: i18nExternals,
         module: {
             rules: [
                 {
@@ -167,6 +176,7 @@ module.exports = [
             path: path.join(__dirname, "assets", "pages"),
             filename: "block-usage.js"
         },
+        externals: i18nExternals,
         module: {
             rules: [
                 {
@@ -186,6 +196,7 @@ module.exports = [
             path: path.join(__dirname, "assets", "blocks"),
             filename: "frontend.js"
         },
+        externals: i18nExternals,
         module: {
             rules: [
                 {
@@ -205,6 +216,7 @@ module.exports = [
             path: path.join(__dirname, "assets", "blocks"),
             filename: "editor.js"
         },
+        externals: i18nExternals,
         module: {
             rules: [
                 {

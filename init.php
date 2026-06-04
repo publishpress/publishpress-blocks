@@ -19,12 +19,6 @@ if (! function_exists('advg_language_domain_init')) {
         $domain = 'advanced-gutenberg';
 
         load_plugin_textdomain($domain, false, dirname(plugin_basename(__FILE__)) . '/languages');
-
-        wp_set_script_translations(
-            'editor',
-            $domain,
-            plugin_dir_path(__FILE__) . 'languages'
-        );
     }
 }
 add_action('init', 'advg_language_domain_init', 0);
