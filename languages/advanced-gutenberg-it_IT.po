@@ -9406,19 +9406,15 @@ msgstr "Errore nel caricamento dei dati dei blocchi…"
 #~ msgid "Save %s"
 #~ msgstr "Salva %s"
 
-#~| msgid "Product Status"
 #~ msgid "Status"
 #~ msgstr "Stato"
 
-#~| msgid "Enable"
 #~ msgid "Enabled"
 #~ msgstr "Abilitata"
 
-#~| msgid "Choose which users can see your blocks."
 #~ msgid "Choose which reusable block to insert."
 #~ msgstr "Scegli quali blocco riutilizzabile inserire."
 
-#~| msgid "Post Image"
 #~ msgid "Post IDs"
 #~ msgstr "ID articoli"
 
@@ -9431,7 +9427,6 @@ msgstr "Errore nel caricamento dei dati dei blocchi…"
 #~ msgid "Search and select posts to include, or enter IDs."
 #~ msgstr "Cerca e seleziona gli articoli da includere o inserisci gli ID."
 
-#~| msgid "Enable block user roles"
 #~ msgid "Enable this rule"
 #~ msgstr "Abilita questa regola"
 

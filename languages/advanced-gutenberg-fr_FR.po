@@ -9449,19 +9449,15 @@ msgstr "Erreur lors de l’envoi du formulaire. Veuillez réessayer."
 #~ msgid "Save %s"
 #~ msgstr "Enregistrer %s"
 
-#~| msgid "Product Status"
 #~ msgid "Status"
 #~ msgstr "État"
 
-#~| msgid "Enable"
 #~ msgid "Enabled"
 #~ msgstr "Activée"
 
-#~| msgid "Choose which users can see your blocks."
 #~ msgid "Choose which reusable block to insert."
 #~ msgstr "Choisir le bloc réutilisable à insérer."
 
-#~| msgid "Post Image"
 #~ msgid "Post IDs"
 #~ msgstr "IDs des publications"
 
@@ -9475,7 +9471,6 @@ msgstr "Erreur lors de l’envoi du formulaire. Veuillez réessayer."
 #~ msgstr ""
 #~ "Rechercher et sélectionner des publications à inclure ou saisir leurs IDs."
 
-#~| msgid "Enable block user roles"
 #~ msgid "Enable this rule"
 #~ msgstr "Activer cette règle"
 
