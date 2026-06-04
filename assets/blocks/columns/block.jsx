@@ -932,6 +932,7 @@
     };
 
     registerBlockType( 'advgb/columns', {
+        apiVersion: 3,
         title: __( 'Columns - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create flexible layouts for your content with advanced options and styles.', 'advanced-gutenberg' ),
         icon: {

@@ -431,6 +431,7 @@
     };
 
     registerBlockType( 'advgb/count-up', {
+        apiVersion: 3,
         title: __( 'Count Up - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create an animated display for important numbers.', 'advanced-gutenberg' ),
         icon: {

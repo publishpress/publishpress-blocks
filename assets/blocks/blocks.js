@@ -1214,6 +1214,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/accordion', {
+    apiVersion: 3,
     title: __('Accordion (deprecated) - PublishPress', 'advanced-gutenberg'),
     description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
     icon: {
@@ -1826,6 +1827,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     height: "2"
   }));
   registerBlockType('advgb/accordion-item', {
+    apiVersion: 3,
     title: __('Accordion Item - PublishPress', 'advanced-gutenberg'),
     description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
     icon: {
@@ -2891,6 +2893,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
   var deprecatedBlockAttrs = _objectSpread({}, blockAttrs);
   delete deprecatedBlockAttrs.expandAll;
   registerBlockType('advgb/accordions', {
+    apiVersion: 3,
     title: __('Accordion - PublishPress', 'advanced-gutenberg'),
     description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
     icon: {
@@ -3939,6 +3942,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/button', {
+    apiVersion: 3,
     title: __('Button - PublishPress', 'advanced-gutenberg'),
     description: __('Button block with more options and styles.', 'advanced-gutenberg'),
     icon: {
@@ -4801,6 +4805,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/icon', {
+    apiVersion: 3,
     title: __('Icon - PublishPress', 'advanced-gutenberg'),
     description: __('Icon block with more options and styles.', 'advanced-gutenberg'),
     icon: {
@@ -5493,6 +5498,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/image', {
+    apiVersion: 3,
     title: __('Image - PublishPress', 'advanced-gutenberg'),
     description: __('Image/photo block with more options and styles.', 'advanced-gutenberg'),
     icon: {
@@ -6260,6 +6266,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/list', {
+    apiVersion: 3,
     title: __('List - PublishPress', 'advanced-gutenberg'),
     description: __('List block with custom icons and styles.', 'advanced-gutenberg'),
     icon: {
@@ -6492,6 +6499,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/list-item', {
+    apiVersion: 3,
     title: __('List item - PublishPress', 'advanced-gutenberg'),
     description: __('Insert a list item inside List block.', 'advanced-gutenberg'),
     icon: {
@@ -8119,6 +8127,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }]);
   }(Component);
   registerBlockType('advgb/table', {
+    apiVersion: 3,
     title: __('Table - PublishPress', 'advanced-gutenberg'),
     description: __('Table block with more styles and functions.', 'advanced-gutenberg'),
     icon: {
@@ -9598,6 +9607,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/adv-tabs', {
+    apiVersion: 3,
     title: __('Tabs - PublishPress', 'advanced-gutenberg'),
     description: __('Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg'),
     icon: {
@@ -10139,6 +10149,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }]);
   }(Component);
   registerBlockType('advgb/tab', {
+    apiVersion: 3,
     title: __('Tab Item - PublishPress', 'advanced-gutenberg'),
     parent: ['advgb/adv-tabs'],
     icon: {
@@ -11205,6 +11216,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/video', {
+    apiVersion: 3,
     title: __('Video - PublishPress', 'advanced-gutenberg'),
     description: __('Add more options and styles for videos in your Media Library.', 'advanced-gutenberg'),
     icon: {
@@ -12552,6 +12564,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     };
   };
   registerBlockType('advgb/columns', {
+    apiVersion: 3,
     title: __('Columns - PublishPress', 'advanced-gutenberg'),
     description: __('Create flexible layouts for your content with advanced options and styles.', 'advanced-gutenberg'),
     icon: {
@@ -13163,6 +13176,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   });
   registerBlockType('advgb/column', {
+    apiVersion: 3,
     title: __('Column - PublishPress', 'advanced-gutenberg'),
     parent: ['advgb/columns'],
     description: __('Column in row.', 'advanced-gutenberg'),
@@ -13703,6 +13717,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/contact-form', {
+    apiVersion: 3,
     title: __('Contact Form - PublishPress', 'advanced-gutenberg'),
     description: __('Fastest way to create a contact form for your page.', 'advanced-gutenberg'),
     icon: {
@@ -13838,6 +13853,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     d: "M3 5v14h19V5H3zm2 2h15v4H5V7zm0 10v-4h4v4H5zm6 0v-4h9v4h-9z"
   }));
   registerBlockType('advgb/container', {
+    apiVersion: 3,
     title: __('Container - PublishPress', 'advanced-gutenberg'),
     description: __('Block for containing other blocks.', 'advanced-gutenberg'),
     icon: {
@@ -14486,6 +14502,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/count-up', {
+    apiVersion: 3,
     title: __('Count Up - PublishPress', 'advanced-gutenberg'),
     description: __('Create an animated display for important numbers.', 'advanced-gutenberg'),
     icon: {
@@ -15482,6 +15499,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/images-slider', {
+    apiVersion: 3,
     title: __('Images Slider - PublishPress', 'advanced-gutenberg'),
     description: __('Display your images in a slider.', 'advanced-gutenberg'),
     icon: {
@@ -17028,6 +17046,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/infobox', {
+    apiVersion: 3,
     title: __('Info Box - PublishPress', 'advanced-gutenberg'),
     description: __('Icon block with more options and styles.', 'advanced-gutenberg'),
     icon: {
@@ -18399,6 +18418,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/login-form', {
+    apiVersion: 3,
     title: __('Login and Register - PublishPress', 'advanced-gutenberg'),
     description: __('Create a login form for your post/page.', 'advanced-gutenberg'),
     icon: {
@@ -20044,6 +20064,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/map', {
+    apiVersion: 3,
     title: __('Map - PublishPress', 'advanced-gutenberg'),
     description: __('Display a location using Google Maps.', 'advanced-gutenberg'),
     icon: {
@@ -20564,6 +20585,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }]);
   }(Component);
   registerBlockType('advgb/newsletter', {
+    apiVersion: 3,
     title: __('Newsletter - PublishPress', 'advanced-gutenberg'),
     description: __('Fastest way to create a newsletter form for your page.', 'advanced-gutenberg'),
     icon: {
@@ -23626,6 +23648,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }]);
   }(Component);
   registerBlockType('advgb/recent-posts', {
+    apiVersion: 3,
     title: __('Content Display - PublishPress', 'advanced-gutenberg'),
     description: __('Displays your content in grid, list, slider, frontpage, newspaper, and masonry views with beautiful layouts and styles.', 'advanced-gutenberg'),
     icon: {
@@ -24544,6 +24567,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/search-bar', {
+    apiVersion: 3,
     title: __('Search Bar - PublishPress', 'advanced-gutenberg'),
     description: __('Easy to create a search bar for your site.', 'advanced-gutenberg'),
     icon: {
@@ -25128,6 +25152,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/social-links', {
+    apiVersion: 3,
     title: __('Social Links - PublishPress', 'advanced-gutenberg'),
     description: __('Create a styling display of links to your social media profiles.', 'advanced-gutenberg'),
     icon: {
@@ -25675,6 +25700,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
     }
   };
   registerBlockType('advgb/summary', {
+    apiVersion: 3,
     title: summaryBlockTitle,
     description: __('Show the table of contents of current post/page.', 'advanced-gutenberg'),
     icon: {
@@ -26322,6 +26348,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/tabs', {
+    apiVersion: 3,
     title: __('Tabs (deprecated) - PublishPress', 'advanced-gutenberg'),
     description: __('Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg'),
     icon: {
@@ -27283,6 +27310,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/testimonial', {
+    apiVersion: 3,
     title: __('Testimonial - PublishPress', 'advanced-gutenberg'),
     description: __('Block for creating personal or team/group information.', 'advanced-gutenberg'),
     icon: {
@@ -27972,6 +28000,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }
   };
   registerBlockType('advgb/woo-products', {
+    apiVersion: 3,
     title: __('Woo Products - PublishPress', 'advanced-gutenberg'),
     description: __('Listing your products in a easy way.', 'advanced-gutenberg'),
     icon: {

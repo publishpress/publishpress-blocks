@@ -447,6 +447,7 @@
     delete deprecatedBlockAttrs.expandAll;
 
     registerBlockType( 'advgb/accordions', {
+        apiVersion: 3,
         title: __( 'Accordion - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create a sliding accordion display for your content.', 'advanced-gutenberg' ),
         icon: {

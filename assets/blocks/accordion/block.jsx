@@ -329,6 +329,7 @@
     };
 
     registerBlockType( 'advgb/accordion', {
+        apiVersion: 3,
         title: __( 'Accordion (deprecated) - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create a sliding accordion display for your content.', 'advanced-gutenberg' ),
         icon: {
