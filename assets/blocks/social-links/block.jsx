@@ -377,6 +377,7 @@
     };
 
     registerBlockType( 'advgb/social-links', {
+        apiVersion: 3,
         title: __( 'Social Links - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create a styling display of links to your social media profiles.', 'advanced-gutenberg' ),
         icon: {

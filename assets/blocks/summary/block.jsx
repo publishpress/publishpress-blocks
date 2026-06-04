@@ -389,6 +389,7 @@ import latinize from "latinize";
     };
 
     registerBlockType( 'advgb/summary', {
+        apiVersion: 3,
         title: summaryBlockTitle,
         description: __( 'Show the table of contents of current post/page.', 'advanced-gutenberg' ),
         icon: {

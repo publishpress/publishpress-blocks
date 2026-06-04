@@ -315,6 +315,7 @@
     };
 
     registerBlockType( 'advgb/contact-form', {
+        apiVersion: 3,
         title: __( 'Contact Form - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Fastest way to create a contact form for your page.', 'advanced-gutenberg' ),
         icon: {

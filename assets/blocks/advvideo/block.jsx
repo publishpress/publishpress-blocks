@@ -612,6 +612,7 @@
     };
 
     registerBlockType( 'advgb/video', {
+        apiVersion: 3,
         title: __( 'Video - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Add more options and styles for videos in your Media Library.', 'advanced-gutenberg' ),
         icon: {

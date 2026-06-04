@@ -603,6 +603,7 @@
     };
 
     registerBlockType('advgb/images-slider', {
+        apiVersion: 3,
         title: __('Images Slider - PublishPress', 'advanced-gutenberg'),
         description: __('Display your images in a slider.', 'advanced-gutenberg'),
         icon: {

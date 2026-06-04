@@ -405,6 +405,7 @@
     };
 
     registerBlockType( 'advgb/woo-products', {
+        apiVersion: 3,
         title: __( 'Woo Products - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Listing your products in a easy way.', 'advanced-gutenberg' ),
         icon: {

@@ -129,6 +129,7 @@
     };
 
     registerBlockType( 'advgb/list-item', {
+        apiVersion: 3,
         title: __( 'List item - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Insert a list item inside List block.', 'advanced-gutenberg'),
         icon: {

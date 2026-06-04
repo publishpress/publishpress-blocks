@@ -14,6 +14,7 @@
     );
 
     registerBlockType( 'advgb/container', {
+        apiVersion: 3,
         title: __( 'Container - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Block for containing other blocks.', 'advanced-gutenberg' ),
         icon: {

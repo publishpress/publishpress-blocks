@@ -368,6 +368,7 @@
     };
 
     registerBlockType( 'advgb/column', {
+        apiVersion: 3,
         title: __( 'Column - PublishPress', 'advanced-gutenberg' ),
         parent: [ 'advgb/columns' ],
         description: __( 'Column in row.', 'advanced-gutenberg' ),
