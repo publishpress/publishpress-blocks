@@ -1404,16 +1404,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.10.0",
+            "version": "2.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "c13824d95608b15913a7c0def0a3dea4474b71fc"
+                "reference": "4120703b9bda8795075047b40361d7ec4d2abe49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/c13824d95608b15913a7c0def0a3dea4474b71fc",
-                "reference": "c13824d95608b15913a7c0def0a3dea4474b71fc",
+                "url": "https://api.github.com/repos/composer/composer/zipball/4120703b9bda8795075047b40361d7ec4d2abe49",
+                "reference": "4120703b9bda8795075047b40361d7ec4d2abe49",
                 "shasum": ""
             },
             "require": {
@@ -1501,7 +1501,7 @@
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
                 "security": "https://github.com/composer/composer/security/policy",
-                "source": "https://github.com/composer/composer/tree/2.10.0"
+                "source": "https://github.com/composer/composer/tree/2.10.1"
             },
             "funding": [
                 {
@@ -1513,7 +1513,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-28T09:22:08+00:00"
+            "time": "2026-06-04T08:25:59+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -5892,16 +5892,16 @@
         },
         {
             "name": "publishpress/dev-workspace",
-            "version": "1.4.3",
+            "version": "1.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-dev-workspace.git",
-                "reference": "f7e21e342316beea2beb596462332a44275a9296"
+                "reference": "05433e0e89ea5e4bc6f6605e906ae50a98756ff1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/f7e21e342316beea2beb596462332a44275a9296",
-                "reference": "f7e21e342316beea2beb596462332a44275a9296",
+                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/05433e0e89ea5e4bc6f6605e906ae50a98756ff1",
+                "reference": "05433e0e89ea5e4bc6f6605e906ae50a98756ff1",
                 "shasum": ""
             },
             "require": {
@@ -5957,9 +5957,9 @@
             "description": "Shared Composer scripts for PublishPress plugins",
             "support": {
                 "issues": "https://github.com/publishpress/library-dev-workspace/issues",
-                "source": "https://github.com/publishpress/library-dev-workspace/tree/1.4.3"
+                "source": "https://github.com/publishpress/library-dev-workspace/tree/1.4.5"
             },
-            "time": "2026-06-02T17:30:41+00:00"
+            "time": "2026-06-04T14:43:39+00:00"
         },
         {
             "name": "publishpress/publishpress-phpcs-standards",
