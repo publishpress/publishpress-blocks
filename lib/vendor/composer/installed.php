@@ -43,6 +43,15 @@
                 0 => '6.5.1',
             ),
         ),
+        'publishpress/bundled-translations' => array(
+            'pretty_version' => 'v1.0.3',
+            'version' => '1.0.3.0',
+            'reference' => '95b06baed793a3a4ec44c5d932b68785302a0559',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../publishpress/bundled-translations',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'publishpress/instance-protection' => array(
             'pretty_version' => '2.1.0',
             'version' => '2.1.0.0',
