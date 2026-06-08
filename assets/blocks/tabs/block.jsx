@@ -351,6 +351,7 @@
     };
 
     registerBlockType( 'advgb/tabs', {
+        apiVersion: 3,
         title: __( 'Tabs (deprecated) - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg' ),
         icon: {

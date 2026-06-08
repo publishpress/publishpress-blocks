@@ -19,5 +19,5 @@ jobs:
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SLUG: advanced-gutenberg
+          SLUG: capability-manager-enhanced
           IGNORE_OTHER_FILES: true

@@ -137,6 +137,7 @@
     }
 
     registerBlockType( 'advgb/tab', {
+        apiVersion: 3,
         title: __( 'Tab Item - PublishPress', 'advanced-gutenberg' ),
         parent: [ 'advgb/adv-tabs' ],
         icon: {

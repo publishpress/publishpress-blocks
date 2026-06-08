@@ -73,6 +73,7 @@ jQuery(document).ready(function ($) {
             var $thisForm = $(this).closest('.advgb-lores-form');
             var g_id = parseInt($thisForm.find('.advgb-grecaptcha').data('gid'));
             var captcha = grecaptcha.getResponse(g_id) || undefined;
+            var nonce_val = $(this).find('[name="advgb_blockform_nonce_field"]').val();
             var validated = false;
 
             if (!captcha) {
@@ -86,7 +87,8 @@ jQuery(document).ready(function ($) {
                 async: false,
                 data: {
                     action: 'advgb_lores_validate',
-                    captcha: captcha
+                    captcha: captcha,
+                    nonce: nonce_val
                 },
                 beforeSend: function () {
                     $thisForm.addClass('sending');

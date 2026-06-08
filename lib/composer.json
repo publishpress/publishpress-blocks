@@ -17,6 +17,7 @@
         "publishpress/wordpress-banners": "^1.3",
         "publishpress/psr-container": "^2.0",
         "publishpress/instance-protection": "^2.0",
+        "publishpress/bundled-translations": "^1.0",
         "matomo/device-detector": "^6.4"
     }
 }

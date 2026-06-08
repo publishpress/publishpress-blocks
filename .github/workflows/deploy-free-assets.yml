@@ -1,0 +1,12 @@
+name: Deploy assets/readme to WordPress.org
+permissions:
+  contents: read
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  deploy-assets:
+    uses: publishpress/github-workflows/.github/workflows/deploy-free-assets.yml@v3
+    secrets: inherit

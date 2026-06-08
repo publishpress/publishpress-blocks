@@ -405,6 +405,7 @@
     };
 
     registerBlockType('advgb/image', {
+        apiVersion: 3,
         title: __('Image - PublishPress', 'advanced-gutenberg'),
         description: __('Image/photo block with more options and styles.', 'advanced-gutenberg'),
         icon: {

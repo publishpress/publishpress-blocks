@@ -8548,19 +8548,15 @@ msgstr "Error al cargar los datos de los bloques…"
 #~ msgid "Save %s"
 #~ msgstr "Guardar %s"
 
-#~| msgid "Product Status"
 #~ msgid "Status"
 #~ msgstr "Estado"
 
-#~| msgid "Enable"
 #~ msgid "Enabled"
 #~ msgstr "Activado"
 
-#~| msgid "Choose which users can see your blocks."
 #~ msgid "Choose which reusable block to insert."
 #~ msgstr "Elige cual bloque reutilizable insertar."
 
-#~| msgid "Post Image"
 #~ msgid "Post IDs"
 #~ msgstr "IDs de las entradas"
 
@@ -8575,7 +8571,6 @@ msgstr "Error al cargar los datos de los bloques…"
 #~ "Busca y selecciona las entradas o introduce sus IDs para limitar estas "
 #~ "reglas a las entradas específicas."
 
-#~| msgid "Enable block user roles"
 #~ msgid "Enable this rule"
 #~ msgstr "Activar esta regla"
 

@@ -329,12 +329,14 @@ class AdvancedGutenbergBlockStyles
                     }
 
                     if (isset($data['generated_css']) && !empty($data['generated_css'])) {
-                        $response['generated_css'] = $data['generated_css'];
+                        $response['generated_css'] = self::sanitize_css($data['generated_css']);
                     } else {
                         if (is_array($data['css'])) {
-                            $response['generated_css'] = AdvancedGutenbergBlockStyles::generate_final_css($data['css'], $data['name']);
+                            $response['generated_css'] = self::sanitize_css(
+                                AdvancedGutenbergBlockStyles::generate_final_css($data['css'], $data['name'])
+                            );
                         } else {
-                            $response['generated_css'] = $data['css'];
+                            $response['generated_css'] = self::sanitize_css($data['css']);
                         }
                     }
 
@@ -347,14 +349,14 @@ class AdvancedGutenbergBlockStyles
             $new_styletitle = sanitize_text_field($_POST['title']);
             $new_classname = sanitize_text_field($_POST['name']);
             $new_identify_color = sanitize_hex_color($_POST['mycolor']);
-            $generated_css = isset($_POST['generated_css']) ? wp_strip_all_tags(wp_specialchars_decode($_POST['generated_css'], ENT_QUOTES)) : '';
+            $generated_css = isset($_POST['generated_css']) ? self::sanitize_css(wp_unslash($_POST['generated_css'])) : '';
 
             $new_css = array();
 
             if (isset($_POST['css_array']) && is_array($_POST['css_array']) && !empty($_POST['css_array'])) {
-                $new_css = $this->sanitize_css_array($_POST['css_array']);
+                $new_css = $this->sanitize_css_array(wp_unslash($_POST['css_array']));
             } else {
-                $new_css = wp_strip_all_tags(wp_specialchars_decode($_POST['mycss'], ENT_QUOTES));
+                $new_css = self::sanitize_css(wp_unslash($_POST['mycss']));
             }
 
             // Validate new name
@@ -387,18 +389,125 @@ class AdvancedGutenbergBlockStyles
     }
 
     /**
+     * Sanitize a custom stylesheet while preserving normal CSS declarations.
+     *
+     * Custom Styles intentionally supports administrator-authored CSS, so this
+     * targets constructs that can execute legacy CSS script or fetch arbitrary
+     * external resources.
+     *
+     * @param string $css CSS to sanitize.
+     *
+     * @return string
+     */
+    public static function sanitize_css($css)
+    {
+        if (is_scalar($css)) {
+            $css = (string) $css;
+        } else {
+            return '';
+        }
+
+        $css = wp_strip_all_tags(wp_specialchars_decode($css, ENT_QUOTES));
+        $css = preg_replace('/\/\*.*?\*\//s', '', $css);
+        $css = preg_replace('/@import\s+[^;{}]*;?/i', '', $css);
+        $css = preg_replace('/expression\s*\([^;{}]*\)/i', '', $css);
+
+        return preg_replace_callback('/url\s*\(\s*([^)]+?)\s*\)/i', array(__CLASS__, 'sanitize_css_url'), $css);
+    }
+
+    /**
+     * Sanitize a url() function in CSS.
+     *
+     * @param array $matches Regex matches for a CSS url() function.
+     *
+     * @return string
+     */
+    private static function sanitize_css_url($matches)
+    {
+        $url = trim($matches[1]);
+        $url = trim($url, "\"'");
+        $url = trim(self::decode_css_escapes($url));
+        $url = trim($url, "\"'");
+
+        if ($url === '' || $url[0] === '#') {
+            return $matches[0];
+        }
+
+        if (strpos($url, '//') === 0) {
+            $scheme = is_ssl() ? 'https:' : 'http:';
+
+            return self::is_same_site_css_url($scheme . $url) ? $matches[0] : '';
+        }
+
+        if (preg_match('/^[a-z][a-z0-9+.-]*:/i', $url)) {
+            return self::is_same_site_css_url($url) ? $matches[0] : '';
+        }
+
+        return $matches[0];
+    }
+
+    /**
+     * Check whether an absolute CSS URL points to this WordPress site.
+     *
+     * @param string $url URL to check.
+     *
+     * @return bool
+     */
+    private static function is_same_site_css_url($url)
+    {
+        $url_parts = wp_parse_url($url);
+
+        if (empty($url_parts['host'])) {
+            return false;
+        }
+
+        $allowed_hosts = array();
+        foreach (array(home_url(), site_url(), content_url()) as $allowed_url) {
+            $allowed_url_parts = wp_parse_url($allowed_url);
+
+            if (!empty($allowed_url_parts['host'])) {
+                $allowed_hosts[] = strtolower($allowed_url_parts['host']);
+            }
+        }
+
+        return in_array(strtolower($url_parts['host']), array_unique($allowed_hosts), true);
+    }
+
+    /**
+     * Decode ASCII CSS escapes so escaped protocols and hosts can be checked.
+     *
+     * @param string $value Value to decode.
+     *
+     * @return string
+     */
+    private static function decode_css_escapes($value)
+    {
+        return preg_replace_callback('/\\\\([0-9a-fA-F]{1,6}\s?|.)/s', function ($matches) {
+            $escape = $matches[1];
+
+            if (preg_match('/^[0-9a-fA-F]/', $escape)) {
+                $codepoint = hexdec(trim($escape));
+
+                return $codepoint > 0 && $codepoint < 128 ? chr($codepoint) : '';
+            }
+
+            return $escape;
+        }, $value);
+    }
+
+    /**
      * Sanitize CSS array with nested structure
      */
     private function sanitize_css_array($css_data)
     {
         if (is_string($css_data)) {
-            return wp_strip_all_tags(wp_specialchars_decode($css_data, ENT_QUOTES));
+            return self::sanitize_css($css_data);
         }
 
         if (is_array($css_data) && !isset($css_data['base']) && !isset($css_data['nested']) && !isset($css_data['states'])) {
             $sanitized = array();
             foreach ($css_data as $property => $value) {
-                $sanitized[sanitize_text_field($property)] = sanitize_text_field($value);
+                $sanitized[sanitize_text_field($property)] = sanitize_text_field(self::sanitize_css($value));
             }
             return $sanitized;
         }
@@ -407,7 +516,7 @@ class AdvancedGutenbergBlockStyles
 
         if (isset($css_data['base']) && is_array($css_data['base'])) {
             foreach ($css_data['base'] as $property => $value) {
-                $sanitized['base'][sanitize_text_field($property)] = sanitize_text_field($value);
+                $sanitized['base'][sanitize_text_field($property)] = sanitize_text_field(self::sanitize_css($value));
             }
         }
 
@@ -415,7 +524,7 @@ class AdvancedGutenbergBlockStyles
             foreach ($css_data['states'] as $state => $rules) {
                 $sanitized_state = sanitize_text_field($state);
                 foreach ($rules as $property => $value) {
-                    $sanitized['states'][$sanitized_state][sanitize_text_field($property)] = sanitize_text_field($value);
+                    $sanitized['states'][$sanitized_state][sanitize_text_field($property)] = sanitize_text_field(self::sanitize_css($value));
                 }
             }
         }
@@ -427,7 +536,7 @@ class AdvancedGutenbergBlockStyles
                 // Handle regular nested properties
                 foreach ($element_rules as $property => $value) {
                     if ($property !== 'states') {
-                        $sanitized['nested'][$sanitized_selector][sanitize_text_field($property)] = sanitize_text_field($value);
+                        $sanitized['nested'][$sanitized_selector][sanitize_text_field($property)] = sanitize_text_field(self::sanitize_css($value));
                     }
                 }
 
@@ -436,7 +545,7 @@ class AdvancedGutenbergBlockStyles
                     foreach ($element_rules['states'] as $state => $state_rules) {
                         $sanitized_state = sanitize_text_field($state);
                         foreach ($state_rules as $property => $value) {
-                            $sanitized['nested'][$sanitized_selector]['states'][$sanitized_state][sanitize_text_field($property)] = sanitize_text_field($value);
+                            $sanitized['nested'][$sanitized_selector]['states'][$sanitized_state][sanitize_text_field($property)] = sanitize_text_field(self::sanitize_css($value));
                         }
                     }
                 }
