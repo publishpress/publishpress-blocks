@@ -1,6 +1,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[3.7.2] - 8 June, 2026
+
+- Fixed: Block with API version 2 or lower is deprecated since version 6.9, #1752
+- Fixed: Blocks causing crashing in post editor when featured in WP reusable blocks, #1777
+- Fixed: PHP 8.4 undefined array key warning for colId, #1776
+
 [3.7.1] - 30 April, 2026
 
 - Update: Add "Expand all" settings on load to accordions block, #1749
