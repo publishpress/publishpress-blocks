@@ -146,7 +146,6 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
                 className,
                 clientId: blockID,
             } = this.props;
-            const buttonClassName = typeof className === 'string' ? className : '';
             const { showPopup } = this.state;
             const {
                 id, align, url, urlOpenNewTab, title, text, bgColor, textColor, textSize,
@@ -157,6 +156,10 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
                 hoverOpacity, transitionSpeed, iconDisplay, icon, iconSize, iconColor, iconTheme, iconPosition, iconSpacing,
                 noreferrer, nofollow, isPreview
             } = attributes;
+            const buttonClassName = [
+                attributes.className,
+                className,
+            ].filter(Boolean).join(' ');
 
             const isStyleSquared = buttonClassName.indexOf('-squared') > -1;
             const isStyleOutlined = buttonClassName.indexOf('-outlined') > -1;

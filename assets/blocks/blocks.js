@@ -3315,7 +3315,6 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           isSelected = _this$props3.isSelected,
           className = _this$props3.className,
           blockID = _this$props3.clientId;
-        var buttonClassName = typeof className === 'string' ? className : '';
         var showPopup = this.state.showPopup;
         var id = attributes.id,
           align = attributes.align,
@@ -3357,6 +3356,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           noreferrer = attributes.noreferrer,
           nofollow = attributes.nofollow,
           isPreview = attributes.isPreview;
+        var buttonClassName = [attributes.className, className].filter(Boolean).join(' ');
         var isStyleSquared = buttonClassName.indexOf('-squared') > -1;
         var isStyleOutlined = buttonClassName.indexOf('-outlined') > -1;
         var isStyleSquaredOutline = buttonClassName.indexOf('-squared-outline') > -1;
@@ -6128,7 +6128,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           lineHeight = attributes.lineHeight,
           fontSize = attributes.fontSize,
           isPreview = attributes.isPreview;
-        var listClassName = [className, id, icon && 'advgb-list', icon && "advgb-list-".concat(icon)].filter(Boolean).join(' ');
+        var listClassName = ['wp-block-advgb-list', attributes.className, className, id, icon && 'advgb-list', icon && "advgb-list-".concat(icon)].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
         var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
         var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
@@ -11848,7 +11850,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           contentMaxHeightUnit = attributes.contentMaxHeightUnit,
           wrapperTag = attributes.wrapperTag,
           isPreview = attributes.isPreview;
-        var blockClasses = ['advgb-columns', className, vAlign && "columns-valign-".concat(vAlign), columns && "advgb-columns-".concat(columns), columnsLayout && "layout-".concat(columnsLayout), columnsLayoutT && "tbl-layout-".concat(columnsLayoutT), columnsLayoutM && "mbl-layout-".concat(columnsLayoutM), !!gutter && "gutter-".concat(gutter), !!collapsedGutter && "vgutter-".concat(collapsedGutter), collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+        var blockClasses = ['wp-block-advgb-columns', 'advgb-columns', attributes.className, className, vAlign && "columns-valign-".concat(vAlign), columns && "advgb-columns-".concat(columns), columnsLayout && "layout-".concat(columnsLayout), columnsLayoutT && "tbl-layout-".concat(columnsLayoutT), columnsLayoutM && "mbl-layout-".concat(columnsLayoutM), !!gutter && "gutter-".concat(gutter), !!collapsedGutter && "vgutter-".concat(collapsedGutter), collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         if (!columns) {
           return isPreview ? /*#__PURE__*/React.createElement("img", {
             alt: __('Columns Manager', 'advanced-gutenberg'),
@@ -12981,7 +12985,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           var width = getBlockAttributes(blockId).width || 0;
           avaiWidth -= parseInt(width);
         });
-        var blockClasses = ['advgb-column', className].filter(Boolean).join(' ');
+        var blockClasses = ['wp-block-advgb-column', 'advgb-column', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         var deviceLetter = '';
         if (tabSelected === 'mobile') deviceLetter = 'M';
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
@@ -13940,6 +13946,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         setAttributes = props.setAttributes,
         className = props.className;
       var wrapperTag = attributes.wrapperTag;
+      var blockClassName = ['wp-block-advgb-container', 'advgb-blocks-container', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+        return value && self.indexOf(value) === index;
+      }).join(' ');
       return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
         title: __('Container Settings', 'advanced-gutenberg')
       }, /*#__PURE__*/React.createElement(SelectControl, {
@@ -13973,7 +13982,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           });
         }
       }))), /*#__PURE__*/React.createElement("div", {
-        className: "advgb-blocks-container ".concat(className)
+        className: blockClassName
       }, /*#__PURE__*/React.createElement(InnerBlocks, null)));
     },
     save: function save(_ref) {
@@ -24248,6 +24257,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           searchBtnHoverOpacity = attributes.searchBtnHoverOpacity,
           searchBtnHoverTranSpeed = attributes.searchBtnHoverTranSpeed,
           isPreview = attributes.isPreview;
+        var blockClassName = ['wp-block-advgb-search-bar', 'advgb-search-bar-wrapper', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         var searchBarIcon = /*#__PURE__*/React.createElement("span", {
           className: "advgb-search-bar-icon"
         }, searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon);
@@ -24499,7 +24511,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           min: 0,
           max: 50
         }))))), /*#__PURE__*/React.createElement("div", {
-          className: "advgb-search-bar-wrapper ".concat(className)
+          className: blockClassName
         }, /*#__PURE__*/React.createElement("div", {
           className: "advgb-search-bar-inner",
           style: {
@@ -24659,6 +24671,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         searchButtonRadius = attributes.searchButtonRadius,
         searchButtonOnLeft = attributes.searchButtonOnLeft,
         searchBtnId = attributes.searchBtnId;
+      var blockClassName = ['wp-block-advgb-search-bar', 'advgb-search-bar-wrapper', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+        return value && self.indexOf(value) === index;
+      }).join(' ');
       var searchBarIcon = /*#__PURE__*/React.createElement("span", {
         className: "advgb-search-bar-icon"
       }, searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon);
@@ -24675,7 +24690,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         }
       }, searchButtonText));
       return /*#__PURE__*/React.createElement("div", {
-        className: "advgb-search-bar-wrapper ".concat(className)
+        className: blockClassName
       }, /*#__PURE__*/React.createElement("form", {
         method: "get",
         action: advgbBlocks.home_url,
@@ -24699,7 +24714,72 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         name: "s",
         placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…'
       }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
-    }
+    },
+    deprecated: [{
+      attributes: blockAttrs,
+      supports: {
+        align: true,
+        anchor: true
+      },
+      save: function save(_ref2) {
+        var attributes = _ref2.attributes,
+          className = _ref2.className;
+        var fullWidth = attributes.fullWidth,
+          width = attributes.width,
+          textColor = attributes.textColor,
+          backgroundColor = attributes.backgroundColor,
+          searchIcon = attributes.searchIcon,
+          searchIconOnRight = attributes.searchIconOnRight,
+          searchPlaceholder = attributes.searchPlaceholder,
+          searchButtonEnabled = attributes.searchButtonEnabled,
+          searchButtonText = attributes.searchButtonText,
+          searchButtonTextColor = attributes.searchButtonTextColor,
+          searchButtonBgColor = attributes.searchButtonBgColor,
+          searchButtonRadius = attributes.searchButtonRadius,
+          searchButtonOnLeft = attributes.searchButtonOnLeft,
+          searchBtnId = attributes.searchBtnId;
+        var searchBarIcon = /*#__PURE__*/React.createElement("span", {
+          className: "advgb-search-bar-icon"
+        }, searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon);
+        var searchBarButton = !searchButtonEnabled ? '' : /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-button-wrapper"
+        }, /*#__PURE__*/React.createElement("button", {
+          type: "submit",
+          className: "advgb-search-bar-button ".concat(searchBtnId),
+          style: {
+            color: searchButtonTextColor,
+            borderColor: searchButtonTextColor,
+            backgroundColor: searchButtonBgColor,
+            borderRadius: searchButtonRadius
+          }
+        }, searchButtonText));
+        return /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-bar-wrapper ".concat(className)
+        }, /*#__PURE__*/React.createElement("form", {
+          method: "get",
+          action: advgbBlocks.home_url,
+          className: "advgb-search-bar-form",
+          role: "search"
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-bar-inner",
+          style: {
+            width: fullWidth ? '100%' : width
+          }
+        }, searchButtonOnLeft && searchBarButton, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-bar",
+          style: {
+            backgroundColor: backgroundColor,
+            color: textColor,
+            borderRadius: searchButtonRadius
+          }
+        }, !searchIconOnRight && searchBarIcon, /*#__PURE__*/React.createElement("input", {
+          type: "text",
+          className: "advgb-search-bar-input",
+          name: "s",
+          placeholder: searchPlaceholder ? searchPlaceholder : 'Type to searchâ€¦'
+        }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
+      }
+    }]
   });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 

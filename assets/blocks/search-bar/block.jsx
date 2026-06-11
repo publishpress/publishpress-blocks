@@ -103,6 +103,12 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 searchBtnHoverShadowBlur, searchBtnHoverShadowSpread, searchBtnHoverOpacity, searchBtnHoverTranSpeed,
                 isPreview,
             } = attributes;
+            const blockClassName = [
+                'wp-block-advgb-search-bar',
+                'advgb-search-bar-wrapper',
+                attributes.className,
+                className,
+            ].filter( Boolean ).join( ' ' ).split( ' ' ).filter( (value, index, self) => value && self.indexOf(value) === index ).join( ' ' );
 
             const searchBarIcon = (
                 <span className="advgb-search-bar-icon">
@@ -301,7 +307,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             ) }
                         </PanelBody>
                     </InspectorControls>
-                    <div className={`advgb-search-bar-wrapper ${className}`}>
+                    <div className={ blockClassName }>
                         <div className="advgb-search-bar-inner" style={ { width: fullWidth ? '100%' : width } }>
                             {searchButtonOnLeft && searchBarButton}
                             <div className="advgb-search-bar"
@@ -459,6 +465,12 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 searchPlaceholder, searchButtonEnabled, searchButtonText, searchButtonTextColor,
                 searchButtonBgColor, searchButtonRadius, searchButtonOnLeft, searchBtnId,
             } = attributes;
+            const blockClassName = [
+                'wp-block-advgb-search-bar',
+                'advgb-search-bar-wrapper',
+                attributes.className,
+                className,
+            ].filter( Boolean ).join( ' ' ).split( ' ' ).filter( (value, index, self) => value && self.indexOf(value) === index ).join( ' ' );
 
             const searchBarIcon = (
                 <span className="advgb-search-bar-icon">
@@ -484,7 +496,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             );
 
             return (
-                <div className={`advgb-search-bar-wrapper ${className}`}>
+                <div className={ blockClassName }>
                     <form method="get"
                           action={advgbBlocks.home_url}
                           className="advgb-search-bar-form"
@@ -512,6 +524,75 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     </form>
                 </div>
             );
-        }
+        },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                supports: {
+                    align: true,
+                    anchor: true
+                },
+                save: function ( { attributes, className } ) {
+                    const {
+                        fullWidth, width, textColor, backgroundColor, searchIcon, searchIconOnRight,
+                        searchPlaceholder, searchButtonEnabled, searchButtonText, searchButtonTextColor,
+                        searchButtonBgColor, searchButtonRadius, searchButtonOnLeft, searchBtnId,
+                    } = attributes;
+
+                    const searchBarIcon = (
+                        <span className="advgb-search-bar-icon">
+                            {searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon}
+                        </span>
+                    );
+
+                    const searchBarButton = !searchButtonEnabled ? '' : (
+                        <div className="advgb-search-button-wrapper">
+                            <button
+                                type="submit"
+                                className={`advgb-search-bar-button ${searchBtnId}`}
+                                style={ {
+                                    color: searchButtonTextColor,
+                                    borderColor: searchButtonTextColor,
+                                    backgroundColor: searchButtonBgColor,
+                                    borderRadius: searchButtonRadius,
+                                } }
+                            >
+                                {searchButtonText}
+                            </button>
+                        </div>
+                    );
+
+                    return (
+                        <div className={`advgb-search-bar-wrapper ${className}`}>
+                            <form method="get"
+                                  action={advgbBlocks.home_url}
+                                  className="advgb-search-bar-form"
+                                  role="search"
+                            >
+                                <div className="advgb-search-bar-inner" style={ { width: fullWidth ? '100%' : width } }>
+                                    {searchButtonOnLeft && searchBarButton}
+                                    <div className="advgb-search-bar"
+                                         style={ {
+                                             backgroundColor: backgroundColor,
+                                             color: textColor,
+                                             borderRadius: searchButtonRadius,
+                                         } }
+                                    >
+                                        {!searchIconOnRight && searchBarIcon}
+                                        <input type="text"
+                                               className="advgb-search-bar-input"
+                                               name="s"
+                                               placeholder={ searchPlaceholder ? searchPlaceholder : 'Type to searchâ€¦' }
+                                        />
+                                        {searchIconOnRight && searchBarIcon}
+                                    </div>
+                                    {!searchButtonOnLeft && searchBarButton}
+                                </div>
+                            </form>
+                        </div>
+                    );
+                }
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
