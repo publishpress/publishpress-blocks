@@ -3315,6 +3315,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           isSelected = _this$props3.isSelected,
           className = _this$props3.className,
           blockID = _this$props3.clientId;
+        var buttonClassName = typeof className === 'string' ? className : '';
         var showPopup = this.state.showPopup;
         var id = attributes.id,
           align = attributes.align,
@@ -3356,9 +3357,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           noreferrer = attributes.noreferrer,
           nofollow = attributes.nofollow,
           isPreview = attributes.isPreview;
-        var isStyleSquared = className.indexOf('-squared') > -1;
-        var isStyleOutlined = className.indexOf('-outlined') > -1;
-        var isStyleSquaredOutline = className.indexOf('-squared-outline') > -1;
+        var isStyleSquared = buttonClassName.indexOf('-squared') > -1;
+        var isStyleOutlined = buttonClassName.indexOf('-outlined') > -1;
+        var isStyleSquaredOutline = buttonClassName.indexOf('-squared-outline') > -1;
         var hoverColorSettings = [{
           label: __('Background Color', 'advanced-gutenberg'),
           value: hoverBgColor,
@@ -3401,7 +3402,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           width: "100%",
           src: previewImageData
         }) : /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("span", {
-          className: "".concat(className, " align").concat(align),
+          className: "".concat(buttonClassName, " align").concat(align),
           style: {
             display: 'inline-block'
           }

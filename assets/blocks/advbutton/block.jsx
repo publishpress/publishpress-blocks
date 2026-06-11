@@ -146,6 +146,7 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
                 className,
                 clientId: blockID,
             } = this.props;
+            const buttonClassName = typeof className === 'string' ? className : '';
             const { showPopup } = this.state;
             const {
                 id, align, url, urlOpenNewTab, title, text, bgColor, textColor, textSize,
@@ -157,9 +158,9 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
                 noreferrer, nofollow, isPreview
             } = attributes;
 
-            const isStyleSquared = className.indexOf('-squared') > -1;
-            const isStyleOutlined = className.indexOf('-outlined') > -1;
-            const isStyleSquaredOutline = className.indexOf('-squared-outline') > -1;
+            const isStyleSquared = buttonClassName.indexOf('-squared') > -1;
+            const isStyleOutlined = buttonClassName.indexOf('-outlined') > -1;
+            const isStyleSquaredOutline = buttonClassName.indexOf('-squared-outline') > -1;
             const hoverColorSettings = [
                 {
                     label: __('Background Color', 'advanced-gutenberg'),
@@ -200,7 +201,7 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
                     <img alt={__('Advanced Button', 'advanced-gutenberg')} width='100%' src={previewImageData} />
                     :
                     <Fragment>
-                        <span className={`${className} align${align}`}
+                        <span className={`${buttonClassName} align${align}`}
                             style={{ display: 'inline-block' }}
                         >
                             <span className={`wp-block-advgb-button_link ${id}`} rel={advgb_relAttribute(attributes)}>
