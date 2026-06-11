@@ -3356,7 +3356,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           noreferrer = attributes.noreferrer,
           nofollow = attributes.nofollow,
           isPreview = attributes.isPreview;
-        var buttonClassName = [attributes.className, className].filter(Boolean).join(' ');
+        var buttonClassName = ['wp-block-advgb-button', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         var isStyleSquared = buttonClassName.indexOf('-squared') > -1;
         var isStyleOutlined = buttonClassName.indexOf('-outlined') > -1;
         var isStyleSquaredOutline = buttonClassName.indexOf('-squared-outline') > -1;
@@ -3847,10 +3849,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       default: 'PUSH THE BUTTON'
     },
     bgColor: {
-      type: 'string'
+      type: 'string',
+      default: '#2196f3'
     },
     textColor: {
-      type: 'string'
+      type: 'string',
+      default: '#fff'
     },
     textSize: {
       type: 'number',
@@ -3893,7 +3897,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       default: 1
     },
     borderColor: {
-      type: 'string'
+      type: 'string',
+      default: '#2196f3'
     },
     borderStyle: {
       type: 'string',
@@ -3904,10 +3909,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       default: 50
     },
     hoverTextColor: {
-      type: 'string'
+      type: 'string',
+      default: '#fff'
     },
     hoverBgColor: {
-      type: 'string'
+      type: 'string',
+      default: '#2196f3'
     },
     hoverShadowColor: {
       type: 'string',

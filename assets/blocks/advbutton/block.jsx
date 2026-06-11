@@ -157,9 +157,10 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
                 noreferrer, nofollow, isPreview
             } = attributes;
             const buttonClassName = [
+                'wp-block-advgb-button',
                 attributes.className,
                 className,
-            ].filter(Boolean).join(' ');
+            ].filter(Boolean).join(' ').split(' ').filter((value, index, self) => value && self.indexOf(value) === index).join(' ');
 
             const isStyleSquared = buttonClassName.indexOf('-squared') > -1;
             const isStyleOutlined = buttonClassName.indexOf('-outlined') > -1;
@@ -645,9 +646,11 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
         },
         bgColor: {
             type: 'string',
+            default: '#2196f3',
         },
         textColor: {
             type: 'string',
+            default: '#fff',
         },
         textSize: {
             type: 'number',
@@ -691,6 +694,7 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
         },
         borderColor: {
             type: 'string',
+            default: '#2196f3',
         },
         borderStyle: {
             type: 'string',
@@ -702,9 +706,11 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
         },
         hoverTextColor: {
             type: 'string',
+            default: '#fff',
         },
         hoverBgColor: {
             type: 'string',
+            default: '#2196f3',
         },
         hoverShadowColor: {
             type: 'string',
