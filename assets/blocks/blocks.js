@@ -19625,6 +19625,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       };
       _this.initMap = _this.initMap.bind(_this);
       _this.fetchLocation = _this.fetchLocation.bind(_this);
+      _this.mapInitRetry = null;
       return _this;
     }
     _inherits(AdvMap, _Component);
@@ -19658,9 +19659,15 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       key: "componentDidMount",
       value: function componentDidMount() {
         var attributes = this.props.attributes;
-        if (attributes.mapID) {
+        if (attributes.mapID && !attributes.isPreview) {
           this.initMap();
         }
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        clearTimeout(mapWillUpdate);
+        clearTimeout(this.mapInitRetry);
       }
     }, {
       key: "componentDidUpdate",
@@ -19693,7 +19700,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "initMap",
       value: function initMap() {
-        if (typeof google === "undefined" || !this.props.attributes.mapID) return null;
+        if (typeof google === "undefined" || !this.props.attributes.mapID || this.props.attributes.isPreview) return null;
         var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
         var _this$state = this.state,
           currentMap = _this$state.currentMap,
@@ -19711,6 +19718,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           mapStyle = _this$props$attribute2.mapStyle,
           mapStyleCustom = _this$props$attribute2.mapStyleCustom,
           infoWindowDefaultShown = _this$props$attribute2.infoWindowDefaultShown;
+        var mapDiv = document.getElementById(mapID);
         var location = {
           lat: parseFloat(lat),
           lng: parseFloat(lng)
@@ -19722,6 +19730,11 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         var customStyleParsed = '';
         var formattedDesc = sanitizeMapText(markerDesc.replace(/\n/g, '<br/>'));
         var sanitizedTitle = sanitizeMapText(markerTitle);
+        if (!mapDiv) {
+          clearTimeout(this.mapInitRetry);
+          this.mapInitRetry = setTimeout(this.initMap, 100);
+          return null;
+        }
         if (mapStyle === 'custom') {
           try {
             customStyleParsed = JSON.parse(mapStyleCustom);
@@ -19735,7 +19748,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           }
         }
         if (!map) {
-          map = new google.maps.Map(document.getElementById(mapID), {
+          map = new google.maps.Map(mapDiv, {
             zoom: zoom,
             center: location,
             gestureHandling: 'cooperative'
