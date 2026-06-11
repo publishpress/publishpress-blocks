@@ -1,5 +1,6 @@
 const { addFilter } = wp.hooks;
 
+// Resolve the default wrapper class Gutenberg expects for a block, e.g. wp-block-advgb-table.
 const getDefaultBlockClassName = (blockName) => {
     if (wp.blocks && typeof wp.blocks.getBlockDefaultClassName === 'function') {
         return wp.blocks.getBlockDefaultClassName(blockName);
@@ -8,6 +9,8 @@ const getDefaultBlockClassName = (blockName) => {
     return `wp-block-${blockName.replace('/', '-')}`;
 };
 
+// API v3 no longer injects the default block class into save markup for these legacy saves.
+// Preserve each block's existing root element and add the class only when it is missing.
 const addDefaultBlockClassName = (element, blockName) => {
     if (
         !wp.element
@@ -32,6 +35,7 @@ const addDefaultBlockClassName = (element, blockName) => {
     });
 };
 
+// Centralize API v3 compatibility fixes so individual block files do not need duplicate wrappers.
 addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (settings, name) {
     const blockName = settings ? name || settings.name : name;
 
@@ -39,6 +43,8 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
         return settings;
     }
 
+    // Class edit components cannot call useBlockProps(), so wrap them with a function component.
+    // This restores editor selection data attributes and toolbar click handling for API v3 blocks.
     if (settings.apiVersion === 3 && typeof settings.edit === 'function' && !settings.__advgbUsesBlockProps) {
         const Edit = settings.edit;
         const getEditWrapperProps = settings.getEditWrapperProps;
@@ -65,6 +71,7 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
         return settings;
     }
 
+    // Keep the pre-wrapper save available so existing post content remains valid after migration.
     const deprecated = Array.isArray(settings.deprecated)
         ? settings.deprecated.map((deprecation) => ({
             ...deprecation,
@@ -82,6 +89,7 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
         ...deprecated,
     ];
 
+    // Ensure new API v3 saves include the default wp-block-* class expected in stored markup.
     if (!settings.__advgbUsesSaveBlockClass) {
         const save = settings.save;
 

@@ -20,12 +20,17 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var addFilter = wp.hooks.addFilter;
+
+// Resolve the default wrapper class Gutenberg expects for a block, e.g. wp-block-advgb-table.
 var getDefaultBlockClassName = function getDefaultBlockClassName(blockName) {
   if (wp.blocks && typeof wp.blocks.getBlockDefaultClassName === 'function') {
     return wp.blocks.getBlockDefaultClassName(blockName);
   }
   return "wp-block-".concat(blockName.replace('/', '-'));
 };
+
+// API v3 no longer injects the default block class into save markup for these legacy saves.
+// Preserve each block's existing root element and add the class only when it is missing.
 var addDefaultBlockClassName = function addDefaultBlockClassName(element, blockName) {
   if (!wp.element || typeof wp.element.isValidElement !== 'function' || typeof wp.element.cloneElement !== 'function' || !wp.element.isValidElement(element) || element.type === wp.element.Fragment) {
     return element;
@@ -40,11 +45,16 @@ var addDefaultBlockClassName = function addDefaultBlockClassName(element, blockN
     className: [defaultClassName, className].filter(Boolean).join(' ')
   });
 };
+
+// Centralize API v3 compatibility fixes so individual block files do not need duplicate wrappers.
 addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (settings, name) {
   var blockName = settings ? name || settings.name : name;
   if (!settings || typeof blockName !== 'string' || blockName.indexOf('advgb/') !== 0) {
     return settings;
   }
+
+  // Class edit components cannot call useBlockProps(), so wrap them with a function component.
+  // This restores editor selection data attributes and toolbar click handling for API v3 blocks.
   if (settings.apiVersion === 3 && typeof settings.edit === 'function' && !settings.__advgbUsesBlockProps) {
     var Edit = settings.edit;
     var getEditWrapperProps = settings.getEditWrapperProps;
@@ -59,6 +69,8 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
   if (settings.apiVersion !== 3 || typeof settings.save !== 'function') {
     return settings;
   }
+
+  // Keep the pre-wrapper save available so existing post content remains valid after migration.
   var deprecated = Array.isArray(settings.deprecated) ? settings.deprecated.map(function (deprecation) {
     return _objectSpread(_objectSpread({}, deprecation), {}, {
       apiVersion: deprecation.apiVersion || 1
@@ -70,6 +82,8 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
     supports: settings.supports,
     save: settings.save
   }].concat(_toConsumableArray(deprecated));
+
+  // Ensure new API v3 saves include the default wp-block-* class expected in stored markup.
   if (!settings.__advgbUsesSaveBlockClass) {
     var save = settings.save;
     settings.save = function AdvgbBlockSaveWithDefaultClass(props) {
