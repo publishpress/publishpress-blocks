@@ -927,13 +927,18 @@
             const {head, body, foot, maxWidth, tableCollapsed, hasFixedLayout, isPreview} = attributes;
             const {initRow, initCol, selectedCell, rangeSelected, multiSelected} = this.state;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
+            const blockClassName = [
+                'wp-block-advgb-table',
+                attributes.className,
+                className,
+            ].filter(Boolean).join(' ').split(' ').filter((value, index, self) => value && self.indexOf(value) === index).join(' ');
             const currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
 
             // First time insert block, let user determine the table
             if (!body.length) {
                 return (
                     isPreview ?
-                        <img alt={__('Advanced Table', 'advanced-gutenberg')} width='100%' src={className.includes('is-style-stripes') ? previewImageDataStripes : previewImageData}/>
+                        <img alt={__('Advanced Table', 'advanced-gutenberg')} width='100%' src={blockClassName.includes('is-style-stripes') ? previewImageDataStripes : previewImageData}/>
                         :
                         <Fragment>
                             <div className="advgb-init-table">
@@ -1369,7 +1374,7 @@
                                 </PanelBody>
                             </PanelBody>
                         </InspectorControls>
-                        <table className={className}
+                        <table className={blockClassName}
                                style={{
                                    maxWidth: maxWidthVal,
                                    borderCollapse: tableCollapsed ? 'collapse' : undefined,

@@ -7564,6 +7564,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           rangeSelected = _this$state11.rangeSelected,
           multiSelected = _this$state11.multiSelected;
         var maxWidthVal = !!maxWidth ? maxWidth : undefined;
+        var blockClassName = ['wp-block-advgb-table', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         var currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
 
         // First time insert block, let user determine the table
@@ -7571,7 +7574,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           return isPreview ? /*#__PURE__*/React.createElement("img", {
             alt: __('Advanced Table', 'advanced-gutenberg'),
             width: "100%",
-            src: className.includes('is-style-stripes') ? previewImageDataStripes : previewImageData
+            src: blockClassName.includes('is-style-stripes') ? previewImageDataStripes : previewImageData
           }) : /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
             className: "advgb-init-table"
           }, /*#__PURE__*/React.createElement(TextControl, {
@@ -8144,7 +8147,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             });
           })
         }))))), /*#__PURE__*/React.createElement("table", {
-          className: className,
+          className: blockClassName,
           style: {
             maxWidth: maxWidthVal,
             borderCollapse: tableCollapsed ? 'collapse' : undefined,
