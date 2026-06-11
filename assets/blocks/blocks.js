@@ -20,6 +20,26 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var addFilter = wp.hooks.addFilter;
+var getDefaultBlockClassName = function getDefaultBlockClassName(blockName) {
+  if (wp.blocks && typeof wp.blocks.getBlockDefaultClassName === 'function') {
+    return wp.blocks.getBlockDefaultClassName(blockName);
+  }
+  return "wp-block-".concat(blockName.replace('/', '-'));
+};
+var addDefaultBlockClassName = function addDefaultBlockClassName(element, blockName) {
+  if (!wp.element || typeof wp.element.isValidElement !== 'function' || typeof wp.element.cloneElement !== 'function' || !wp.element.isValidElement(element) || element.type === wp.element.Fragment) {
+    return element;
+  }
+  var defaultClassName = getDefaultBlockClassName(blockName);
+  var className = element.props && element.props.className ? element.props.className : '';
+  var classNames = className.split(/\s+/).filter(Boolean);
+  if (classNames.indexOf(defaultClassName) !== -1) {
+    return element;
+  }
+  return wp.element.cloneElement(element, {
+    className: [defaultClassName, className].filter(Boolean).join(' ')
+  });
+};
 addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (settings, name) {
   var blockName = settings ? name || settings.name : name;
   if (!settings || typeof blockName !== 'string' || blockName.indexOf('advgb/') !== 0) {
@@ -50,6 +70,13 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
     supports: settings.supports,
     save: settings.save
   }].concat(_toConsumableArray(deprecated));
+  if (!settings.__advgbUsesSaveBlockClass) {
+    var save = settings.save;
+    settings.save = function AdvgbBlockSaveWithDefaultClass(props) {
+      return addDefaultBlockClassName(save.apply(this, arguments), blockName);
+    };
+    settings.__advgbUsesSaveBlockClass = true;
+  }
   return settings;
 });
 
