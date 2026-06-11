@@ -7,6 +7,28 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
         return settings;
     }
 
+    if (settings.apiVersion === 3 && typeof settings.edit === 'function' && !settings.__advgbUsesBlockProps) {
+        const Edit = settings.edit;
+        const getEditWrapperProps = settings.getEditWrapperProps;
+
+        settings.edit = function AdvgbBlockEditWithProps(props) {
+            const wrapperProps = typeof getEditWrapperProps === 'function'
+                ? getEditWrapperProps(props.attributes)
+                : {};
+            const blockEditor = wp.blockEditor || wp.editor;
+            const blockProps = blockEditor && typeof blockEditor.useBlockProps === 'function'
+                ? blockEditor.useBlockProps(wrapperProps)
+                : wrapperProps;
+
+            return (
+                <div {...blockProps}>
+                    <Edit {...props} />
+                </div>
+            );
+        };
+        settings.__advgbUsesBlockProps = true;
+    }
+
     if (settings.apiVersion !== 3 || typeof settings.save !== 'function') {
         return settings;
     }

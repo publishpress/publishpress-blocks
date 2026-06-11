@@ -25,6 +25,17 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
   if (!settings || typeof blockName !== 'string' || blockName.indexOf('advgb/') !== 0) {
     return settings;
   }
+  if (settings.apiVersion === 3 && typeof settings.edit === 'function' && !settings.__advgbUsesBlockProps) {
+    var Edit = settings.edit;
+    var getEditWrapperProps = settings.getEditWrapperProps;
+    settings.edit = function AdvgbBlockEditWithProps(props) {
+      var wrapperProps = typeof getEditWrapperProps === 'function' ? getEditWrapperProps(props.attributes) : {};
+      var blockEditor = wp.blockEditor || wp.editor;
+      var blockProps = blockEditor && typeof blockEditor.useBlockProps === 'function' ? blockEditor.useBlockProps(wrapperProps) : wrapperProps;
+      return /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement(Edit, props));
+    };
+    settings.__advgbUsesBlockProps = true;
+  }
   if (settings.apiVersion !== 3 || typeof settings.save !== 'function') {
     return settings;
   }
