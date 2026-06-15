@@ -2236,51 +2236,15 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     background-color: #ddd;
 }
 
-/* Icon List Lightbox */
+/* Icon List Modal */
 .advgb-icon-popup {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    background-color: rgba(0,0,0, 0.5);
-    z-index: 160000;
-}
-.advgb-icon-popup .popup-inner {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin: auto;
-    background: #fff;
-    transform: translate(-50%,-50%);
     max-width: 650px;
     width: 100%;
 }
-.advgb-icon-popup .popup-inner .popup-body {
+.advgb-icon-popup .popup-body {
     padding: 20px;
 }
-.advgb-icon-popup .popup-inner .popup-header {
-    padding: 20px 20px 0;
-}
-.advgb-icon-popup .popup-inner .popup-header h3 {
-    margin: 0;
-    font-size: 24px;
-}
-.advgb-icon-popup .popup-inner .popup-header .close-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    height: 24px;
-    background: transparent;
-    border: none;
-    width: auto;
-    padding: 0;
-    cursor: pointer;
-}
-.advgb-icon-popup .popup-inner .popup-footer {
+.advgb-icon-popup .popup-footer {
     padding: 0 20px 20px;
     line-height: initial;
     text-align: right;

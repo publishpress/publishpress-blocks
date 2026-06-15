@@ -244,11 +244,13 @@
                 isPreview,
             } = attributes;
             const listClassName = [
+                'wp-block-advgb-list',
+                attributes.className,
                 className,
                 id,
                 icon && 'advgb-list',
                 icon && `advgb-list-${icon}`
-            ].filter(Boolean).join(' ');
+            ].filter(Boolean).join(' ').split(' ').filter((value, index, self) => value && self.indexOf(value) === index).join(' ');
             const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
             const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
             const padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;

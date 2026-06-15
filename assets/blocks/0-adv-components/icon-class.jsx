@@ -1,12 +1,11 @@
 const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
-const { SelectControl, TextControl } = wp.components;
+const { Component } = wp.element;
+const { Button, Modal, SelectControl, TextControl } = wp.components;
 
 class IconListPopup extends Component {
 
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
         this.state = {
             searchedText: '',
             selectedIcon: '',
@@ -26,20 +25,6 @@ class IconListPopup extends Component {
                 selectedIconTheme: this.props.selectedIconTheme
             });
         }
-        document.addEventListener('click', this.handleClick)
-    }
-
-    componentWillUnmount() {
-        // important
-        document.removeEventListener('click', this.handleClick)
-    }
-
-    handleClick(e) {
-        // ignore clicks inside the popup and the click that launched the popup
-        if (this.node.contains(e.target) || e.target.className.includes('advgb-browse-image-btn') || e.target.className.includes('advgb-browse-icon-btn')) {
-            return;
-        }
-        this.props.closePopup();
     }
 
 
@@ -56,94 +41,86 @@ class IconListPopup extends Component {
             'is-primary'
         ].filter( Boolean ).join( ' ' );
 
-        const closeButtonClass = [
-            'close-btn',
-        ].filter( Boolean ).join( ' ' );
-
         return (
-            <Fragment>
-                <div className='advgb-icon-popup'>
-                    <div
-                        className='popup-inner'
-                        ref={node => {this.node = node}}
-                    >
-                        <div className="popup-content">
-                            <div className="popup-header">
-                                <h3>{popUpTitle}</h3>
-                                <button
-                                    className={closeButtonClass}
-                                    onClick={this.props.closePopup}>
-                                    <i className="material-icons">close</i>
-                                </button>
-                            </div>
-                            <div className="popup-body">
-                                <TextControl
-                                    placeholder={ __( 'Search icons', 'advanced-gutenberg' ) }
-                                    value={ searchedText }
-                                    onChange={ (value) => this.setState( { searchedText: value } ) }
-                                />
-                                <SelectControl
-                                    label={ __('Style', 'advanced-gutenberg') }
-                                    value={ selectedIconTheme }
-                                    className="advgb-icon-style-select"
-                                    options={ [
-                                        { label: __('Filled', 'advanced-gutenberg'), value: '' },
-                                        { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' },
-                                        { label: __('Rounded', 'advanced-gutenberg'), value: 'round' },
-                                        { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' },
-                                        { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' },
-                                    ] }
-                                    onChange={ ( value ) => {
-                                        this.setState({
-                                            selectedIconTheme: value,
-                                        });
-                                    } }
-                                />
-                                <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflowY: 'auto', overflowX: 'hidden'} }>
+            <Modal
+                title={ popUpTitle }
+                onRequestClose={ this.props.closePopup }
+                className="advgb-icon-popup"
+                isDismissible={ true }
+                shouldCloseOnClickOutside={ false }
+                shouldCloseOnEsc={ true }
+            >
+                <div
+                    className="advgb-icon-popup-content"
+                    ref={node => {this.node = node}}
+                >
+                    <div className="popup-body">
+                        <TextControl
+                            placeholder={ __( 'Search icons', 'advanced-gutenberg' ) }
+                            value={ searchedText }
+                            onChange={ (value) => this.setState( { searchedText: value } ) }
+                        />
+                        <SelectControl
+                            label={ __('Style', 'advanced-gutenberg') }
+                            value={ selectedIconTheme }
+                            className="advgb-icon-style-select"
+                            options={ [
+                                { label: __('Filled', 'advanced-gutenberg'), value: '' },
+                                { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' },
+                                { label: __('Rounded', 'advanced-gutenberg'), value: 'round' },
+                                { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' },
+                                { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' },
+                            ] }
+                            onChange={ ( value ) => {
+                                this.setState({
+                                    selectedIconTheme: value,
+                                });
+                            } }
+                        />
+                        <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflowY: 'auto', overflowX: 'hidden'} }>
 
-                                    {Object.keys(advgbBlocks.iconList[iconType])
-                                        .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)
-                                        .map( (icon, index) => {
+                            {Object.keys(advgbBlocks.iconList[iconType])
+                                .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)
+                                .map( (icon, index) => {
 
-                                            const iconClass = [
-                                                iconType === 'material' && 'material-icons',
-                                                selectedIconTheme !== '' && `-${selectedIconTheme}`
-                                            ].filter( Boolean ).join('');
+                                    const iconClass = [
+                                        iconType === 'material' && 'material-icons',
+                                        selectedIconTheme !== '' && `-${selectedIconTheme}`
+                                    ].filter( Boolean ).join('');
 
-                                            return (
-                                                <div className="advgb-icon-item" key={ index }>
-                                                        <span
-                                                            onClick={ () => {
-                                                                this.setState({
-                                                                    selectedIcon: icon
-                                                                })
-                                                            } }
-                                                            className={ icon === selectedIcon && 'active' }
-                                                            title={ icon }
-                                                        >
-                                                            <i className={ iconClass }>{icon}</i>
-                                                        </span>
-                                                </div>
-                                            )
-                                        } ) }
-                                </div>
-                            </div>
-                            <div className="popup-footer">
-                                <button
-                                    disabled={selectedIcon === ''}
-                                    className={applyIconButtonClass}
-                                    onClick={() => {
-                                        this.props.onSelectIcon( selectedIcon );
-                                        this.props.onSelectIconTheme(selectedIconTheme);
-                                        this.props.closePopup();
-                                    }}>
-                                    { __('Apply', 'advanced-gutenberg') }
-                                </button>
-                            </div>
+                                    return (
+                                        <div className="advgb-icon-item" key={ index }>
+                                            <span
+                                                onClick={ () => {
+                                                    this.setState({
+                                                        selectedIcon: icon
+                                                    })
+                                                } }
+                                                className={ icon === selectedIcon && 'active' }
+                                                title={ icon }
+                                            >
+                                                <i className={ iconClass }>{icon}</i>
+                                            </span>
+                                        </div>
+                                    )
+                                } ) }
                         </div>
                     </div>
+                    <div className="popup-footer">
+                        <Button
+                            disabled={selectedIcon === ''}
+                            className={applyIconButtonClass}
+                            isPrimary
+                            onClick={() => {
+                                this.props.onSelectIcon( selectedIcon );
+                                this.props.onSelectIconTheme(selectedIconTheme);
+                                this.props.closePopup();
+                            }}>
+                            { __('Apply', 'advanced-gutenberg') }
+                        </Button>
+                    </div>
                 </div>
-            </Fragment>
+            </Modal>
         );
     }
 }

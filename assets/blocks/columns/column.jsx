@@ -100,9 +100,11 @@
             } );
 
             const blockClasses = [
+                'wp-block-advgb-column',
                 'advgb-column',
+                attributes.className,
                 className,
-            ].filter( Boolean ).join( ' ' );
+            ].filter( Boolean ).join( ' ' ).split( ' ' ).filter( (value, index, self) => value && self.indexOf(value) === index ).join( ' ' );
 
             let deviceLetter = '';
             if (tabSelected === 'mobile') deviceLetter = 'M';
