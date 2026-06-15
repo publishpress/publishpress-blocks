@@ -121,6 +121,7 @@
         border: none;
         border-radius: 0;
         line-height: 34px;
+        min-height: unset;
 
         &:first-of-type {
           padding-left: 8px;
