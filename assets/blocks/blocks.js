@@ -577,7 +577,11 @@ function AdvTimezoneControl(props) {
   var label = props.label,
     defaultTimezone = props.defaultTimezone;
   return /*#__PURE__*/React.createElement(Fragment, null, applyFilters('advgb.timezoneControl', /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "advgb-promo-overlay-area"
+    className: "advgb-promo-overlay-area",
+    style: {
+      marginTop: 10,
+      marginBottom: 10
+    }
   }, /*#__PURE__*/React.createElement("div", {
     className: "advgb-blur"
   }, label, /*#__PURE__*/React.createElement(SelectControl, {
