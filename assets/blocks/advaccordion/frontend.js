@@ -12,13 +12,12 @@ jQuery(document).ready(function($){
 
             $body.show();
             setAccordionHeaderState($header, true);
+            $header.attr({ tabindex: '0', role: 'button' });
         });
 
-        $headers.on('click', function() {
-            const $header = $(this);
+        function toggleItem($header) {
             const $body = $header.next('.advgb-accordion-body');
             const isExpanded = $header.attr('aria-expanded') === 'true';
-
             if (isExpanded) {
                 $body.stop(true, true).slideUp(200);
                 setAccordionHeaderState($header, false);
@@ -26,20 +25,71 @@ jQuery(document).ready(function($){
                 $body.stop(true, true).slideDown(200);
                 setAccordionHeaderState($header, true);
             }
+        }
+
+        $headers.on('click', function() {
+            toggleItem($(this));
+        });
+
+        $headers.on('keydown', function(e) {
+            const $header = $(this);
+            const idx = $headers.index($header);
+            switch (e.key) {
+                case 'Enter':
+                case ' ':
+                    e.preventDefault();
+                    toggleItem($header);
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    $headers.eq((idx + 1) % $headers.length).focus();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    $headers.eq((idx - 1 + $headers.length) % $headers.length).focus();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    $headers.first().focus();
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    $headers.last().focus();
+                    break;
+            }
         });
     }
 
     $(".advgb-accordion-wrapper").each(function() {
-        if ($(this).data('expand-all')) {
-            initExpandAllMode($(this));
+        const $wrapper = $(this);
+
+        if ($wrapper.data('expand-all')) {
+            initExpandAllMode($wrapper);
             return;
         }
 
-        $(this).accordion({
+        $wrapper.accordion({
             header: "> div > .advgb-accordion-header",
             heightStyle: "content",
             collapsible: true,
-            active: $(this).data("collapsed") ? false : 0,
+            active: $wrapper.data("collapsed") ? false : 0,
+        });
+
+        // Override jQuery UI's roving tabindex so Tab visits every header
+        const $headers = $wrapper.find('> .advgb-accordion-item > .advgb-accordion-header');
+
+        function restoreTabIndex() {
+            $headers.attr('tabindex', '0');
+        }
+        restoreTabIndex();
+        $wrapper.on('accordionactivate', restoreTabIndex);
+
+        // jQuery UI handles Enter; also support Space to activate
+        $headers.on('keydown', function(e) {
+            if (e.key === ' ') {
+                e.preventDefault();
+                $(this).trigger('click');
+            }
         });
     });
 });
