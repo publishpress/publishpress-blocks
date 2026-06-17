@@ -1,7 +1,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-[3.7.3] - 15 June, 2026
+[3.7.3] - 17 June, 2026
 
 - Fixed: Fix GDRP/DSGVO issue with Icons from Google servers by loading icons from local bundled, #1803
 - Fixed: WordPress 7.0 and Blocks api_version 3 compatibility, #1804
