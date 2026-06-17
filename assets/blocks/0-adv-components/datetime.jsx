@@ -423,7 +423,10 @@ export function AdvTimezoneControl(props) {
         <Fragment>
             { applyFilters( 'advgb.timezoneControl',
                 <Fragment>
-                    <div className="advgb-promo-overlay-area">
+                    <div className="advgb-promo-overlay-area" style={{
+                        marginTop: 10,
+                        marginBottom: 10
+                    }}>
                         <div className="advgb-blur">
                             { label }
                             <SelectControl

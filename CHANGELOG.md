@@ -1,6 +1,15 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[3.7.3] - 17 June, 2026
+
+- Fixed: Fix GDRP/DSGVO issue with Icons from Google servers by loading icons from local bundled, #1803
+- Fixed: WordPress 7.0 and Blocks api_version 3 compatibility, #1804
+- Update: Accordion block: Tab key navigation and ARIA keyboard support, #1796
+- Fixed: Table block is broken in the latest version (Version 3.7.2), #1799
+- Fixed: Block toolbar not appearing when clicking any PublishPress blocks, #1799
+- Fixed: Add more spacing to Block Controls promo, #1802
+
 [3.7.2] - 8 June, 2026
 
 - Fixed: Block with API version 2 or lower is deprecated since version 6.9, #1752

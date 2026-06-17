@@ -325,7 +325,9 @@
             } = attributes;
 
             const blockClasses = [
+                'wp-block-advgb-columns',
                 'advgb-columns',
+                attributes.className,
                 className,
                 vAlign && `columns-valign-${vAlign}`,
                 columns && `advgb-columns-${columns}`,
@@ -336,7 +338,7 @@
                 !!collapsedGutter && `vgutter-${collapsedGutter}`,
                 collapsedRtl && 'order-rtl',
                 columnsWrapped && 'columns-wrapped',
-            ].filter( Boolean ).join( ' ' );
+            ].filter( Boolean ).join( ' ' ).split( ' ' ).filter( (value, index, self) => value && self.indexOf(value) === index ).join( ' ' );
 
             if (!columns) {
                 return (

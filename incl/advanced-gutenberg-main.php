@@ -45,6 +45,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             add_action('init', array( $this, 'registerPostMeta' ));
             add_action('admin_init', array($this, 'addCustomStylesToReusableBlocks'));
             add_action('admin_init', array( $this, 'registerStylesScripts' ));
+            add_action('admin_init', array( $this, 'addEditorFrameStyles' ));
             add_action('wp_loaded', [ 'PublishPress\Blocks\Controls', 'addAttributes' ], 999);
             add_filter('rest_pre_dispatch', [ 'PublishPress\Blocks\Controls', 'removeAttributes' ], 10, 3);
             add_action('wp_enqueue_scripts', array( $this, 'registerStylesScriptsFrontend' ));
@@ -410,7 +411,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 Utilities::settingIsEnabled('enable_advgb_blocks')
                  || Utilities::settingIsEnabled('enable_block_access')
                  || Utilities::settingIsEnabled('block_controls')
-            ) {
+                ) {
+                $this->addEditorFrameStyles();
+
                 // Define the dependency for the editor based on current screen
                 if ($currentScreen->id === 'customize') {
                     // Customizer > Widgets
@@ -713,6 +716,42 @@ if (! class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Load block styles inside the editor iframe used by API v3 blocks.
+         *
+         * Normal enqueue_block_editor_assets styles load in the parent editor document only;
+         * icons rendered in the canvas iframe need editor styles registered with WordPress.
+         *
+         * @return void
+         */
+        public function addEditorFrameStyles()
+        {
+            static $loaded = false;
+
+            if (! Utilities::settingIsEnabled('enable_advgb_blocks')) {
+                return;
+            }
+
+            if ($loaded) {
+                return;
+            }
+
+            $loaded = true;
+
+            add_editor_style(ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/fonts/material-icons.min.css');
+            add_editor_style(ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/fonts/material-icons-custom.min.css');
+
+            if (
+                defined('ADVANCED_GUTENBERG_PRO_LOADED')
+                && method_exists(
+                    'PPB_AdvancedGutenbergPro\Utils\Definitions',
+                    'advgb_pro_enqueue_main_styles_inline'
+                )
+            ) {
+                PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_main_styles_inline();
+            }
+        }
+
+        /**
          * Enqueue styles for gutenberg editor and front-end
          *
          * @return mixed
@@ -744,6 +783,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
             }
 
             if (is_admin() && Utilities::settingIsEnabled('enable_advgb_blocks')) {
+                wp_enqueue_style('material_icon_font');
+                wp_enqueue_style('material_icon_font_custom');
+
                 wp_enqueue_style(
                     'advgb_blocks_styles',
                     ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/blocks.css',

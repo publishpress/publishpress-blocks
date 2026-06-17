@@ -20,14 +20,57 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var addFilter = wp.hooks.addFilter;
+
+// Resolve the default wrapper class Gutenberg expects for a block, e.g. wp-block-advgb-table.
+var getDefaultBlockClassName = function getDefaultBlockClassName(blockName) {
+  if (wp.blocks && typeof wp.blocks.getBlockDefaultClassName === 'function') {
+    return wp.blocks.getBlockDefaultClassName(blockName);
+  }
+  return "wp-block-".concat(blockName.replace('/', '-'));
+};
+
+// API v3 no longer injects the default block class into save markup for these legacy saves.
+// Preserve each block's existing root element and add the class only when it is missing.
+var addDefaultBlockClassName = function addDefaultBlockClassName(element, blockName) {
+  if (!wp.element || typeof wp.element.isValidElement !== 'function' || typeof wp.element.cloneElement !== 'function' || !wp.element.isValidElement(element) || element.type === wp.element.Fragment) {
+    return element;
+  }
+  var defaultClassName = getDefaultBlockClassName(blockName);
+  var className = element.props && element.props.className ? element.props.className : '';
+  var classNames = className.split(/\s+/).filter(Boolean);
+  if (classNames.indexOf(defaultClassName) !== -1) {
+    return element;
+  }
+  return wp.element.cloneElement(element, {
+    className: [defaultClassName, className].filter(Boolean).join(' ')
+  });
+};
+
+// Centralize API v3 compatibility fixes so individual block files do not need duplicate wrappers.
 addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (settings, name) {
   var blockName = settings ? name || settings.name : name;
   if (!settings || typeof blockName !== 'string' || blockName.indexOf('advgb/') !== 0) {
     return settings;
   }
+
+  // Class edit components cannot call useBlockProps(), so wrap them with a function component.
+  // This restores editor selection data attributes and toolbar click handling for API v3 blocks.
+  if (settings.apiVersion === 3 && typeof settings.edit === 'function' && !settings.__advgbUsesBlockProps) {
+    var Edit = settings.edit;
+    var getEditWrapperProps = settings.getEditWrapperProps;
+    settings.edit = function AdvgbBlockEditWithProps(props) {
+      var wrapperProps = typeof getEditWrapperProps === 'function' ? getEditWrapperProps(props.attributes) : {};
+      var blockEditor = wp.blockEditor || wp.editor;
+      var blockProps = blockEditor && typeof blockEditor.useBlockProps === 'function' ? blockEditor.useBlockProps(wrapperProps) : wrapperProps;
+      return /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement(Edit, props));
+    };
+    settings.__advgbUsesBlockProps = true;
+  }
   if (settings.apiVersion !== 3 || typeof settings.save !== 'function') {
     return settings;
   }
+
+  // Keep the pre-wrapper save available so existing post content remains valid after migration.
   var deprecated = Array.isArray(settings.deprecated) ? settings.deprecated.map(function (deprecation) {
     return _objectSpread(_objectSpread({}, deprecation), {}, {
       apiVersion: deprecation.apiVersion || 1
@@ -39,6 +82,15 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
     supports: settings.supports,
     save: settings.save
   }].concat(_toConsumableArray(deprecated));
+
+  // Ensure new API v3 saves include the default wp-block-* class expected in stored markup.
+  if (!settings.__advgbUsesSaveBlockClass) {
+    var save = settings.save;
+    settings.save = function AdvgbBlockSaveWithDefaultClass(props) {
+      return addDefaultBlockClassName(save.apply(this, arguments), blockName);
+    };
+    settings.__advgbUsesSaveBlockClass = true;
+  }
   return settings;
 });
 
@@ -525,7 +577,11 @@ function AdvTimezoneControl(props) {
   var label = props.label,
     defaultTimezone = props.defaultTimezone;
   return /*#__PURE__*/React.createElement(Fragment, null, applyFilters('advgb.timezoneControl', /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "advgb-promo-overlay-area"
+    className: "advgb-promo-overlay-area",
+    style: {
+      marginTop: 10,
+      marginBottom: 10
+    }
   }, /*#__PURE__*/React.createElement("div", {
     className: "advgb-blur"
   }, label, /*#__PURE__*/React.createElement(SelectControl, {
@@ -585,10 +641,10 @@ function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? O
 function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
 var __ = wp.i18n.__;
-var _wp$element = wp.element,
-  Component = _wp$element.Component,
-  Fragment = _wp$element.Fragment;
+var Component = wp.element.Component;
 var _wp$components = wp.components,
+  Button = _wp$components.Button,
+  Modal = _wp$components.Modal,
   SelectControl = _wp$components.SelectControl,
   TextControl = _wp$components.TextControl;
 var IconListPopup = /*#__PURE__*/function (_Component) {
@@ -596,7 +652,6 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
     var _this;
     _classCallCheck(this, IconListPopup);
     _this = _callSuper(this, IconListPopup, [props]);
-    _this.handleClick = _this.handleClick.bind(_this);
     _this.state = {
       searchedText: '',
       selectedIcon: '',
@@ -621,22 +676,6 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
           selectedIconTheme: this.props.selectedIconTheme
         });
       }
-      document.addEventListener('click', this.handleClick);
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      // important
-      document.removeEventListener('click', this.handleClick);
-    }
-  }, {
-    key: "handleClick",
-    value: function handleClick(e) {
-      // ignore clicks inside the popup and the click that launched the popup
-      if (this.node.contains(e.target) || e.target.className.includes('advgb-browse-image-btn') || e.target.className.includes('advgb-browse-icon-btn')) {
-        return;
-      }
-      this.props.closePopup();
     }
   }, {
     key: "render",
@@ -649,24 +688,19 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
       var popUpTitle = __('Icon List', 'advanced-gutenberg');
       var iconType = 'material';
       var applyIconButtonClass = ['apply-btn', 'components-button', 'button button-large', 'advgb-icon-apply-btn', 'is-primary'].filter(Boolean).join(' ');
-      var closeButtonClass = ['close-btn'].filter(Boolean).join(' ');
-      return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-        className: "advgb-icon-popup"
+      return /*#__PURE__*/React.createElement(Modal, {
+        title: popUpTitle,
+        onRequestClose: this.props.closePopup,
+        className: "advgb-icon-popup",
+        isDismissible: true,
+        shouldCloseOnClickOutside: false,
+        shouldCloseOnEsc: true
       }, /*#__PURE__*/React.createElement("div", {
-        className: "popup-inner",
+        className: "advgb-icon-popup-content",
         ref: function ref(node) {
           _this2.node = node;
         }
       }, /*#__PURE__*/React.createElement("div", {
-        className: "popup-content"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "popup-header"
-      }, /*#__PURE__*/React.createElement("h3", null, popUpTitle), /*#__PURE__*/React.createElement("button", {
-        className: closeButtonClass,
-        onClick: this.props.closePopup
-      }, /*#__PURE__*/React.createElement("i", {
-        className: "material-icons"
-      }, "close"))), /*#__PURE__*/React.createElement("div", {
         className: "popup-body"
       }, /*#__PURE__*/React.createElement(TextControl, {
         placeholder: __('Search icons', 'advanced-gutenberg'),
@@ -728,15 +762,16 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
         }, icon)));
       }))), /*#__PURE__*/React.createElement("div", {
         className: "popup-footer"
-      }, /*#__PURE__*/React.createElement("button", {
+      }, /*#__PURE__*/React.createElement(Button, {
         disabled: selectedIcon === '',
         className: applyIconButtonClass,
+        isPrimary: true,
         onClick: function onClick() {
           _this2.props.onSelectIcon(selectedIcon);
           _this2.props.onSelectIconTheme(selectedIconTheme);
           _this2.props.closePopup();
         }
-      }, __('Apply', 'advanced-gutenberg')))))));
+      }, __('Apply', 'advanced-gutenberg')))));
     }
   }]);
 }(Component);
@@ -3356,9 +3391,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           noreferrer = attributes.noreferrer,
           nofollow = attributes.nofollow,
           isPreview = attributes.isPreview;
-        var isStyleSquared = className.indexOf('-squared') > -1;
-        var isStyleOutlined = className.indexOf('-outlined') > -1;
-        var isStyleSquaredOutline = className.indexOf('-squared-outline') > -1;
+        var buttonClassName = ['wp-block-advgb-button', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
+        var isStyleSquared = buttonClassName.indexOf('-squared') > -1;
+        var isStyleOutlined = buttonClassName.indexOf('-outlined') > -1;
+        var isStyleSquaredOutline = buttonClassName.indexOf('-squared-outline') > -1;
         var hoverColorSettings = [{
           label: __('Background Color', 'advanced-gutenberg'),
           value: hoverBgColor,
@@ -3401,7 +3439,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           width: "100%",
           src: previewImageData
         }) : /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("span", {
-          className: "".concat(className, " align").concat(align),
+          className: "".concat(buttonClassName, " align").concat(align),
           style: {
             display: 'inline-block'
           }
@@ -3846,10 +3884,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       default: 'PUSH THE BUTTON'
     },
     bgColor: {
-      type: 'string'
+      type: 'string',
+      default: '#2196f3'
     },
     textColor: {
-      type: 'string'
+      type: 'string',
+      default: '#fff'
     },
     textSize: {
       type: 'number',
@@ -3892,7 +3932,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       default: 1
     },
     borderColor: {
-      type: 'string'
+      type: 'string',
+      default: '#2196f3'
     },
     borderStyle: {
       type: 'string',
@@ -3903,10 +3944,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       default: 50
     },
     hoverTextColor: {
-      type: 'string'
+      type: 'string',
+      default: '#fff'
     },
     hoverBgColor: {
-      type: 'string'
+      type: 'string',
+      default: '#2196f3'
     },
     hoverShadowColor: {
       type: 'string',
@@ -6127,7 +6170,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           lineHeight = attributes.lineHeight,
           fontSize = attributes.fontSize,
           isPreview = attributes.isPreview;
-        var listClassName = [className, id, icon && 'advgb-list', icon && "advgb-list-".concat(icon)].filter(Boolean).join(' ');
+        var listClassName = ['wp-block-advgb-list', attributes.className, className, id, icon && 'advgb-list', icon && "advgb-list-".concat(icon)].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
         var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
         var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
@@ -7563,6 +7608,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           rangeSelected = _this$state11.rangeSelected,
           multiSelected = _this$state11.multiSelected;
         var maxWidthVal = !!maxWidth ? maxWidth : undefined;
+        var blockClassName = ['wp-block-advgb-table', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         var currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
 
         // First time insert block, let user determine the table
@@ -7570,7 +7618,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           return isPreview ? /*#__PURE__*/React.createElement("img", {
             alt: __('Advanced Table', 'advanced-gutenberg'),
             width: "100%",
-            src: className.includes('is-style-stripes') ? previewImageDataStripes : previewImageData
+            src: blockClassName.includes('is-style-stripes') ? previewImageDataStripes : previewImageData
           }) : /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
             className: "advgb-init-table"
           }, /*#__PURE__*/React.createElement(TextControl, {
@@ -8143,7 +8191,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             });
           })
         }))))), /*#__PURE__*/React.createElement("table", {
-          className: className,
+          className: blockClassName,
           style: {
             maxWidth: maxWidthVal,
             borderCollapse: tableCollapsed ? 'collapse' : undefined,
@@ -11844,7 +11892,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           contentMaxHeightUnit = attributes.contentMaxHeightUnit,
           wrapperTag = attributes.wrapperTag,
           isPreview = attributes.isPreview;
-        var blockClasses = ['advgb-columns', className, vAlign && "columns-valign-".concat(vAlign), columns && "advgb-columns-".concat(columns), columnsLayout && "layout-".concat(columnsLayout), columnsLayoutT && "tbl-layout-".concat(columnsLayoutT), columnsLayoutM && "mbl-layout-".concat(columnsLayoutM), !!gutter && "gutter-".concat(gutter), !!collapsedGutter && "vgutter-".concat(collapsedGutter), collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+        var blockClasses = ['wp-block-advgb-columns', 'advgb-columns', attributes.className, className, vAlign && "columns-valign-".concat(vAlign), columns && "advgb-columns-".concat(columns), columnsLayout && "layout-".concat(columnsLayout), columnsLayoutT && "tbl-layout-".concat(columnsLayoutT), columnsLayoutM && "mbl-layout-".concat(columnsLayoutM), !!gutter && "gutter-".concat(gutter), !!collapsedGutter && "vgutter-".concat(collapsedGutter), collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         if (!columns) {
           return isPreview ? /*#__PURE__*/React.createElement("img", {
             alt: __('Columns Manager', 'advanced-gutenberg'),
@@ -12977,7 +13027,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           var width = getBlockAttributes(blockId).width || 0;
           avaiWidth -= parseInt(width);
         });
-        var blockClasses = ['advgb-column', className].filter(Boolean).join(' ');
+        var blockClasses = ['wp-block-advgb-column', 'advgb-column', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         var deviceLetter = '';
         if (tabSelected === 'mobile') deviceLetter = 'M';
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
@@ -13936,6 +13988,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         setAttributes = props.setAttributes,
         className = props.className;
       var wrapperTag = attributes.wrapperTag;
+      var blockClassName = ['wp-block-advgb-container', 'advgb-blocks-container', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+        return value && self.indexOf(value) === index;
+      }).join(' ');
       return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
         title: __('Container Settings', 'advanced-gutenberg')
       }, /*#__PURE__*/React.createElement(SelectControl, {
@@ -13969,7 +14024,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           });
         }
       }))), /*#__PURE__*/React.createElement("div", {
-        className: "advgb-blocks-container ".concat(className)
+        className: blockClassName
       }, /*#__PURE__*/React.createElement(InnerBlocks, null)));
     },
     save: function save(_ref) {
@@ -19594,6 +19649,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       };
       _this.initMap = _this.initMap.bind(_this);
       _this.fetchLocation = _this.fetchLocation.bind(_this);
+      _this.mapInitRetry = null;
       return _this;
     }
     _inherits(AdvMap, _Component);
@@ -19627,9 +19683,15 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       key: "componentDidMount",
       value: function componentDidMount() {
         var attributes = this.props.attributes;
-        if (attributes.mapID) {
+        if (attributes.mapID && !attributes.isPreview) {
           this.initMap();
         }
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        clearTimeout(mapWillUpdate);
+        clearTimeout(this.mapInitRetry);
       }
     }, {
       key: "componentDidUpdate",
@@ -19662,7 +19724,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "initMap",
       value: function initMap() {
-        if (typeof google === "undefined" || !this.props.attributes.mapID) return null;
+        if (typeof google === "undefined" || !this.props.attributes.mapID || this.props.attributes.isPreview) return null;
         var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
         var _this$state = this.state,
           currentMap = _this$state.currentMap,
@@ -19680,6 +19742,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           mapStyle = _this$props$attribute2.mapStyle,
           mapStyleCustom = _this$props$attribute2.mapStyleCustom,
           infoWindowDefaultShown = _this$props$attribute2.infoWindowDefaultShown;
+        var mapDiv = document.getElementById(mapID);
         var location = {
           lat: parseFloat(lat),
           lng: parseFloat(lng)
@@ -19691,6 +19754,11 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         var customStyleParsed = '';
         var formattedDesc = sanitizeMapText(markerDesc.replace(/\n/g, '<br/>'));
         var sanitizedTitle = sanitizeMapText(markerTitle);
+        if (!mapDiv) {
+          clearTimeout(this.mapInitRetry);
+          this.mapInitRetry = setTimeout(this.initMap, 100);
+          return null;
+        }
         if (mapStyle === 'custom') {
           try {
             customStyleParsed = JSON.parse(mapStyleCustom);
@@ -19704,7 +19772,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           }
         }
         if (!map) {
-          map = new google.maps.Map(document.getElementById(mapID), {
+          map = new google.maps.Map(mapDiv, {
             zoom: zoom,
             center: location,
             gestureHandling: 'cooperative'
@@ -24244,6 +24312,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           searchBtnHoverOpacity = attributes.searchBtnHoverOpacity,
           searchBtnHoverTranSpeed = attributes.searchBtnHoverTranSpeed,
           isPreview = attributes.isPreview;
+        var blockClassName = ['wp-block-advgb-search-bar', 'advgb-search-bar-wrapper', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
         var searchBarIcon = /*#__PURE__*/React.createElement("span", {
           className: "advgb-search-bar-icon"
         }, searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon);
@@ -24495,7 +24566,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           min: 0,
           max: 50
         }))))), /*#__PURE__*/React.createElement("div", {
-          className: "advgb-search-bar-wrapper ".concat(className)
+          className: blockClassName
         }, /*#__PURE__*/React.createElement("div", {
           className: "advgb-search-bar-inner",
           style: {
@@ -24655,6 +24726,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         searchButtonRadius = attributes.searchButtonRadius,
         searchButtonOnLeft = attributes.searchButtonOnLeft,
         searchBtnId = attributes.searchBtnId;
+      var blockClassName = ['wp-block-advgb-search-bar', 'advgb-search-bar-wrapper', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+        return value && self.indexOf(value) === index;
+      }).join(' ');
       var searchBarIcon = /*#__PURE__*/React.createElement("span", {
         className: "advgb-search-bar-icon"
       }, searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon);
@@ -24671,7 +24745,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         }
       }, searchButtonText));
       return /*#__PURE__*/React.createElement("div", {
-        className: "advgb-search-bar-wrapper ".concat(className)
+        className: blockClassName
       }, /*#__PURE__*/React.createElement("form", {
         method: "get",
         action: advgbBlocks.home_url,
@@ -24695,7 +24769,72 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         name: "s",
         placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…'
       }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
-    }
+    },
+    deprecated: [{
+      attributes: blockAttrs,
+      supports: {
+        align: true,
+        anchor: true
+      },
+      save: function save(_ref2) {
+        var attributes = _ref2.attributes,
+          className = _ref2.className;
+        var fullWidth = attributes.fullWidth,
+          width = attributes.width,
+          textColor = attributes.textColor,
+          backgroundColor = attributes.backgroundColor,
+          searchIcon = attributes.searchIcon,
+          searchIconOnRight = attributes.searchIconOnRight,
+          searchPlaceholder = attributes.searchPlaceholder,
+          searchButtonEnabled = attributes.searchButtonEnabled,
+          searchButtonText = attributes.searchButtonText,
+          searchButtonTextColor = attributes.searchButtonTextColor,
+          searchButtonBgColor = attributes.searchButtonBgColor,
+          searchButtonRadius = attributes.searchButtonRadius,
+          searchButtonOnLeft = attributes.searchButtonOnLeft,
+          searchBtnId = attributes.searchBtnId;
+        var searchBarIcon = /*#__PURE__*/React.createElement("span", {
+          className: "advgb-search-bar-icon"
+        }, searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon);
+        var searchBarButton = !searchButtonEnabled ? '' : /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-button-wrapper"
+        }, /*#__PURE__*/React.createElement("button", {
+          type: "submit",
+          className: "advgb-search-bar-button ".concat(searchBtnId),
+          style: {
+            color: searchButtonTextColor,
+            borderColor: searchButtonTextColor,
+            backgroundColor: searchButtonBgColor,
+            borderRadius: searchButtonRadius
+          }
+        }, searchButtonText));
+        return /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-bar-wrapper ".concat(className)
+        }, /*#__PURE__*/React.createElement("form", {
+          method: "get",
+          action: advgbBlocks.home_url,
+          className: "advgb-search-bar-form",
+          role: "search"
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-bar-inner",
+          style: {
+            width: fullWidth ? '100%' : width
+          }
+        }, searchButtonOnLeft && searchBarButton, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-bar",
+          style: {
+            backgroundColor: backgroundColor,
+            color: textColor,
+            borderRadius: searchButtonRadius
+          }
+        }, !searchIconOnRight && searchBarIcon, /*#__PURE__*/React.createElement("input", {
+          type: "text",
+          className: "advgb-search-bar-input",
+          name: "s",
+          placeholder: searchPlaceholder ? searchPlaceholder : 'Type to searchâ€¦'
+        }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
+      }
+    }]
   });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 

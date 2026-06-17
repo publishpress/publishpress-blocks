@@ -58,6 +58,12 @@
         edit: function ( props ) {
             const { attributes, setAttributes, className } = props;
             const { wrapperTag } = attributes;
+            const blockClassName = [
+                'wp-block-advgb-container',
+                'advgb-blocks-container',
+                attributes.className,
+                className,
+            ].filter( Boolean ).join( ' ' ).split( ' ' ).filter( (value, index, self) => value && self.indexOf(value) === index ).join( ' ' );
 
             return (
                 <Fragment>
@@ -79,7 +85,7 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className={`advgb-blocks-container ${className}`}>
+                    <div className={ blockClassName }>
                         <InnerBlocks />
                     </div>
                 </Fragment>

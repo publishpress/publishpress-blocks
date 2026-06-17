@@ -1011,6 +1011,7 @@
 
             this.initMap = this.initMap.bind(this);
             this.fetchLocation = this.fetchLocation.bind(this);
+            this.mapInitRetry = null;
         }
 
         componentWillMount() {
@@ -1037,9 +1038,14 @@
         componentDidMount() {
             const { attributes } = this.props;
 
-            if (attributes.mapID) {
+            if (attributes.mapID && !attributes.isPreview) {
                 this.initMap();
             }
+        }
+
+        componentWillUnmount() {
+            clearTimeout(mapWillUpdate);
+            clearTimeout(this.mapInitRetry);
         }
 
         componentDidUpdate( prevProps, prevState ) {
@@ -1063,12 +1069,13 @@
         }
 
         initMap() {
-            if (typeof google === "undefined" || !this.props.attributes.mapID)
+            if (typeof google === "undefined" || !this.props.attributes.mapID || this.props.attributes.isPreview)
                 return null;
 
             const DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
             const { currentMap, currentMarker, currentInfo, invalidStyle } = this.state;
             const { mapID, lat, lng, zoom, markerTitle, markerIcon, markerDesc, mapStyle, mapStyleCustom, infoWindowDefaultShown } = this.props.attributes;
+            const mapDiv = document.getElementById(mapID);
             const location = { lat: parseFloat(lat), lng: parseFloat(lng) };
             const that = this;
             let map = currentMap;
@@ -1077,6 +1084,12 @@
             let customStyleParsed = '';
             const formattedDesc = sanitizeMapText(markerDesc.replace(/\n/g, '<br/>'));
             const sanitizedTitle = sanitizeMapText(markerTitle);
+
+            if (!mapDiv) {
+                clearTimeout(this.mapInitRetry);
+                this.mapInitRetry = setTimeout(this.initMap, 100);
+                return null;
+            }
 
             if (mapStyle === 'custom') {
                 try {
@@ -1088,7 +1101,7 @@
             }
 
             if (!map) {
-                map = new google.maps.Map(document.getElementById(mapID), {
+                map = new google.maps.Map(mapDiv, {
                     zoom: zoom,
                     center: location,
                     gestureHandling: 'cooperative',

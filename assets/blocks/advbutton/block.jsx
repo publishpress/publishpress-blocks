@@ -156,10 +156,15 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
                 hoverOpacity, transitionSpeed, iconDisplay, icon, iconSize, iconColor, iconTheme, iconPosition, iconSpacing,
                 noreferrer, nofollow, isPreview
             } = attributes;
+            const buttonClassName = [
+                'wp-block-advgb-button',
+                attributes.className,
+                className,
+            ].filter(Boolean).join(' ').split(' ').filter((value, index, self) => value && self.indexOf(value) === index).join(' ');
 
-            const isStyleSquared = className.indexOf('-squared') > -1;
-            const isStyleOutlined = className.indexOf('-outlined') > -1;
-            const isStyleSquaredOutline = className.indexOf('-squared-outline') > -1;
+            const isStyleSquared = buttonClassName.indexOf('-squared') > -1;
+            const isStyleOutlined = buttonClassName.indexOf('-outlined') > -1;
+            const isStyleSquaredOutline = buttonClassName.indexOf('-squared-outline') > -1;
             const hoverColorSettings = [
                 {
                     label: __('Background Color', 'advanced-gutenberg'),
@@ -200,7 +205,7 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
                     <img alt={__('Advanced Button', 'advanced-gutenberg')} width='100%' src={previewImageData} />
                     :
                     <Fragment>
-                        <span className={`${className} align${align}`}
+                        <span className={`${buttonClassName} align${align}`}
                             style={{ display: 'inline-block' }}
                         >
                             <span className={`wp-block-advgb-button_link ${id}`} rel={advgb_relAttribute(attributes)}>
@@ -641,9 +646,11 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
         },
         bgColor: {
             type: 'string',
+            default: '#2196f3',
         },
         textColor: {
             type: 'string',
+            default: '#fff',
         },
         textSize: {
             type: 'number',
@@ -687,6 +694,7 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
         },
         borderColor: {
             type: 'string',
+            default: '#2196f3',
         },
         borderStyle: {
             type: 'string',
@@ -698,9 +706,11 @@ import { IconListPopupHook } from "../0-adv-components/icon-class.jsx";
         },
         hoverTextColor: {
             type: 'string',
+            default: '#fff',
         },
         hoverBgColor: {
             type: 'string',
+            default: '#2196f3',
         },
         hoverShadowColor: {
             type: 'string',
