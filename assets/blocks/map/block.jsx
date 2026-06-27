@@ -1407,9 +1407,7 @@
                         <Placeholder
                             icon={ mapBlockIcon }
                             label={ __( 'No API Key Provided!', 'advanced-gutenberg' ) }
-                            instructions={ __( 'Opps! Look like you have not configured your Google API Key yet. ' +
-                                'Add an API Key and refresh the page to start using Map Block. ' +
-                                'This is a requirement enforced by Google.' ) }
+                            instructions={ __( 'Opps! Look like you have not configured your Google API Key yet. Add an API Key and refresh the page to start using Map Block. This is a requirement enforced by Google.', 'advanced-gutenberg' ) }
                         >
                             <a target="_blank"
                                className="button button-large"
