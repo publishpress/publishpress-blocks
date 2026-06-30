@@ -2220,6 +2220,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
         public static function legacyBlocksMap()
         {
             return [
+                'container'    => __('Container', 'advanced-gutenberg'),
                 'contact-form' => __('Contact Form', 'advanced-gutenberg'),
                 'login-form'   => __('Login and Register', 'advanced-gutenberg'),
                 'map'          => __('Map', 'advanced-gutenberg'),
@@ -2759,6 +2760,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             }
 
             self::commonAdminPagesAssets();
+            Utilities::enqueueToolTipsAssets(); // Tooltips describing each block
             $this->loadPage('block-settings');
         }
 

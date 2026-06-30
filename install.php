@@ -65,6 +65,7 @@ if ($saved_settings === false) {
 // AdvancedGutenbergMain::maybeInitLegacyBlocks(), which defaults them ON.
 if ($saved_settings === false && get_option('advgb_legacy_blocks') === false) {
     update_option('advgb_legacy_blocks', array(
+        'container'    => 0,
         'contact-form' => 0,
         'login-form'   => 0,
         'map'          => 0,

@@ -7,8 +7,18 @@ add_thickbox();
 $blocks_list_saved = get_option('advgb_blocks_list');
 $advgb_blocks      = [];
 $free_version      = false;
-// Deprecated blocks hidden from this screen on all sites
-$hidden_blocks     = AdvancedGutenbergMain::hiddenDeprecatedBlocks();
+// Blocks hidden from this screen on all sites:
+// deprecated blocks plus inner/child blocks that aren't configured directly.
+$hidden_blocks     = array_merge(
+    AdvancedGutenbergMain::hiddenDeprecatedBlocks(),
+    [
+        'advgb/accordion-item', // Accordion Item
+        'advgb/recent-posts',   // Content Display
+        'advgb/list-item',      // List Item
+        'advgb/tab',            // Tab Item
+        'advgb/feature-list',   // Feature List
+    ]
+);
 if (gettype($blocks_list_saved) === 'array') {
     foreach ($blocks_list_saved as $block) {
         if (strpos($block['name'], 'advgb/') === false) {
@@ -80,6 +90,36 @@ $new_titles = [
     'advgb/woo-products' => __('Woo Products - PublishPress', 'advanced-gutenberg')
 ];
 
+// Short description of what each block does, shown as a hover tooltip
+$block_descriptions = [
+    'advgb/accordions'    => __('Show content in collapsible panels that expand when clicked.', 'advanced-gutenberg'),
+    'advgb/button'        => __('Add a customizable call-to-action button with colors, sizes and icons.', 'advanced-gutenberg'),
+    'advgb/icon'          => __('Insert a vector icon from a large library, with size and color controls.', 'advanced-gutenberg'),
+    'advgb/image'         => __('Display an image with extra styling, captions and link options.', 'advanced-gutenberg'),
+    'advgb/list'          => __('Build styled ordered or unordered lists with custom icons.', 'advanced-gutenberg'),
+    'advgb/table'         => __('Create responsive tables with styling and per-cell formatting.', 'advanced-gutenberg'),
+    'advgb/adv-tabs'      => __('Organize content into horizontal or vertical tabbed sections.', 'advanced-gutenberg'),
+    'advgb/video'         => __('Embed a self-hosted or external video with a custom poster image.', 'advanced-gutenberg'),
+    'advgb/columns'       => __('Lay out content in flexible, responsive multi-column rows.', 'advanced-gutenberg'),
+    'advgb/column'        => __('A single column used inside the Columns block.', 'advanced-gutenberg'),
+    'advgb/container'     => __('Wrap blocks in a styled container with background, padding and borders.', 'advanced-gutenberg'),
+    'advgb/contact-form'  => __('Add a customizable contact form that emails submissions to you.', 'advanced-gutenberg'),
+    'advgb/count-up'      => __('Animate numbers counting up to highlight stats and milestones.', 'advanced-gutenberg'),
+    'advgb/images-slider' => __('Show multiple images in a responsive carousel slider.', 'advanced-gutenberg'),
+    'advgb/infobox'       => __('Present an icon or image with a heading and text in a styled box.', 'advanced-gutenberg'),
+    'advgb/map'           => __('Embed an interactive Google Map with custom markers.', 'advanced-gutenberg'),
+    'advgb/newsletter'    => __('Collect email subscribers with a customizable signup form.', 'advanced-gutenberg'),
+    'advgb/login-form'    => __('Display a front-end login and registration form.', 'advanced-gutenberg'),
+    'advgb/search-bar'    => __('Add a styled site search bar anywhere on your pages.', 'advanced-gutenberg'),
+    'advgb/social-links'  => __('Link to your social profiles with a row of social icons.', 'advanced-gutenberg'),
+    'advgb/summary'       => __('Generate an automatic table of contents from your headings.', 'advanced-gutenberg'),
+    'advgb/testimonial'   => __('Showcase customer testimonials with photo, name and role.', 'advanced-gutenberg'),
+    'advgb/woo-products'  => __('Display WooCommerce products in a customizable grid.', 'advanced-gutenberg'),
+    'advgb/countdown'     => __('Display a countdown timer to a specific date or event.', 'advanced-gutenberg'),
+    'advgb/feature'       => __('Highlight a single feature with an icon, title and description.', 'advanced-gutenberg'),
+    'advgb/pricing-table' => __('Compare pricing plans side by side with features and buttons.', 'advanced-gutenberg'),
+];
+
 // Pro
 if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
     if (method_exists('PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_default_block_settings')) {
@@ -96,7 +136,7 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
 <div class="publishpress-admin wrap">
     <header>
         <h1 class="wp-heading-inline">
-            <?php esc_html_e('PublishPress Blocks', 'advanced-gutenberg') ?>
+            <?php esc_html_e('Extra Blocks', 'advanced-gutenberg') ?>
         </h1>
     </header>
     <div class="wrap">
@@ -116,9 +156,9 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                 // Use new block title
                 if (isset($new_titles[$block['name']])) {
                     $block['title'] = $new_titles[$block['name']];
-                    //$block['title'] = str_replace( 'PublishPress', '', $new_titles[$block['name']] ); // Remove 'PublishPress'
-                    //$block['title'] = str_replace( '-', '', $block['title'] ); // Remove hyphen in RTL and LTR
                 }
+                // Remove the " - PublishPress" suffix from block names
+                $block['title'] = preg_replace('/\s*-?\s*PublishPress\s*$/', '', $block['title']);
                 $blur_class = '';
                 $isProPromo = false;
                 if ($free_version && isset($block['isPro']) && $block['isPro'] ===  true) {
@@ -131,6 +171,16 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                     <?php echo html_entity_decode(html_entity_decode(stripslashes($block['icon']))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>
                 <span class="block-title  <?php echo esc_attr($blur_class); ?>"><?php echo esc_html(__($block['title'], 'advanced-gutenberg')); ?></span>
+                <?php if (isset($block_descriptions[$block['name']])) : ?>
+                    <span class="ppb-tooltips-library advgb-block-tooltip"
+                          data-toggle="ppbtooltip"
+                          data-placement="top">
+                        <i class="dashicons dashicons-info-outline" aria-hidden="true"></i>
+                        <span class="tooltip-text">
+                            <?php echo esc_html($block_descriptions[$block['name']]); ?>
+                        </span>
+                    </span>
+                <?php endif; ?>
                 <?php if ($isProPromo) : ?>
                     <span class="advgb-pro-small-overlay-text" style="float: right;">
                         <a class="advgb-pro-link clickable" href="<?php echo esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK); ?>" target="_blank">
@@ -156,3 +206,26 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
         <?php endif; ?>
     </div>
 </div>
+
+<style>
+.advgb-block-tooltip {
+    vertical-align: middle;
+    margin-left: 6px;
+    line-height: 30px;
+}
+.advgb-block-tooltip .dashicons-info-outline {
+    color: #9fabba;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 30px;
+    transition: color .2s ease;
+}
+.advgb-block-tooltip:hover .dashicons-info-outline {
+    color: #655997;
+}
+.advgb-block-tooltip .tooltip-text {
+    font-weight: 400;
+    line-height: 1.5;
+}
+</style>
