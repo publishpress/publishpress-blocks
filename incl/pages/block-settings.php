@@ -8,6 +8,15 @@ $blocks_list_saved = get_option('advgb_blocks_list');
 $advgb_blocks      = [];
 $free_version      = false;
 
+// Global per-block enable/disable state (default: enabled unless explicitly off)
+$blocks_enabled_opt = get_option('advgb_blocks_enabled');
+if (! is_array($blocks_enabled_opt)) {
+    $blocks_enabled_opt = [];
+}
+$advgb_is_block_enabled = function ($name) use ($blocks_enabled_opt) {
+    return ! isset($blocks_enabled_opt[$name]) || ! empty($blocks_enabled_opt[$name]);
+};
+
 // Content Display default thumbnail (configured via the Content Display block's gear)
 $advgb_settings_opt = get_option('advgb_settings');
 $cd_default_thumb   = ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/recent-posts/recent-post-default.png';
@@ -162,6 +171,9 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                    placeholder="<?php esc_attr_e('Search blocks', 'advanced-gutenberg') ?>"
             >
         </div>
+        <form method="post" action="<?php echo esc_url(admin_url('admin.php?page=advgb_block_settings')) ?>">
+        <?php wp_nonce_field('advgb_blocks_enabled_nonce', 'advgb_blocks_enabled_nonce_field') ?>
+        <?php $advgb_toggle_names = []; ?>
         <ul class="blocks-config-list clearfix">
             <?php foreach ($advgb_blocks as $block) : ?>
                 <?php $iconColor = '';
@@ -197,6 +209,20 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                         </span>
                     </span>
                 <?php endif; ?>
+                <?php if (! $isProPromo) : // Enable/Disable toggle (global, per block)
+                    $advgb_toggle_names[] = $block['name']; ?>
+                    <label class="advgb-switch-button advgb-block-enable-toggle"
+                           title="<?php esc_attr_e('Enable / disable this block', 'advanced-gutenberg') ?>">
+                        <span class="switch">
+                            <input type="checkbox"
+                                   name="advgb_blocks_enabled[<?php echo esc_attr($block['name']); ?>]"
+                                   value="1"
+                                <?php checked($advgb_is_block_enabled($block['name'])); ?>
+                            />
+                            <span class="slider"></span>
+                        </span>
+                    </label>
+                <?php endif; ?>
                 <?php if ($block['name'] === 'advgb/recent-posts') : ?>
                     <a href="#TB_inline?width=560&height=360&inlineId=advgb-content-display-config"
                        class="thickbox advgb-cd-config-link"
@@ -218,6 +244,16 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
             </li>
             <?php endforeach; ?>
         </ul>
+
+        <?php if (! empty($advgb_toggle_names)) : ?>
+            <input type="hidden" name="advgb_blocks_all" value="<?php echo esc_attr(implode(',', $advgb_toggle_names)) ?>"/>
+            <div class="advgb-form-buttons-bottom">
+                <button type="submit" class="button button-primary" name="save_blocks_enabled">
+                    <?php esc_html_e('Save', 'advanced-gutenberg') ?>
+                </button>
+            </div>
+        <?php endif; ?>
+        </form>
 
         <?php if (count($advgb_blocks) === 0) : ?>
             <div class="blocks-not-loaded" style="text-align: center">
@@ -351,5 +387,15 @@ jQuery(function ($) {
 }
 .advgb-cd-config-inner .form-table th {
     padding-left: 0;
+}
+
+/* Per-block enable/disable toggle */
+.block-config-item .advgb-block-enable-toggle {
+    float: right;
+    margin: 0 4px 0 10px;
+    line-height: 30px;
+}
+.block-config-item .advgb-block-enable-toggle .switch {
+    margin: 2px 0;
 }
 </style>

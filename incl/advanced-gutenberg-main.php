@@ -454,15 +454,26 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
                     );
 
-                    // Legacy Blocks: unregister disabled ones in the editor
-                    $legacy_state    = self::getLegacyBlocksState();
-                    $legacy_disabled = [];
-                    foreach ($legacy_state as $slug => $enabled) {
+                    // Unregister disabled blocks in the editor:
+                    // (a) legacy blocks turned off, (b) blocks globally disabled
+                    // via the Extra Blocks enable/disable toggles.
+                    $disabled_blocks = [];
+                    foreach (self::getLegacyBlocksState() as $slug => $enabled) {
                         if (! $enabled) {
-                            $legacy_disabled[] = 'advgb/' . $slug;
+                            $disabled_blocks[] = 'advgb/' . $slug;
                         }
                     }
-                    if (! empty($legacy_disabled)) {
+                    $blocks_enabled = get_option('advgb_blocks_enabled');
+                    if (is_array($blocks_enabled)) {
+                        foreach ($blocks_enabled as $block_name => $is_enabled) {
+                            if (! $is_enabled) {
+                                $disabled_blocks[] = $block_name;
+                            }
+                        }
+                    }
+                    $disabled_blocks = array_values(array_unique($disabled_blocks));
+
+                    if (! empty($disabled_blocks)) {
                         wp_enqueue_script(
                             'advgb_legacy_blocks_js',
                             ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/js/legacy-blocks.js',
@@ -473,7 +484,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         wp_localize_script(
                             'advgb_legacy_blocks_js',
                             'advgbLegacyDisabled',
-                            $legacy_disabled
+                            $disabled_blocks
                         );
                     }
 
@@ -2212,6 +2223,30 @@ if (! class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Blocks globally disabled via the Extra Blocks enable/disable toggles
+         * (advgb_blocks_enabled option). Default: a block is enabled unless
+         * explicitly set to 0.
+         *
+         * @return array Full block names that are disabled
+         */
+        public static function globallyDisabledBlocks()
+        {
+            $enabled = get_option('advgb_blocks_enabled');
+            if (! is_array($enabled)) {
+                return [];
+            }
+
+            $disabled = [];
+            foreach ($enabled as $block_name => $is_enabled) {
+                if (! $is_enabled) {
+                    $disabled[] = $block_name;
+                }
+            }
+
+            return $disabled;
+        }
+
+        /**
          * Map of "legacy" blocks: slug (without advgb/ prefix) => label.
          * These can be toggled on/off in Settings > Extra Blocks > Legacy.
          *
@@ -2626,7 +2661,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'access',
                 // The object name to store the active/inactive blocks. To see it in browser console: advgbCUserRole.access
                 'advgb_blocks_user_roles', // Database option to check current user role's active/inactive blocks
-                self::hiddenDeprecatedBlocks() // Hide deprecated blocks from this screen
+                // Hide deprecated blocks and any globally disabled via Extra Blocks toggles
+                array_merge(self::hiddenDeprecatedBlocks(), self::globallyDisabledBlocks())
             );
 
             // Render form
@@ -2796,6 +2832,36 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 ];
 
                 update_option('advgb_settings', $advgb_settings);
+
+                if (isset($_REQUEST['_wp_http_referer'])) {
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_block_settings&save=success'));
+                    exit;
+                }
+            } // Global per-block enable/disable toggles
+            elseif (isset($_POST['save_blocks_enabled'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key($_POST['advgb_blocks_enabled_nonce_field']),
+                        'advgb_blocks_enabled_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $all_blocks = isset($_POST['advgb_blocks_all'])
+                    ? array_filter(array_map('sanitize_text_field', explode(',', wp_unslash($_POST['advgb_blocks_all']))))
+                    : [];
+                $checked = (isset($_POST['advgb_blocks_enabled']) && is_array($_POST['advgb_blocks_enabled']))
+                    ? array_map('sanitize_text_field', array_keys($_POST['advgb_blocks_enabled']))
+                    : [];
+
+                $state = [];
+                foreach ($all_blocks as $name) {
+                    // Checkboxes only post when checked; everything else is disabled
+                    $state[$name] = in_array($name, $checked, true) ? 1 : 0;
+                }
+
+                update_option('advgb_blocks_enabled', $state, false);
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
                     wp_safe_redirect(admin_url('admin.php?page=advgb_block_settings&save=success'));
@@ -4043,7 +4109,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             </div>
                             <div class="advgb-toggle-wrapper">
                                 <?php
-                                _e('Enable or disable all blocks', 'advanced-gutenberg') ?>
+                                _e('Enable or disable all blocks for CURRENT ROLE', 'advanced-gutenberg') ?>
                                 <div class="advgb-switch-button">
                                     <label class="switch">
                                         <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
