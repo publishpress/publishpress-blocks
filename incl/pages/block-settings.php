@@ -37,6 +37,11 @@ if (!defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
     $free_version      = true;
 }
 
+// Remove hidden blocks (includes Pro promo blocks merged in above, e.g. Feature List)
+$advgb_blocks = array_values(array_filter($advgb_blocks, function ($block) use ($hidden_blocks) {
+    return ! in_array($block['name'], $hidden_blocks, true);
+}));
+
 /**
  * Sort array
  *
