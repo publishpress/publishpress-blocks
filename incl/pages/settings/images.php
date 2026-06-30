@@ -2,15 +2,6 @@
 
 defined('ABSPATH') || die;
 
-wp_enqueue_media(); // We require this for "Default thumbnail" setting
-
-$settings         = get_option('advgb_settings');
-$default_thumb    = ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/recent-posts/recent-post-default.png';
-
-$rp_default_thumb = isset($settings['rp_default_thumb'])
-    ? $settings['rp_default_thumb']
-    : [ 'url' => $default_thumb, 'id' => 0 ];
-
 $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_lightbox_caption', 'text', '1');
 $gallery_lightbox_checked = $this->getOptionSetting('advgb_settings', 'gallery_lightbox', 'checkbox', 1);
 
@@ -70,41 +61,6 @@ $gallery_lightbox_checked = $this->getOptionSetting('advgb_settings', 'gallery_l
                     <?php
                     _e(
                         'Display caption text on images loaded as lightbox in galleries.',
-                        'advanced-gutenberg'
-                    )
-                    ?>
-                </p>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">
-                <?php
-                _e('Default thumbnail', 'advanced-gutenberg') ?>
-            </th>
-            <td>
-                <div class="setting-actions-wrapper">
-                    <input type="hidden" id="post_default_thumb" name="post_default_thumb" value="<?php
-                    echo esc_attr($rp_default_thumb['url']); ?>"/>
-                    <input type="hidden" id="post_default_thumb_id" name="post_default_thumb_id" value="<?php
-                    echo esc_attr($rp_default_thumb['id']); ?>"/>
-                    <div class="setting-actions" id="post_default_thumb_actions">
-                        <img class="thumb-selected"
-                             src="<?php
-                                echo esc_url($rp_default_thumb['url']); ?>"
-                             alt="thumb"
-                             data-default="<?php
-                                echo esc_url($default_thumb); ?>"
-                        />
-                        <i class="dashicons dashicons-edit" id="thumb_edit" title="<?php
-                        esc_attr_e('Edit', 'advanced-gutenberg'); ?>"></i>
-                        <i class="dashicons dashicons-no" id="thumb_remove" title="<?php
-                        esc_attr_e('Reset to default', 'advanced-gutenberg'); ?>"></i>
-                    </div>
-                </div>
-                <p class="description">
-                    <?php
-                    _e(
-                        'Set the default post thumbnail to use in Content Display blocks for posts without featured image.',
                         'advanced-gutenberg'
                     )
                     ?>

@@ -7,9 +7,13 @@ add_thickbox();
 $blocks_list_saved = get_option('advgb_blocks_list');
 $advgb_blocks      = [];
 $free_version      = false;
+// Deprecated blocks hidden from this screen on all sites
+$hidden_blocks     = AdvancedGutenbergMain::hiddenDeprecatedBlocks();
 if (gettype($blocks_list_saved) === 'array') {
     foreach ($blocks_list_saved as $block) {
         if (strpos($block['name'], 'advgb/') === false) {
+            continue;
+        } elseif (in_array($block['name'], $hidden_blocks, true)) {
             continue;
         } else {
             $block['icon'] = htmlentities($block['icon']);

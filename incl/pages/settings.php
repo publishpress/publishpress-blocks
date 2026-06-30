@@ -12,10 +12,29 @@ defined('ABSPATH') || die;
  * matching Extra Blocks sub-tab so they keep working.
  */
 
-// Sub-tabs that live under "Extra Blocks"
+// Sub-tabs that live under "Extra Blocks".
+// Maps / Email & Forms / reCAPTCHA / Data Export depend on their legacy block
+// being enabled (Settings > Extra Blocks > Legacy), so they're hidden otherwise.
 $extra_blocks_subtabs = ['general'];
 if ($this->settingIsEnabled('enable_advgb_blocks')) {
-    array_push($extra_blocks_subtabs, 'images', 'maps', 'forms', 'recaptcha', 'data');
+    $legacy_state = AdvancedGutenbergMain::getLegacyBlocksState();
+
+    $extra_blocks_subtabs[] = 'images';
+
+    // Map block -> Maps tab
+    if (! empty($legacy_state['map'])) {
+        $extra_blocks_subtabs[] = 'maps';
+    }
+
+    // Contact Form block -> Email & Forms, reCAPTCHA, Data Export tabs
+    if (! empty($legacy_state['contact-form'])) {
+        $extra_blocks_subtabs[] = 'forms';
+        $extra_blocks_subtabs[] = 'recaptcha';
+        $extra_blocks_subtabs[] = 'data';
+    }
+
+    $extra_blocks_subtabs[] = 'content-display';
+    $extra_blocks_subtabs[] = 'legacy';
 }
 
 // Allowed top-level tabs
@@ -108,7 +127,9 @@ if (in_array($requested_tab, $extra_blocks_subtabs, true)) {
                 'maps'      => esc_html__('Maps', 'advanced-gutenberg'),
                 'forms'     => esc_html__('Email & Forms', 'advanced-gutenberg'),
                 'recaptcha' => esc_html__('reCAPTCHA', 'advanced-gutenberg'),
-                'data'      => esc_html__('Data Export', 'advanced-gutenberg'),
+                'data'            => esc_html__('Data Export', 'advanced-gutenberg'),
+                'content-display' => esc_html__('Content Display', 'advanced-gutenberg'),
+                'legacy'          => esc_html__('Legacy', 'advanced-gutenberg'),
             ];
 
             echo '<ul class="nav-tab-wrapper advgb-subtab-wrapper" style="margin-top:15px;">';

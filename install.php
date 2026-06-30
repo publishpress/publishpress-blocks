@@ -61,6 +61,21 @@ if ($saved_settings === false) {
     ));
 }
 
+// Legacy blocks: OFF by default on new sites. Existing sites are handled by
+// AdvancedGutenbergMain::maybeInitLegacyBlocks(), which defaults them ON.
+if ($saved_settings === false && get_option('advgb_legacy_blocks') === false) {
+    update_option('advgb_legacy_blocks', array(
+        'contact-form' => 0,
+        'login-form'   => 0,
+        'map'          => 0,
+        'newsletter'   => 0,
+        'search-bar'   => 0,
+        'social-links' => 0,
+        'testimonial'  => 0,
+        'woo-products' => 0,
+    ), false);
+}
+
 update_option('advgb_maybe_new_blocks', intval(true), false);
 
 /* Delete deprecated options
