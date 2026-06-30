@@ -463,14 +463,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             $disabled_blocks[] = 'advgb/' . $slug;
                         }
                     }
-                    $blocks_enabled = get_option('advgb_blocks_enabled');
-                    if (is_array($blocks_enabled)) {
-                        foreach ($blocks_enabled as $block_name => $is_enabled) {
-                            if (! $is_enabled) {
-                                $disabled_blocks[] = $block_name;
-                            }
-                        }
-                    }
+                    $disabled_blocks = array_merge($disabled_blocks, self::globallyDisabledBlocks());
                     $disabled_blocks = array_values(array_unique($disabled_blocks));
 
                     if (! empty($disabled_blocks)) {
@@ -2243,7 +2236,30 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
-            return $disabled;
+            // Cascade: disabling a parent block also disables its inner block
+            $child_map = self::childBlocksMap();
+            foreach ($disabled as $block_name) {
+                if (! empty($child_map[$block_name])) {
+                    $disabled = array_merge($disabled, $child_map[$block_name]);
+                }
+            }
+
+            return array_values(array_unique($disabled));
+        }
+
+        /**
+         * Inner ("item") blocks that must be disabled together with their parent
+         * block when the parent is turned off via the Extra Blocks toggles.
+         *
+         * @return array parent block name => array of child block names
+         */
+        public static function childBlocksMap()
+        {
+            return [
+                'advgb/accordions' => [ 'advgb/accordion-item' ], // Accordion -> Accordion Item
+                'advgb/list'       => [ 'advgb/list-item' ],      // List -> List Item
+                'advgb/adv-tabs'   => [ 'advgb/tab' ],            // Tabs -> Tab Item
+            ];
         }
 
         /**
