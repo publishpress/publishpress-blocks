@@ -14,12 +14,13 @@ defined('ABSPATH') || die;
 
 // Sub-tabs that live under "Extra Blocks".
 // Maps / Email & Forms / reCAPTCHA / Data Export depend on their legacy block
-// being enabled (Settings > Extra Blocks > Legacy), so they're hidden otherwise.
-$extra_blocks_subtabs = ['general'];
+// being enabled (Settings > Legacy), so they're hidden otherwise.
+// The Extra Blocks tab lands on the "general" content (Blocks icon color);
+// it is not listed as a sub-tab. Maps / Forms / reCAPTCHA / Data Export are
+// the only sub-tabs, shown when their legacy block is enabled.
+$extra_blocks_subtabs = [];
 if ($this->settingIsEnabled('enable_advgb_blocks')) {
     $legacy_state = AdvancedGutenbergMain::getLegacyBlocksState();
-
-    $extra_blocks_subtabs[] = 'images';
 
     // Map block -> Maps tab
     if (! empty($legacy_state['map'])) {
@@ -32,13 +33,10 @@ if ($this->settingIsEnabled('enable_advgb_blocks')) {
         $extra_blocks_subtabs[] = 'recaptcha';
         $extra_blocks_subtabs[] = 'data';
     }
-
-    $extra_blocks_subtabs[] = 'content-display';
-    $extra_blocks_subtabs[] = 'legacy';
 }
 
-// Allowed top-level tabs
-$allowed_top_tabs = ['extra-blocks', 'block-features', 'post-notes', 'license'];
+// Allowed top-level tabs ("legacy" is now a top-level tab, not a sub-tab)
+$allowed_top_tabs = ['extra-blocks', 'block-features', 'post-notes', 'legacy', 'license'];
 
 $current_tab    = 'extra-blocks';
 $current_subtab = 'general';
@@ -99,6 +97,15 @@ if (in_array($requested_tab, $extra_blocks_subtabs, true)) {
         );
     }
 
+    // Legacy is a top-level tab (next to Extra Blocks, Block Features, Post Notes)
+    array_push(
+        $tabs,
+        [
+            'title' => esc_html__('Legacy', 'advanced-gutenberg'),
+            'slug' => 'legacy'
+        ]
+    );
+
     if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
         array_push(
             $tabs,
@@ -122,34 +129,32 @@ if (in_array($requested_tab, $extra_blocks_subtabs, true)) {
         if ($current_tab === 'extra-blocks') {
             // Sub-tab navigation for Extra Blocks
             $subtabs_titles = [
-                'general'   => esc_html__('General', 'advanced-gutenberg'),
-                'images'    => esc_html__('Images', 'advanced-gutenberg'),
                 'maps'      => esc_html__('Maps', 'advanced-gutenberg'),
                 'forms'     => esc_html__('Email & Forms', 'advanced-gutenberg'),
                 'recaptcha' => esc_html__('reCAPTCHA', 'advanced-gutenberg'),
-                'data'            => esc_html__('Data Export', 'advanced-gutenberg'),
-                'content-display' => esc_html__('Content Display', 'advanced-gutenberg'),
-                'legacy'          => esc_html__('Legacy', 'advanced-gutenberg'),
+                'data'      => esc_html__('Data Export', 'advanced-gutenberg'),
             ];
 
-            echo '<ul class="nav-tab-wrapper advgb-subtab-wrapper" style="margin-top:15px;">';
-            foreach ($extra_blocks_subtabs as $subtab_slug) {
-                if (! isset($subtabs_titles[$subtab_slug])) {
-                    continue;
+            if (! empty($extra_blocks_subtabs)) {
+                echo '<ul class="nav-tab-wrapper advgb-subtab-wrapper" style="margin-top:15px;">';
+                foreach ($extra_blocks_subtabs as $subtab_slug) {
+                    if (! isset($subtabs_titles[$subtab_slug])) {
+                        continue;
+                    }
+                    $subtab_url = admin_url(
+                        'admin.php?page=advgb_settings&tab=extra-blocks&subtab=' . $subtab_slug
+                    );
+                    printf(
+                        '<li class="nav-tab%1$s"><a href="%2$s">%3$s</a></li>',
+                        ($subtab_slug === $current_subtab ? ' nav-tab-active' : ''),
+                        esc_url($subtab_url),
+                        esc_html($subtabs_titles[$subtab_slug])
+                    );
                 }
-                $subtab_url = admin_url(
-                    'admin.php?page=advgb_settings&tab=extra-blocks&subtab=' . $subtab_slug
-                );
-                printf(
-                    '<li class="nav-tab%1$s"><a href="%2$s">%3$s</a></li>',
-                    ($subtab_slug === $current_subtab ? ' nav-tab-active' : ''),
-                    esc_url($subtab_url),
-                    esc_html($subtabs_titles[$subtab_slug])
-                );
+                echo '</ul>';
             }
-            echo '</ul>';
 
-            // Load active sub-tab content
+            // Load active content (defaults to "general" = Blocks icon color)
             $this->loadPageTab('settings', $current_subtab);
         } else {
             // Load active top-level tab content (block-features, post-notes, license)

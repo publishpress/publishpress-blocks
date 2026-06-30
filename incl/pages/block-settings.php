@@ -7,13 +7,19 @@ add_thickbox();
 $blocks_list_saved = get_option('advgb_blocks_list');
 $advgb_blocks      = [];
 $free_version      = false;
+
+// Content Display default thumbnail (configured via the Content Display block's gear)
+$advgb_settings_opt = get_option('advgb_settings');
+$cd_default_thumb   = ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/recent-posts/recent-post-default.png';
+$cd_thumb           = isset($advgb_settings_opt['rp_default_thumb'])
+    ? $advgb_settings_opt['rp_default_thumb']
+    : [ 'url' => $cd_default_thumb, 'id' => 0 ];
 // Blocks hidden from this screen on all sites:
 // deprecated blocks plus inner/child blocks that aren't configured directly.
 $hidden_blocks     = array_merge(
     AdvancedGutenbergMain::hiddenDeprecatedBlocks(),
     [
         'advgb/accordion-item', // Accordion Item
-        'advgb/recent-posts',   // Content Display
         'advgb/list-item',      // List Item
         'advgb/tab',            // Tab Item
         'advgb/feature-list',   // Feature List
@@ -139,6 +145,11 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
 }
 ?>
 <div class="publishpress-admin wrap">
+    <?php if (isset($_GET['save']) && $_GET['save'] === 'success') : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display only ?>
+        <div id="message" class="updated fade">
+            <p><?php esc_html_e('Settings saved successfully!', 'advanced-gutenberg'); ?></p>
+        </div>
+    <?php endif; ?>
     <header>
         <h1 class="wp-heading-inline">
             <?php esc_html_e('Extra Blocks', 'advanced-gutenberg') ?>
@@ -186,7 +197,13 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                         </span>
                     </span>
                 <?php endif; ?>
-                <?php if ($isProPromo) : ?>
+                <?php if ($block['name'] === 'advgb/recent-posts') : ?>
+                    <a href="#TB_inline?width=560&height=360&inlineId=advgb-content-display-config"
+                       class="thickbox advgb-cd-config-link"
+                       title="<?php esc_attr_e('Configure', 'advanced-gutenberg') ?>">
+                        <i class="dashicons dashicons-admin-generic block-config-button"></i>
+                    </a>
+                <?php elseif ($isProPromo) : ?>
                     <span class="advgb-pro-small-overlay-text" style="float: right;">
                         <a class="advgb-pro-link clickable" href="<?php echo esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK); ?>" target="_blank">
                             <span class="dashicons dashicons-lock"></span> <?php esc_html_e('Pro', 'advanced-gutenberg') ?>
@@ -212,6 +229,81 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
     </div>
 </div>
 
+<?php // Content Display config popup (Default thumbnail), opened by the block's gear ?>
+<div id="advgb-content-display-config" style="display:none;">
+    <div class="publishpress-admin advgb-cd-config-inner">
+        <h2 class="advgb-cd-config-title"><?php esc_html_e('Content Display', 'advanced-gutenberg') ?></h2>
+        <form method="post" action="<?php echo esc_url(admin_url('admin.php?page=advgb_block_settings')) ?>">
+            <?php wp_nonce_field('advgb_content_display_nonce', 'advgb_content_display_nonce_field') ?>
+            <table class="form-table">
+                <tr>
+                    <th scope="row">
+                        <?php esc_html_e('Default thumbnail', 'advanced-gutenberg') ?>
+                    </th>
+                    <td>
+                        <div class="setting-actions-wrapper">
+                            <input type="hidden" id="post_default_thumb" name="post_default_thumb"
+                                   value="<?php echo esc_attr($cd_thumb['url']); ?>"/>
+                            <input type="hidden" id="post_default_thumb_id" name="post_default_thumb_id"
+                                   value="<?php echo esc_attr($cd_thumb['id']); ?>"/>
+                            <div class="setting-actions" id="post_default_thumb_actions">
+                                <img class="thumb-selected"
+                                     src="<?php echo esc_url($cd_thumb['url']); ?>"
+                                     alt="thumb"
+                                     data-default="<?php echo esc_url($cd_default_thumb); ?>"/>
+                                <i class="dashicons dashicons-edit" id="thumb_edit" title="<?php esc_attr_e('Edit', 'advanced-gutenberg'); ?>"></i>
+                                <i class="dashicons dashicons-no" id="thumb_remove" title="<?php esc_attr_e('Reset to default', 'advanced-gutenberg'); ?>"></i>
+                            </div>
+                        </div>
+                        <p class="description">
+                            <?php esc_html_e(
+                                'Set the default post thumbnail to use in Content Display blocks for posts without a featured image.',
+                                'advanced-gutenberg'
+                            ) ?>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="advgb-form-buttons-bottom">
+                <button type="submit" class="button button-primary" name="save_content_display_thumb">
+                    <?php esc_html_e('Save', 'advanced-gutenberg') ?>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+jQuery(function ($) {
+    var frame;
+    $(document).on('click', '#thumb_edit', function (e) {
+        e.preventDefault();
+        if (frame) { frame.open(); return; }
+        frame = wp.media({
+            title: '<?php echo esc_js(__('Select default thumbnail', 'advanced-gutenberg')); ?>',
+            button: { text: '<?php echo esc_js(__('Use this image', 'advanced-gutenberg')); ?>' },
+            library: { type: 'image' },
+            multiple: false
+        });
+        frame.on('select', function () {
+            var img = frame.state().get('selection').first().toJSON();
+            $('#post_default_thumb').val(img.url);
+            $('#post_default_thumb_id').val(img.id);
+            $('#advgb-content-display-config .thumb-selected').attr('src', img.url);
+        });
+        frame.open();
+    });
+    $(document).on('click', '#thumb_remove', function (e) {
+        e.preventDefault();
+        var $img = $('#advgb-content-display-config .thumb-selected');
+        $img.attr('src', $img.data('default'));
+        $('#post_default_thumb').val($img.data('default'));
+        $('#post_default_thumb_id').val(0);
+    });
+});
+</script>
+
 <style>
 .advgb-block-tooltip {
     vertical-align: middle;
@@ -232,5 +324,32 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
 .advgb-block-tooltip .tooltip-text {
     font-weight: 400;
     line-height: 1.5;
+}
+
+/* Content Display gear link: align right like other blocks, no link underline */
+.advgb-cd-config-link,
+.advgb-cd-config-link:hover,
+.advgb-cd-config-link:focus,
+.advgb-cd-config-link:active {
+    float: right;
+    text-decoration: none;
+    box-shadow: none;
+    outline: none;
+}
+.advgb-cd-config-link .block-config-button {
+    float: none;
+}
+
+/* Content Display config popup styling */
+.advgb-cd-config-inner {
+    padding: 10px 24px 24px;
+}
+.advgb-cd-config-inner .advgb-cd-config-title {
+    margin: 0 0 10px;
+    padding: 0;
+    font-size: 1.4em;
+}
+.advgb-cd-config-inner .form-table th {
+    padding-left: 0;
 }
 </style>

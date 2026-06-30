@@ -25,12 +25,6 @@ $post_notes_block_toolbar = $this->getOptionSetting('advgb_settings', 'post_note
                         'advanced-gutenberg'
                     ) ?>
                 </label>
-                <p class="description">
-                    <?php _e(
-                        'WordPress core already provides an "All notes" sidebar icon in the editor header to view and resolve notes.',
-                        'advanced-gutenberg'
-                    ) ?>
-                </p>
             </td>
         </tr>
     </table>

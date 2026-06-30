@@ -2761,7 +2761,47 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             self::commonAdminPagesAssets();
             Utilities::enqueueToolTipsAssets(); // Tooltips describing each block
+            wp_enqueue_media(); // Content Display gear -> Default thumbnail picker
             $this->loadPage('block-settings');
+        }
+
+        /**
+         * Save handler for the Extra Blocks page.
+         * Auto-hooked on 'load-{hook}' via registerMainMenu() ($slug . '_save_page').
+         * Handles the Content Display block's Default thumbnail.
+         *
+         * @return bool|void
+         */
+        public function advgb_block_settings_save_page()
+        {
+            if (! current_user_can('activate_plugins')) {
+                return false;
+            }
+
+            if (isset($_POST['save_content_display_thumb'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key($_POST['advgb_content_display_nonce_field']),
+                        'advgb_content_display_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $advgb_settings = get_option('advgb_settings');
+
+                $advgb_settings['rp_default_thumb'] = [
+                    'url' => esc_url_raw($_POST['post_default_thumb']),
+                    'id'  => (int) $_POST['post_default_thumb_id']
+                ];
+
+                update_option('advgb_settings', $advgb_settings);
+
+                if (isset($_REQUEST['_wp_http_referer'])) {
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_block_settings&save=success'));
+                    exit;
+                }
+            }
         }
 
         /**
@@ -3151,78 +3191,15 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                 $advgb_settings = get_option('advgb_settings');
 
-                $advgb_settings['enable_blocks_spacing']       = isset($_POST['enable_blocks_spacing']) ? 1 : 0;
-                $advgb_settings['disable_wpautop']             = isset($_POST['disable_wpautop']) ? 1 : 0; // @TODO Remove later
-                $advgb_settings['enable_columns_visual_guide'] = isset($_POST['enable_columns_visual_guide']) ? 1 : 0;
-                $advgb_settings['blocks_spacing']              = (int) $_POST['blocks_spacing'];
-                $advgb_settings['blocks_icon_color']           = sanitize_hex_color($_POST['blocks_icon_color']);
-                $advgb_settings['editor_width']                = sanitize_text_field($_POST['editor_width']);
-
-                // Pro
-                if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
-                    if (
-                        method_exists(
-                            'PPB_AdvancedGutenbergPro\Utils\Definitions',
-                            'advgb_pro_setting_set_value'
-                        )
-                    ) {
-                        $advgb_settings['enable_pp_branding'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value('enable_pp_branding');
-                    }
-                }
+                $advgb_settings['blocks_icon_color'] = sanitize_hex_color($_POST['blocks_icon_color']);
 
                 update_option('advgb_settings', $advgb_settings);
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=general&save=success'));
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=extra-blocks&save=success'));
                     exit;
                 }
-            } // Images settings
-            elseif (isset($_POST['save_settings_images'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                if (
-                    ! wp_verify_nonce(
-                        sanitize_key($_POST['advgb_settings_images_nonce_field']),
-                        'advgb_settings_images_nonce'
-                    )
-                ) {
-                    return false;
-                }
-
-                $advgb_settings = get_option('advgb_settings');
-
-                $advgb_settings['gallery_lightbox']         = isset($_POST['gallery_lightbox']) ? 1 : 0;
-                $advgb_settings['gallery_lightbox_caption'] = (int) $_POST['gallery_lightbox_caption'];
-
-                update_option('advgb_settings', $advgb_settings);
-
-                if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=images&save=success'));
-                    exit;
-                }
-            } // Content Display settings
-            elseif (isset($_POST['save_settings_content_display'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                if (
-                    ! wp_verify_nonce(
-                        sanitize_key($_POST['advgb_settings_content_display_nonce_field']),
-                        'advgb_settings_content_display_nonce'
-                    )
-                ) {
-                    return false;
-                }
-
-                $advgb_settings = get_option('advgb_settings');
-
-                $advgb_settings['rp_default_thumb'] = [
-                    'url' => esc_url_raw($_POST['post_default_thumb']),
-                    'id'  => (int) $_POST['post_default_thumb_id']
-                ];
-
-                update_option('advgb_settings', $advgb_settings);
-
-                if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=content-display&save=success'));
-                    exit;
-                }
-            } // Images settings
+            } // General settings
             elseif (isset($_POST['save_settings_block_features'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 if (
                     ! wp_verify_nonce(
@@ -3404,8 +3381,14 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                 update_option('advgb_legacy_blocks', $legacy_state, false);
 
+                // Legacy features: gallery lightbox (moved here from the Images tab)
+                $advgb_settings = get_option('advgb_settings');
+                $advgb_settings['gallery_lightbox']         = isset($_POST['gallery_lightbox']) ? 1 : 0;
+                $advgb_settings['gallery_lightbox_caption'] = (int) $_POST['gallery_lightbox_caption'];
+                update_option('advgb_settings', $advgb_settings);
+
                 if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=legacy&save=success'));
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=legacy&save=success'));
                     exit;
                 }
             }

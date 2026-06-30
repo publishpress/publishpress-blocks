@@ -45,7 +45,7 @@ $saved_settings = get_option('advgb_settings');
 
 if ($saved_settings === false) {
     update_option('advgb_settings', array(
-        'gallery_lightbox'            => 1,
+        'gallery_lightbox'            => 0, // Legacy feature: off by default on new sites
         'gallery_lightbox_caption'    => '1',
         'blocks_icon_color'           => '#655997',
         'disable_wpautop'             => 0,
