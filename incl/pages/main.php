@@ -86,6 +86,16 @@ defined('ABSPATH') || die;
                             'access' => true
                         ],
                         [
+                            'name' => 'enable_post_notes',
+                            'title' => __('Post Notes', 'advanced-gutenberg'),
+                            'description' => __(
+                                'Adds an "Add Note" button to the block editor toolbar and a Post Notes admin page to review all notes across your posts (requires WordPress 6.9+).',
+                                'advanced-gutenberg'
+                            ),
+                            'default' => 1,
+                            'access' => true
+                        ],
+                        [
                             'name' => 'enable_core_blocks_features',
                             'title' => __('Core Blocks Features', 'advanced-gutenberg'),
                             'description' => __(

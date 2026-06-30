@@ -582,6 +582,36 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
+            // Post Notes: Add Note button in block editor toolbar (WP 6.9+)
+            if (Utilities::settingIsEnabled('enable_post_notes')) {
+                wp_enqueue_script(
+                    'advgb_post_notes_editor',
+                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/js/post-notes-editor.js',
+                    array(
+                        'wp-plugins',
+                        'wp-element',
+                        'wp-data',
+                        'wp-components',
+                        'wp-editor',
+                        'wp-block-editor',
+                        'wp-hooks',
+                        'wp-compose',
+                    ),
+                    ADVANCED_GUTENBERG_VERSION,
+                    true
+                );
+
+                $advgb_settings = get_option('advgb_settings');
+                wp_localize_script(
+                    'advgb_post_notes_editor',
+                    'advgbPostNotes',
+                    array(
+                        // Default on when the setting has never been saved
+                        'blockToolbar' => ! isset($advgb_settings['post_notes_block_toolbar']) || $advgb_settings['post_notes_block_toolbar'],
+                    )
+                );
+            }
+
             // Include needed JS libraries
             wp_enqueue_script('jquery-ui-tabs');
             wp_enqueue_script('jquery-ui-sortable');
@@ -2210,10 +2240,18 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'enabled'  => Utilities::settingIsEnabled( 'auto_insert_blocks' )
                 ],
                 [
+                    'slug'       => 'advgb_post_notes',
+                    'title'      => esc_html__('Post Notes', 'advanced-gutenberg'),
+                    'callback'   => 'loadPostNotesPage',
+                    'order'      => 9,
+                    'enabled'    => Utilities::settingIsEnabled('enable_post_notes'),
+                    'capability' => 'edit_posts',
+                ],
+                [
                     'slug'     => 'advgb_settings',
                     'title'    => esc_html__('Settings', 'advanced-gutenberg'),
                     'callback' => 'loadSettingsPage',
-                    'order'    => 9,
+                    'order'    => 10,
                     'enabled'  => true
                 ]
             ];
@@ -2228,7 +2266,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
          */
         public function registerMainMenu()
         {
-            if (! current_user_can('manage_options')) {
+            /* Admins get the full menu. Users who can edit posts still get the menu
+             * registered so the Post Notes submenu (capability: edit_posts) is reachable;
+             * WordPress promotes the top-level menu to the first submenu they can access. */
+            if (! current_user_can('manage_options') && ! current_user_can('edit_posts')) {
                 return false;
             }
 
@@ -2251,7 +2292,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         'advgb_main',
                         $page['title'],
                         $page['title'],
-                        'manage_options',
+                        $page['capability'] ?? 'manage_options',
                         $page['slug'],
                         // slug should use underscores, not hyphen due we generate automatic function names based on it
                         ! empty($page['callback']) ? [ $this, $page['callback'] ] : '',
@@ -2521,6 +2562,22 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $this->blocksUsageData();
 
             $this->blocksUsagePage();
+        }
+
+        /**
+         * Post Notes page
+         *
+         * @return void
+         */
+        public function loadPostNotesPage()
+        {
+            if (! current_user_can('edit_posts')) {
+                return false;
+            }
+
+            self::commonAdminPagesAssets();
+
+            require_once plugin_dir_path(dirname(__FILE__)) . 'incl/pages/post-notes.php';
         }
 
         /**
@@ -2999,7 +3056,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 update_option('advgb_settings', $advgb_settings);
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=general&save=success'));
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=general&save=success'));
                     exit;
                 }
             } // Images settings
@@ -3025,7 +3082,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 update_option('advgb_settings', $advgb_settings);
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=images&save=success'));
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=images&save=success'));
                     exit;
                 }
             } // Images settings
@@ -3068,7 +3125,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 update_option('advgb_settings', $advgb_settings);
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=maps&save=success'));
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=maps&save=success'));
                     exit;
                 }
             } // Email & forms settings
@@ -3096,7 +3153,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
                     wp_safe_redirect(
-                        admin_url('admin.php?page=advgb_settings&tab=forms&save=success')
+                        admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=forms&save=success')
                     );
                     exit; // @TODO - Do we really need this?
                 }
@@ -3130,7 +3187,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
                     wp_safe_redirect(
-                        admin_url('admin.php?page=advgb_settings&tab=recaptcha&save=success')
+                        admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=recaptcha&save=success')
                     );
                     exit;
                 }
@@ -3167,6 +3224,27 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 }
 
                 return false;
+            } // Post Notes settings
+            elseif (isset($_POST['save_settings_post_notes'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key($_POST['advgb_settings_post_notes_nonce_field']),
+                        'advgb_settings_post_notes_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $advgb_settings = get_option('advgb_settings');
+
+                $advgb_settings['post_notes_block_toolbar'] = isset($_POST['post_notes_block_toolbar']) ? 1 : 0;
+
+                update_option('advgb_settings', $advgb_settings);
+
+                if (isset($_REQUEST['_wp_http_referer'])) {
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=post-notes&save=success'));
+                    exit;
+                }
             }
 
             return false;
