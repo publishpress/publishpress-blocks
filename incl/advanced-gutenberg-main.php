@@ -297,6 +297,27 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
+            /* Hide disabled blocks (Legacy + Extra Blocks toggles) from the inserter.
+             * We remove them from allowedBlockTypes instead of unregistering them, so
+             * the blocks stay registered: the management screens keep listing them
+             * (re-enable still works) and existing content keeps rendering. */
+            $disabled_blocks = self::allDisabledBlocks();
+            if (! empty($disabled_blocks)) {
+                if (is_array($settings['allowedBlockTypes'])) {
+                    $settings['allowedBlockTypes'] = array_values(
+                        array_diff($settings['allowedBlockTypes'], $disabled_blocks)
+                    );
+                } elseif ($settings['allowedBlockTypes'] === true && class_exists('WP_Block_Type_Registry')) {
+                    // Convert "all allowed" into an explicit list minus the disabled blocks
+                    $all_registered = array_keys(
+                        WP_Block_Type_Registry::get_instance()->get_all_registered()
+                    );
+                    $settings['allowedBlockTypes'] = array_values(
+                        array_diff($all_registered, $disabled_blocks)
+                    );
+                }
+            }
+
             $current_screen = get_current_screen();
             if (
                 method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor()
@@ -454,32 +475,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
                     );
 
-                    // Unregister disabled blocks in the editor:
-                    // (a) legacy blocks turned off, (b) blocks globally disabled
-                    // via the Extra Blocks enable/disable toggles.
-                    $disabled_blocks = [];
-                    foreach (self::getLegacyBlocksState() as $slug => $enabled) {
-                        if (! $enabled) {
-                            $disabled_blocks[] = 'advgb/' . $slug;
-                        }
-                    }
-                    $disabled_blocks = array_merge($disabled_blocks, self::globallyDisabledBlocks());
-                    $disabled_blocks = array_values(array_unique($disabled_blocks));
-
-                    if (! empty($disabled_blocks)) {
-                        wp_enqueue_script(
-                            'advgb_legacy_blocks_js',
-                            ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/js/legacy-blocks.js',
-                            array( 'advgb_blocks', 'wp-blocks', 'wp-dom-ready' ),
-                            ADVANCED_GUTENBERG_VERSION,
-                            true
-                        );
-                        wp_localize_script(
-                            'advgb_legacy_blocks_js',
-                            'advgbLegacyDisabled',
-                            $disabled_blocks
-                        );
-                    }
+                    /* Disabled blocks (Legacy + Extra Blocks toggles) are hidden from
+                     * the inserter via replaceEditorSettings() (allowedBlockTypes),
+                     * which keeps them registered so they still appear on the
+                     * management screens and existing content keeps rendering. */
 
                     // Pro Ads in some blocks for free version
                     if (! defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
@@ -2260,6 +2259,26 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'advgb/list'       => [ 'advgb/list-item' ],      // List -> List Item
                 'advgb/adv-tabs'   => [ 'advgb/tab' ],            // Tabs -> Tab Item
             ];
+        }
+
+        /**
+         * All blocks that should be hidden from the editor: legacy blocks turned
+         * off, plus blocks globally disabled via the Extra Blocks toggles (incl.
+         * cascaded inner blocks). Full block names.
+         *
+         * @return array
+         */
+        public static function allDisabledBlocks()
+        {
+            $disabled = [];
+            foreach (self::getLegacyBlocksState() as $slug => $enabled) {
+                if (! $enabled) {
+                    $disabled[] = 'advgb/' . $slug;
+                }
+            }
+            $disabled = array_merge($disabled, self::globallyDisabledBlocks());
+
+            return array_values(array_unique($disabled));
         }
 
         /**
