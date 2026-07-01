@@ -43,6 +43,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
             global $wp_version;
 
             add_action('init', array( $this, 'registerPostMeta' ));
+            // Initialize Legacy Blocks state before blocks are registered (init 10)
+            add_action('plugins_loaded', array( $this, 'maybeInitLegacyBlocks' ), 1);
             add_action('admin_init', array($this, 'addCustomStylesToReusableBlocks'));
             add_action('admin_init', array( $this, 'registerStylesScripts' ));
             add_action('admin_init', array( $this, 'addEditorFrameStyles' ));
@@ -295,6 +297,27 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
+            /* Hide disabled blocks (Legacy + Extra Blocks toggles) from the inserter.
+             * We remove them from allowedBlockTypes instead of unregistering them, so
+             * the blocks stay registered: the management screens keep listing them
+             * (re-enable still works) and existing content keeps rendering. */
+            $disabled_blocks = self::allDisabledBlocks();
+            if (! empty($disabled_blocks)) {
+                if (is_array($settings['allowedBlockTypes'])) {
+                    $settings['allowedBlockTypes'] = array_values(
+                        array_diff($settings['allowedBlockTypes'], $disabled_blocks)
+                    );
+                } elseif ($settings['allowedBlockTypes'] === true && class_exists('WP_Block_Type_Registry')) {
+                    // Convert "all allowed" into an explicit list minus the disabled blocks
+                    $all_registered = array_keys(
+                        WP_Block_Type_Registry::get_instance()->get_all_registered()
+                    );
+                    $settings['allowedBlockTypes'] = array_values(
+                        array_diff($all_registered, $disabled_blocks)
+                    );
+                }
+            }
+
             $current_screen = get_current_screen();
             if (
                 method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor()
@@ -452,6 +475,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
                     );
 
+                    /* Disabled blocks (Legacy + Extra Blocks toggles) are hidden from
+                     * the inserter via replaceEditorSettings() (allowedBlockTypes),
+                     * which keeps them registered so they still appear on the
+                     * management screens and existing content keeps rendering. */
+
                     // Pro Ads in some blocks for free version
                     if (! defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
 
@@ -580,6 +608,36 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 ) {
                     PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_editor_conditional();
                 }
+            }
+
+            // Post Notes: Add Note button in block editor toolbar (WP 6.9+)
+            if (Utilities::settingIsEnabled('enable_post_notes')) {
+                wp_enqueue_script(
+                    'advgb_post_notes_editor',
+                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/js/post-notes-editor.js',
+                    array(
+                        'wp-plugins',
+                        'wp-element',
+                        'wp-data',
+                        'wp-components',
+                        'wp-editor',
+                        'wp-block-editor',
+                        'wp-hooks',
+                        'wp-compose',
+                    ),
+                    ADVANCED_GUTENBERG_VERSION,
+                    true
+                );
+
+                $advgb_settings = get_option('advgb_settings');
+                wp_localize_script(
+                    'advgb_post_notes_editor',
+                    'advgbPostNotes',
+                    array(
+                        // Default on when the setting has never been saved
+                        'blockToolbar' => ! isset($advgb_settings['post_notes_block_toolbar']) || $advgb_settings['post_notes_block_toolbar'],
+                    )
+                );
             }
 
             // Include needed JS libraries
@@ -2142,6 +2200,163 @@ if (! class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Deprecated blocks hidden from the management screens (Block Permissions
+         * and Extra Blocks) on all sites. They stay registered for backward
+         * compatibility with existing content, but are not listed for configuration.
+         *
+         * @return array Full block names
+         */
+        public static function hiddenDeprecatedBlocks()
+        {
+            return [
+                'advgb/accordion', // "Accordion (deprecated)"
+                'advgb/tabs',      // "Tabs (deprecated)"
+            ];
+        }
+
+        /**
+         * Blocks globally disabled via the Extra Blocks enable/disable toggles
+         * (advgb_blocks_enabled option). Default: a block is enabled unless
+         * explicitly set to 0.
+         *
+         * @return array Full block names that are disabled
+         */
+        public static function globallyDisabledBlocks()
+        {
+            $enabled = get_option('advgb_blocks_enabled');
+            if (! is_array($enabled)) {
+                return [];
+            }
+
+            $disabled = [];
+            foreach ($enabled as $block_name => $is_enabled) {
+                if (! $is_enabled) {
+                    $disabled[] = $block_name;
+                }
+            }
+
+            // Cascade: disabling a parent block also disables its inner block
+            $child_map = self::childBlocksMap();
+            foreach ($disabled as $block_name) {
+                if (! empty($child_map[$block_name])) {
+                    $disabled = array_merge($disabled, $child_map[$block_name]);
+                }
+            }
+
+            return array_values(array_unique($disabled));
+        }
+
+        /**
+         * Inner ("item") blocks that must be disabled together with their parent
+         * block when the parent is turned off via the Extra Blocks toggles.
+         *
+         * @return array parent block name => array of child block names
+         */
+        public static function childBlocksMap()
+        {
+            return [
+                'advgb/accordions' => [ 'advgb/accordion-item' ], // Accordion -> Accordion Item
+                'advgb/list'       => [ 'advgb/list-item' ],      // List -> List Item
+                'advgb/adv-tabs'   => [ 'advgb/tab' ],            // Tabs -> Tab Item
+            ];
+        }
+
+        /**
+         * All blocks that should be hidden from the editor: legacy blocks turned
+         * off, plus blocks globally disabled via the Extra Blocks toggles (incl.
+         * cascaded inner blocks). Full block names.
+         *
+         * @return array
+         */
+        public static function allDisabledBlocks()
+        {
+            $disabled = [];
+            foreach (self::getLegacyBlocksState() as $slug => $enabled) {
+                if (! $enabled) {
+                    $disabled[] = 'advgb/' . $slug;
+                }
+            }
+            $disabled = array_merge($disabled, self::globallyDisabledBlocks());
+
+            return array_values(array_unique($disabled));
+        }
+
+        /**
+         * Map of "legacy" blocks: slug (without advgb/ prefix) => label.
+         * These can be toggled on/off in Settings > Extra Blocks > Legacy.
+         *
+         * @return array
+         */
+        public static function legacyBlocksMap()
+        {
+            return [
+                'container'    => __('Container', 'advanced-gutenberg'),
+                'contact-form' => __('Contact Form', 'advanced-gutenberg'),
+                'login-form'   => __('Login and Register', 'advanced-gutenberg'),
+                'map'          => __('Map', 'advanced-gutenberg'),
+                'newsletter'   => __('Newsletter', 'advanced-gutenberg'),
+                'search-bar'   => __('Search Bar', 'advanced-gutenberg'),
+                'social-links' => __('Social Links', 'advanced-gutenberg'),
+                'testimonial'  => __('Testimonial', 'advanced-gutenberg'),
+                'woo-products' => __('Woo Products', 'advanced-gutenberg'),
+            ];
+        }
+
+        /**
+         * Current on/off state of each legacy block.
+         *
+         * @return array slug => bool (true = enabled)
+         */
+        public static function getLegacyBlocksState()
+        {
+            $saved = get_option('advgb_legacy_blocks');
+            if (! is_array($saved)) {
+                $saved = [];
+            }
+
+            $state = [];
+            foreach (array_keys(self::legacyBlocksMap()) as $slug) {
+                // Default off for any slug not explicitly enabled
+                $state[$slug] = ! empty($saved[$slug]);
+            }
+
+            return $state;
+        }
+
+        /**
+         * Initialize the Legacy Blocks option the first time.
+         *
+         * New sites: all legacy blocks OFF (set in install.php).
+         * Existing sites upgrading (option absent but plugin already in use):
+         * all legacy blocks ON, so existing content keeps working.
+         *
+         * @return void
+         */
+        public function maybeInitLegacyBlocks()
+        {
+            if (get_option('advgb_legacy_blocks') !== false) {
+                // Already initialized (fresh install set it, or a prior run did)
+                return;
+            }
+
+            // Fresh install in progress: advgb_settings not created yet (install.php
+            // runs on the activation hook, after plugins_loaded). Leave it to
+            // install.php, which defaults legacy blocks OFF for new sites.
+            if (get_option('advgb_settings') === false) {
+                return;
+            }
+
+            // Existing install (settings present, legacy option absent) -> default
+            // everything ON so existing content keeps working.
+            $state = [];
+            foreach (array_keys(self::legacyBlocksMap()) as $slug) {
+                $state[$slug] = 1;
+            }
+
+            update_option('advgb_legacy_blocks', $state, false);
+        }
+
+        /**
          * Get list of submenu pages
          *
          * @return array
@@ -2210,10 +2425,18 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'enabled'  => Utilities::settingIsEnabled( 'auto_insert_blocks' )
                 ],
                 [
+                    'slug'       => 'advgb_post_notes',
+                    'title'      => esc_html__('Post Notes', 'advanced-gutenberg'),
+                    'callback'   => 'loadPostNotesPage',
+                    'order'      => 9,
+                    'enabled'    => Utilities::settingIsEnabled('enable_post_notes'),
+                    'capability' => 'edit_posts',
+                ],
+                [
                     'slug'     => 'advgb_settings',
                     'title'    => esc_html__('Settings', 'advanced-gutenberg'),
                     'callback' => 'loadSettingsPage',
-                    'order'    => 9,
+                    'order'    => 10,
                     'enabled'  => true
                 ]
             ];
@@ -2228,7 +2451,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
          */
         public function registerMainMenu()
         {
-            if (! current_user_can('manage_options')) {
+            /* Admins get the full menu. Users who can edit posts still get the menu
+             * registered so the Post Notes submenu (capability: edit_posts) is reachable;
+             * WordPress promotes the top-level menu to the first submenu they can access. */
+            if (! current_user_can('manage_options') && ! current_user_can('edit_posts')) {
                 return false;
             }
 
@@ -2251,7 +2477,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         'advgb_main',
                         $page['title'],
                         $page['title'],
-                        'manage_options',
+                        $page['capability'] ?? 'manage_options',
                         $page['slug'],
                         // slug should use underscores, not hyphen due we generate automatic function names based on it
                         ! empty($page['callback']) ? [ $this, $page['callback'] ] : '',
@@ -2469,7 +2695,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $this->blocksFeatureData(
                 'access',
                 // The object name to store the active/inactive blocks. To see it in browser console: advgbCUserRole.access
-                'advgb_blocks_user_roles' // Database option to check current user role's active/inactive blocks
+                'advgb_blocks_user_roles', // Database option to check current user role's active/inactive blocks
+                // Hide deprecated blocks and any globally disabled via Extra Blocks toggles
+                array_merge(self::hiddenDeprecatedBlocks(), self::globallyDisabledBlocks())
             );
 
             // Render form
@@ -2521,6 +2749,22 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $this->blocksUsageData();
 
             $this->blocksUsagePage();
+        }
+
+        /**
+         * Post Notes page
+         *
+         * @return void
+         */
+        public function loadPostNotesPage()
+        {
+            if (! current_user_can('edit_posts')) {
+                return false;
+            }
+
+            self::commonAdminPagesAssets();
+
+            require_once plugin_dir_path(dirname(__FILE__)) . 'incl/pages/post-notes.php';
         }
 
         /**
@@ -2587,7 +2831,78 @@ if (! class_exists('AdvancedGutenbergMain')) {
             }
 
             self::commonAdminPagesAssets();
+            Utilities::enqueueToolTipsAssets(); // Tooltips describing each block
+            wp_enqueue_media(); // Content Display gear -> Default thumbnail picker
             $this->loadPage('block-settings');
+        }
+
+        /**
+         * Save handler for the Extra Blocks page.
+         * Auto-hooked on 'load-{hook}' via registerMainMenu() ($slug . '_save_page').
+         * Handles the Content Display block's Default thumbnail.
+         *
+         * @return bool|void
+         */
+        public function advgb_block_settings_save_page()
+        {
+            if (! current_user_can('activate_plugins')) {
+                return false;
+            }
+
+            if (isset($_POST['save_content_display_thumb'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key($_POST['advgb_content_display_nonce_field']),
+                        'advgb_content_display_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $advgb_settings = get_option('advgb_settings');
+
+                $advgb_settings['rp_default_thumb'] = [
+                    'url' => esc_url_raw($_POST['post_default_thumb']),
+                    'id'  => (int) $_POST['post_default_thumb_id']
+                ];
+
+                update_option('advgb_settings', $advgb_settings);
+
+                if (isset($_REQUEST['_wp_http_referer'])) {
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_block_settings&save=success'));
+                    exit;
+                }
+            } // Global per-block enable/disable toggles
+            elseif (isset($_POST['save_blocks_enabled'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key($_POST['advgb_blocks_enabled_nonce_field']),
+                        'advgb_blocks_enabled_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $all_blocks = isset($_POST['advgb_blocks_all'])
+                    ? array_filter(array_map('sanitize_text_field', explode(',', wp_unslash($_POST['advgb_blocks_all']))))
+                    : [];
+                $checked = (isset($_POST['advgb_blocks_enabled']) && is_array($_POST['advgb_blocks_enabled']))
+                    ? array_map('sanitize_text_field', array_keys($_POST['advgb_blocks_enabled']))
+                    : [];
+
+                $state = [];
+                foreach ($all_blocks as $name) {
+                    // Checkboxes only post when checked; everything else is disabled
+                    $state[$name] = in_array($name, $checked, true) ? 1 : 0;
+                }
+
+                update_option('advgb_blocks_enabled', $state, false);
+
+                if (isset($_REQUEST['_wp_http_referer'])) {
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_block_settings&save=success'));
+                    exit;
+                }
+            }
         }
 
         /**
@@ -2977,58 +3292,15 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                 $advgb_settings = get_option('advgb_settings');
 
-                $advgb_settings['enable_blocks_spacing']       = isset($_POST['enable_blocks_spacing']) ? 1 : 0;
-                $advgb_settings['disable_wpautop']             = isset($_POST['disable_wpautop']) ? 1 : 0; // @TODO Remove later
-                $advgb_settings['enable_columns_visual_guide'] = isset($_POST['enable_columns_visual_guide']) ? 1 : 0;
-                $advgb_settings['blocks_spacing']              = (int) $_POST['blocks_spacing'];
-                $advgb_settings['blocks_icon_color']           = sanitize_hex_color($_POST['blocks_icon_color']);
-                $advgb_settings['editor_width']                = sanitize_text_field($_POST['editor_width']);
-
-                // Pro
-                if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
-                    if (
-                        method_exists(
-                            'PPB_AdvancedGutenbergPro\Utils\Definitions',
-                            'advgb_pro_setting_set_value'
-                        )
-                    ) {
-                        $advgb_settings['enable_pp_branding'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value('enable_pp_branding');
-                    }
-                }
+                $advgb_settings['blocks_icon_color'] = sanitize_hex_color($_POST['blocks_icon_color']);
 
                 update_option('advgb_settings', $advgb_settings);
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=general&save=success'));
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=extra-blocks&save=success'));
                     exit;
                 }
-            } // Images settings
-            elseif (isset($_POST['save_settings_images'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                if (
-                    ! wp_verify_nonce(
-                        sanitize_key($_POST['advgb_settings_images_nonce_field']),
-                        'advgb_settings_images_nonce'
-                    )
-                ) {
-                    return false;
-                }
-
-                $advgb_settings = get_option('advgb_settings');
-
-                $advgb_settings['gallery_lightbox']         = isset($_POST['gallery_lightbox']) ? 1 : 0;
-                $advgb_settings['gallery_lightbox_caption'] = (int) $_POST['gallery_lightbox_caption'];
-                $advgb_settings['rp_default_thumb']         = [
-                    'url' => esc_url_raw($_POST['post_default_thumb']),
-                    'id'  => (int) $_POST['post_default_thumb_id']
-                ];
-
-                update_option('advgb_settings', $advgb_settings);
-
-                if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=images&save=success'));
-                    exit;
-                }
-            } // Images settings
+            } // General settings
             elseif (isset($_POST['save_settings_block_features'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 if (
                     ! wp_verify_nonce(
@@ -3068,7 +3340,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 update_option('advgb_settings', $advgb_settings);
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=maps&save=success'));
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=maps&save=success'));
                     exit;
                 }
             } // Email & forms settings
@@ -3096,7 +3368,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
                     wp_safe_redirect(
-                        admin_url('admin.php?page=advgb_settings&tab=forms&save=success')
+                        admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=forms&save=success')
                     );
                     exit; // @TODO - Do we really need this?
                 }
@@ -3130,7 +3402,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
                     wp_safe_redirect(
-                        admin_url('admin.php?page=advgb_settings&tab=recaptcha&save=success')
+                        admin_url('admin.php?page=advgb_settings&tab=extra-blocks&subtab=recaptcha&save=success')
                     );
                     exit;
                 }
@@ -3167,6 +3439,59 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 }
 
                 return false;
+            } // Post Notes settings
+            elseif (isset($_POST['save_settings_post_notes'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key($_POST['advgb_settings_post_notes_nonce_field']),
+                        'advgb_settings_post_notes_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $advgb_settings = get_option('advgb_settings');
+
+                $advgb_settings['post_notes_block_toolbar'] = isset($_POST['post_notes_block_toolbar']) ? 1 : 0;
+
+                update_option('advgb_settings', $advgb_settings);
+
+                if (isset($_REQUEST['_wp_http_referer'])) {
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=post-notes&save=success'));
+                    exit;
+                }
+            } // Legacy blocks settings
+            elseif (isset($_POST['save_settings_legacy'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key($_POST['advgb_settings_legacy_nonce_field']),
+                        'advgb_settings_legacy_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $submitted = isset($_POST['advgb_legacy_blocks']) && is_array($_POST['advgb_legacy_blocks'])
+                    ? array_map('sanitize_text_field', wp_unslash($_POST['advgb_legacy_blocks']))
+                    : [];
+
+                $legacy_state = [];
+                foreach (array_keys(self::legacyBlocksMap()) as $slug) {
+                    $legacy_state[$slug] = ! empty($submitted[$slug]) ? 1 : 0;
+                }
+
+                update_option('advgb_legacy_blocks', $legacy_state, false);
+
+                // Legacy features: gallery lightbox (moved here from the Images tab)
+                $advgb_settings = get_option('advgb_settings');
+                $advgb_settings['gallery_lightbox']         = isset($_POST['gallery_lightbox']) ? 1 : 0;
+                $advgb_settings['gallery_lightbox_caption'] = (int) $_POST['gallery_lightbox_caption'];
+                update_option('advgb_settings', $advgb_settings);
+
+                if (isset($_REQUEST['_wp_http_referer'])) {
+                    wp_safe_redirect(admin_url('admin.php?page=advgb_settings&tab=legacy&save=success'));
+                    exit;
+                }
             }
 
             return false;
@@ -3819,7 +4144,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             </div>
                             <div class="advgb-toggle-wrapper">
                                 <?php
-                                _e('Enable or disable all blocks', 'advanced-gutenberg') ?>
+                                _e('Enable or disable all blocks for CURRENT ROLE', 'advanced-gutenberg') ?>
                                 <div class="advgb-switch-button">
                                     <label class="switch">
                                         <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
