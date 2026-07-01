@@ -46,11 +46,11 @@ addFilter('editor.BlockEdit', 'advgb/testimonialPro', function (BlockEdit) {
                             </div>
                         </BlockControls>
                         <InspectorControls>
-                            <PanelBody title={__('Content Size', 'advanced-gutenberg-pro')} className="advgb-pro-icon">
+                            <PanelBody title={__('Content Size', 'advanced-gutenberg')} className="advgb-pro-icon">
                                 <div className="advgb-promo-overlay-area">
                                     <div className="advgb-blur">
                                         <RangeControl
-                                            label={__('Name size', 'advanced-gutenberg-pro')}
+                                            label={__('Name size', 'advanced-gutenberg')}
                                             value={props.attributes.nameSize || ''}
                                             min={10}
                                             max={100}
@@ -58,7 +58,7 @@ addFilter('editor.BlockEdit', 'advgb/testimonialPro', function (BlockEdit) {
                                             allowReset
                                         />
                                         <RangeControl
-                                            label={__('Position size', 'advanced-gutenberg-pro')}
+                                            label={__('Position size', 'advanced-gutenberg')}
                                             value={props.attributes.positionSize || ''}
                                             min={10}
                                             max={100}
@@ -66,7 +66,7 @@ addFilter('editor.BlockEdit', 'advgb/testimonialPro', function (BlockEdit) {
                                             allowReset
                                         />
                                         <RangeControl
-                                            label={__('Description size', 'advanced-gutenberg-pro')}
+                                            label={__('Description size', 'advanced-gutenberg')}
                                             value={props.attributes.descriptionSize || ''}
                                             min={10}
                                             max={100}

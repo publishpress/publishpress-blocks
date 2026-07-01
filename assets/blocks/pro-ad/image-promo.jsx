@@ -17,11 +17,11 @@ addFilter('editor.BlockEdit', 'advgb/advImagePro', function (BlockEdit) {
                 {props.isSelected && props.name === 'advgb/image' && (
                     <Fragment>
                         <InspectorControls>
-                            <PanelBody title={__('Content Tags', 'advanced-gutenberg-pro')} className="advgb-pro-icon">
+                            <PanelBody title={__('Content Tags', 'advanced-gutenberg')} className="advgb-pro-icon">
                                 <div className="advgb-promo-overlay-area">
                                     <div className="advgb-blur">
                                         <SelectControl
-                                            label={__('Title tag', 'advanced-gutenberg-pro')}
+                                            label={__('Title tag', 'advanced-gutenberg')}
                                             value={props.attributes.titleTag}
                                             options={[
                                                 { label: 'h1', value: 'h1' },
@@ -35,7 +35,7 @@ addFilter('editor.BlockEdit', 'advgb/advImagePro', function (BlockEdit) {
                                             ]}
                                         />
                                         <SelectControl
-                                            label={__('Subtitle tag', 'advanced-gutenberg-pro')}
+                                            label={__('Subtitle tag', 'advanced-gutenberg')}
                                             value={props.attributes.subtitleTag}
                                             options={[
                                                 { label: 'h1', value: 'h1' },
