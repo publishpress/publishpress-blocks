@@ -43,9 +43,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
             global $wp_version;
 
             add_action('init', array( $this, 'registerPostMeta' ));
+            add_action('init', array( $this, 'registerCustomStyleFrontendFilter' ));
             // Initialize Legacy Blocks state before blocks are registered (init 10)
             add_action('plugins_loaded', array( $this, 'maybeInitLegacyBlocks' ), 1);
-            add_action('admin_init', array($this, 'addCustomStylesToReusableBlocks'));
             add_action('admin_init', array( $this, 'registerStylesScripts' ));
             add_action('admin_init', array( $this, 'addEditorFrameStyles' ));
             add_action('wp_loaded', [ 'PublishPress\Blocks\Controls', 'addAttributes' ], 999);
@@ -85,6 +85,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 add_action('admin_enqueue_scripts', [ $this, 'adminMenuStyles' ]);
                 add_action('activated_plugin', [ $this, 'maybeNewBlocks' ], 9999, 2);
                 add_filter('plugin_row_meta', [$this, 'addPluginActionLinks'], 10, 2);
+                add_filter('block_editor_settings_all', array( $this, 'injectCustomStylesIntoEditorIframe' ), 20);
 
                 if ($wp_version >= 5.8) {
                     add_action('admin_enqueue_scripts', array( $this, 'addEditorAssetsWidgets' ), 9999);
@@ -3565,24 +3566,46 @@ if (! class_exists('AdvancedGutenbergMain')) {
             if (!Utilities::settingIsEnabled('enable_custom_styles')) {
                 return '';
             }
+
+            $css = $this->getCustomStylesContentCss();
+
+            if (!empty($css)) {
+                echo '<style type="text/css">' . AdvancedGutenbergBlockStyles::sanitize_css($css) . '</style>';
+            }
+        }
+
+        /**
+         * Get custom block style CSS for frontend or editor iframe output.
+         *
+         * @return string
+         */
+        private function getCustomStylesContentCss()
+        {
             $custom_styles = get_option('advgb_custom_styles', AdvancedGutenbergBlockStyles::$default_custom_styles);
 
-            if (is_array($custom_styles)) {
-                $css = '';
+            if (!is_array($custom_styles)) {
+                return '';
+            }
 
-                foreach ($custom_styles as $styles) {
-                    if (isset($styles['generated_css']) && !empty($styles['generated_css'])) {
-                        $css .= $styles['generated_css'];
-                    } else {
-                        // Fallback: generate CSS on the fly for legacy data
-                        $css .= AdvancedGutenbergBlockStyles::generate_final_css($styles['css'], $styles['name']);
-                    }
+            $css = '';
+
+            foreach ($custom_styles as $styles) {
+                if (empty($styles['name'])) {
+                    continue;
                 }
 
-                if (!empty($css)) {
-                    echo '<style type="text/css">' . AdvancedGutenbergBlockStyles::sanitize_css($css) . '</style>';
+                if (isset($styles['generated_css']) && !empty($styles['generated_css'])) {
+                    $css .= AdvancedGutenbergBlockStyles::add_block_style_aliases(
+                        $styles['generated_css'],
+                        $styles['name']
+                    );
+                } elseif (isset($styles['css'])) {
+                    // Fallback: generate CSS on the fly for legacy data
+                    $css .= AdvancedGutenbergBlockStyles::generate_final_css($styles['css'], $styles['name']);
                 }
             }
+
+            return $css;
         }
 
         private function getAdminEditorCustomStyles() {
@@ -3594,12 +3617,23 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 foreach ($custom_styles as $styles) {
                     // post editor
                     $class_name = '.block-editor-writing-flow .' . $styles['name'];
+                    $class_name .= ', .block-editor-writing-flow .is-style-' . $styles['name'];
                     // resusable block editor
                     $class_name .= ', .editor-visual-editor iframe .' . $styles['name'];
+                    $class_name .= ', .editor-visual-editor iframe .is-style-' . $styles['name'];
                     $class_name .= ', .block-editor-iframe__body .' . $styles['name'];
+                    $class_name .= ', .block-editor-iframe__body .is-style-' . $styles['name'];
 
                     if (isset($styles['generated_css']) && !empty($styles['generated_css'])) {
-                        $admin_css = str_replace('.' . $styles['name'], $class_name, $styles['generated_css']);
+                        $generated_css = AdvancedGutenbergBlockStyles::add_block_style_aliases(
+                            $styles['generated_css'],
+                            $styles['name']
+                        );
+                        $admin_css = preg_replace(
+                            '/(?<![a-zA-Z0-9_-])\.(?:is-style-)?' . preg_quote($styles['name'], '/') . '(?![a-zA-Z0-9_-])/',
+                            $class_name,
+                            $generated_css
+                        );
                         $content .= $admin_css;
                     } else {
                         // Fallback: generate CSS on the fly for legacy data
@@ -3629,30 +3663,131 @@ if (! class_exists('AdvancedGutenbergMain')) {
             }
         }
 
+        /**
+         * Load custom block style CSS inside the block editor iframe.
+         *
+         * @param array $settings Block editor settings.
+         *
+         * @return array
+         */
+        public function injectCustomStylesIntoEditorIframe($settings)
+        {
+            if (!Utilities::settingIsEnabled('enable_custom_styles')) {
+                return $settings;
+            }
+
+            $custom_styles = $this->getCustomStylesContentCss();
+
+            if (empty($custom_styles)) {
+                return $settings;
+            }
+
+            if (!isset($settings['styles']) || !is_array($settings['styles'])) {
+                $settings['styles'] = [];
+            }
+
+            $settings['styles'][] = [
+                'css' => AdvancedGutenbergBlockStyles::sanitize_css($custom_styles),
+            ];
+
+            return $settings;
+        }
+
         public function addCustomStylesToReusableBlocks() {
 
             if (!Utilities::settingIsEnabled('enable_custom_styles')) {
                 return;
             }
 
-            if (get_post_type() === 'wp_block') {
-                add_filter('block_editor_settings_all', function($settings) {
+            add_filter('block_editor_settings_all', array( $this, 'injectCustomStylesIntoEditorIframe' ), 20);
+        }
 
-                    $custom_styles = $this->getAdminEditorCustomStyles();
+        /**
+         * Register frontend custom style class restoration.
+         *
+         * @return void
+         */
+        public function registerCustomStyleFrontendFilter()
+        {
+            if (is_admin() || !Utilities::settingIsEnabled('enable_custom_styles')) {
+                return;
+            }
 
-                    if (!empty($custom_styles)) {
-                        if (!isset($settings['styles'])) {
-                            $settings['styles'] = [];
-                        }
+            add_filter('render_block', array( $this, 'applyCustomStyleClassOnFrontend' ), 10, 2);
+        }
 
-                        $settings['styles'][] = [
-                            'css' => $custom_styles,
-                        ];
+        /**
+         * Restore the custom style class when a block save function drops extraProps.className.
+         *
+         * @param string $block_content Rendered block HTML.
+         * @param array  $block         Parsed block data.
+         *
+         * @return string
+         */
+        public function applyCustomStyleClassOnFrontend($block_content, $block)
+        {
+            if (
+                empty($block_content)
+                || empty($block['attrs']['customStyle'])
+                || !is_string($block['attrs']['customStyle'])
+            ) {
+                return $block_content;
+            }
+
+            $custom_style = sanitize_html_class($block['attrs']['customStyle']);
+
+            if (empty($custom_style)) {
+                return $block_content;
+            }
+
+            if (class_exists('WP_HTML_Tag_Processor')) {
+                $processor = new WP_HTML_Tag_Processor($block_content);
+
+                if (
+                    method_exists($processor, 'add_class')
+                    && method_exists($processor, 'get_updated_html')
+                    && $processor->next_tag()
+                ) {
+                    if (method_exists($processor, 'has_class') && $processor->has_class($custom_style)) {
+                        return $block_content;
                     }
 
-                    return $settings;
-                }, 20);
+                    $processor->add_class($custom_style);
+
+                    return $processor->get_updated_html();
+                }
             }
+
+            return $this->addClassToFirstHtmlTag($block_content, $custom_style);
+        }
+
+        /**
+         * Add a class to the first HTML tag for WordPress versions without Tag Processor support.
+         *
+         * @param string $html       HTML content.
+         * @param string $class_name Class to add.
+         *
+         * @return string
+         */
+        private function addClassToFirstHtmlTag($html, $class_name)
+        {
+            return preg_replace_callback('/<([a-z][a-z0-9:-]*)(\s[^>]*)?>/i', function ($matches) use ($class_name) {
+                $tag = $matches[0];
+
+                if (preg_match('/\sclass=(["\'])(.*?)\1/i', $tag)) {
+                    return preg_replace_callback('/\sclass=(["\'])(.*?)\1/i', function ($class_matches) use ($class_name) {
+                        $classes = trim($class_matches[2]);
+
+                        if (preg_match('/\b' . preg_quote($class_name, '/') . '\b/', $classes)) {
+                            return $class_matches[0];
+                        }
+
+                        return ' class=' . $class_matches[1] . esc_attr(trim($classes . ' ' . $class_name)) . $class_matches[1];
+                    }, $tag, 1);
+                }
+
+                return preg_replace('/(\s*\/?)>$/', ' class="' . esc_attr($class_name) . '"$1>', $tag);
+            }, $html, 1);
         }
 
         /**

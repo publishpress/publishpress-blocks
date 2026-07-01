@@ -863,16 +863,16 @@ class AdvancedGutenbergBlockStyles
      */
     public static function generate_final_css($css_data, $class_name)
     {
-        // make sure to trim off starting . in class name if it starts with it
-        $class_name = ltrim($class_name, '.');
+        $selector = self::get_custom_style_selector($class_name);
+
         // Handle string format (legacy custom CSS)
         if (is_string($css_data)) {
-            return ".{$class_name} {\n" . $css_data . "\n}";
+            return "{$selector} {\n" . $css_data . "\n}";
         }
 
         // Handle flat array format (legacy UI data)
         if (is_array($css_data) && !isset($css_data['base']) && !isset($css_data['nested']) && !isset($css_data['states'])) {
-            $css = ".{$class_name} {\n";
+            $css = "{$selector} {\n";
             foreach ($css_data as $property => $value) {
                 if (!empty($value)) {
                     $css .= "    {$property}: {$value};\n";
@@ -887,7 +887,7 @@ class AdvancedGutenbergBlockStyles
 
         // Base styles
         if (isset($css_data['base']) && is_array($css_data['base'])) {
-            $css .= ".{$class_name} {\n";
+            $css .= "{$selector} {\n";
             foreach ($css_data['base'] as $property => $value) {
                 if (!empty($value)) {
                     $css .= "    {$property}: {$value};\n";
@@ -900,7 +900,7 @@ class AdvancedGutenbergBlockStyles
         if (isset($css_data['states']) && is_array($css_data['states'])) {
             foreach ($css_data['states'] as $state => $rules) {
                 if (!empty($rules)) {
-                    $css .= ".{$class_name}{$state} {\n";
+                    $css .= self::append_to_selector_list($selector, $state) . " {\n";
                     foreach ($rules as $property => $value) {
                         if (!empty($value)) {
                             $css .= "    {$property}: {$value};\n";
@@ -914,7 +914,7 @@ class AdvancedGutenbergBlockStyles
         // Nested elements
         if (isset($css_data['nested']) && is_array($css_data['nested'])) {
             foreach ($css_data['nested'] as $selector => $element_rules) {
-                $full_selector = ".{$class_name} {$selector}";
+                $full_selector = self::append_to_selector_list(self::get_custom_style_selector($class_name), ' ' . $selector);
 
                 // Regular nested styles
                 $regular_rules = array_filter($element_rules, function ($key) {
@@ -935,7 +935,7 @@ class AdvancedGutenbergBlockStyles
                 if (isset($element_rules['states']) && is_array($element_rules['states'])) {
                     foreach ($element_rules['states'] as $state => $state_rules) {
                         if (!empty($state_rules)) {
-                            $css .= "{$full_selector}{$state} {\n";
+                            $css .= self::append_to_selector_list($full_selector, $state) . " {\n";
                             foreach ($state_rules as $property => $value) {
                                 if (!empty($value)) {
                                     $css .= "    {$property}: {$value};\n";
@@ -949,6 +949,106 @@ class AdvancedGutenbergBlockStyles
         }
 
         return $css;
+    }
+
+    /**
+     * Build selectors for custom styles.
+     *
+     * Older PublishPress Blocks custom styles use the raw style slug as a class,
+     * while WordPress block styles use the is-style-{slug} class. Emit both for
+     * plain style names and preserve complete selector lists passed by callers.
+     *
+     * @param string $class_name Style slug or complete CSS selector list.
+     *
+     * @return string
+     */
+    public static function get_custom_style_selector($class_name)
+    {
+        $class_name = trim((string) $class_name);
+
+        if ($class_name === '') {
+            return '';
+        }
+
+        if (preg_match('/[\s,>+~:#\[\]\*]/', $class_name)) {
+            return $class_name;
+        }
+
+        $class_name = ltrim($class_name, '.');
+
+        if (strpos($class_name, 'is-style-') === 0) {
+            return '.' . $class_name;
+        }
+
+        return '.' . $class_name . ', .is-style-' . $class_name;
+    }
+
+    /**
+     * Append a suffix to every selector in a selector list.
+     *
+     * @param string $selector_list Comma-separated selector list.
+     * @param string $suffix        Suffix to append.
+     *
+     * @return string
+     */
+    private static function append_to_selector_list($selector_list, $suffix)
+    {
+        $selectors = array_map('trim', explode(',', $selector_list));
+
+        foreach ($selectors as $index => $selector) {
+            if ($selector !== '') {
+                $selectors[$index] = $selector . $suffix;
+            }
+        }
+
+        return implode(', ', array_filter($selectors));
+    }
+
+    /**
+     * Add WordPress block style aliases to generated legacy custom style CSS.
+     *
+     * @param string $css        Generated CSS.
+     * @param string $class_name Custom style slug.
+     *
+     * @return string
+     */
+    public static function add_block_style_aliases($css, $class_name)
+    {
+        $class_name = ltrim(trim((string) $class_name), '.');
+
+        if ($css === '' || $class_name === '' || strpos($class_name, 'is-style-') === 0) {
+            return $css;
+        }
+
+        $class_selector = '.' . preg_quote($class_name, '/');
+        $alias_selector = '.is-style-' . $class_name;
+
+        return preg_replace_callback('/([^{}]+)\{/', function ($matches) use ($class_selector, $alias_selector) {
+            $selector_list = trim($matches[1]);
+
+            if (!preg_match('/' . $class_selector . '(?![a-zA-Z0-9_-])/', $selector_list)) {
+                return $matches[0];
+            }
+
+            if (strpos($selector_list, $alias_selector) !== false) {
+                return $matches[0];
+            }
+
+            $selectors = array_map('trim', explode(',', $selector_list));
+            $aliases   = array();
+
+            foreach ($selectors as $selector) {
+                if (preg_match('/' . $class_selector . '(?![a-zA-Z0-9_-])/', $selector)) {
+                    $aliases[] = preg_replace('/' . $class_selector . '(?![a-zA-Z0-9_-])/', $alias_selector, $selector);
+                }
+            }
+
+            if (empty($aliases)) {
+                return $matches[0];
+            }
+
+            return $selector_list . ', ' . implode(', ', array_unique($aliases)) . ' {';
+        }, $css);
     }
 
     public static function generate_control_group($field, $property)
