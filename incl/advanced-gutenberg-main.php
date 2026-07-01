@@ -1253,7 +1253,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
         {
             check_ajax_referer('block_usage_nonce', 'nonce');
 
-            if (! current_user_can('administrator')) {
+            if (! current_user_can('manage_options')) {
                 wp_send_json(__('No permission!', 'advanced-gutenberg'), 403);
                 return false;
             }
@@ -2408,7 +2408,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     'title'    => esc_html__('Block Usage', 'advanced-gutenberg'),
                     'callback' => 'loadBlockUsagePage',
                     'order'    => 6,
-                    'enabled'  => Utilities::settingIsEnabled('enable_block_usage')
+                    'enabled'    => Utilities::settingIsEnabled('enable_block_usage'),
+                    'capability' => 'manage_options',
                 ],
                 [
                     'slug'     => 'edit.php?post_type=wp_block',
@@ -2716,7 +2717,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
         public function loadBlockUsagePage()
         {
             // Check users permissions
-            if (! current_user_can('administrator')) {
+            if (! current_user_can('manage_options')) {
                 return false;
             }
 
