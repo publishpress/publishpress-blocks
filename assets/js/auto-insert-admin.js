@@ -6,6 +6,8 @@
     });
 
     function initAutoInsertAdmin() {
+        setSelect2Translations();
+
         // taxonomy select2
         $('.advg-insert-taxonomy-select2').pp_select2({
             placeholder: $(this).data('placeholder'),
@@ -212,6 +214,57 @@
         // Initialize on page load
         toggleTaxonomyVisibility();
         togglePositionOptions();
+    }
+
+    function setSelect2Translations() {
+        if (! $.fn.pp_select2 || ! advgbAutoInsertI18n.select2) {
+            return;
+        }
+
+        var strings = advgbAutoInsertI18n.select2;
+
+        $.fn.pp_select2.defaults.set('language', {
+            errorLoading: function () {
+                return strings.errorLoading;
+            },
+            inputTooLong: function (args) {
+                var count = args.input.length - args.maximum;
+
+                return formatCountString(strings.inputTooLong, count);
+            },
+            inputTooShort: function (args) {
+                var count = args.minimum - args.input.length;
+
+                return formatCountString(strings.inputTooShort, count);
+            },
+            loadingMore: function () {
+                return strings.loadingMore;
+            },
+            maximumSelected: function (args) {
+                return formatCountString(strings.maximumSelected, args.maximum);
+            },
+            noResults: function () {
+                return strings.noResults;
+            },
+            searching: function () {
+                return strings.searching;
+            },
+            removeAllItems: function () {
+                return strings.removeAllItems;
+            },
+            removeItem: function () {
+                return strings.removeItem;
+            },
+            search: function () {
+                return strings.search;
+            }
+        });
+    }
+
+    function formatCountString(stringSet, count) {
+        var template = count === 1 ? stringSet.one : stringSet.other;
+
+        return template.replace('%s', count);
     }
 
     function toggleTaxonomyVisibility() {
