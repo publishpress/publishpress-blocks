@@ -83,6 +83,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 add_filter('admin_body_class', array( $this, 'setAdvgEditorBodyClassses' ));
                 add_filter('admin_footer_text', [ $this, 'adminFooter' ]);
                 add_action('admin_enqueue_scripts', [ $this, 'adminMenuStyles' ]);
+                add_filter('views_edit-wp_block', [ $this, 'reusableBlocksDescription' ], 1);
+                add_filter('views_edit-advgb_insert_block', [ $this, 'autoInsertBlocksDescription' ], 1);
                 add_action('activated_plugin', [ $this, 'maybeNewBlocks' ], 9999, 2);
                 add_filter('plugin_row_meta', [$this, 'addPluginActionLinks'], 10, 2);
                 add_filter('block_editor_settings_all', array( $this, 'injectCustomStylesIntoEditorIframe' ), 20);
@@ -4236,6 +4238,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         echo $label; ?>
                     </h1>
                 </header>
+                <?php
+                $this->screenDescription(
+                    __('Choose which blocks are available to each user role, including default WordPress blocks.', 'advanced-gutenberg')
+                );
+                ?>
                 <div class="wrap">
                     <form method="post">
                         <?php
@@ -4369,6 +4376,12 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         <?php esc_html_e('Scan Block Usage', 'advanced-gutenberg'); ?>
                     </button>
                 </header>
+
+                <?php
+                $this->screenDescription(
+                    __('Scan your site to see where blocks are used across your posts.', 'advanced-gutenberg')
+                );
+                ?>
 
                 <div class="wrap">
                     <div class="tab-content block-list-tab" id="advgb-block-usage-app">
@@ -4970,6 +4983,58 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     '</a>'
                 );
             }
+        }
+
+        /**
+         * Output a short explanation for an admin screen.
+         *
+         * @param string $description Screen description.
+         *
+         * @return void
+         */
+        public function screenDescription($description)
+        {
+            if (empty($description)) {
+                return;
+            }
+            ?>
+            <p><?php echo esc_html($description); ?></p>
+            <?php
+        }
+
+        /**
+         * Output a description for the Reusable Blocks list screen.
+         *
+         * @param array $views List table views.
+         *
+         * @return array
+         */
+        public function reusableBlocksDescription($views)
+        {
+            $this->screenDescription(
+                __('Manage reusable blocks that can be inserted across your site.', 'advanced-gutenberg')
+            );
+
+            return $views;
+        }
+
+        /**
+         * Output a description for the Auto Insert Blocks list screen.
+         *
+         * @param array $views List table views.
+         *
+         * @return array
+         */
+        public function autoInsertBlocksDescription($views)
+        {
+            $this->screenDescription(
+                __(
+                    'Create rules to automatically insert reusable blocks into posts by position, category, tag, or other criteria.',
+                    'advanced-gutenberg'
+                )
+            );
+
+            return $views;
         }
 
         /**

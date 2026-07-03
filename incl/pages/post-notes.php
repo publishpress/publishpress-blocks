@@ -200,6 +200,15 @@ if ($filter_search) {
         </h1>
     </header>
 
+    <?php
+    $this->screenDescription(
+        __(
+            'Review notes added from the block editor toolbar across your posts.',
+            'advanced-gutenberg'
+        )
+    );
+    ?>
+
     <div class="wrap">
         <form method="get" action="<?php echo esc_url(admin_url('admin.php')) ?>">
             <input type="hidden" name="page" value="advgb_post_notes">

@@ -164,6 +164,14 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
             <?php esc_html_e('Extra Blocks', 'advanced-gutenberg') ?>
         </h1>
     </header>
+    <?php
+    $this->screenDescription(
+        __(
+            'Manage the extra PublishPress blocks available in the editor, including content displays, sliders, buttons, icons, tabs, accordions, and more.',
+            'advanced-gutenberg'
+        )
+    );
+    ?>
     <div class="wrap">
         <div class="advgb-search-wrapper" style="padding-bottom: 20px;">
             <input type="text"
