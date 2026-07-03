@@ -8,6 +8,14 @@ defined('ABSPATH') || die;
             <?php esc_html_e('PublishPress Blocks', 'advanced-gutenberg') ?>
         </h1>
     </header>
+    <?php
+    $this->screenDescription(
+        __(
+            'Use this dashboard to turn PublishPress Blocks features on or off.',
+            'advanced-gutenberg'
+        )
+    );
+    ?>
     <div class="wrap">
         <div class="pp-columns-wrapper"
         >
