@@ -1,6 +1,15 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[3.7.4] - 06 July, 2026
+
+- Feature: Add Post Notes screen (WordPress 6.9 Notes), #1823
+- Update: Add description on blocks screens, #1824
+- Fixed: Moved unused blocks to legacy settings, hide deprecateds and improve Content Display & Extra Blocks screen, #1825
+- Fixed: Block Styles (Custom Styles) not applying colors in the Editor and Frontend, #1820
+- Fixed: Editor Role Cannot Access Block Usage Page Despite Being Granted Capabilities, #1819
+- Fixed: Additional CSS classes not being added in frontend, #1817
+
 [3.7.3] - 17 June, 2026
 
 - Fixed: Fix GDRP/DSGVO issue with Icons from Google servers by loading icons from local bundled, #1803
