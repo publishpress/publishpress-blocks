@@ -27,6 +27,7 @@ $cd_thumb           = isset($advgb_settings_opt['rp_default_thumb'])
 // deprecated blocks plus inner/child blocks that aren't configured directly.
 $hidden_blocks     = array_merge(
     AdvancedGutenbergMain::hiddenDeprecatedBlocks(),
+    AdvancedGutenbergMain::disabledLegacyBlocks(),
     [
         'advgb/accordion-item', // Accordion Item
         'advgb/list-item',      // List Item
