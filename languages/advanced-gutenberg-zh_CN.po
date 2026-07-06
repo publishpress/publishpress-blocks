@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2022-10-25 14:40-0500\n"
-"PO-Revision-Date: 2026-07-03 08:27+0000\n"
+"PO-Revision-Date: 2026-07-06 17:41+0000\n"
 "X-Generator: Poedit 3.2\n"
 "X-Domain: advanced-gutenberg\n"
 "Language: zh_CN\n"
@@ -21,12 +21,12 @@ msgstr ""
 msgid "100"
 msgstr "100"
 
-#: incl/block-controls-main.php:1757, fuzzy
+#: incl/block-controls-main.php:1760, fuzzy
 msgid "404"
 msgstr "404"
 
 #: advanced-gutenberg.php:4
-#: incl/advanced-gutenberg-main.php:182
+#: incl/advanced-gutenberg-main.php:180
 #: incl/pages/main.php:8, fuzzy
 #. Plugin Name of the plugin
 msgid "PublishPress Blocks"
@@ -140,11 +140,11 @@ msgstr "已更新"
 msgid "Read More"
 msgstr "了解更多"
 
-#: incl/advanced-gutenberg-main.php:509
-#: incl/advanced-gutenberg-main.php:1051
-#: incl/advanced-gutenberg-main.php:2617
-#: incl/advanced-gutenberg-main.php:4053
-#: incl/advanced-gutenberg-main.php:6867
+#: incl/advanced-gutenberg-main.php:507
+#: incl/advanced-gutenberg-main.php:1049
+#: incl/advanced-gutenberg-main.php:2699
+#: incl/advanced-gutenberg-main.php:4136
+#: incl/advanced-gutenberg-main.php:6969
 #: assets/blocks/0-adv-components/datetime.jsx:453
 #: assets/blocks/advbutton/block.jsx:603
 #: assets/blocks/pro-ad/accordion-promo.jsx:51
@@ -210,10 +210,10 @@ msgstr "了解更多"
 msgid "Upgrade to Pro"
 msgstr "升级到专业版"
 
-#: incl/advanced-gutenberg-main.php:510
-#: incl/advanced-gutenberg-main.php:2618
-#: incl/advanced-gutenberg-main.php:4054
-#: incl/pages/block-settings.php:243
+#: incl/advanced-gutenberg-main.php:508
+#: incl/advanced-gutenberg-main.php:2700
+#: incl/advanced-gutenberg-main.php:4137
+#: incl/pages/block-settings.php:244
 #: assets/blocks/advbutton/block.jsx:595
 #: assets/blocks/pro-ad/accordion-promo.jsx:43
 #: assets/blocks/pro-ad/accordion-promo.jsx:92
@@ -273,80 +273,80 @@ msgstr "升级到专业版"
 msgid "Pro"
 msgstr "专业版"
 
-#: incl/advanced-gutenberg-main.php:1025
+#: incl/advanced-gutenberg-main.php:1023
 #, php-format
 msgid ""
 "You're using PublishPress Blocks Free. The Pro version has more features "
 "and support. %sUpgrade to Pro%s"
 msgstr "您正在使用 PublishPress Blocks 免费版。专业版具有更多功能和支持。%s升级到专业版%s"
 
-#: incl/advanced-gutenberg-main.php:1260
-#: incl/advanced-gutenberg-main.php:1386
-#: incl/advanced-gutenberg-main.php:1447
+#: incl/advanced-gutenberg-main.php:1258
+#: incl/advanced-gutenberg-main.php:1384
+#: incl/advanced-gutenberg-main.php:1445
 #: incl/block-styles/block-styles.php:234
 msgid "No permission!"
 msgstr "没有权限！"
 
-#: incl/advanced-gutenberg-main.php:1397
-#: incl/advanced-gutenberg-main.php:1460
-#: incl/advanced-gutenberg-main.php:1578
-#: incl/advanced-gutenberg-main.php:1673
-#: incl/advanced-gutenberg-main.php:1867
+#: incl/advanced-gutenberg-main.php:1395
+#: incl/advanced-gutenberg-main.php:1458
+#: incl/advanced-gutenberg-main.php:1576
+#: incl/advanced-gutenberg-main.php:1671
+#: incl/advanced-gutenberg-main.php:1865
 #: incl/block-styles/block-styles.php:241
 msgid "Invalid nonce token!"
 msgstr "无效的token！"
 
-#: incl/advanced-gutenberg-main.php:1401
-#: incl/advanced-gutenberg-main.php:1484
+#: incl/advanced-gutenberg-main.php:1399
+#: incl/advanced-gutenberg-main.php:1482
 msgid "Error: wrong data"
 msgstr "错误：数据错误"
 
-#: incl/advanced-gutenberg-main.php:1432
+#: incl/advanced-gutenberg-main.php:1430
 msgid "Error: can't edit this feature"
 msgstr "错误：无法编辑此功能"
 
-#: incl/advanced-gutenberg-main.php:1474
+#: incl/advanced-gutenberg-main.php:1472
 msgid "Error: wrong block type"
 msgstr "错误：错误的区块类型"
 
-#: incl/advanced-gutenberg-main.php:1583
-#: incl/advanced-gutenberg-main.php:1678
-#: incl/advanced-gutenberg-main.php:1873
+#: incl/advanced-gutenberg-main.php:1581
+#: incl/advanced-gutenberg-main.php:1676
+#: incl/advanced-gutenberg-main.php:1871
 msgid "Bad Request!"
 msgstr "错误的请求"
 
-#: incl/advanced-gutenberg-main.php:1593
-#: incl/advanced-gutenberg-main.php:1688
-#: incl/advanced-gutenberg-main.php:1881
+#: incl/advanced-gutenberg-main.php:1591
+#: incl/advanced-gutenberg-main.php:1686
+#: incl/advanced-gutenberg-main.php:1879
 msgid "Server error. Try again later!"
 msgstr "服务器错误。请重试！"
 
-#: incl/advanced-gutenberg-main.php:1601
-#: incl/advanced-gutenberg-main.php:1696
-#: incl/advanced-gutenberg-main.php:1889
+#: incl/advanced-gutenberg-main.php:1599
+#: incl/advanced-gutenberg-main.php:1694
+#: incl/advanced-gutenberg-main.php:1887
 msgid "Cannot validate captcha"
 msgstr "无法验证captcha"
 
-#: incl/advanced-gutenberg-main.php:1606
-#: incl/advanced-gutenberg-main.php:1701
-#: incl/advanced-gutenberg-main.php:1894
+#: incl/advanced-gutenberg-main.php:1604
+#: incl/advanced-gutenberg-main.php:1699
+#: incl/advanced-gutenberg-main.php:1892
 msgid "Captcha validation error"
 msgstr "captcha验证错误"
 
-#: incl/advanced-gutenberg-main.php:1632
+#: incl/advanced-gutenberg-main.php:1630
 #: incl/pages/settings/forms.php:24
 msgid "Website Contact"
 msgstr "网站联系方式"
 
-#: incl/advanced-gutenberg-main.php:1638
+#: incl/advanced-gutenberg-main.php:1636
 msgid "You have received a contact from your website."
 msgstr "你从你的网站上收到了一个联系表单"
 
-#: incl/advanced-gutenberg-main.php:1641
+#: incl/advanced-gutenberg-main.php:1639
 msgid "Name"
 msgstr "名字"
 
-#: incl/advanced-gutenberg-main.php:1643
+#: incl/advanced-gutenberg-main.php:1641
 #: incl/block-settings-main.php:808
 #: incl/block-settings-main.php:849
 #: incl/block-settings-main.php:890
@@ -355,71 +355,71 @@ msgstr "名字"
 msgid "Email"
 msgstr "电子邮件"
 
-#: incl/advanced-gutenberg-main.php:1645
+#: incl/advanced-gutenberg-main.php:1643
 #: incl/pages/post-notes.php:275
 #: incl/pages/post-notes.php:340
 msgid "Date"
 msgstr "日期"
 
-#: incl/advanced-gutenberg-main.php:1647
+#: incl/advanced-gutenberg-main.php:1645
 msgid "Message"
 msgstr "信息"
 
-#: incl/advanced-gutenberg-main.php:1655
+#: incl/advanced-gutenberg-main.php:1653
 msgid "Error while sending the form. Please try again."
 msgstr "发送表单时出错。请再试一次。"
 
-#: incl/advanced-gutenberg-main.php:1750
+#: incl/advanced-gutenberg-main.php:1748
 msgid "Too many submissions. Please try again later."
 msgstr "提交次数过多。请稍后再试。"
 
-#: incl/advanced-gutenberg-main.php:1897
+#: incl/advanced-gutenberg-main.php:1895
 msgid "Captcha validated"
 msgstr "验证码已验证"
 
-#: incl/advanced-gutenberg-main.php:1900
+#: incl/advanced-gutenberg-main.php:1898
 msgid "Captcha is empty"
 msgstr "验证码为空"
 
-#: incl/advanced-gutenberg-main.php:2296
+#: incl/advanced-gutenberg-main.php:2308
 msgid "Container"
 msgstr "容器"
 
-#: incl/advanced-gutenberg-main.php:2297
+#: incl/advanced-gutenberg-main.php:2309
 #: assets/blocks/contact-form/block.jsx:67
 #: assets/blocks/blocks.js:12116
 msgid "Contact Form"
 msgstr "联系表单"
 
-#: incl/advanced-gutenberg-main.php:2298
+#: incl/advanced-gutenberg-main.php:2310
 msgid "Login and Register"
 msgstr "登录和注册"
 
-#: incl/advanced-gutenberg-main.php:2299
+#: incl/advanced-gutenberg-main.php:2311
 #: assets/blocks/map/block.jsx:1237
 #: assets/blocks/blocks.js:17943
 msgid "Map"
 msgstr "地图"
 
-#: incl/advanced-gutenberg-main.php:2300
+#: incl/advanced-gutenberg-main.php:2312
 #: assets/blocks/newsletter/block.jsx:68
 #: assets/blocks/blocks.js:18401
 msgid "Newsletter"
 msgstr "新闻通讯"
 
-#: incl/advanced-gutenberg-main.php:2301
+#: incl/advanced-gutenberg-main.php:2313
 #: assets/blocks/search-bar/block.jsx:144
 #: assets/blocks/blocks.js:21973
 msgid "Search Bar"
 msgstr "搜索栏"
 
-#: incl/advanced-gutenberg-main.php:2302
+#: incl/advanced-gutenberg-main.php:2314
 #: assets/blocks/social-links/block.jsx:166
 #: assets/blocks/blocks.js:22594
 msgid "Social Links"
 msgstr "社交链接"
 
-#: incl/advanced-gutenberg-main.php:2303
+#: incl/advanced-gutenberg-main.php:2315
 #: assets/blocks/pro-ad/shared/index.jsx:122
 #: assets/blocks/testimonial/block.jsx:230
 #: assets/blocks/blocks.js:18954
@@ -428,39 +428,39 @@ msgstr "社交链接"
 msgid "Testimonial"
 msgstr "推荐语"
 
-#: incl/advanced-gutenberg-main.php:2304
+#: incl/advanced-gutenberg-main.php:2316
 #: assets/blocks/woo-products/block.jsx:233
 #: assets/blocks/blocks.js:25112
 msgid "Woo Products"
 msgstr "Woo 产品"
 
-#: incl/advanced-gutenberg-main.php:2376
-#: incl/advanced-gutenberg-main.php:6854
+#: incl/advanced-gutenberg-main.php:2458
+#: incl/advanced-gutenberg-main.php:6956
 #: assets/blocks/login-form/block.jsx:512
 #: assets/blocks/blocks.js:15881
 msgid "Dashboard"
 msgstr "仪表盘"
 
-#: incl/advanced-gutenberg-main.php:2383
-#: incl/advanced-gutenberg-main.php:2710
+#: incl/advanced-gutenberg-main.php:2465
+#: incl/advanced-gutenberg-main.php:2792
 #: incl/pages/main.php:29
 msgid "Block Permissions"
 msgstr "区块权限"
 
-#: incl/advanced-gutenberg-main.php:2390
-#: incl/pages/block-settings.php:164
+#: incl/advanced-gutenberg-main.php:2472
+#: incl/pages/block-settings.php:165
 #: incl/pages/main.php:39
 #: incl/pages/settings.php:81
 msgid "Extra Blocks"
 msgstr "额外区块"
 
-#: incl/advanced-gutenberg-main.php:2397
+#: incl/advanced-gutenberg-main.php:2479
 #: incl/pages/custom-styles.php:9
 #: incl/pages/main.php:49
 msgid "Block Styles"
 msgstr "区块样式"
 
-#: incl/advanced-gutenberg-main.php:2404
+#: incl/advanced-gutenberg-main.php:2486
 #: incl/pages/block-controls.php:30
 #: incl/pages/main.php:59
 #: assets/pages/block-controls/block-controls.jsx:2271
@@ -468,20 +468,20 @@ msgstr "区块样式"
 msgid "Block Controls"
 msgstr "区块控制"
 
-#: incl/advanced-gutenberg-main.php:2411
-#: incl/advanced-gutenberg-main.php:4373
+#: incl/advanced-gutenberg-main.php:2493
+#: incl/advanced-gutenberg-main.php:4475
 #: incl/pages/main.php:69
 msgid "Block Usage"
 msgstr "区块使用情况"
 
-#: incl/advanced-gutenberg-main.php:2419
-#: incl/advanced-gutenberg-main.php:6886
-#: incl/advanced-gutenberg-main.php:6888
+#: incl/advanced-gutenberg-main.php:2501
+#: incl/advanced-gutenberg-main.php:6988
+#: incl/advanced-gutenberg-main.php:6990
 #: incl/pages/main.php:79
 msgid "Reusable Blocks"
 msgstr "可重用区块"
 
-#: incl/advanced-gutenberg-main.php:2426
+#: incl/advanced-gutenberg-main.php:2508
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:141
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:179
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:180
@@ -489,152 +489,154 @@ msgstr "可重用区块"
 msgid "Auto Insert Blocks"
 msgstr "自动插入区块"
 
-#: incl/advanced-gutenberg-main.php:2433
+#: incl/advanced-gutenberg-main.php:2515
 #: incl/pages/main.php:98
 #: incl/pages/post-notes.php:199
 #: incl/pages/settings.php:94
 msgid "Post Notes"
 msgstr "帖子备注"
 
-#: incl/advanced-gutenberg-main.php:2441
-#: incl/advanced-gutenberg-main.php:6860
+#: incl/advanced-gutenberg-main.php:2523
+#: incl/advanced-gutenberg-main.php:6962
 #: incl/pages/settings.php:74
 msgid "Settings"
 msgstr "设置"
 
-#: incl/advanced-gutenberg-main.php:2469
-#: incl/advanced-gutenberg-main.php:2470
+#: incl/advanced-gutenberg-main.php:2551
+#: incl/advanced-gutenberg-main.php:2552
 #: incl/pages/block-controls.php:54
 msgid "Blocks"
 msgstr "区块"
 
-#: incl/advanced-gutenberg-main.php:2683
-#: incl/advanced-gutenberg-main.php:2731
-#: incl/advanced-gutenberg-main.php:2791
-#: incl/advanced-gutenberg-main.php:2827
-#: incl/advanced-gutenberg-main.php:2944
+#: incl/advanced-gutenberg-main.php:2765
+#: incl/advanced-gutenberg-main.php:2813
+#: incl/advanced-gutenberg-main.php:2873
+#: incl/advanced-gutenberg-main.php:2909
+#: incl/advanced-gutenberg-main.php:3026
 #, php-format
 msgid ""
 "This feature is disabled. In order to use, please enable back through "
 "%sDashboard%s."
 msgstr "此功能已禁用。要使用，请通过 %s仪表盘%s 启用。"
 
-#: incl/advanced-gutenberg-main.php:3017
+#: incl/advanced-gutenberg-main.php:3099
 #, php-format
 msgid "If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!"
 msgstr "如果您喜欢 %sPublishPress Blocks%s，请给我们留下 %s 评价。谢谢！"
 
-#: incl/advanced-gutenberg-main.php:3034
+#: incl/advanced-gutenberg-main.php:3116
 msgid "About PublishPress Blocks"
 msgstr "关于 PublishPress Blocks"
 
-#: incl/advanced-gutenberg-main.php:3037
+#: incl/advanced-gutenberg-main.php:3119
 msgid "About"
 msgstr "关于"
 
-#: incl/advanced-gutenberg-main.php:3044
-#: incl/advanced-gutenberg-main.php:3047
+#: incl/advanced-gutenberg-main.php:3126
+#: incl/advanced-gutenberg-main.php:3129
 msgid "Documentation"
 msgstr "文档"
 
-#: incl/advanced-gutenberg-main.php:3055
+#: incl/advanced-gutenberg-main.php:3137
 msgid "Contact the PublishPress team"
 msgstr "联系 PublishPress 团队"
 
-#: incl/advanced-gutenberg-main.php:3058
+#: incl/advanced-gutenberg-main.php:3140
 msgid "Contact"
 msgstr "联系"
 
-#: incl/advanced-gutenberg-main.php:3066
+#: incl/advanced-gutenberg-main.php:3148
 msgid "PublishPress Blocks logo"
 msgstr "PublishPress Blocks 标志"
 
-#: incl/advanced-gutenberg-main.php:4214
+#: incl/advanced-gutenberg-main.php:4297
 #, php-format
 msgid "%s saved successfully!"
 msgstr "%s 保存成功！"
 
-#: incl/advanced-gutenberg-main.php:4224
+#: incl/advanced-gutenberg-main.php:4307
 #, php-format
 msgid "%s can't be saved. Please try again."
 msgstr "%s 无法保存。请再试一次。"
 
-#: incl/advanced-gutenberg-main.php:4243
+#: incl/advanced-gutenberg-main.php:4326
 msgid ""
 "Choose which blocks are available to each user role, including default "
 "WordPress blocks."
 msgstr "选择每个用户角色可用的块，包括默认的 WordPress 块。"
 
-#: incl/advanced-gutenberg-main.php:4285
-#: incl/pages/block-controls/blocks.php:13
-#: incl/pages/block-settings.php:179
-msgid "Search blocks"
-msgstr "搜索块"
-
-#: incl/advanced-gutenberg-main.php:4290
-msgid "Enable or disable all blocks for CURRENT ROLE"
-msgstr "启用或禁用当前角色的所有块"
-
-#: incl/advanced-gutenberg-main.php:4303
-#: incl/advanced-gutenberg-main.php:4349
+#: incl/advanced-gutenberg-main.php:4357
+#: incl/advanced-gutenberg-main.php:4451
 #: incl/pages/block-controls/blocks.php:31
 #: incl/pages/block-controls/blocks.php:79
 msgid "To save this configuration, enable at least one block."
 msgstr "要保存此配置，请至少启用一个区块。"
 
-#: incl/advanced-gutenberg-main.php:4314
-#: incl/advanced-gutenberg-main.php:4338
-msgid "Save Role Block Permissions"
-msgstr "保存角色区块权限"
+#: incl/advanced-gutenberg-main.php:4370
+#: incl/advanced-gutenberg-main.php:4437
+#, php-format
+msgid "Save %s Block Permissions"
+msgstr "保存 %s 块权限"
 
-#: incl/advanced-gutenberg-main.php:4318
-#: incl/advanced-gutenberg-main.php:4342
+#: incl/advanced-gutenberg-main.php:4377
+#: incl/advanced-gutenberg-main.php:4444
 msgid "Save Permission for all Roles"
 msgstr "保存所有角色的权限"
 
-#: incl/advanced-gutenberg-main.php:4327
-#: incl/advanced-gutenberg-main.php:4389
+#: incl/advanced-gutenberg-main.php:4401
+#: incl/pages/block-controls/blocks.php:13
+#: incl/pages/block-settings.php:180
+msgid "Search blocks"
+msgstr "搜索块"
+
+#: incl/advanced-gutenberg-main.php:4407
+#, php-format
+msgid "Enable or disable all blocks for %s"
+msgstr "为 %s 启用或禁用所有块"
+
+#: incl/advanced-gutenberg-main.php:4424
+#: incl/advanced-gutenberg-main.php:4491
 #: incl/pages/block-controls/blocks.php:56
 #: assets/pages/block-usage/block-usage.jsx:886
 #: assets/pages/block-usage.js:886
 msgid "Loading..."
 msgstr "加载中..."
 
-#: incl/advanced-gutenberg-main.php:4376
+#: incl/advanced-gutenberg-main.php:4478
 #: assets/pages/block-usage/block-usage.jsx:295
 #: assets/pages/block-usage.js:295
 msgid "Scan Block Usage"
 msgstr "扫描区块使用情况"
 
-#: incl/advanced-gutenberg-main.php:4382
+#: incl/advanced-gutenberg-main.php:4484
 msgid "Scan your site to see where blocks are used across your posts."
 msgstr "扫描您的站点以查看块在您的帖子中使用的位置。"
 
-#: incl/advanced-gutenberg-main.php:4855
-#: incl/advanced-gutenberg-main.php:4856
+#: incl/advanced-gutenberg-main.php:4957
+#: incl/advanced-gutenberg-main.php:4958
 msgid "Block Config"
 msgstr "块设置"
 
-#: incl/advanced-gutenberg-main.php:4915
+#: incl/advanced-gutenberg-main.php:5017
 msgid "Default configuration for this block is not available."
 msgstr "此区块的默认配置不可用。"
 
-#: incl/advanced-gutenberg-main.php:4981
+#: incl/advanced-gutenberg-main.php:5083
 #, php-format
 msgid "Page not found. Go to %sDashboard%s"
 msgstr "未找到页面。前往 %s仪表板%s"
 
-#: incl/advanced-gutenberg-main.php:5015
+#: incl/advanced-gutenberg-main.php:5117
 msgid "Manage reusable blocks that can be inserted across your site."
 msgstr "管理可以在您的站点中插入的可重用块。"
 
-#: incl/advanced-gutenberg-main.php:5031
+#: incl/advanced-gutenberg-main.php:5133
 msgid ""
 "Create rules to automatically insert reusable blocks into posts by "
 "position, category, tag, or other criteria."
 msgstr "创建规则以根据位置、类别、标签或其他标准自动将可重用块插入帖子中。"
 
-#: incl/advanced-gutenberg-main.php:5454
+#: incl/advanced-gutenberg-main.php:5556
 #: incl/block-styles/block-styles.php:1186
 #: incl/block-styles/block-styles.php:1205
 #: incl/block-styles/block-styles.php:1375
@@ -677,141 +679,141 @@ msgstr "创建规则以根据位置、类别、标签或其他标准自动将可
 msgid "Default"
 msgstr "默认"
 
-#: incl/advanced-gutenberg-main.php:5468
+#: incl/advanced-gutenberg-main.php:5570
 msgid "Type field not defined"
 msgstr "输入的字段位定义"
 
-#: incl/advanced-gutenberg-main.php:5743
+#: incl/advanced-gutenberg-main.php:5845
 msgid "User registration is currently not allowed."
 msgstr "当前不允许用户注册。"
 
-#: incl/advanced-gutenberg-main.php:5747
+#: incl/advanced-gutenberg-main.php:5849
 msgid "Captcha must be checked!"
 msgstr "必须检查验证码！"
 
-#: incl/advanced-gutenberg-main.php:5748
+#: incl/advanced-gutenberg-main.php:5850
 msgid "Username or password is incorrect!"
 msgstr "用户名或密码不正确！"
 
-#: incl/advanced-gutenberg-main.php:6887
+#: incl/advanced-gutenberg-main.php:6989
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:222
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:87
 msgid "Reusable Block"
 msgstr "可重用区块"
 
-#: incl/advanced-gutenberg-main.php:6889
+#: incl/advanced-gutenberg-main.php:6991
 msgid "All Reusable Blocks"
 msgstr "所有可重用区块"
 
-#: incl/advanced-gutenberg-main.php:6890
+#: incl/advanced-gutenberg-main.php:6992
 msgid "Add New"
 msgstr "添加新项"
 
-#: incl/advanced-gutenberg-main.php:6891
+#: incl/advanced-gutenberg-main.php:6993
 msgid "Add New Reusable Block"
 msgstr "添加新可重用区块"
 
-#: incl/advanced-gutenberg-main.php:6892
+#: incl/advanced-gutenberg-main.php:6994
 msgid "Edit Reusable Block"
 msgstr "编辑可重用区块"
 
-#: incl/advanced-gutenberg-main.php:6893
+#: incl/advanced-gutenberg-main.php:6995
 msgid "New Reusable Block"
 msgstr "新可重用区块"
 
-#: incl/advanced-gutenberg-main.php:6894
+#: incl/advanced-gutenberg-main.php:6996
 msgid "View Reusable Block"
 msgstr "查看可重用区块"
 
-#: incl/advanced-gutenberg-main.php:6895
+#: incl/advanced-gutenberg-main.php:6997
 msgid "View Reusable Blocks"
 msgstr "查看可重用区块"
 
-#: incl/advanced-gutenberg-main.php:6896
+#: incl/advanced-gutenberg-main.php:6998
 msgid "Search Reusable Blocks"
 msgstr "搜索可重用区块"
 
-#: incl/advanced-gutenberg-main.php:6897
+#: incl/advanced-gutenberg-main.php:6999
 msgid "No reusable blocks found."
 msgstr "未找到可重用块。"
 
-#: incl/advanced-gutenberg-main.php:6898
+#: incl/advanced-gutenberg-main.php:7000
 msgid "No reusable blocks found in Trash."
 msgstr "回收站中未找到可重用块。"
 
-#: incl/advanced-gutenberg-main.php:6899
+#: incl/advanced-gutenberg-main.php:7001
 msgid "Parent Reusable Block:"
 msgstr "父级可重用块："
 
-#: incl/advanced-gutenberg-main.php:6900
+#: incl/advanced-gutenberg-main.php:7002
 msgid "Reusable Block Archives"
 msgstr "可重用块存档"
 
-#: incl/advanced-gutenberg-main.php:6918
+#: incl/advanced-gutenberg-main.php:7020
 msgid "Reusable Block Categories"
 msgstr "可重用块类别"
 
-#: incl/advanced-gutenberg-main.php:6919
+#: incl/advanced-gutenberg-main.php:7021
 msgid "Reusable Block Category"
 msgstr "可重用块类别"
 
-#: incl/advanced-gutenberg-main.php:6920
+#: incl/advanced-gutenberg-main.php:7022
 msgid "Block Categories"
 msgstr "块类别"
 
-#: incl/advanced-gutenberg-main.php:6921
+#: incl/advanced-gutenberg-main.php:7023
 msgid "All Block Categories"
 msgstr "所有块类别"
 
-#: incl/advanced-gutenberg-main.php:6922
+#: incl/advanced-gutenberg-main.php:7024
 msgid "Edit Block Category"
 msgstr "编辑块类别"
 
-#: incl/advanced-gutenberg-main.php:6923
+#: incl/advanced-gutenberg-main.php:7025
 msgid "View Block Category"
 msgstr "查看块类别"
 
-#: incl/advanced-gutenberg-main.php:6924
+#: incl/advanced-gutenberg-main.php:7026
 msgid "Update Block Category"
 msgstr "更新块类别"
 
-#: incl/advanced-gutenberg-main.php:6925
+#: incl/advanced-gutenberg-main.php:7027
 msgid "Add New Block Category"
 msgstr "添加新块类别"
 
-#: incl/advanced-gutenberg-main.php:6926
+#: incl/advanced-gutenberg-main.php:7028
 msgid "New Block Category Name"
 msgstr "新块类别名称"
 
-#: incl/advanced-gutenberg-main.php:6927
+#: incl/advanced-gutenberg-main.php:7029
 msgid "Parent Block Category"
 msgstr "父级块类别"
 
-#: incl/advanced-gutenberg-main.php:6928
+#: incl/advanced-gutenberg-main.php:7030
 msgid "Parent Block Category:"
 msgstr "父级块类别："
 
-#: incl/advanced-gutenberg-main.php:6929
+#: incl/advanced-gutenberg-main.php:7031
 msgid "Search Block Categories"
 msgstr "搜索块类别"
 
-#: incl/advanced-gutenberg-main.php:6930
+#: incl/advanced-gutenberg-main.php:7032
 msgid "Popular Block Categories"
 msgstr "热门块类别"
 
-#: incl/advanced-gutenberg-main.php:6931
+#: incl/advanced-gutenberg-main.php:7033
 msgid "Separate block categories with commas"
 msgstr "用逗号分隔块类别"
 
-#: incl/advanced-gutenberg-main.php:6932
+#: incl/advanced-gutenberg-main.php:7034
 msgid "Add or remove block categories"
 msgstr "添加或删除块类别"
 
-#: incl/advanced-gutenberg-main.php:6933
+#: incl/advanced-gutenberg-main.php:7035
 msgid "Choose from the most used block categories"
 msgstr "从最常用的块类别中选择"
 
-#: incl/advanced-gutenberg-main.php:6934
+#: incl/advanced-gutenberg-main.php:7036
 msgid "No block categories found."
 msgstr "未找到区块类别。"
 
@@ -870,7 +872,7 @@ msgid "Remove item"
 msgstr "移除项目"
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:122
-#: incl/block-controls-main.php:1753
+#: incl/block-controls-main.php:1756
 #: assets/pages/block-controls/block-controls.jsx:1573
 #: assets/pages/block-controls/block-controls.jsx:2153
 #: assets/pages/block-controls.js:2268
@@ -1358,17 +1360,17 @@ msgstr "如果您有多个规则针对帖子中的同一位置，此选项决定
 msgid "Search terms..."
 msgstr "搜索词..."
 
-#: incl/block-controls-main.php:1741
+#: incl/block-controls-main.php:1744
 #: assets/blocks/login-form/block.jsx:511
 #: assets/blocks/blocks.js:15880
 msgid "Home"
 msgstr "主页"
 
-#: incl/block-controls-main.php:1745
+#: incl/block-controls-main.php:1748
 msgid "Blog"
 msgstr "博客"
 
-#: incl/block-controls-main.php:1749
+#: incl/block-controls-main.php:1752
 #: assets/pages/block-controls/preset-manager.jsx:677
 #: assets/pages/preset-manager.js:1287
 msgid "Archive"
@@ -3952,7 +3954,7 @@ msgid "Blocks saved successfully!"
 msgstr "区块保存成功！"
 
 #: incl/pages/block-controls.php:18
-#: incl/pages/block-settings.php:159
+#: incl/pages/block-settings.php:160
 #: incl/pages/settings.php:67
 msgid "Settings saved successfully!"
 msgstr "设置已成功保存！"
@@ -4206,266 +4208,266 @@ msgstr "保存控制"
 msgid "Loading presets..."
 msgstr "加载预设..."
 
-#: incl/pages/block-settings.php:91
+#: incl/pages/block-settings.php:92
 #: assets/blocks/advaccordion/block.jsx:451
 #: assets/blocks/blocks.js:2556
 msgid "Accordion - PublishPress"
 msgstr "手风琴 - PublishPress"
 
-#: incl/pages/block-settings.php:92
+#: incl/pages/block-settings.php:93
 #: assets/blocks/advbutton/block.jsx:794
 #: assets/blocks/blocks.js:3531
 msgid "Button - PublishPress"
 msgstr "按钮 - PublishPress"
 
-#: incl/pages/block-settings.php:93
+#: incl/pages/block-settings.php:94
 #: assets/blocks/advicon/block.jsx:516
 #: assets/blocks/blocks.js:4239
 msgid "Icon - PublishPress"
 msgstr "图标 - PublishPress"
 
-#: incl/pages/block-settings.php:94
+#: incl/pages/block-settings.php:95
 #: assets/blocks/advimage/block.jsx:409
 #: assets/blocks/blocks.js:4875
 msgid "Image - PublishPress"
 msgstr "图像 - PublishPress"
 
-#: incl/pages/block-settings.php:95
+#: incl/pages/block-settings.php:96
 #: assets/blocks/advlist/block.jsx:446
 #: assets/blocks/blocks.js:5602
 msgid "List - PublishPress"
 msgstr "列表 - PublishPress"
 
-#: incl/pages/block-settings.php:96
+#: incl/pages/block-settings.php:97
 #: assets/blocks/advtable/block.jsx:1399
 #: assets/blocks/blocks.js:7267
 msgid "Table - PublishPress"
 msgstr "表格 - PublishPress"
 
-#: incl/pages/block-settings.php:97
+#: incl/pages/block-settings.php:98
 #: assets/blocks/advtabs/block.jsx:759
 #: assets/blocks/blocks.js:8581
 msgid "Tabs - PublishPress"
 msgstr "标签 - PublishPress"
 
-#: incl/pages/block-settings.php:98
+#: incl/pages/block-settings.php:99
 #: assets/blocks/advvideo/block.jsx:616
 #: assets/blocks/blocks.js:10145
 msgid "Video - PublishPress"
 msgstr "视频 - PublishPress"
 
-#: incl/pages/block-settings.php:99
+#: incl/pages/block-settings.php:100
 #: assets/blocks/columns/block.jsx:938
 #: assets/blocks/blocks.js:11286
 msgid "Columns - PublishPress"
 msgstr "列 - PublishPress"
 
-#: incl/pages/block-settings.php:100
+#: incl/pages/block-settings.php:101
 #: assets/blocks/columns/column.jsx:374
 #: assets/blocks/blocks.js:11905
 msgid "Column - PublishPress"
 msgstr "列 - PublishPress"
 
-#: incl/pages/block-settings.php:101
+#: incl/pages/block-settings.php:102
 #: assets/blocks/contact-form/block.jsx:319
 #: assets/blocks/blocks.js:12368
 msgid "Contact Form - PublishPress"
 msgstr "联系表单 - PublishPress"
 
-#: incl/pages/block-settings.php:102
+#: incl/pages/block-settings.php:103
 #: assets/blocks/count-up/block.jsx:435
 #: assets/blocks/blocks.js:13013
 msgid "Count Up - PublishPress"
 msgstr "计数器 - PublishPress"
 
-#: incl/pages/block-settings.php:103
+#: incl/pages/block-settings.php:104
 #: assets/blocks/images-slider/block.jsx:607
 #: assets/blocks/blocks.js:13863
 msgid "Images Slider - PublishPress"
 msgstr "图片滑块 - PublishPress"
 
-#: incl/pages/block-settings.php:104
+#: incl/pages/block-settings.php:105
 #: assets/blocks/infobox/block.jsx:987
 #: assets/blocks/blocks.js:15240
 msgid "Info Box - PublishPress"
 msgstr "信息框 - PublishPress"
 
-#: incl/pages/block-settings.php:105
+#: incl/pages/block-settings.php:106
 #: assets/blocks/map/block.jsx:1482
 #: assets/blocks/blocks.js:18190
 msgid "Map - PublishPress"
 msgstr "地图 - PublishPress"
 
-#: incl/pages/block-settings.php:106
+#: incl/pages/block-settings.php:107
 #: assets/blocks/newsletter/block.jsx:303
 #: assets/blocks/blocks.js:18636
 msgid "Newsletter - PublishPress"
 msgstr "新闻通讯 - PublishPress"
 
-#: incl/pages/block-settings.php:107
+#: incl/pages/block-settings.php:108
 #: assets/blocks/social-links/block.jsx:381
 #: assets/blocks/blocks.js:22809
 msgid "Social Links - PublishPress"
 msgstr "社交链接 - PublishPress"
 
-#: incl/pages/block-settings.php:108
+#: incl/pages/block-settings.php:109
 #: assets/blocks/summary/block.jsx:22
 #: assets/blocks/blocks.js:22935
 msgid "Table of Contents - PublishPress"
 msgstr "目录 - PublishPress"
 
-#: incl/pages/block-settings.php:109
+#: incl/pages/block-settings.php:110
 #: assets/blocks/testimonial/block.jsx:673
 #: assets/blocks/blocks.js:24671
 msgid "Testimonial - PublishPress"
 msgstr "推荐 - PublishPress"
 
-#: incl/pages/block-settings.php:110
+#: incl/pages/block-settings.php:111
 #: assets/blocks/woo-products/block.jsx:409
 #: assets/blocks/blocks.js:25288
 msgid "Woo Products - PublishPress"
 msgstr "Woo 产品 - PublishPress"
 
-#: incl/pages/block-settings.php:115
+#: incl/pages/block-settings.php:116
 msgid "Show content in collapsible panels that expand when clicked."
 msgstr "在可折叠面板中显示内容，点击时展开。"
 
-#: incl/pages/block-settings.php:116
+#: incl/pages/block-settings.php:117
 msgid "Add a customizable call-to-action button with colors, sizes and icons."
 msgstr "添加一个可自定义的行动按钮，具有颜色、大小和图标。"
 
-#: incl/pages/block-settings.php:117
+#: incl/pages/block-settings.php:118
 msgid "Insert a vector icon from a large library, with size and color controls."
 msgstr "从大型库中插入矢量图标，具有大小和颜色控制。"
 
-#: incl/pages/block-settings.php:118
+#: incl/pages/block-settings.php:119
 msgid "Display an image with extra styling, captions and link options."
 msgstr "显示带有额外样式、标题和链接选项的图像。"
 
-#: incl/pages/block-settings.php:119
+#: incl/pages/block-settings.php:120
 msgid "Build styled ordered or unordered lists with custom icons."
 msgstr "构建带有自定义图标的有序或无序列表。"
 
-#: incl/pages/block-settings.php:120
+#: incl/pages/block-settings.php:121
 msgid "Create responsive tables with styling and per-cell formatting."
 msgstr "创建具有样式和每个单元格格式的响应式表格。"
 
-#: incl/pages/block-settings.php:121
+#: incl/pages/block-settings.php:122
 msgid "Organize content into horizontal or vertical tabbed sections."
 msgstr "将内容组织成水平或垂直的标签部分。"
 
-#: incl/pages/block-settings.php:122
+#: incl/pages/block-settings.php:123
 msgid "Embed a self-hosted or external video with a custom poster image."
 msgstr "嵌入自托管或外部视频，并添加自定义海报图像。"
 
-#: incl/pages/block-settings.php:123
+#: incl/pages/block-settings.php:124
 msgid "Lay out content in flexible, responsive multi-column rows."
 msgstr "在灵活的响应式多列行中布局内容。"
 
-#: incl/pages/block-settings.php:124
+#: incl/pages/block-settings.php:125
 msgid "A single column used inside the Columns block."
 msgstr "在列块内使用的单列。"
 
-#: incl/pages/block-settings.php:125
+#: incl/pages/block-settings.php:126
 msgid "Wrap blocks in a styled container with background, padding and borders."
 msgstr "将块包装在具有背景、内边距和边框的样式容器中。"
 
-#: incl/pages/block-settings.php:126
+#: incl/pages/block-settings.php:127
 msgid "Add a customizable contact form that emails submissions to you."
 msgstr "添加一个可自定义的联系表单，将提交内容通过电子邮件发送给您。"
 
-#: incl/pages/block-settings.php:127
+#: incl/pages/block-settings.php:128
 msgid "Animate numbers counting up to highlight stats and milestones."
 msgstr "动画数字计数以突出显示统计数据和里程碑。"
 
-#: incl/pages/block-settings.php:128
+#: incl/pages/block-settings.php:129
 msgid "Show multiple images in a responsive carousel slider."
 msgstr "在响应式轮播滑块中显示多个图像。"
 
-#: incl/pages/block-settings.php:129
+#: incl/pages/block-settings.php:130
 msgid "Present an icon or image with a heading and text in a styled box."
 msgstr "在样式框中呈现图标或图像及其标题和文本。"
 
-#: incl/pages/block-settings.php:130
+#: incl/pages/block-settings.php:131
 msgid "Embed an interactive Google Map with custom markers."
 msgstr "嵌入具有自定义标记的交互式谷歌地图。"
 
-#: incl/pages/block-settings.php:131
+#: incl/pages/block-settings.php:132
 msgid "Collect email subscribers with a customizable signup form."
 msgstr "通过可自定义的注册表单收集电子邮件订阅者。"
 
-#: incl/pages/block-settings.php:132
+#: incl/pages/block-settings.php:133
 msgid "Display a front-end login and registration form."
 msgstr "显示前端登录和注册表单。"
 
-#: incl/pages/block-settings.php:133
+#: incl/pages/block-settings.php:134
 msgid "Add a styled site search bar anywhere on your pages."
 msgstr "在您页面的任何地方添加样式网站搜索栏。"
 
-#: incl/pages/block-settings.php:134
+#: incl/pages/block-settings.php:135
 msgid "Link to your social profiles with a row of social icons."
 msgstr "用一排社交图标链接到您的社交资料。"
 
-#: incl/pages/block-settings.php:135
+#: incl/pages/block-settings.php:136
 msgid "Generate an automatic table of contents from your headings."
 msgstr "从您的标题生成自动目录。"
 
-#: incl/pages/block-settings.php:136
+#: incl/pages/block-settings.php:137
 msgid "Showcase customer testimonials with photo, name and role."
 msgstr "展示客户推荐，包含照片、姓名和角色。"
 
-#: incl/pages/block-settings.php:137
+#: incl/pages/block-settings.php:138
 msgid "Display WooCommerce products in a customizable grid."
 msgstr "在可自定义的网格中展示WooCommerce产品。"
 
-#: incl/pages/block-settings.php:138
+#: incl/pages/block-settings.php:139
 msgid "Display a countdown timer to a specific date or event."
 msgstr "显示倒计时计时器，直到特定日期或事件。"
 
-#: incl/pages/block-settings.php:139
+#: incl/pages/block-settings.php:140
 msgid "Highlight a single feature with an icon, title and description."
 msgstr "使用图标、标题和描述突出显示单个功能。"
 
-#: incl/pages/block-settings.php:140
+#: incl/pages/block-settings.php:141
 msgid "Compare pricing plans side by side with features and buttons."
 msgstr "并排比较定价方案，包含功能和按钮。"
 
-#: incl/pages/block-settings.php:169
+#: incl/pages/block-settings.php:170
 msgid ""
 "Manage the extra PublishPress blocks available in the editor, including "
 "content displays, sliders, buttons, icons, tabs, accordions, and more."
 msgstr "管理在编辑器中可用的额外PublishPress模块，包括内容显示、滑块、按钮、图标、标签、手风琴等。"
 
-#: incl/pages/block-settings.php:223
+#: incl/pages/block-settings.php:224
 msgid "Enable / disable this block"
 msgstr "启用 / 禁用此模块"
 
-#: incl/pages/block-settings.php:237
+#: incl/pages/block-settings.php:238
 msgid "Configure"
 msgstr "配置"
 
-#: incl/pages/block-settings.php:248
-#: incl/pages/block-settings.php:298
+#: incl/pages/block-settings.php:249
+#: incl/pages/block-settings.php:299
 #: assets/pages/block-controls/preset-manager.jsx:746
 #: assets/pages/preset-manager.js:1356
 msgid "Edit"
 msgstr "编辑"
 
-#: incl/pages/block-settings.php:260
-#: incl/pages/block-settings.php:314
+#: incl/pages/block-settings.php:261
+#: incl/pages/block-settings.php:315
 #: incl/pages/block-settings/block-config.php:14
 #: incl/pages/block-settings/block-config.php:30
 msgid "Save"
 msgstr "保存"
 
-#: incl/pages/block-settings.php:269
+#: incl/pages/block-settings.php:270
 msgid ""
 "No blocks available. Please go to a post edit (without saving either "
 "modifying anything). Then come back to Block Settings to see the blocks "
 "list."
 msgstr "没有可用的区块。请前往帖子编辑（不保存或修改任何内容）。然后返回区块设置以查看区块列表。"
 
-#: incl/pages/block-settings.php:279
+#: incl/pages/block-settings.php:280
 #: assets/blocks/pro-ad/shared/index.jsx:102
 #: assets/blocks/recent-posts/block.jsx:1544
 #: assets/blocks/recent-posts/block.jsx:1624
@@ -4476,25 +4478,25 @@ msgstr "没有可用的区块。请前往帖子编辑（不保存或修改任何
 msgid "Content Display"
 msgstr "内容显示"
 
-#: incl/pages/block-settings.php:285
+#: incl/pages/block-settings.php:286
 msgid "Default thumbnail"
 msgstr "默认缩略图"
 
-#: incl/pages/block-settings.php:299
+#: incl/pages/block-settings.php:300
 msgid "Reset to default"
 msgstr "重置至默认"
 
-#: incl/pages/block-settings.php:303
+#: incl/pages/block-settings.php:304
 msgid ""
 "Set the default post thumbnail to use in Content Display blocks for posts "
 "without a featured image."
 msgstr "为没有特色图像的文章设置默认文章缩略图，以便在内容显示模块中使用。"
 
-#: incl/pages/block-settings.php:328
+#: incl/pages/block-settings.php:329
 msgid "Select default thumbnail"
 msgstr "选择默认缩略图"
 
-#: incl/pages/block-settings.php:329
+#: incl/pages/block-settings.php:330
 msgid "Use this image"
 msgstr "使用此图像"
 
@@ -4644,8 +4646,8 @@ msgid "Add Google Fonts support to core blocks including paragraphs and headings
 msgstr "为核心区块添加 Google 字体支持，包括段落和标题。"
 
 #: incl/pages/post-notes.php:205
-msgid "Review notes added from the block editor toolbar across your posts."
-msgstr "查看从块编辑器工具栏添加到您所有文章的备注。"
+msgid "Find all the editorial notes for your posts in one place."
+msgstr "在一个地方找到您帖子中的所有编辑备注。"
 
 #: incl/pages/post-notes.php:220
 msgid "All post types"

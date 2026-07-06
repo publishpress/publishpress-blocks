@@ -1,7 +1,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-[3.7.4] - 06 July, 2026
+[3.7.4] - 07 July, 2026
 
 - Feature: Add Post Notes screen (WordPress 6.9 Notes), #1823
 - Update: Add description on blocks screens, #1824

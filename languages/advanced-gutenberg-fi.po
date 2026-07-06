@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-06-05T15:08:13+00:00\n"
-"PO-Revision-Date: 2026-07-03 08:15+0000\n"
+"PO-Revision-Date: 2026-07-06 17:41+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -21,12 +21,12 @@ msgstr ""
 msgid "100"
 msgstr "100"
 
-#: incl/block-controls-main.php:1757, fuzzy
+#: incl/block-controls-main.php:1760, fuzzy
 msgid "404"
 msgstr "404"
 
 #: advanced-gutenberg.php:4
-#: incl/advanced-gutenberg-main.php:182
+#: incl/advanced-gutenberg-main.php:180
 #: incl/pages/main.php:8
 #. Plugin Name of the plugin
 msgid "PublishPress Blocks"
@@ -142,11 +142,11 @@ msgstr "Päivitetty"
 msgid "Read More"
 msgstr "Lue lisää"
 
-#: incl/advanced-gutenberg-main.php:509
-#: incl/advanced-gutenberg-main.php:1051
-#: incl/advanced-gutenberg-main.php:2617
-#: incl/advanced-gutenberg-main.php:4053
-#: incl/advanced-gutenberg-main.php:6867
+#: incl/advanced-gutenberg-main.php:507
+#: incl/advanced-gutenberg-main.php:1049
+#: incl/advanced-gutenberg-main.php:2699
+#: incl/advanced-gutenberg-main.php:4136
+#: incl/advanced-gutenberg-main.php:6969
 #: assets/blocks/0-adv-components/datetime.jsx:453
 #: assets/blocks/advbutton/block.jsx:603
 #: assets/blocks/pro-ad/accordion-promo.jsx:51
@@ -212,10 +212,10 @@ msgstr "Lue lisää"
 msgid "Upgrade to Pro"
 msgstr "Päivitä Pro-versioon"
 
-#: incl/advanced-gutenberg-main.php:510
-#: incl/advanced-gutenberg-main.php:2618
-#: incl/advanced-gutenberg-main.php:4054
-#: incl/pages/block-settings.php:243
+#: incl/advanced-gutenberg-main.php:508
+#: incl/advanced-gutenberg-main.php:2700
+#: incl/advanced-gutenberg-main.php:4137
+#: incl/pages/block-settings.php:244
 #: assets/blocks/advbutton/block.jsx:595
 #: assets/blocks/pro-ad/accordion-promo.jsx:43
 #: assets/blocks/pro-ad/accordion-promo.jsx:92
@@ -275,7 +275,7 @@ msgstr "Päivitä Pro-versioon"
 msgid "Pro"
 msgstr "Pro"
 
-#: incl/advanced-gutenberg-main.php:1025
+#: incl/advanced-gutenberg-main.php:1023
 #, php-format
 msgid ""
 "You're using PublishPress Blocks Free. The Pro version has more features "
@@ -284,73 +284,73 @@ msgstr ""
 "Käytät PublishPress Blocks Free -versiota. Pro-versiossa on enemmän "
 "ominaisuuksia ja tukea. %sPäivitä Pro:hon%s"
 
-#: incl/advanced-gutenberg-main.php:1260
-#: incl/advanced-gutenberg-main.php:1386
-#: incl/advanced-gutenberg-main.php:1447
+#: incl/advanced-gutenberg-main.php:1258
+#: incl/advanced-gutenberg-main.php:1384
+#: incl/advanced-gutenberg-main.php:1445
 #: incl/block-styles/block-styles.php:234
 msgid "No permission!"
 msgstr "Ei lupaa!"
 
-#: incl/advanced-gutenberg-main.php:1397
-#: incl/advanced-gutenberg-main.php:1460
-#: incl/advanced-gutenberg-main.php:1578
-#: incl/advanced-gutenberg-main.php:1673
-#: incl/advanced-gutenberg-main.php:1867
+#: incl/advanced-gutenberg-main.php:1395
+#: incl/advanced-gutenberg-main.php:1458
+#: incl/advanced-gutenberg-main.php:1576
+#: incl/advanced-gutenberg-main.php:1671
+#: incl/advanced-gutenberg-main.php:1865
 #: incl/block-styles/block-styles.php:241
 msgid "Invalid nonce token!"
 msgstr "Virheellinen nonce-token!"
 
-#: incl/advanced-gutenberg-main.php:1401
-#: incl/advanced-gutenberg-main.php:1484
+#: incl/advanced-gutenberg-main.php:1399
+#: incl/advanced-gutenberg-main.php:1482
 msgid "Error: wrong data"
 msgstr "Virhe: väärät tiedot"
 
-#: incl/advanced-gutenberg-main.php:1432
+#: incl/advanced-gutenberg-main.php:1430
 msgid "Error: can't edit this feature"
 msgstr "Virhe: ei voi muokata tätä ominaisuutta"
 
-#: incl/advanced-gutenberg-main.php:1474
+#: incl/advanced-gutenberg-main.php:1472
 msgid "Error: wrong block type"
 msgstr "Virhe: väärä lohkotyyppi"
 
-#: incl/advanced-gutenberg-main.php:1583
-#: incl/advanced-gutenberg-main.php:1678
-#: incl/advanced-gutenberg-main.php:1873
+#: incl/advanced-gutenberg-main.php:1581
+#: incl/advanced-gutenberg-main.php:1676
+#: incl/advanced-gutenberg-main.php:1871
 msgid "Bad Request!"
 msgstr "Virheellinen pyyntö!"
 
-#: incl/advanced-gutenberg-main.php:1593
-#: incl/advanced-gutenberg-main.php:1688
-#: incl/advanced-gutenberg-main.php:1881
+#: incl/advanced-gutenberg-main.php:1591
+#: incl/advanced-gutenberg-main.php:1686
+#: incl/advanced-gutenberg-main.php:1879
 msgid "Server error. Try again later!"
 msgstr "Palvelinvirhe. Yritä myöhemmin uudelleen!"
 
-#: incl/advanced-gutenberg-main.php:1601
-#: incl/advanced-gutenberg-main.php:1696
-#: incl/advanced-gutenberg-main.php:1889
+#: incl/advanced-gutenberg-main.php:1599
+#: incl/advanced-gutenberg-main.php:1694
+#: incl/advanced-gutenberg-main.php:1887
 msgid "Cannot validate captcha"
 msgstr "Ei voi vahvistaa captcha"
 
-#: incl/advanced-gutenberg-main.php:1606
-#: incl/advanced-gutenberg-main.php:1701
-#: incl/advanced-gutenberg-main.php:1894
+#: incl/advanced-gutenberg-main.php:1604
+#: incl/advanced-gutenberg-main.php:1699
+#: incl/advanced-gutenberg-main.php:1892
 msgid "Captcha validation error"
 msgstr "Captcha-vahvistusvirhe"
 
-#: incl/advanced-gutenberg-main.php:1632
+#: incl/advanced-gutenberg-main.php:1630
 #: incl/pages/settings/forms.php:24
 msgid "Website Contact"
 msgstr "Verkkosivuston yhteystiedot"
 
-#: incl/advanced-gutenberg-main.php:1638
+#: incl/advanced-gutenberg-main.php:1636
 msgid "You have received a contact from your website."
 msgstr "Olet saanut yhteydenoton verkkosivustoltasi."
 
-#: incl/advanced-gutenberg-main.php:1641
+#: incl/advanced-gutenberg-main.php:1639
 msgid "Name"
 msgstr "Nimi"
 
-#: incl/advanced-gutenberg-main.php:1643
+#: incl/advanced-gutenberg-main.php:1641
 #: incl/block-settings-main.php:808
 #: incl/block-settings-main.php:849
 #: incl/block-settings-main.php:890
@@ -359,71 +359,71 @@ msgstr "Nimi"
 msgid "Email"
 msgstr "Sähköposti"
 
-#: incl/advanced-gutenberg-main.php:1645
+#: incl/advanced-gutenberg-main.php:1643
 #: incl/pages/post-notes.php:275
 #: incl/pages/post-notes.php:340
 msgid "Date"
 msgstr "Päivämäärä"
 
-#: incl/advanced-gutenberg-main.php:1647
+#: incl/advanced-gutenberg-main.php:1645
 msgid "Message"
 msgstr "Viesti"
 
-#: incl/advanced-gutenberg-main.php:1655
+#: incl/advanced-gutenberg-main.php:1653
 msgid "Error while sending the form. Please try again."
 msgstr "Virhe lomakkeen lähettämisessä. Yritä uudelleen."
 
-#: incl/advanced-gutenberg-main.php:1750
+#: incl/advanced-gutenberg-main.php:1748
 msgid "Too many submissions. Please try again later."
 msgstr "Liian monta lähettämistä. Yritä uudelleen myöhemmin."
 
-#: incl/advanced-gutenberg-main.php:1897
+#: incl/advanced-gutenberg-main.php:1895
 msgid "Captcha validated"
 msgstr "Captcha vahvistettu"
 
-#: incl/advanced-gutenberg-main.php:1900
+#: incl/advanced-gutenberg-main.php:1898
 msgid "Captcha is empty"
 msgstr "Captcha on tyhjät"
 
-#: incl/advanced-gutenberg-main.php:2296
+#: incl/advanced-gutenberg-main.php:2308
 msgid "Container"
 msgstr "Säiliö"
 
-#: incl/advanced-gutenberg-main.php:2297
+#: incl/advanced-gutenberg-main.php:2309
 #: assets/blocks/contact-form/block.jsx:67
 #: assets/blocks/blocks.js:12116
 msgid "Contact Form"
 msgstr "Yhteydenottolomake"
 
-#: incl/advanced-gutenberg-main.php:2298
+#: incl/advanced-gutenberg-main.php:2310
 msgid "Login and Register"
 msgstr "Kirjaudu sisään ja rekisteröidy"
 
-#: incl/advanced-gutenberg-main.php:2299
+#: incl/advanced-gutenberg-main.php:2311
 #: assets/blocks/map/block.jsx:1237
 #: assets/blocks/blocks.js:17943
 msgid "Map"
 msgstr "Kartta"
 
-#: incl/advanced-gutenberg-main.php:2300
+#: incl/advanced-gutenberg-main.php:2312
 #: assets/blocks/newsletter/block.jsx:68
 #: assets/blocks/blocks.js:18401
 msgid "Newsletter"
 msgstr "Uutiskirje"
 
-#: incl/advanced-gutenberg-main.php:2301
+#: incl/advanced-gutenberg-main.php:2313
 #: assets/blocks/search-bar/block.jsx:144
 #: assets/blocks/blocks.js:21973
 msgid "Search Bar"
 msgstr "Hakualue"
 
-#: incl/advanced-gutenberg-main.php:2302
+#: incl/advanced-gutenberg-main.php:2314
 #: assets/blocks/social-links/block.jsx:166
 #: assets/blocks/blocks.js:22594
 msgid "Social Links"
 msgstr "Sosiaaliset linkit"
 
-#: incl/advanced-gutenberg-main.php:2303
+#: incl/advanced-gutenberg-main.php:2315
 #: assets/blocks/pro-ad/shared/index.jsx:122
 #: assets/blocks/testimonial/block.jsx:230
 #: assets/blocks/blocks.js:18954
@@ -432,39 +432,39 @@ msgstr "Sosiaaliset linkit"
 msgid "Testimonial"
 msgstr "Suositus"
 
-#: incl/advanced-gutenberg-main.php:2304
+#: incl/advanced-gutenberg-main.php:2316
 #: assets/blocks/woo-products/block.jsx:233
 #: assets/blocks/blocks.js:25112
 msgid "Woo Products"
 msgstr "Woo-tuotteet"
 
-#: incl/advanced-gutenberg-main.php:2376
-#: incl/advanced-gutenberg-main.php:6854
+#: incl/advanced-gutenberg-main.php:2458
+#: incl/advanced-gutenberg-main.php:6956
 #: assets/blocks/login-form/block.jsx:512
 #: assets/blocks/blocks.js:15881
 msgid "Dashboard"
 msgstr "Ohjaamo"
 
-#: incl/advanced-gutenberg-main.php:2383
-#: incl/advanced-gutenberg-main.php:2710
+#: incl/advanced-gutenberg-main.php:2465
+#: incl/advanced-gutenberg-main.php:2792
 #: incl/pages/main.php:29
 msgid "Block Permissions"
 msgstr "Blokin oikeudet"
 
-#: incl/advanced-gutenberg-main.php:2390
-#: incl/pages/block-settings.php:164
+#: incl/advanced-gutenberg-main.php:2472
+#: incl/pages/block-settings.php:165
 #: incl/pages/main.php:39
 #: incl/pages/settings.php:81
 msgid "Extra Blocks"
 msgstr "Lisälohkoja"
 
-#: incl/advanced-gutenberg-main.php:2397
+#: incl/advanced-gutenberg-main.php:2479
 #: incl/pages/custom-styles.php:9
 #: incl/pages/main.php:49
 msgid "Block Styles"
 msgstr "Blokin tyylit"
 
-#: incl/advanced-gutenberg-main.php:2404
+#: incl/advanced-gutenberg-main.php:2486
 #: incl/pages/block-controls.php:30
 #: incl/pages/main.php:59
 #: assets/pages/block-controls/block-controls.jsx:2271
@@ -472,20 +472,20 @@ msgstr "Blokin tyylit"
 msgid "Block Controls"
 msgstr "Blokin ohjaimet"
 
-#: incl/advanced-gutenberg-main.php:2411
-#: incl/advanced-gutenberg-main.php:4373
+#: incl/advanced-gutenberg-main.php:2493
+#: incl/advanced-gutenberg-main.php:4475
 #: incl/pages/main.php:69
 msgid "Block Usage"
 msgstr "Blokin käyttö"
 
-#: incl/advanced-gutenberg-main.php:2419
-#: incl/advanced-gutenberg-main.php:6886
-#: incl/advanced-gutenberg-main.php:6888
+#: incl/advanced-gutenberg-main.php:2501
+#: incl/advanced-gutenberg-main.php:6988
+#: incl/advanced-gutenberg-main.php:6990
 #: incl/pages/main.php:79
 msgid "Reusable Blocks"
 msgstr "Uudelleenkäytettävät lohkot"
 
-#: incl/advanced-gutenberg-main.php:2426
+#: incl/advanced-gutenberg-main.php:2508
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:141
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:179
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:180
@@ -493,30 +493,30 @@ msgstr "Uudelleenkäytettävät lohkot"
 msgid "Auto Insert Blocks"
 msgstr "Automaattinen lohkojen lisääminen"
 
-#: incl/advanced-gutenberg-main.php:2433
+#: incl/advanced-gutenberg-main.php:2515
 #: incl/pages/main.php:98
 #: incl/pages/post-notes.php:199
 #: incl/pages/settings.php:94
 msgid "Post Notes"
 msgstr "Julkaisumuistiinpanot"
 
-#: incl/advanced-gutenberg-main.php:2441
-#: incl/advanced-gutenberg-main.php:6860
+#: incl/advanced-gutenberg-main.php:2523
+#: incl/advanced-gutenberg-main.php:6962
 #: incl/pages/settings.php:74
 msgid "Settings"
 msgstr "Asetukset"
 
-#: incl/advanced-gutenberg-main.php:2469
-#: incl/advanced-gutenberg-main.php:2470
+#: incl/advanced-gutenberg-main.php:2551
+#: incl/advanced-gutenberg-main.php:2552
 #: incl/pages/block-controls.php:54
 msgid "Blocks"
 msgstr "Loitsut"
 
-#: incl/advanced-gutenberg-main.php:2683
-#: incl/advanced-gutenberg-main.php:2731
-#: incl/advanced-gutenberg-main.php:2791
-#: incl/advanced-gutenberg-main.php:2827
-#: incl/advanced-gutenberg-main.php:2944
+#: incl/advanced-gutenberg-main.php:2765
+#: incl/advanced-gutenberg-main.php:2813
+#: incl/advanced-gutenberg-main.php:2873
+#: incl/advanced-gutenberg-main.php:2909
+#: incl/advanced-gutenberg-main.php:3026
 #, php-format
 msgid ""
 "This feature is disabled. In order to use, please enable back through "
@@ -525,47 +525,47 @@ msgstr ""
 "Tämä ominaisuus on poistettu käytöstä. Käyttääksesi sitä, ota se uudelleen "
 "käyttöön %sHallintapaneelin%s kautta."
 
-#: incl/advanced-gutenberg-main.php:3017
+#: incl/advanced-gutenberg-main.php:3099
 #, php-format
 msgid "If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!"
 msgstr "Jos pidät %sPublishPress Blocks%s, jätä meille %s arvio. Kiitos!"
 
-#: incl/advanced-gutenberg-main.php:3034
+#: incl/advanced-gutenberg-main.php:3116
 msgid "About PublishPress Blocks"
 msgstr "Tietoja PublishPress Blocksista"
 
-#: incl/advanced-gutenberg-main.php:3037
+#: incl/advanced-gutenberg-main.php:3119
 msgid "About"
 msgstr "Tietoja"
 
-#: incl/advanced-gutenberg-main.php:3044
-#: incl/advanced-gutenberg-main.php:3047
+#: incl/advanced-gutenberg-main.php:3126
+#: incl/advanced-gutenberg-main.php:3129
 msgid "Documentation"
 msgstr "Dokumentaatio"
 
-#: incl/advanced-gutenberg-main.php:3055
+#: incl/advanced-gutenberg-main.php:3137
 msgid "Contact the PublishPress team"
 msgstr "Ota yhteyttä PublishPress-tiimiin"
 
-#: incl/advanced-gutenberg-main.php:3058
+#: incl/advanced-gutenberg-main.php:3140
 msgid "Contact"
 msgstr "Ota yhteyttä"
 
-#: incl/advanced-gutenberg-main.php:3066
+#: incl/advanced-gutenberg-main.php:3148
 msgid "PublishPress Blocks logo"
 msgstr "PublishPress Blokit -logo"
 
-#: incl/advanced-gutenberg-main.php:4214
+#: incl/advanced-gutenberg-main.php:4297
 #, php-format
 msgid "%s saved successfully!"
 msgstr "%s tallennettiin onnistuneesti!"
 
-#: incl/advanced-gutenberg-main.php:4224
+#: incl/advanced-gutenberg-main.php:4307
 #, php-format
 msgid "%s can't be saved. Please try again."
 msgstr "%s ei voi tallentaa. Yritä uudelleen."
 
-#: incl/advanced-gutenberg-main.php:4243
+#: incl/advanced-gutenberg-main.php:4326
 msgid ""
 "Choose which blocks are available to each user role, including default "
 "WordPress blocks."
@@ -573,70 +573,72 @@ msgstr ""
 "Valitse, mitkä lohkot ovat käytettävissä kullekin käyttäjäroolille, mukaan "
 "lukien oletus WordPress-lohkot."
 
-#: incl/advanced-gutenberg-main.php:4285
-#: incl/pages/block-controls/blocks.php:13
-#: incl/pages/block-settings.php:179
-msgid "Search blocks"
-msgstr "Etsi blokeja"
-
-#: incl/advanced-gutenberg-main.php:4290
-msgid "Enable or disable all blocks for CURRENT ROLE"
-msgstr "Ota tai poista käytöstä kaikki lohkot NYKYISELLE ROOLILLE"
-
-#: incl/advanced-gutenberg-main.php:4303
-#: incl/advanced-gutenberg-main.php:4349
+#: incl/advanced-gutenberg-main.php:4357
+#: incl/advanced-gutenberg-main.php:4451
 #: incl/pages/block-controls/blocks.php:31
 #: incl/pages/block-controls/blocks.php:79
 msgid "To save this configuration, enable at least one block."
 msgstr "Tallenna tämä kokoonpano, ota käyttöön vähintään yksi blokki."
 
-#: incl/advanced-gutenberg-main.php:4314
-#: incl/advanced-gutenberg-main.php:4338
-msgid "Save Role Block Permissions"
-msgstr "Tallenna rooliblokin käyttöoikeudet"
+#: incl/advanced-gutenberg-main.php:4370
+#: incl/advanced-gutenberg-main.php:4437
+#, php-format
+msgid "Save %s Block Permissions"
+msgstr "Tallenna %s lohko-oikeudet"
 
-#: incl/advanced-gutenberg-main.php:4318
-#: incl/advanced-gutenberg-main.php:4342
+#: incl/advanced-gutenberg-main.php:4377
+#: incl/advanced-gutenberg-main.php:4444
 msgid "Save Permission for all Roles"
 msgstr "Tallenna käyttöoikeus kaikille rooleille"
 
-#: incl/advanced-gutenberg-main.php:4327
-#: incl/advanced-gutenberg-main.php:4389
+#: incl/advanced-gutenberg-main.php:4401
+#: incl/pages/block-controls/blocks.php:13
+#: incl/pages/block-settings.php:180
+msgid "Search blocks"
+msgstr "Etsi blokeja"
+
+#: incl/advanced-gutenberg-main.php:4407
+#, php-format
+msgid "Enable or disable all blocks for %s"
+msgstr "Ota käyttöön tai poista käytöstä kaikki lohkot %s:lle"
+
+#: incl/advanced-gutenberg-main.php:4424
+#: incl/advanced-gutenberg-main.php:4491
 #: incl/pages/block-controls/blocks.php:56
 #: assets/pages/block-usage/block-usage.jsx:886
 #: assets/pages/block-usage.js:886
 msgid "Loading..."
 msgstr "Ladataan..."
 
-#: incl/advanced-gutenberg-main.php:4376
+#: incl/advanced-gutenberg-main.php:4478
 #: assets/pages/block-usage/block-usage.jsx:295
 #: assets/pages/block-usage.js:295
 msgid "Scan Block Usage"
 msgstr "Skannaa blokkien käyttö"
 
-#: incl/advanced-gutenberg-main.php:4382
+#: incl/advanced-gutenberg-main.php:4484
 msgid "Scan your site to see where blocks are used across your posts."
 msgstr "Skannaa sivustosi nähdäksesi, missä lohkoja käytetään julkaisuissasi."
 
-#: incl/advanced-gutenberg-main.php:4855
-#: incl/advanced-gutenberg-main.php:4856
+#: incl/advanced-gutenberg-main.php:4957
+#: incl/advanced-gutenberg-main.php:4958
 msgid "Block Config"
 msgstr "Blokin asetukset"
 
-#: incl/advanced-gutenberg-main.php:4915
+#: incl/advanced-gutenberg-main.php:5017
 msgid "Default configuration for this block is not available."
 msgstr "Tämän blokin oletusasetuksia ei ole saatavilla."
 
-#: incl/advanced-gutenberg-main.php:4981
+#: incl/advanced-gutenberg-main.php:5083
 #, php-format
 msgid "Page not found. Go to %sDashboard%s"
 msgstr "Sivua ei löytynyt. Siirry %sHallintapaneeliin%s"
 
-#: incl/advanced-gutenberg-main.php:5015
+#: incl/advanced-gutenberg-main.php:5117
 msgid "Manage reusable blocks that can be inserted across your site."
 msgstr "Hallitse uudelleenkäytettäviä lohkoja, joita voidaan lisätä sivustollesi."
 
-#: incl/advanced-gutenberg-main.php:5031
+#: incl/advanced-gutenberg-main.php:5133
 msgid ""
 "Create rules to automatically insert reusable blocks into posts by "
 "position, category, tag, or other criteria."
@@ -645,7 +647,7 @@ msgstr ""
 "automaattisesti julkaisuihin sijainnin, kategorian, tunnisteen tai muiden "
 "kriteerien perusteella."
 
-#: incl/advanced-gutenberg-main.php:5454
+#: incl/advanced-gutenberg-main.php:5556
 #: incl/block-styles/block-styles.php:1186
 #: incl/block-styles/block-styles.php:1205
 #: incl/block-styles/block-styles.php:1375
@@ -688,141 +690,141 @@ msgstr ""
 msgid "Default"
 msgstr "Oletus"
 
-#: incl/advanced-gutenberg-main.php:5468
+#: incl/advanced-gutenberg-main.php:5570
 msgid "Type field not defined"
 msgstr "Tyyppikenttää ei ole määritelty"
 
-#: incl/advanced-gutenberg-main.php:5743
+#: incl/advanced-gutenberg-main.php:5845
 msgid "User registration is currently not allowed."
 msgstr "Käyttäjärekisteröinti ei ole tällä hetkellä sallittua."
 
-#: incl/advanced-gutenberg-main.php:5747
+#: incl/advanced-gutenberg-main.php:5849
 msgid "Captcha must be checked!"
 msgstr "Captcha on tarkistettava!"
 
-#: incl/advanced-gutenberg-main.php:5748
+#: incl/advanced-gutenberg-main.php:5850
 msgid "Username or password is incorrect!"
 msgstr "Käyttäjänimi tai salasana on väärin!"
 
-#: incl/advanced-gutenberg-main.php:6887
+#: incl/advanced-gutenberg-main.php:6989
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:222
 #: incl/auto-insert-blocks/class-auto-insert-metaboxes.php:87
 msgid "Reusable Block"
 msgstr "Uudelleenkäytettävä lohko"
 
-#: incl/advanced-gutenberg-main.php:6889
+#: incl/advanced-gutenberg-main.php:6991
 msgid "All Reusable Blocks"
 msgstr "Kaikki uudelleenkäytettävät lohkot"
 
-#: incl/advanced-gutenberg-main.php:6890
+#: incl/advanced-gutenberg-main.php:6992
 msgid "Add New"
 msgstr "Lisää uusi"
 
-#: incl/advanced-gutenberg-main.php:6891
+#: incl/advanced-gutenberg-main.php:6993
 msgid "Add New Reusable Block"
 msgstr "Lisää uusi uudelleenkäytettävä lohko"
 
-#: incl/advanced-gutenberg-main.php:6892
+#: incl/advanced-gutenberg-main.php:6994
 msgid "Edit Reusable Block"
 msgstr "Muokkaa uudelleenkäytettävää lohkoa"
 
-#: incl/advanced-gutenberg-main.php:6893
+#: incl/advanced-gutenberg-main.php:6995
 msgid "New Reusable Block"
 msgstr "Uusi uudelleenkäytettävä lohko"
 
-#: incl/advanced-gutenberg-main.php:6894
+#: incl/advanced-gutenberg-main.php:6996
 msgid "View Reusable Block"
 msgstr "Näytä uudelleenkäytettävä lohko"
 
-#: incl/advanced-gutenberg-main.php:6895
+#: incl/advanced-gutenberg-main.php:6997
 msgid "View Reusable Blocks"
 msgstr "Näytä uudelleenkäytettävät lohkot"
 
-#: incl/advanced-gutenberg-main.php:6896
+#: incl/advanced-gutenberg-main.php:6998
 msgid "Search Reusable Blocks"
 msgstr "Etsi uudelleenkäytettäviä lohkoja"
 
-#: incl/advanced-gutenberg-main.php:6897
+#: incl/advanced-gutenberg-main.php:6999
 msgid "No reusable blocks found."
 msgstr "Ei löydetty uudelleenkäytettäviä lohkoja."
 
-#: incl/advanced-gutenberg-main.php:6898
+#: incl/advanced-gutenberg-main.php:7000
 msgid "No reusable blocks found in Trash."
 msgstr "Ei löydetty uudelleenkäytettäviä lohkoja roskakorista."
 
-#: incl/advanced-gutenberg-main.php:6899
+#: incl/advanced-gutenberg-main.php:7001
 msgid "Parent Reusable Block:"
 msgstr "Ylälaitteen uudelleenkäytettävä lohko:"
 
-#: incl/advanced-gutenberg-main.php:6900
+#: incl/advanced-gutenberg-main.php:7002
 msgid "Reusable Block Archives"
 msgstr "Uudelleenkäytettävien lohkojen arkistot"
 
-#: incl/advanced-gutenberg-main.php:6918
+#: incl/advanced-gutenberg-main.php:7020
 msgid "Reusable Block Categories"
 msgstr "Uudelleenkäytettävien lohkojen kategoriat"
 
-#: incl/advanced-gutenberg-main.php:6919
+#: incl/advanced-gutenberg-main.php:7021
 msgid "Reusable Block Category"
 msgstr "Uudelleenkäytettävän lohkon kategoria"
 
-#: incl/advanced-gutenberg-main.php:6920
+#: incl/advanced-gutenberg-main.php:7022
 msgid "Block Categories"
 msgstr "Lohkojen kategoriat"
 
-#: incl/advanced-gutenberg-main.php:6921
+#: incl/advanced-gutenberg-main.php:7023
 msgid "All Block Categories"
 msgstr "Kaikki lohkojen kategoriat"
 
-#: incl/advanced-gutenberg-main.php:6922
+#: incl/advanced-gutenberg-main.php:7024
 msgid "Edit Block Category"
 msgstr "Muokkaa lohkokategoriaa"
 
-#: incl/advanced-gutenberg-main.php:6923
+#: incl/advanced-gutenberg-main.php:7025
 msgid "View Block Category"
 msgstr "Näytä lohkokategoria"
 
-#: incl/advanced-gutenberg-main.php:6924
+#: incl/advanced-gutenberg-main.php:7026
 msgid "Update Block Category"
 msgstr "Päivitä lohkokategoria"
 
-#: incl/advanced-gutenberg-main.php:6925
+#: incl/advanced-gutenberg-main.php:7027
 msgid "Add New Block Category"
 msgstr "Lisää uusi lohkokategoria"
 
-#: incl/advanced-gutenberg-main.php:6926
+#: incl/advanced-gutenberg-main.php:7028
 msgid "New Block Category Name"
 msgstr "Uuden lohkokategorian nimi"
 
-#: incl/advanced-gutenberg-main.php:6927
+#: incl/advanced-gutenberg-main.php:7029
 msgid "Parent Block Category"
 msgstr "Ylälohkokategoria"
 
-#: incl/advanced-gutenberg-main.php:6928
+#: incl/advanced-gutenberg-main.php:7030
 msgid "Parent Block Category:"
 msgstr "Ylälohkokategoria:"
 
-#: incl/advanced-gutenberg-main.php:6929
+#: incl/advanced-gutenberg-main.php:7031
 msgid "Search Block Categories"
 msgstr "Etsi lohkokategorioita"
 
-#: incl/advanced-gutenberg-main.php:6930
+#: incl/advanced-gutenberg-main.php:7032
 msgid "Popular Block Categories"
 msgstr "Suositut lohkokategoriat"
 
-#: incl/advanced-gutenberg-main.php:6931
+#: incl/advanced-gutenberg-main.php:7033
 msgid "Separate block categories with commas"
 msgstr "Erottele lohkokategoriat pilkuilla"
 
-#: incl/advanced-gutenberg-main.php:6932
+#: incl/advanced-gutenberg-main.php:7034
 msgid "Add or remove block categories"
 msgstr "Lisää tai poista lohkokategorioita"
 
-#: incl/advanced-gutenberg-main.php:6933
+#: incl/advanced-gutenberg-main.php:7035
 msgid "Choose from the most used block categories"
 msgstr "Valitse käytetyimmistä lohkokategorioista"
 
-#: incl/advanced-gutenberg-main.php:6934
+#: incl/advanced-gutenberg-main.php:7036
 msgid "No block categories found."
 msgstr "Lohkokategorioita ei löytynyt."
 
@@ -881,7 +883,7 @@ msgid "Remove item"
 msgstr "Poista kohde"
 
 #: incl/auto-insert-blocks/class-auto-insert-blocks.php:122
-#: incl/block-controls-main.php:1753
+#: incl/block-controls-main.php:1756
 #: assets/pages/block-controls/block-controls.jsx:1573
 #: assets/pages/block-controls/block-controls.jsx:2153
 #: assets/pages/block-controls.js:2268
@@ -1388,17 +1390,17 @@ msgstr ""
 msgid "Search terms..."
 msgstr "Hakulausekkeet..."
 
-#: incl/block-controls-main.php:1741
+#: incl/block-controls-main.php:1744
 #: assets/blocks/login-form/block.jsx:511
 #: assets/blocks/blocks.js:15880
 msgid "Home"
 msgstr "Koti"
 
-#: incl/block-controls-main.php:1745
+#: incl/block-controls-main.php:1748
 msgid "Blog"
 msgstr "Blogi"
 
-#: incl/block-controls-main.php:1749
+#: incl/block-controls-main.php:1752
 #: assets/pages/block-controls/preset-manager.jsx:677
 #: assets/pages/preset-manager.js:1287
 msgid "Archive"
@@ -3982,7 +3984,7 @@ msgid "Blocks saved successfully!"
 msgstr "Loitsut tallennettiin onnistuneesti!"
 
 #: incl/pages/block-controls.php:18
-#: incl/pages/block-settings.php:159
+#: incl/pages/block-settings.php:160
 #: incl/pages/settings.php:67
 msgid "Settings saved successfully!"
 msgstr "Asetukset tallennettiin onnistuneesti!"
@@ -4242,241 +4244,241 @@ msgstr "Tallenna Ohjaimet"
 msgid "Loading presets..."
 msgstr "Ladataan esiasetuksia..."
 
-#: incl/pages/block-settings.php:91
+#: incl/pages/block-settings.php:92
 #: assets/blocks/advaccordion/block.jsx:451
 #: assets/blocks/blocks.js:2556, fuzzy
 msgid "Accordion - PublishPress"
 msgstr "Accordion - PublishPress"
 
-#: incl/pages/block-settings.php:92
+#: incl/pages/block-settings.php:93
 #: assets/blocks/advbutton/block.jsx:794
 #: assets/blocks/blocks.js:3531
 msgid "Button - PublishPress"
 msgstr "Nappi - PublishPress"
 
-#: incl/pages/block-settings.php:93
+#: incl/pages/block-settings.php:94
 #: assets/blocks/advicon/block.jsx:516
 #: assets/blocks/blocks.js:4239
 msgid "Icon - PublishPress"
 msgstr "Ikoni - PublishPress"
 
-#: incl/pages/block-settings.php:94
+#: incl/pages/block-settings.php:95
 #: assets/blocks/advimage/block.jsx:409
 #: assets/blocks/blocks.js:4875
 msgid "Image - PublishPress"
 msgstr "Kuva - PublishPress"
 
-#: incl/pages/block-settings.php:95
+#: incl/pages/block-settings.php:96
 #: assets/blocks/advlist/block.jsx:446
 #: assets/blocks/blocks.js:5602
 msgid "List - PublishPress"
 msgstr "Lista - PublishPress"
 
-#: incl/pages/block-settings.php:96
+#: incl/pages/block-settings.php:97
 #: assets/blocks/advtable/block.jsx:1399
 #: assets/blocks/blocks.js:7267
 msgid "Table - PublishPress"
 msgstr "Taulukko - PublishPress"
 
-#: incl/pages/block-settings.php:97
+#: incl/pages/block-settings.php:98
 #: assets/blocks/advtabs/block.jsx:759
 #: assets/blocks/blocks.js:8581
 msgid "Tabs - PublishPress"
 msgstr "Välilehdet - PublishPress"
 
-#: incl/pages/block-settings.php:98
+#: incl/pages/block-settings.php:99
 #: assets/blocks/advvideo/block.jsx:616
 #: assets/blocks/blocks.js:10145, fuzzy
 msgid "Video - PublishPress"
 msgstr "Video - PublishPress"
 
-#: incl/pages/block-settings.php:99
+#: incl/pages/block-settings.php:100
 #: assets/blocks/columns/block.jsx:938
 #: assets/blocks/blocks.js:11286
 msgid "Columns - PublishPress"
 msgstr "Sarakkeet - PublishPress"
 
-#: incl/pages/block-settings.php:100
+#: incl/pages/block-settings.php:101
 #: assets/blocks/columns/column.jsx:374
 #: assets/blocks/blocks.js:11905
 msgid "Column - PublishPress"
 msgstr "Sarake - PublishPress"
 
-#: incl/pages/block-settings.php:101
+#: incl/pages/block-settings.php:102
 #: assets/blocks/contact-form/block.jsx:319
 #: assets/blocks/blocks.js:12368
 msgid "Contact Form - PublishPress"
 msgstr "Yhteydenottolomake - PublishPress"
 
-#: incl/pages/block-settings.php:102
+#: incl/pages/block-settings.php:103
 #: assets/blocks/count-up/block.jsx:435
 #: assets/blocks/blocks.js:13013
 msgid "Count Up - PublishPress"
 msgstr "Laskuri - PublishPress"
 
-#: incl/pages/block-settings.php:103
+#: incl/pages/block-settings.php:104
 #: assets/blocks/images-slider/block.jsx:607
 #: assets/blocks/blocks.js:13863
 msgid "Images Slider - PublishPress"
 msgstr "Kuvakaruselli - PublishPress"
 
-#: incl/pages/block-settings.php:104
+#: incl/pages/block-settings.php:105
 #: assets/blocks/infobox/block.jsx:987
 #: assets/blocks/blocks.js:15240
 msgid "Info Box - PublishPress"
 msgstr "Tietolaatikko - PublishPress"
 
-#: incl/pages/block-settings.php:105
+#: incl/pages/block-settings.php:106
 #: assets/blocks/map/block.jsx:1482
 #: assets/blocks/blocks.js:18190
 msgid "Map - PublishPress"
 msgstr "Kartta - PublishPress"
 
-#: incl/pages/block-settings.php:106
+#: incl/pages/block-settings.php:107
 #: assets/blocks/newsletter/block.jsx:303
 #: assets/blocks/blocks.js:18636
 msgid "Newsletter - PublishPress"
 msgstr "Uutiskirje - PublishPress"
 
-#: incl/pages/block-settings.php:107
+#: incl/pages/block-settings.php:108
 #: assets/blocks/social-links/block.jsx:381
 #: assets/blocks/blocks.js:22809
 msgid "Social Links - PublishPress"
 msgstr "Sosiaalisten Linkkien - PublishPress"
 
-#: incl/pages/block-settings.php:108
+#: incl/pages/block-settings.php:109
 #: assets/blocks/summary/block.jsx:22
 #: assets/blocks/blocks.js:22935
 msgid "Table of Contents - PublishPress"
 msgstr "Sisällysluettelo - PublishPress"
 
-#: incl/pages/block-settings.php:109
+#: incl/pages/block-settings.php:110
 #: assets/blocks/testimonial/block.jsx:673
 #: assets/blocks/blocks.js:24671
 msgid "Testimonial - PublishPress"
 msgstr "Suositus - PublishPress"
 
-#: incl/pages/block-settings.php:110
+#: incl/pages/block-settings.php:111
 #: assets/blocks/woo-products/block.jsx:409
 #: assets/blocks/blocks.js:25288
 msgid "Woo Products - PublishPress"
 msgstr "Woo-tuotteet - PublishPress"
 
-#: incl/pages/block-settings.php:115
+#: incl/pages/block-settings.php:116
 msgid "Show content in collapsible panels that expand when clicked."
 msgstr "Näytä sisältöä taitettavissa paneeleissa, jotka laajenevat napsautettaessa."
 
-#: incl/pages/block-settings.php:116
+#: incl/pages/block-settings.php:117
 msgid "Add a customizable call-to-action button with colors, sizes and icons."
 msgstr ""
 "Lisää mukautettava toimintakutsu-painike, jossa on värejä, kokoja ja "
 "kuvakkeita."
 
-#: incl/pages/block-settings.php:117
+#: incl/pages/block-settings.php:118
 msgid "Insert a vector icon from a large library, with size and color controls."
 msgstr "Lisää vektorikuvake suuresta kirjastosta, jossa on koko- ja väriasetukset."
 
-#: incl/pages/block-settings.php:118
+#: incl/pages/block-settings.php:119
 msgid "Display an image with extra styling, captions and link options."
 msgstr "Näytä kuva lisätyylillä, kuvateksteillä ja linkkivaihtoehdoilla."
 
-#: incl/pages/block-settings.php:119
+#: incl/pages/block-settings.php:120
 msgid "Build styled ordered or unordered lists with custom icons."
 msgstr ""
 "Rakenna tyyliteltyjä järjestettyjä tai järjestämättömiä luetteloita "
 "mukautetuilla kuvakkeilla."
 
-#: incl/pages/block-settings.php:120
+#: incl/pages/block-settings.php:121
 msgid "Create responsive tables with styling and per-cell formatting."
 msgstr "Luo responsiivisia taulukoita tyylillä ja solukohtaisella muotoilulla."
 
-#: incl/pages/block-settings.php:121
+#: incl/pages/block-settings.php:122
 msgid "Organize content into horizontal or vertical tabbed sections."
 msgstr "Järjestä sisältö vaakasuoriin tai pystysuoriin välilehtiosioihin."
 
-#: incl/pages/block-settings.php:122
+#: incl/pages/block-settings.php:123
 msgid "Embed a self-hosted or external video with a custom poster image."
 msgstr "Upota itse isännöity tai ulkoinen video mukautetulla ilmoituskuvalla."
 
-#: incl/pages/block-settings.php:123
+#: incl/pages/block-settings.php:124
 msgid "Lay out content in flexible, responsive multi-column rows."
 msgstr "Aseta sisältö joustaviin, responsiivisiin monisarakkeisiin riveihin."
 
-#: incl/pages/block-settings.php:124
+#: incl/pages/block-settings.php:125
 msgid "A single column used inside the Columns block."
 msgstr "Yksi sarake, jota käytetään Sarakkeet-lohkossa."
 
-#: incl/pages/block-settings.php:125
+#: incl/pages/block-settings.php:126
 msgid "Wrap blocks in a styled container with background, padding and borders."
 msgstr "Kääri lohkot tyyliteltyyn säiliöön, jossa on tausta, pehmuste ja reunat."
 
-#: incl/pages/block-settings.php:126
+#: incl/pages/block-settings.php:127
 msgid "Add a customizable contact form that emails submissions to you."
 msgstr ""
 "Lisää mukautettava yhteydenottolomake, joka lähettää lähetykset sinulle "
 "sähköpostilla."
 
-#: incl/pages/block-settings.php:127
+#: incl/pages/block-settings.php:128
 msgid "Animate numbers counting up to highlight stats and milestones."
 msgstr ""
 "Animoi numeroita, jotka laskevat ylös korostaakseen tilastoja ja "
 "virstanpylväitä."
 
-#: incl/pages/block-settings.php:128
+#: incl/pages/block-settings.php:129
 msgid "Show multiple images in a responsive carousel slider."
 msgstr "Näytä useita kuvia responsiivisessa karuselli-liukusäätimessä."
 
-#: incl/pages/block-settings.php:129
+#: incl/pages/block-settings.php:130
 msgid "Present an icon or image with a heading and text in a styled box."
 msgstr "Esitä kuvake tai kuva otsikon ja tekstin kanssa tyylitellyssä laatikossa."
 
-#: incl/pages/block-settings.php:130
+#: incl/pages/block-settings.php:131
 msgid "Embed an interactive Google Map with custom markers."
 msgstr "Upota interaktiivinen Google Kartta mukautetuilla merkinnöillä."
 
-#: incl/pages/block-settings.php:131
+#: incl/pages/block-settings.php:132
 msgid "Collect email subscribers with a customizable signup form."
 msgstr "Kerää sähköpostitilaajia mukautettavalla ilmoittautumislomakkeella."
 
-#: incl/pages/block-settings.php:132
+#: incl/pages/block-settings.php:133
 msgid "Display a front-end login and registration form."
 msgstr "Näytä etupään kirjautumis- ja rekisteröintilomake."
 
-#: incl/pages/block-settings.php:133
+#: incl/pages/block-settings.php:134
 msgid "Add a styled site search bar anywhere on your pages."
 msgstr "Lisää tyylitelty sivustohaku-palkki minne tahansa sivuillesi."
 
-#: incl/pages/block-settings.php:134
+#: incl/pages/block-settings.php:135
 msgid "Link to your social profiles with a row of social icons."
 msgstr "Linkitä sosiaaliprofiilisi sosiaalisten kuvakkeiden rivillä."
 
-#: incl/pages/block-settings.php:135
+#: incl/pages/block-settings.php:136
 msgid "Generate an automatic table of contents from your headings."
 msgstr "Luo automaattinen sisällysluettelo otsikoistasi."
 
-#: incl/pages/block-settings.php:136
+#: incl/pages/block-settings.php:137
 msgid "Showcase customer testimonials with photo, name and role."
 msgstr "Esittele asiakastestimoniaalit valokuvalla, nimellä ja roolilla."
 
-#: incl/pages/block-settings.php:137
+#: incl/pages/block-settings.php:138
 msgid "Display WooCommerce products in a customizable grid."
 msgstr "Näytä WooCommerce-tuotteet mukautettavassa ruudukossa."
 
-#: incl/pages/block-settings.php:138
+#: incl/pages/block-settings.php:139
 msgid "Display a countdown timer to a specific date or event."
 msgstr "Näytä laskuri tiettyyn päivämäärään tai tapahtumaan."
 
-#: incl/pages/block-settings.php:139
+#: incl/pages/block-settings.php:140
 msgid "Highlight a single feature with an icon, title and description."
 msgstr "Korosta yksittäistä ominaisuutta kuvakkeella, otsikolla ja kuvauksella."
 
-#: incl/pages/block-settings.php:140
+#: incl/pages/block-settings.php:141
 msgid "Compare pricing plans side by side with features and buttons."
 msgstr ""
 "Vertaa hinnoittelusuunnitelmia vierekkäin ominaisuuksien ja painikkeiden "
 "kanssa."
 
-#: incl/pages/block-settings.php:169
+#: incl/pages/block-settings.php:170
 msgid ""
 "Manage the extra PublishPress blocks available in the editor, including "
 "content displays, sliders, buttons, icons, tabs, accordions, and more."
@@ -4485,29 +4487,29 @@ msgstr ""
 "editorissa, mukaan lukien sisältönäytöt, liukusäätimet, painikkeet, "
 "kuvakkeet, välilehdet, akordeonit ja enemmän."
 
-#: incl/pages/block-settings.php:223
+#: incl/pages/block-settings.php:224
 msgid "Enable / disable this block"
 msgstr "Ota tämä lohko käyttöön / poista käytöstä"
 
-#: incl/pages/block-settings.php:237
+#: incl/pages/block-settings.php:238
 msgid "Configure"
 msgstr "Määritä"
 
-#: incl/pages/block-settings.php:248
-#: incl/pages/block-settings.php:298
+#: incl/pages/block-settings.php:249
+#: incl/pages/block-settings.php:299
 #: assets/pages/block-controls/preset-manager.jsx:746
 #: assets/pages/preset-manager.js:1356
 msgid "Edit"
 msgstr "Muokata"
 
-#: incl/pages/block-settings.php:260
-#: incl/pages/block-settings.php:314
+#: incl/pages/block-settings.php:261
+#: incl/pages/block-settings.php:315
 #: incl/pages/block-settings/block-config.php:14
 #: incl/pages/block-settings/block-config.php:30
 msgid "Save"
 msgstr "Tallenna"
 
-#: incl/pages/block-settings.php:269
+#: incl/pages/block-settings.php:270
 msgid ""
 "No blocks available. Please go to a post edit (without saving either "
 "modifying anything). Then come back to Block Settings to see the blocks "
@@ -4516,7 +4518,7 @@ msgstr ""
 "Ei lohkoja saatavilla. Siirry viestin muokkaukseen (ilman tallentamista tai "
 "mitään muutoksia). Palaa sitten Loitsuasetuksiin nähdäksesi lohkoluettelon."
 
-#: incl/pages/block-settings.php:279
+#: incl/pages/block-settings.php:280
 #: assets/blocks/pro-ad/shared/index.jsx:102
 #: assets/blocks/recent-posts/block.jsx:1544
 #: assets/blocks/recent-posts/block.jsx:1624
@@ -4527,15 +4529,15 @@ msgstr ""
 msgid "Content Display"
 msgstr "Sisällön näyttö"
 
-#: incl/pages/block-settings.php:285
+#: incl/pages/block-settings.php:286
 msgid "Default thumbnail"
 msgstr "Oletus pikkukuva"
 
-#: incl/pages/block-settings.php:299
+#: incl/pages/block-settings.php:300
 msgid "Reset to default"
 msgstr "Palauta oletukseksi"
 
-#: incl/pages/block-settings.php:303
+#: incl/pages/block-settings.php:304
 msgid ""
 "Set the default post thumbnail to use in Content Display blocks for posts "
 "without a featured image."
@@ -4543,11 +4545,11 @@ msgstr ""
 "Aseta oletuspostikuvake käytettäväksi sisältönäyttölohkoissa niille "
 "posteille, joilla ei ole esittelykuvaa."
 
-#: incl/pages/block-settings.php:328
+#: incl/pages/block-settings.php:329
 msgid "Select default thumbnail"
 msgstr "Valitse oletuskuvake"
 
-#: incl/pages/block-settings.php:329
+#: incl/pages/block-settings.php:330
 msgid "Use this image"
 msgstr "Käytä tätä kuvaa"
 
@@ -4718,8 +4720,8 @@ msgid "Add Google Fonts support to core blocks including paragraphs and headings
 msgstr "Lisää Google Fonts -tuki ydinlohkoille, mukaan lukien kappaleet ja otsikot."
 
 #: incl/pages/post-notes.php:205
-msgid "Review notes added from the block editor toolbar across your posts."
-msgstr "Tarkista lohkoeditorin työkalupalkista lisätyt muistiinpanot posteissasi."
+msgid "Find all the editorial notes for your posts in one place."
+msgstr "Löydä kaikki toimitukselliset muistiinpanot julkaisuistasi yhdestä paikasta."
 
 #: incl/pages/post-notes.php:220
 msgid "All post types"
