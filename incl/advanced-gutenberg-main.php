@@ -4259,11 +4259,44 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             } ?>
                             <input type="hidden" name="advgb_feature" id="advgb_feature" value="<?php
                             echo $feature ?>"/>
+                            <?php
+                            global $wp_roles;
+                            $roles_list = $wp_roles->get_names();
+                            $current_user_role_name = isset($roles_list[ $current_user_role ])
+                                ? translate_user_role($roles_list[ $current_user_role ])
+                                : $current_user_role;
+                            ?>
+                            <div class="inline-button-wrapper">
+                                <span class="advgb-enable-one-block-msg" style="display: none;">
+                                    <span>
+                                        <span>
+                                            <?php
+                                            esc_attr_e(
+                                                'To save this configuration, enable at least one block.',
+                                                'advanced-gutenberg'
+                                            )
+                                            ?>
+                                        </span>
+                                        <span class="dashicons dashicons-warning"></span>
+                                    </span>
+                                </span>
+                                <button type="submit" name="advgb_block_<?php
+                                        echo $feature ?>_save" class="button button-primary save-profile-button">
+                                    <?php
+                                    printf(
+                                        esc_html__('Save %s Block Permissions', 'advanced-gutenberg'),
+                                        esc_html($current_user_role_name)
+                                    );
+                                    ?>
+                                </button>
+                                <button type="submit" name="advgb_block_<?php
+                                        echo $feature ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
+                                    <?php esc_html_e( 'Save Permission for all Roles', 'advanced-gutenberg' ); ?>
+                                </button>
+                            </div>
                             <div>
                                 <select name="user_role" id="user_role">
                                     <?php
-                                    global $wp_roles;
-                                    $roles_list = $wp_roles->get_names();
                                     foreach ($roles_list as $roles => $role_name) :
                                         $role_name = translate_user_role($role_name);
                                         ?>
@@ -4287,36 +4320,17 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             </div>
                             <div class="advgb-toggle-wrapper">
                                 <?php
-                                _e('Enable or disable all blocks for CURRENT ROLE', 'advanced-gutenberg') ?>
+                                printf(
+                                    esc_html__('Enable or disable all blocks for %s', 'advanced-gutenberg'),
+                                    esc_html($current_user_role_name)
+                                );
+                                ?>
                                 <div class="advgb-switch-button">
                                     <label class="switch">
                                         <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
                                         <span class="slider"></span>
                                     </label>
                                 </div>
-                            </div>
-                            <div class="inline-button-wrapper">
-                                <span class="advgb-enable-one-block-msg" style="display: none;">
-                                    <span>
-                                        <span>
-                                            <?php
-                                            esc_attr_e(
-                                                'To save this configuration, enable at least one block.',
-                                                'advanced-gutenberg'
-                                            )
-                                            ?>
-                                        </span>
-                                        <span class="dashicons dashicons-warning"></span>
-                                    </span>
-                                </span>
-                                <button type="submit" name="advgb_block_<?php
-                                        echo $feature ?>_save" class="button button-primary save-profile-button">
-                                    <?php esc_html_e( 'Save Role Block Permissions', 'advanced-gutenberg' ); ?>
-                                </button>
-                                <button type="submit" name="advgb_block_<?php
-                                        echo $feature ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
-                                    <?php esc_html_e( 'Save Permission for all Roles', 'advanced-gutenberg' ); ?>
-                                </button>
                             </div>
                         </div>
 
@@ -4335,7 +4349,12 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         <div class="advgb-form-buttons-bottom">
                             <button type="submit" name="advgb_block_<?php
                                     echo $feature ?>_save" class="button button-primary save-profile-button">
-                                <?php esc_html_e( 'Save Role Block Permissions', 'advanced-gutenberg' ); ?>
+                                <?php
+                                    printf(
+                                        esc_html__('Save %s Block Permissions', 'advanced-gutenberg'),
+                                        esc_html($current_user_role_name)
+                                    );
+                                    ?>
                             </button>
                             <button type="submit" name="advgb_block_<?php
                                     echo $feature ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
