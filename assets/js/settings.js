@@ -107,6 +107,6 @@ function initBlockConfigButton() {
         var blockLabel = $(this).closest('.block-config-item').find('.block-title').text().trim();
         window.blockLabel = blockLabel;
 
-        tb_show(__('Edit block', 'advanced-gutenberg') + ' ' + blockLabel + ' ' + __('default config', 'advanced-gutenberg'), 'admin.php?page=' + blockName + '&noheader=1&width=550&height=600&TB_iframe=1');
+        tb_show(__('Default settings for', 'advanced-gutenberg') + ' ' + blockLabel + ' ' + __('block', 'advanced-gutenberg'), 'admin.php?page=' + blockName + '&noheader=1&width=550&height=600&TB_iframe=1');
     })
 }

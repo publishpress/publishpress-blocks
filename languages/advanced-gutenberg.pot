@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-06T17:39:27+00:00\n"
+"POT-Creation-Date: 2026-07-07T09:03:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
@@ -4463,6 +4463,7 @@ msgid "Use this image"
 msgstr ""
 
 #: incl/pages/block-settings/block-config.php:18
+#: assets/js/settings.js:110
 #: assets/pages/block-usage/block-usage.jsx:1019
 #: assets/pages/block-usage.js:1019
 msgid "block"
@@ -9727,11 +9728,7 @@ msgid " Error: changes can't be saved."
 msgstr ""
 
 #: assets/js/settings.js:110
-msgid "Edit block"
-msgstr ""
-
-#: assets/js/settings.js:110
-msgid "default config"
+msgid "Default settings for"
 msgstr ""
 
 #: assets/pages/block-controls/block-controls.jsx:204

@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-06-05T15:08:13+00:00\n"
-"PO-Revision-Date: 2026-07-06 17:41+0000\n"
+"PO-Revision-Date: 2026-07-07 09:05+0000\n"
 "X-Generator: Poedit 3.3.2\n"
 "X-Domain: advanced-gutenberg\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
@@ -4558,6 +4558,7 @@ msgid "Use this image"
 msgstr "Gunakan gambar ini"
 
 #: incl/pages/block-settings/block-config.php:18
+#: assets/js/settings.js:110
 #: assets/pages/block-usage/block-usage.jsx:1019
 #: assets/pages/block-usage.js:1019
 msgid "block"
@@ -9985,12 +9986,8 @@ msgid " Error: changes can't be saved."
 msgstr " Kesalahan: perubahan tidak dapat disimpan."
 
 #: assets/js/settings.js:110
-msgid "Edit block"
-msgstr "Edit blok"
-
-#: assets/js/settings.js:110
-msgid "default config"
-msgstr "konfigurasi default"
+msgid "Default settings for"
+msgstr "Pengaturan default untuk"
 
 #: assets/pages/block-controls/block-controls.jsx:204
 #: assets/pages/block-controls/preset-manager.jsx:43

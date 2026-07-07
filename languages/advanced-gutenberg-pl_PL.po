@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-06-05T15:08:13+00:00\n"
-"PO-Revision-Date: 2026-07-06 17:41+0000\n"
+"PO-Revision-Date: 2026-07-07 09:05+0000\n"
 "X-Generator: Poedit 3.2\n"
 "X-Domain: advanced-gutenberg\n"
 "&& (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);\n"
@@ -4557,6 +4557,7 @@ msgid "Use this image"
 msgstr "Użyj tego obrazu"
 
 #: incl/pages/block-settings/block-config.php:18
+#: assets/js/settings.js:110
 #: assets/pages/block-usage/block-usage.jsx:1019
 #: assets/pages/block-usage.js:1019
 msgid "block"
@@ -9999,12 +10000,8 @@ msgid " Error: changes can't be saved."
 msgstr " Błąd: zmiany nie mogą zostać zapisane."
 
 #: assets/js/settings.js:110
-msgid "Edit block"
-msgstr "Edytuj blok"
-
-#: assets/js/settings.js:110
-msgid "default config"
-msgstr "domyślna konfiguracja"
+msgid "Default settings for"
+msgstr "Ustawienia domyślne dla"
 
 #: assets/pages/block-controls/block-controls.jsx:204
 #: assets/pages/block-controls/preset-manager.jsx:43

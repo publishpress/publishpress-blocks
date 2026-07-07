@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-06-05T15:08:13+00:00\n"
-"PO-Revision-Date: 2026-07-06 17:41+0000\n"
+"PO-Revision-Date: 2026-07-07 09:05+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
 "Language: ko_KR\n"
@@ -4507,6 +4507,7 @@ msgid "Use this image"
 msgstr "이 이미지를 사용하세요"
 
 #: incl/pages/block-settings/block-config.php:18
+#: assets/js/settings.js:110
 #: assets/pages/block-usage/block-usage.jsx:1019
 #: assets/pages/block-usage.js:1019
 msgid "block"
@@ -9845,11 +9846,7 @@ msgid " Error: changes can't be saved."
 msgstr "오류: 변경 사항을 저장할 수 없습니다."
 
 #: assets/js/settings.js:110
-msgid "Edit block"
-msgstr "블록 편집"
-
-#: assets/js/settings.js:110
-msgid "default config"
+msgid "Default settings for"
 msgstr "기본 설정"
 
 #: assets/pages/block-controls/block-controls.jsx:204

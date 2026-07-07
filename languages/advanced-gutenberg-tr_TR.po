@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-29T17:47:16+00:00\n"
-"PO-Revision-Date: 2026-07-06 17:41+0000\n"
+"PO-Revision-Date: 2026-07-07 09:05+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
 "Language: tr_TR\n"
@@ -4560,6 +4560,7 @@ msgid "Use this image"
 msgstr "Bu resmi kullan"
 
 #: incl/pages/block-settings/block-config.php:18
+#: assets/js/settings.js:110
 #: assets/pages/block-usage/block-usage.jsx:1019
 #: assets/pages/block-usage.js:1019
 msgid "block"
@@ -10002,12 +10003,8 @@ msgid " Error: changes can't be saved."
 msgstr "Hata: değişiklikler kaydedilemez."
 
 #: assets/js/settings.js:110
-msgid "Edit block"
-msgstr "Blok düzenle"
-
-#: assets/js/settings.js:110
-msgid "default config"
-msgstr "varsayılan yapılandırma"
+msgid "Default settings for"
+msgstr "Varsayılan ayarlar için"
 
 #: assets/pages/block-controls/block-controls.jsx:204
 #: assets/pages/block-controls/preset-manager.jsx:43

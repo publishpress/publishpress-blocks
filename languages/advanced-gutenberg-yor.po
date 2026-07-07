@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-12-15T13:55:51+00:00\n"
-"PO-Revision-Date: 2026-07-06 17:41+0000\n"
+"PO-Revision-Date: 2026-07-07 09:06+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: advanced-gutenberg\n"
 "Language: yor\n"
@@ -4532,6 +4532,7 @@ msgid "Use this image"
 msgstr "Lo aworan yii"
 
 #: incl/pages/block-settings/block-config.php:18
+#: assets/js/settings.js:110
 #: assets/pages/block-usage/block-usage.jsx:1019
 #: assets/pages/block-usage.js:1019
 msgid "block"
@@ -9962,12 +9963,8 @@ msgid " Error: changes can't be saved."
 msgstr " Aṣiṣe: awọn ayipada ko le fipamọ."
 
 #: assets/js/settings.js:110
-msgid "Edit block"
-msgstr "Ṣatunkọ bulọọki"
-
-#: assets/js/settings.js:110
-msgid "default config"
-msgstr "eto aiyipada"
+msgid "Default settings for"
+msgstr "Iwọn aiyipada fun"
 
 #: assets/pages/block-controls/block-controls.jsx:204
 #: assets/pages/block-controls/preset-manager.jsx:43
