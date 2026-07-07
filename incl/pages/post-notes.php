@@ -203,7 +203,7 @@ if ($filter_search) {
     <?php
     $this->screenDescription(
         __(
-            'Review notes added from the block editor toolbar across your posts.',
+            'Find all the editorial notes for your posts in one place.',
             'advanced-gutenberg'
         )
     );

@@ -137,6 +137,12 @@ if (! function_exists('advgb_some_specific_updates')) {
             }
         }
 
+        // Existing sites: keep legacy blocks and gallery lightbox enabled unless explicitly saved otherwise.
+        if (get_option('advgb_legacy_settings_migrated', false) === false && get_option('advgb_settings') !== false) {
+            AdvancedGutenbergMain::upgradeLegacySettings();
+            update_option('advgb_legacy_settings_migrated', 1, false);
+        }
+
         // Set version if needed
         if ($advgb_current_version !== ADVANCED_GUTENBERG_VERSION) {
             update_option('advgb_version', ADVANCED_GUTENBERG_VERSION);

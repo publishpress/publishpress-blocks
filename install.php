@@ -62,7 +62,7 @@ if ($saved_settings === false) {
 }
 
 // Legacy blocks: OFF by default on new sites. Existing sites are handled by
-// AdvancedGutenbergMain::maybeInitLegacyBlocks(), which defaults them ON.
+// the versioned upgrade routine in init.php, which defaults them ON.
 if ($saved_settings === false && get_option('advgb_legacy_blocks') === false) {
     update_option('advgb_legacy_blocks', array(
         'container'    => 0,
@@ -75,6 +75,7 @@ if ($saved_settings === false && get_option('advgb_legacy_blocks') === false) {
         'testimonial'  => 0,
         'woo-products' => 0,
     ), false);
+    update_option('advgb_legacy_settings_migrated', 1, false);
 }
 
 update_option('advgb_maybe_new_blocks', intval(true), false);

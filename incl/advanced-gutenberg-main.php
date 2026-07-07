@@ -44,8 +44,6 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             add_action('init', array( $this, 'registerPostMeta' ));
             add_action('init', array( $this, 'registerCustomStyleFrontendFilter' ));
-            // Initialize Legacy Blocks state before blocks are registered (init 10)
-            add_action('plugins_loaded', array( $this, 'maybeInitLegacyBlocks' ), 1);
             add_action('admin_init', array( $this, 'registerStylesScripts' ));
             add_action('admin_init', array( $this, 'addEditorFrameStyles' ));
             add_action('wp_loaded', [ 'PublishPress\Blocks\Controls', 'addAttributes' ], 999);
@@ -2273,15 +2271,29 @@ if (! class_exists('AdvancedGutenbergMain')) {
          */
         public static function allDisabledBlocks()
         {
+            $disabled = array_merge(
+                self::disabledLegacyBlocks(),
+                self::globallyDisabledBlocks()
+            );
+
+            return array_values(array_unique($disabled));
+        }
+
+        /**
+         * Legacy blocks turned off from Settings > Legacy Blocks.
+         *
+         * @return array Full block names that are disabled
+         */
+        public static function disabledLegacyBlocks()
+        {
             $disabled = [];
             foreach (self::getLegacyBlocksState() as $slug => $enabled) {
                 if (! $enabled) {
                     $disabled[] = 'advgb/' . $slug;
                 }
             }
-            $disabled = array_merge($disabled, self::globallyDisabledBlocks());
 
-            return array_values(array_unique($disabled));
+            return $disabled;
         }
 
         /**
@@ -2335,28 +2347,98 @@ if (! class_exists('AdvancedGutenbergMain')) {
          *
          * @return void
          */
-        public function maybeInitLegacyBlocks()
+        public static function upgradeLegacySettings()
         {
-            if (get_option('advgb_legacy_blocks') !== false) {
-                // Already initialized (fresh install set it, or a prior run did)
+            $saved_settings = get_option('advgb_settings');
+            if (! is_array($saved_settings)) {
                 return;
             }
 
-            // Fresh install in progress: advgb_settings not created yet (install.php
-            // runs on the activation hook, after plugins_loaded). Leave it to
-            // install.php, which defaults legacy blocks OFF for new sites.
-            if (get_option('advgb_settings') === false) {
-                return;
+            $legacy_blocks = get_option('advgb_legacy_blocks');
+            if (
+                $legacy_blocks === false
+                || self::legacyBlocksOptionHasNoKnownBlocks($legacy_blocks)
+                || self::legacyBlocksOptionDisablesAllKnownBlocks($legacy_blocks)
+            ) {
+                update_option('advgb_legacy_blocks', self::defaultLegacyBlocksState(true), false);
             }
 
-            // Existing install (settings present, legacy option absent) -> default
-            // everything ON so existing content keeps working.
+            $updated_settings = false;
+            if (! array_key_exists('gallery_lightbox', $saved_settings)) {
+                $saved_settings['gallery_lightbox'] = 1;
+                $updated_settings = true;
+            }
+
+            if (! array_key_exists('gallery_lightbox_caption', $saved_settings)) {
+                $saved_settings['gallery_lightbox_caption'] = '1';
+                $updated_settings = true;
+            }
+
+            if ($updated_settings) {
+                update_option('advgb_settings', $saved_settings, false);
+            }
+        }
+
+        /**
+         * Default enabled/disabled state for every legacy block.
+         *
+         * @param bool $enabled Whether legacy blocks should be enabled.
+         *
+         * @return array slug => int
+         */
+        public static function defaultLegacyBlocksState($enabled)
+        {
             $state = [];
             foreach (array_keys(self::legacyBlocksMap()) as $slug) {
-                $state[$slug] = 1;
+                $state[$slug] = $enabled ? 1 : 0;
             }
 
-            update_option('advgb_legacy_blocks', $state, false);
+            return $state;
+        }
+
+        /**
+         * Detect an uninitialized legacy blocks option without overriding saved choices.
+         *
+         * @param mixed $legacy_blocks Saved option value.
+         *
+         * @return bool
+         */
+        public static function legacyBlocksOptionHasNoKnownBlocks($legacy_blocks)
+        {
+            if (! is_array($legacy_blocks)) {
+                return false;
+            }
+
+            foreach (array_keys(self::legacyBlocksMap()) as $slug) {
+                if (array_key_exists($slug, $legacy_blocks)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
+        /**
+         * Detect legacy blocks initialized to new-install OFF defaults.
+         *
+         * @param mixed $legacy_blocks Saved option value.
+         *
+         * @return bool
+         */
+        public static function legacyBlocksOptionDisablesAllKnownBlocks($legacy_blocks)
+        {
+            if (! is_array($legacy_blocks)) {
+                return false;
+            }
+
+            foreach (array_keys(self::legacyBlocksMap()) as $slug) {
+                if (! array_key_exists($slug, $legacy_blocks) || ! empty($legacy_blocks[$slug])) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /**
@@ -2700,8 +2782,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'access',
                 // The object name to store the active/inactive blocks. To see it in browser console: advgbCUserRole.access
                 'advgb_blocks_user_roles', // Database option to check current user role's active/inactive blocks
-                // Hide deprecated blocks and any globally disabled via Extra Blocks toggles
-                array_merge(self::hiddenDeprecatedBlocks(), self::globallyDisabledBlocks())
+                // Hide deprecated blocks, disabled legacy blocks, and any globally disabled via Extra Blocks toggles
+                array_merge(self::hiddenDeprecatedBlocks(), self::allDisabledBlocks())
             );
 
             // Render form
@@ -3485,6 +3567,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 }
 
                 update_option('advgb_legacy_blocks', $legacy_state, false);
+                update_option('advgb_legacy_settings_migrated', 1, false);
 
                 // Legacy features: gallery lightbox (moved here from the Images tab)
                 $advgb_settings = get_option('advgb_settings');
@@ -4259,11 +4342,44 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             } ?>
                             <input type="hidden" name="advgb_feature" id="advgb_feature" value="<?php
                             echo $feature ?>"/>
+                            <?php
+                            global $wp_roles;
+                            $roles_list = $wp_roles->get_names();
+                            $current_user_role_name = isset($roles_list[ $current_user_role ])
+                                ? translate_user_role($roles_list[ $current_user_role ])
+                                : $current_user_role;
+                            ?>
+                            <div class="inline-button-wrapper">
+                                <span class="advgb-enable-one-block-msg" style="display: none;">
+                                    <span>
+                                        <span>
+                                            <?php
+                                            esc_attr_e(
+                                                'To save this configuration, enable at least one block.',
+                                                'advanced-gutenberg'
+                                            )
+                                            ?>
+                                        </span>
+                                        <span class="dashicons dashicons-warning"></span>
+                                    </span>
+                                </span>
+                                <button type="submit" name="advgb_block_<?php
+                                        echo $feature ?>_save" class="button button-primary save-profile-button">
+                                    <?php
+                                    printf(
+                                        esc_html__('Save %s Block Permissions', 'advanced-gutenberg'),
+                                        esc_html($current_user_role_name)
+                                    );
+                                    ?>
+                                </button>
+                                <button type="submit" name="advgb_block_<?php
+                                        echo $feature ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
+                                    <?php esc_html_e( 'Save Permission for all Roles', 'advanced-gutenberg' ); ?>
+                                </button>
+                            </div>
                             <div>
                                 <select name="user_role" id="user_role">
                                     <?php
-                                    global $wp_roles;
-                                    $roles_list = $wp_roles->get_names();
                                     foreach ($roles_list as $roles => $role_name) :
                                         $role_name = translate_user_role($role_name);
                                         ?>
@@ -4287,36 +4403,17 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             </div>
                             <div class="advgb-toggle-wrapper">
                                 <?php
-                                _e('Enable or disable all blocks for CURRENT ROLE', 'advanced-gutenberg') ?>
+                                printf(
+                                    esc_html__('Enable or disable all blocks for %s', 'advanced-gutenberg'),
+                                    esc_html($current_user_role_name)
+                                );
+                                ?>
                                 <div class="advgb-switch-button">
                                     <label class="switch">
                                         <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
                                         <span class="slider"></span>
                                     </label>
                                 </div>
-                            </div>
-                            <div class="inline-button-wrapper">
-                                <span class="advgb-enable-one-block-msg" style="display: none;">
-                                    <span>
-                                        <span>
-                                            <?php
-                                            esc_attr_e(
-                                                'To save this configuration, enable at least one block.',
-                                                'advanced-gutenberg'
-                                            )
-                                            ?>
-                                        </span>
-                                        <span class="dashicons dashicons-warning"></span>
-                                    </span>
-                                </span>
-                                <button type="submit" name="advgb_block_<?php
-                                        echo $feature ?>_save" class="button button-primary save-profile-button">
-                                    <?php esc_html_e( 'Save Role Block Permissions', 'advanced-gutenberg' ); ?>
-                                </button>
-                                <button type="submit" name="advgb_block_<?php
-                                        echo $feature ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
-                                    <?php esc_html_e( 'Save Permission for all Roles', 'advanced-gutenberg' ); ?>
-                                </button>
                             </div>
                         </div>
 
@@ -4335,7 +4432,12 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         <div class="advgb-form-buttons-bottom">
                             <button type="submit" name="advgb_block_<?php
                                     echo $feature ?>_save" class="button button-primary save-profile-button">
-                                <?php esc_html_e( 'Save Role Block Permissions', 'advanced-gutenberg' ); ?>
+                                <?php
+                                    printf(
+                                        esc_html__('Save %s Block Permissions', 'advanced-gutenberg'),
+                                        esc_html($current_user_role_name)
+                                    );
+                                    ?>
                             </button>
                             <button type="submit" name="advgb_block_<?php
                                     echo $feature ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
