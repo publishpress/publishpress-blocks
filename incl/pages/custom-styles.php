@@ -13,6 +13,15 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
         </button>
     </header>
 
+    <?php
+    $this->screenDescription(
+        __(
+            'Create and manage custom CSS styles that editors can quickly apply to blocks.',
+            'advanced-gutenberg'
+        )
+    );
+    ?>
+
     <div class="wrap">
         <div id="customstyles-tab" class="tab-content">
             <div id="advgb-customstyles-list">

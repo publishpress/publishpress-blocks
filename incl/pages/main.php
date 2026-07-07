@@ -8,6 +8,14 @@ defined('ABSPATH') || die;
             <?php esc_html_e('PublishPress Blocks', 'advanced-gutenberg') ?>
         </h1>
     </header>
+    <?php
+    $this->screenDescription(
+        __(
+            'Use this dashboard to turn PublishPress Blocks features on or off.',
+            'advanced-gutenberg'
+        )
+    );
+    ?>
     <div class="wrap">
         <div class="pp-columns-wrapper"
         >
@@ -81,6 +89,16 @@ defined('ABSPATH') || die;
                             'title' => __( 'Auto Insert Blocks', 'advanced-gutenberg' ),
                             'description' => __(
                                 'Automatically insert reusable blocks into posts based on position, categories, tags, and other criteria.', 'advanced-gutenberg'
+                            ),
+                            'default' => 1,
+                            'access' => true
+                        ],
+                        [
+                            'name' => 'enable_post_notes',
+                            'title' => __('Post Notes', 'advanced-gutenberg'),
+                            'description' => __(
+                                'Adds an "Add Note" button to the block editor toolbar and a Post Notes admin page to review all notes across your posts (requires WordPress 6.9+).',
+                                'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => true

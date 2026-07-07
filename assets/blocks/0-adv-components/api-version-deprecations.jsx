@@ -9,9 +9,9 @@ const getDefaultBlockClassName = (blockName) => {
     return `wp-block-${blockName.replace('/', '-')}`;
 };
 
-// API v3 no longer injects the default block class into save markup for these legacy saves.
-// Preserve each block's existing root element and add the class only when it is missing.
-const addDefaultBlockClassName = (element, blockName) => {
+// API v3 no longer injects wrapper classes into save markup for these legacy saves.
+// Preserve each block's existing root element and add the default and custom classes when missing.
+const addSaveBlockClassNames = (element, blockName, customClassName = '') => {
     if (
         !wp.element
         || typeof wp.element.isValidElement !== 'function'
@@ -24,14 +24,21 @@ const addDefaultBlockClassName = (element, blockName) => {
 
     const defaultClassName = getDefaultBlockClassName(blockName);
     const className = element.props && element.props.className ? element.props.className : '';
-    const classNames = className.split(/\s+/).filter(Boolean);
+    const classNames = [
+        defaultClassName,
+        className,
+        customClassName,
+    ]
+        .join(' ')
+        .split(/\s+/)
+        .filter((value, index, self) => value && self.indexOf(value) === index);
 
-    if (classNames.indexOf(defaultClassName) !== -1) {
+    if (classNames.join(' ') === className) {
         return element;
     }
 
     return wp.element.cloneElement(element, {
-        className: [defaultClassName, className].filter(Boolean).join(' '),
+        className: classNames.join(' '),
     });
 };
 
@@ -94,7 +101,9 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
         const save = settings.save;
 
         settings.save = function AdvgbBlockSaveWithDefaultClass(props) {
-            return addDefaultBlockClassName(save.apply(this, arguments), blockName);
+            const customClassName = props && props.attributes ? props.attributes.className : '';
+
+            return addSaveBlockClassNames(save.apply(this, arguments), blockName, customClassName);
         };
         settings.__advgbUsesSaveBlockClass = true;
     }

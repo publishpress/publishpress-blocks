@@ -96,7 +96,31 @@ class AdvancedGutenbergAutoInsertBlocks
                 'advgbAutoInsertI18n',
                 [
                     'nonce' => wp_create_nonce('advgb_auto_insert_nonce'),
-                    'proVer' => $this->proActive
+                    'proVer' => $this->proActive,
+                    'select2' => [
+                        'errorLoading' => __('The results could not be loaded.', 'advanced-gutenberg'),
+                        'inputTooLong' => [
+                            'one' => __('Please delete 1 character', 'advanced-gutenberg'),
+                            /* translators: %s: number of characters. */
+                            'other' => __('Please delete %s characters', 'advanced-gutenberg'),
+                        ],
+                        'inputTooShort' => [
+                            'one' => __('Please enter 1 or more characters', 'advanced-gutenberg'),
+                            /* translators: %s: number of characters. */
+                            'other' => __('Please enter %s or more characters', 'advanced-gutenberg'),
+                        ],
+                        'loadingMore' => __('Loading more results...', 'advanced-gutenberg'),
+                        'maximumSelected' => [
+                            'one' => __('You can only select 1 item', 'advanced-gutenberg'),
+                            /* translators: %s: number of items. */
+                            'other' => __('You can only select %s items', 'advanced-gutenberg'),
+                        ],
+                        'noResults' => __('No results found', 'advanced-gutenberg'),
+                        'searching' => __('Searching...', 'advanced-gutenberg'),
+                        'removeAllItems' => __('Remove all items', 'advanced-gutenberg'),
+                        'removeItem' => __('Remove item', 'advanced-gutenberg'),
+                        'search' => __('Search', 'advanced-gutenberg'),
+                    ],
                 ]
             );
         }

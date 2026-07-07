@@ -1470,15 +1470,18 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
          */
         public static function defaultExcludedBlocks()
         {
-            return [
-                'core/freeform',
-                'core/legacy-widget',
-                'core/widget-area',
-                'core/column',
-                'advgb/tab',
-                'advgb/column',
-                'advgb/accordion' // @TODO - Deprecated block. Remove later.
-            ];
+            return array_values(array_unique(array_merge(
+                [
+                    'core/freeform',
+                    'core/legacy-widget',
+                    'core/widget-area',
+                    'core/column',
+                    'advgb/tab',
+                    'advgb/column',
+                    'advgb/accordion' // @TODO - Deprecated block. Remove later.
+                ],
+                \AdvancedGutenbergMain::allDisabledBlocks()
+            )));
         }
 
         /**
