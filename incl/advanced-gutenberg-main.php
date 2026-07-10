@@ -43,6 +43,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
             global $wp_version;
 
             add_action('init', array( $this, 'registerPostMeta' ));
+            /* Must be registered unconditionally (not inside a load-{page} hook): core
+             * saves the Screen Options "per page" value during admin_init, which runs
+             * before load-{page} fires. */
+            add_filter('set_screen_option_advgb_post_notes_per_page', array( $this, 'setPostNotesScreenOption' ), 10, 3);
             add_action('init', array( $this, 'registerCustomStyleFrontendFilter' ));
             add_action('admin_init', array( $this, 'registerStylesScripts' ));
             add_action('admin_init', array( $this, 'addEditorFrameStyles' ));
@@ -2580,6 +2584,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         // e.g. 'load-blocks_page_advgb_block_access'
                         add_action('load-' . $hook, [ $this, $function_name ]);
                     }
+
+                    // Screen Options (per-page + column visibility) for Post Notes
+                    if (! empty($hook) && $page['slug'] === 'advgb_post_notes') {
+                        add_action('load-' . $hook, [ $this, 'addPostNotesScreenOptions' ]);
+                    }
                 }
 
                 /* Add CSS classes to these submenus to dynamically show/hide them
@@ -2851,6 +2860,59 @@ if (! class_exists('AdvancedGutenbergMain')) {
             self::commonAdminPagesAssets();
 
             require_once plugin_dir_path(dirname(__FILE__)) . 'incl/pages/post-notes.php';
+        }
+
+        /**
+         * Register the "Screen Options" tab content for the Post Notes page:
+         * a "Notes per page" number field and column show/hide checkboxes.
+         * Must run on load-{page}, before admin-header.php renders the tab.
+         *
+         * @return void
+         */
+        public function addPostNotesScreenOptions()
+        {
+            add_screen_option('per_page', [
+                'label'   => __('Notes per page', 'advanced-gutenberg'),
+                'default' => 20,
+                'option'  => 'advgb_post_notes_per_page',
+            ]);
+
+            $screen = get_current_screen();
+            if (! $screen) {
+                return;
+            }
+
+            add_filter('manage_' . $screen->id . '_columns', function () {
+                return [
+                    // '_title' is the core-recognized key for a mandatory, non-hideable column
+                    '_title'    => __('Post', 'advanced-gutenberg'),
+                    'post_type' => __('Post Type', 'advanced-gutenberg'),
+                    'note'      => __('Note', 'advanced-gutenberg'),
+                    'author'    => __('Author', 'advanced-gutenberg'),
+                    'date'      => __('Date', 'advanced-gutenberg'),
+                    'status'    => __('Status', 'advanced-gutenberg'),
+                ];
+            });
+        }
+
+        /**
+         * Validate/save the "Notes per page" Screen Option value.
+         *
+         * @param mixed  $status Screen option value to save, or false to skip.
+         * @param string $option Screen option name being saved.
+         * @param mixed  $value  Value submitted by the user.
+         *
+         * @return mixed
+         */
+        public function setPostNotesScreenOption($status, $option, $value)
+        {
+            if ($option === 'advgb_post_notes_per_page') {
+                $value = (int) $value;
+
+                return ($value > 0) ? $value : $status;
+            }
+
+            return $status;
         }
 
         /**

@@ -3,7 +3,20 @@ defined('ABSPATH') || die;
 
 $current_user      = wp_get_current_user();
 $can_edit_others   = current_user_can('edit_others_posts');
-$per_page          = 20;
+
+// "Notes per page" Screen Option (Settings > Screen Options, top right of this page)
+$per_page = (int) get_user_meta($current_user->ID, 'advgb_post_notes_per_page', true);
+if ($per_page < 1) {
+    $per_page = 20;
+}
+
+// Column visibility from Screen Options; '_title' (Post) is always shown
+$advgb_screen  = get_current_screen();
+$hidden_cols   = $advgb_screen ? get_hidden_columns($advgb_screen) : [];
+$advgb_show_col = function ($key) use ($hidden_cols) {
+    return ! in_array($key, $hidden_cols, true);
+};
+
 $current_page      = max(1, isset($_GET['paged']) ? absint($_GET['paged']) : 1);
 $filter_status     = isset($_GET['note_status']) ? sanitize_text_field($_GET['note_status']) : '';
 $filter_post_type  = isset($_GET['post_type_filter']) ? sanitize_text_field($_GET['post_type_filter']) : '';
@@ -265,21 +278,40 @@ if ($filter_search) {
                 <?php endif ?>
             </div><!-- .tablenav.top -->
 
+            <?php
+            // Column count for the "no notes" placeholder row (Post is always shown)
+            $advgb_visible_cols = 1;
+            foreach (['post_type', 'note', 'author', 'date', 'status'] as $advgb_col_key) {
+                if ($advgb_show_col($advgb_col_key)) {
+                    $advgb_visible_cols++;
+                }
+            }
+            ?>
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
                         <th scope="col" style="width:22%"><?php esc_html_e('Post', 'advanced-gutenberg') ?></th>
-                        <th scope="col" style="width:10%"><?php esc_html_e('Post Type', 'advanced-gutenberg') ?></th>
-                        <th scope="col"><?php esc_html_e('Note', 'advanced-gutenberg') ?></th>
-                        <th scope="col" style="width:16%"><?php esc_html_e('Author', 'advanced-gutenberg') ?></th>
-                        <th scope="col" style="width:11%"><?php esc_html_e('Date', 'advanced-gutenberg') ?></th>
-                        <th scope="col" style="width:9%"><?php esc_html_e('Status', 'advanced-gutenberg') ?></th>
+                        <?php if ($advgb_show_col('post_type')) : ?>
+                            <th scope="col" style="width:10%"><?php esc_html_e('Post Type', 'advanced-gutenberg') ?></th>
+                        <?php endif ?>
+                        <?php if ($advgb_show_col('note')) : ?>
+                            <th scope="col"><?php esc_html_e('Note', 'advanced-gutenberg') ?></th>
+                        <?php endif ?>
+                        <?php if ($advgb_show_col('author')) : ?>
+                            <th scope="col" style="width:16%"><?php esc_html_e('Author', 'advanced-gutenberg') ?></th>
+                        <?php endif ?>
+                        <?php if ($advgb_show_col('date')) : ?>
+                            <th scope="col" style="width:11%"><?php esc_html_e('Date', 'advanced-gutenberg') ?></th>
+                        <?php endif ?>
+                        <?php if ($advgb_show_col('status')) : ?>
+                            <th scope="col" style="width:9%"><?php esc_html_e('Status', 'advanced-gutenberg') ?></th>
+                        <?php endif ?>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($notes)) : ?>
                         <tr>
-                            <td colspan="6">
+                            <td colspan="<?php echo (int) $advgb_visible_cols ?>">
                                 <?php esc_html_e('No notes found.', 'advanced-gutenberg') ?>
                             </td>
                         </tr>
@@ -301,32 +333,42 @@ if ($filter_search) {
                                     <span><?php echo esc_html($post_title) ?></span>
                                 <?php endif ?>
                             </td>
-                            <td>
-                                <?php echo $post_type ? esc_html($post_type->labels->singular_name) : '&mdash;' ?>
-                            </td>
-                            <td>
-                                <?php echo esc_html(wp_trim_words($note->comment_content, 20)) ?>
-                            </td>
-                            <td>
-                                <div style="display:flex;align-items:center;gap:8px">
-                                    <?php advgb_note_author_avatar($note->comment_author, $note->comment_author_email, 32) ?>
-                                    <span><?php echo esc_html($note->comment_author) ?></span>
-                                </div>
-                            </td>
-                            <td>
-                                <abbr title="<?php echo esc_attr($note->comment_date) ?>">
-                                    <?php echo esc_html(
-                                        date_i18n(get_option('date_format'), strtotime($note->comment_date))
-                                    ) ?>
-                                </abbr>
-                            </td>
-                            <td>
-                                <span class="advgb-note-status advgb-note-status--<?php echo $resolved ? 'resolved' : 'open' ?>">
-                                    <?php echo $resolved
-                                        ? esc_html__('Resolved', 'advanced-gutenberg')
-                                        : esc_html__('Open', 'advanced-gutenberg') ?>
-                                </span>
-                            </td>
+                            <?php if ($advgb_show_col('post_type')) : ?>
+                                <td>
+                                    <?php echo $post_type ? esc_html($post_type->labels->singular_name) : '&mdash;' ?>
+                                </td>
+                            <?php endif ?>
+                            <?php if ($advgb_show_col('note')) : ?>
+                                <td>
+                                    <?php echo esc_html(wp_trim_words($note->comment_content, 20)) ?>
+                                </td>
+                            <?php endif ?>
+                            <?php if ($advgb_show_col('author')) : ?>
+                                <td>
+                                    <div style="display:flex;align-items:center;gap:8px">
+                                        <?php advgb_note_author_avatar($note->comment_author, $note->comment_author_email, 32) ?>
+                                        <span><?php echo esc_html($note->comment_author) ?></span>
+                                    </div>
+                                </td>
+                            <?php endif ?>
+                            <?php if ($advgb_show_col('date')) : ?>
+                                <td>
+                                    <abbr title="<?php echo esc_attr($note->comment_date) ?>">
+                                        <?php echo esc_html(
+                                            date_i18n(get_option('date_format'), strtotime($note->comment_date))
+                                        ) ?>
+                                    </abbr>
+                                </td>
+                            <?php endif ?>
+                            <?php if ($advgb_show_col('status')) : ?>
+                                <td>
+                                    <span class="advgb-note-status advgb-note-status--<?php echo $resolved ? 'resolved' : 'open' ?>">
+                                        <?php echo $resolved
+                                            ? esc_html__('Resolved', 'advanced-gutenberg')
+                                            : esc_html__('Open', 'advanced-gutenberg') ?>
+                                    </span>
+                                </td>
+                            <?php endif ?>
                         </tr>
                         <?php endforeach ?>
                     <?php endif ?>
@@ -334,11 +376,21 @@ if ($filter_search) {
                 <tfoot>
                     <tr>
                         <th scope="col"><?php esc_html_e('Post', 'advanced-gutenberg') ?></th>
-                        <th scope="col"><?php esc_html_e('Post Type', 'advanced-gutenberg') ?></th>
-                        <th scope="col"><?php esc_html_e('Note', 'advanced-gutenberg') ?></th>
-                        <th scope="col"><?php esc_html_e('Author', 'advanced-gutenberg') ?></th>
-                        <th scope="col"><?php esc_html_e('Date', 'advanced-gutenberg') ?></th>
-                        <th scope="col"><?php esc_html_e('Status', 'advanced-gutenberg') ?></th>
+                        <?php if ($advgb_show_col('post_type')) : ?>
+                            <th scope="col"><?php esc_html_e('Post Type', 'advanced-gutenberg') ?></th>
+                        <?php endif ?>
+                        <?php if ($advgb_show_col('note')) : ?>
+                            <th scope="col"><?php esc_html_e('Note', 'advanced-gutenberg') ?></th>
+                        <?php endif ?>
+                        <?php if ($advgb_show_col('author')) : ?>
+                            <th scope="col"><?php esc_html_e('Author', 'advanced-gutenberg') ?></th>
+                        <?php endif ?>
+                        <?php if ($advgb_show_col('date')) : ?>
+                            <th scope="col"><?php esc_html_e('Date', 'advanced-gutenberg') ?></th>
+                        <?php endif ?>
+                        <?php if ($advgb_show_col('status')) : ?>
+                            <th scope="col"><?php esc_html_e('Status', 'advanced-gutenberg') ?></th>
+                        <?php endif ?>
                     </tr>
                 </tfoot>
             </table>
