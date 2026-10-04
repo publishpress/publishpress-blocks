@@ -49,6 +49,51 @@ HTML;
 }
 
 /**
+ * Check whether recent posts query arguments use expensive filters that should be cached.
+ *
+ * @param array $args Query arguments.
+ *
+ * @return bool
+ */
+function advgbShouldCacheRecentPostsQuery($args)
+{
+    foreach (array('category__in', 'tax_query', 'meta_key', 'meta_query') as $key) {
+        if (! empty($args[ $key ])) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Retrieve recent posts and cache expensive filtered queries for a short period.
+ *
+ * @param array $args Query arguments.
+ *
+ * @return array
+ */
+function advgbGetRecentPosts($args)
+{
+    if (! advgbShouldCacheRecentPostsQuery($args)) {
+        return wp_get_recent_posts($args, OBJECT);
+    }
+
+    $cache_key    = 'recent_posts_' . md5(wp_json_encode($args));
+    $cache_group  = 'advgb_recent_posts';
+    $recent_posts = wp_cache_get($cache_key, $cache_group);
+
+    if (false !== $recent_posts) {
+        return $recent_posts;
+    }
+
+    $recent_posts = wp_get_recent_posts($args, OBJECT);
+    wp_cache_set($cache_key, $recent_posts, $cache_group, 5 * MINUTE_IN_SECONDS);
+
+    return $recent_posts;
+}
+
+/**
  * Render content for Content Display block
  *
  * @param array $attributes Attributes of the block
@@ -160,7 +205,7 @@ function advgbRenderBlockRecentPosts($attributes)
         ));
     }
 
-    $recent_posts = wp_get_recent_posts(apply_filters('advgb_get_recent_posts_args', $args, $attributes, $post_type), OBJECT);
+    $recent_posts = advgbGetRecentPosts(apply_filters('advgb_get_recent_posts_args', $args, $attributes, $post_type));
     $saved_settings    = get_option('advgb_settings');
     $default_thumb     = ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/recent-posts/recent-post-default.png';
     $rp_default_thumb  = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
