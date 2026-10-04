@@ -35,7 +35,10 @@
         "build:css": "sass assets/scss/:assets/css/ --style=compressed --no-source-map",
         "build:css-dev": "sass assets/scss/:assets/css/ -w",
         "minify:js-main": "uglifyjs assets/js/main.js --output assets/js/main.min.js",
-        "minify:js-settings": "uglifyjs assets/js/settings.js --output assets/js/settings.min.js"
+        "minify:js-settings": "uglifyjs assets/js/settings.js --output assets/js/settings.min.js",
+        "minify:js-blocks": "uglifyjs assets/blocks/blocks.js --compress --mangle --comments '/^!|@preserve|@license|@cc_on/' --output assets/blocks/blocks.min.js",
+        "minify:js-frontend": "uglifyjs assets/blocks/frontend.js --compress --mangle --comments '/^!|@preserve|@license|@cc_on/' --output assets/blocks/frontend.min.js",
+        "minify:js-codemirror": "uglifyjs assets/js/codemirror/lib/codemirror.js --compress --mangle --comments all --output assets/js/codemirror/lib/codemirror.min.js"
     },
     "extra": {
         "plugin-name": "publishpress-blocks",

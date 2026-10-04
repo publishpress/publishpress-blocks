@@ -142,6 +142,33 @@ if (! class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Get plugin asset URL and prefer minified JavaScript outside debug mode.
+         *
+         * @param string $path Relative asset path.
+         *
+         * @return string
+         */
+        protected function getAssetUrl($path)
+        {
+            $minified_path = substr($path, -3) === '.js'
+                ? substr($path, 0, -3) . '.min.js'
+                : '';
+
+            if (
+                $minified_path
+                && file_exists(ADVANCED_GUTENBERG_PLUGIN_DIR_PATH . $minified_path)
+                && (
+                    (! defined('SCRIPT_DEBUG') || ! SCRIPT_DEBUG)
+                    || ! file_exists(ADVANCED_GUTENBERG_PLUGIN_DIR_PATH . $path)
+                )
+            ) {
+                $path = $minified_path;
+            }
+
+            return ADVANCED_GUTENBERG_PLUGIN_DIR_URL . $path;
+        }
+
+        /**
          * Disable all admin notices in our page
          *
          * @return void
@@ -464,7 +491,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 if (Utilities::settingIsEnabled('enable_advgb_blocks')) {
                     wp_enqueue_script(
                         'advgb_blocks',
-                        ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/blocks.js',
+                        $this->getAssetUrl('assets/blocks/blocks.js'),
                         array(
                             'lodash',
                             'wp-blocks',
@@ -2054,7 +2081,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 );
                 wp_register_script(
                     'advgb_codemirror_js',
-                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/js/codemirror/lib/codemirror.js',
+                    $this->getAssetUrl('assets/js/codemirror/lib/codemirror.js'),
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
@@ -2121,7 +2148,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             if (Utilities::settingIsEnabled('enable_advgb_blocks')) {
                 wp_register_script(
                     'advgb_blocks_frontend_scripts',
-                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/frontend.js',
+                    $this->getAssetUrl('assets/blocks/frontend.js'),
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
