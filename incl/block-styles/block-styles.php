@@ -1167,7 +1167,7 @@ class AdvancedGutenbergBlockStyles
             case 'promo':
                 $html .= '<div class="advgb-pro-small-overlay-text">
                         <a class="advgb-pro-link" href="' . esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK) . '" target="_blank">
-                            <span class="dashicons dashicons-lock"></span> ' . __('Pro feature', 'advanced-gutenberg') . '
+                            <span class="dashicons dashicons-lock"></span> ' . esc_html__('Pro feature', 'advanced-gutenberg') . '
                         </a>
                     </div>
                     ';
@@ -1178,6 +1178,48 @@ class AdvancedGutenbergBlockStyles
             $html .= '</div>';
         }
         return $html;
+    }
+
+    public static function allowed_control_html()
+    {
+        return [
+            'a'        => [
+                'class'  => true,
+                'href'   => true,
+                'target' => true,
+            ],
+            'div'      => [
+                'class' => true,
+            ],
+            'fieldset' => [
+                'class' => true,
+            ],
+            'input'    => [
+                'class'               => true,
+                'data-css-property'   => true,
+                'data-field-config'   => true,
+                'data-special-values' => true,
+                'data-unit'           => true,
+                'max'                 => true,
+                'min'                 => true,
+                'placeholder'         => true,
+                'step'                => true,
+                'type'                => true,
+            ],
+            'label'    => [],
+            'legend'   => [],
+            'option'   => [
+                'value' => true,
+            ],
+            'select'   => [
+                'class'             => true,
+                'data-css-property' => true,
+                'data-field-config' => true,
+            ],
+            'span'     => [
+                'class' => true,
+            ],
+        ];
     }
 
     public static function get_font_weight_options()

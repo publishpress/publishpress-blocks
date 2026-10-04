@@ -20,7 +20,7 @@ if ($blocks_icon_color === '#5952de') {
         echo( ! $this->settingIsEnabled('enable_advgb_blocks') ? ' style="display:none;"' : '' ) ?>>
             <th scope="row">
                 <?php
-                _e('Blocks icon color', 'advanced-gutenberg') ?>
+                esc_html_e('Blocks icon color', 'advanced-gutenberg') ?>
             </th>
             <td>
                 <label>
@@ -35,7 +35,7 @@ if ($blocks_icon_color === '#5952de') {
                 </label>
                 <p class="description">
                     <?php
-                    _e(
+                    esc_html_e(
                         'Apply in admin to blocks from PublishPress Blocks plugin.',
                         'advanced-gutenberg'
                     )
@@ -51,7 +51,7 @@ if ($blocks_icon_color === '#5952de') {
                 name="save_settings_general"
         >
             <?php
-            esc_html_e('Save Settings', 'advanced-gutenberg') ?>
+            esc_htmlesc_html_e('Save Settings', 'advanced-gutenberg') ?>
         </button>
     </div>
 </form>
