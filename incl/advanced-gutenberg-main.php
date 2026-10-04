@@ -715,7 +715,14 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'id'  => 0
             );
             $icons                = array();
-            $icons['material']    = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
+            global $wp_filesystem;
+            if (! function_exists('WP_Filesystem')) {
+                require_once ABSPATH . 'wp-admin/includes/file.php';
+            }
+            WP_Filesystem();
+            $icons['material']    = is_object($wp_filesystem)
+                ? $wp_filesystem->get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json')
+                : '{}';
             $icons['material']    = json_decode($icons['material'], true);
             $enable_advgb_blocks  = ! isset($saved_settings['enable_advgb_blocks']) || $saved_settings['enable_advgb_blocks'] ? 1 : 0;
             $pp_series_active     = is_plugin_active('organize-series/orgSeries.php') || is_plugin_active('publishpress-series-pro/publishpress-series-pro.php') ? 1 : 0;

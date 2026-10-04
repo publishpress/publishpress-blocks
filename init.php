@@ -89,10 +89,14 @@ if (! function_exists('advgb_some_specific_updates')) {
         if (version_compare($advgb_current_version, '2.10.2', 'lt') && ! get_option('advgb_blocks_user_roles')) {
             // Migrate Block Access Profiles to Block Access by Roles
             global $wpdb;
-            $profiles = $wpdb->get_results(
-                'SELECT * FROM ' . $wpdb->prefix . 'posts
-                WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC'
-            );
+            $profiles = wp_cache_get('legacy_profiles', 'publishpress_blocks');
+            if (false === $profiles) {
+                $profiles = $wpdb->get_results(
+                    "SELECT * FROM {$wpdb->posts}
+                    WHERE post_type='advgb_profiles' AND post_status='publish' ORDER BY post_date_gmt DESC"
+                );
+                wp_cache_set('legacy_profiles', $profiles, 'publishpress_blocks');
+            }
 
             if (! empty($profiles)) {
                 // Let's extract the user roles associated to Block Access profiles (we can't get all the user roles with regular WP way)
@@ -108,11 +112,6 @@ if (! function_exists('advgb_some_specific_updates')) {
                 // Find the most recent profile of each user role
                 $blocks_by_role_access = array();
                 foreach ($user_role_accesses as $user_role_access) {
-                    $profiles = $wpdb->get_results(
-                        'SELECT * FROM ' . $wpdb->prefix . 'posts
-                        WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC'
-                    );
-
                     if (! empty($profiles)) {
                         $centinel[ $user_role_access ] = false; // A boolean to get the first profile (newest) and skip the rest
                         foreach ($profiles as $profile) {
