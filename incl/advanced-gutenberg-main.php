@@ -4056,6 +4056,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         wp_get_referer()
                     )
                 );
+                exit;
             } else {
                 // Redirect with error message / Nothing was saved
                 wp_safe_redirect(
@@ -4067,6 +4068,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         wp_get_referer()
                     )
                 );
+                exit;
             }
         }
 
@@ -4138,6 +4140,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         wp_get_referer()
                     )
                 );
+                exit;
             } else {
                 // Redirect with error message / Nothing was saved
                 wp_safe_redirect(
@@ -4149,6 +4152,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         wp_get_referer()
                     )
                 );
+                exit;
             }
         }
 
