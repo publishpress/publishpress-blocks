@@ -149,7 +149,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                     <div>
                         <!-- Enhanced Style Builder UI with Tabs -->
                         <div class="advgb-style-builder">
-                            <h3><?php esc_html_e('Style Builder', 'advanced-gutenberg'); ?></h3>
+                            <h2><?php esc_html_e('Style Builder', 'advanced-gutenberg'); ?></h2>
 
                             <!-- Tab Navigation -->
                             <div class="advgb-tabs-wrapper advgb-sub-tabs advgb-tab-horz-desktop">
