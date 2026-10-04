@@ -196,7 +196,15 @@ function advgbRenderBlockRecentPosts($attributes)
                 || ($postView === 'slider' && $attributes['sliderStyle'] === 'headline')
                  && $displayImageVsOrder === 'ignore-order'
             ) {
-                $postHtml .= sprintf('<div class="advgb-post-thumbnail advgb-post-thumbnail-no-image"><a href="%1$s"></a></div>', get_permalink($post->ID));
+                $postHtml .= sprintf(
+                    '<div class="advgb-post-thumbnail advgb-post-thumbnail-no-image"><a href="%1$s" aria-label="%2$s"></a></div>',
+                    esc_url(get_permalink($post->ID)),
+                    esc_attr(sprintf(
+                        /* translators: %s: post title. */
+                        __('Read %s', 'advanced-gutenberg'),
+                        get_the_title($post->ID)
+                    ))
+                );
             } else {
             // Nothing to do here
             }
