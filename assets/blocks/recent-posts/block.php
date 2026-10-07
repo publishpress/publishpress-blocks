@@ -1373,11 +1373,8 @@ function advgbSetSeriesOrderREST($args, $request)
         $args['orderby'] = 'meta_value_num';
 
         // Series 2.11.4+ meta_key now uses _series_part_${id}
-        if (
-                 function_exists('publishpress_multi_series_supported')
-            && publishpress_multi_series_supported()
-        ) {
-            $ids = array_map('intval', $request['series']);
+        $ids = array_map('intval', (array) $request['series']);
+        if (advgbSeriesUsesPerSeriesMetaKey($ids)) {
             foreach ($ids as $id) {
                 $args['meta_key'][] = '_series_part_' . $id;
             }
@@ -1455,40 +1452,78 @@ function advgbSeriesOrderSort()
     if (class_exists('orgSeries')) {
         add_action('pre_get_posts', function ($query) {
 
-            if (is_admin() || $query->query_vars['orderby'] !== 'series_order') {
+            if (is_admin() || ! isset($query->query_vars['orderby']) || $query->query_vars['orderby'] !== 'series_order') {
                 return $query;
             }
             $query->set('orderby', 'meta_value');
 
-            // Series 2.11.4+ meta_key now uses _series_part_${id}
+            $term_ids = [];
             if (
-                 function_exists('publishpress_multi_series_supported')
-                && publishpress_multi_series_supported()
+                isset($query->query_vars['tax_query'][0]['terms'])
+                && count($query->query_vars['tax_query'][0]['terms'])
             ) {
-// Make sure series are selected
-                if (
-                    isset($query->query_vars['tax_query'][0]['terms'])
-                    && count($query->query_vars['tax_query'][0]['terms'])
-                ) {
-// We get the terms titles. The same stored in block's taxonomies->series attribute
-                    // @TODO - Store and use term ids instead as attributes
-                    $terms = $query->query_vars['tax_query'][0]['terms'];
-                    $metakeys = [];
-                    foreach ($terms as $term) {
+                // We get the terms titles. The same stored in block's taxonomies->series attribute
+                // @TODO - Store and use term ids instead as attributes
+                foreach ($query->query_vars['tax_query'][0]['terms'] as $term) {
                     // Get the term object and then use the id to get the meta_key
-                        $term_obj = get_term_by('name', $term, 'series');
-                        $metakeys[] = '_series_part_' . (int) $term_obj->term_id;
+                    $term_obj = get_term_by('name', $term, 'series');
+                    if ($term_obj) {
+                        $term_ids[] = (int) $term_obj->term_id;
                     }
-                    $query->set('meta_key', $metakeys);
                 }
+            }
+
+            // Series 2.11.4+ meta_key now uses _series_part_${id}
+            if (advgbSeriesUsesPerSeriesMetaKey($term_ids)) {
+                $metakeys = [];
+                foreach ($term_ids as $term_id) {
+                    $metakeys[] = '_series_part_' . $term_id;
+                }
+                $query->set('meta_key', $metakeys);
             } else {
-        // Series Pro 2.11.3- and Series Free 2.11.2-
+                // Series Pro 2.11.3- and Series Free 2.11.2-
                 $query->set('meta_key', '_series_part');
             }
 
             return $query;
         });
     }
+}
+
+/**
+ * Check whether Series stores the order of the given series in _series_part_${id} meta keys.
+ *
+ * The publishpress_multi_series_supported option is only set by a Series upgrade
+ * notice, so it can be empty although the posts already use the new meta keys.
+ *
+ * @param int[] $term_ids Series term ids
+ *
+ * @return boolean
+ */
+function advgbSeriesUsesPerSeriesMetaKey($term_ids)
+{
+    $term_ids = array_filter(array_map('intval', (array) $term_ids));
+    if (empty($term_ids)) {
+        return false;
+    }
+
+    if (
+        function_exists('publishpress_multi_series_supported')
+        && publishpress_multi_series_supported()
+    ) {
+        return true;
+    }
+
+    global $wpdb;
+    $meta_keys = array_map(function ($id) {
+        return '_series_part_' . $id;
+    }, $term_ids);
+    $placeholders = implode(', ', array_fill(0, count($meta_keys), '%s'));
+
+    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- The IN fragment contains only generated placeholders.
+    $found = $wpdb->get_var($wpdb->prepare("SELECT meta_id FROM {$wpdb->postmeta} WHERE meta_key IN ($placeholders) LIMIT 1", $meta_keys)); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Query prepared above.
+
+    return ! empty($found);
 }
 
 /**
