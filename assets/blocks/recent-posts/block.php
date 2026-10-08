@@ -1183,7 +1183,7 @@ function advgbGetSeriesOrder($post)
         && publishpress_multi_series_supported()
     ) {
 // Get the terms array from a post so later we can get the term id
-        $terms = wp_get_post_terms($post['id'], 'series');
+        $terms = wp_get_post_terms($post['id'], advgbGetSeriesTaxonomy());
         if (is_array($terms) && count($terms) && $terms[0]->term_id) {
             return (int) get_post_meta($post['id'], '_series_part_' . $terms[0]->term_id, true);
         }
@@ -1369,11 +1369,15 @@ add_filter('rest_page_query', 'advgbGetAuthorFilterREST', 10, 2);
 function advgbSetSeriesOrderREST($args, $request)
 {
     $orderby = esc_html($request['orderby']);
-    if (isset($orderby) && $orderby === 'series_order' && isset($request['series'])) {
+    $taxonomy = advgbGetSeriesTaxonomy();
+    $taxonomy_object = get_taxonomy($taxonomy);
+    $rest_base = ($taxonomy_object && ! empty($taxonomy_object->rest_base)) ? $taxonomy_object->rest_base : $taxonomy;
+    $series_param = isset($request[$rest_base]) ? $request[$rest_base] : (isset($request['series']) ? $request['series'] : null);
+    if (isset($orderby) && $orderby === 'series_order' && isset($series_param)) {
         $args['orderby'] = 'meta_value_num';
 
         // Series 2.11.4+ meta_key now uses _series_part_${id}
-        $ids = array_map('intval', (array) $request['series']);
+        $ids = array_map('intval', (array) $series_param);
         if (advgbSeriesUsesPerSeriesMetaKey($ids)) {
             foreach ($ids as $id) {
                 $args['meta_key'][] = '_series_part_' . $id;
@@ -1457,24 +1461,34 @@ function advgbSeriesOrderSort()
             }
             $query->set('orderby', 'meta_value');
 
+            // The series taxonomy slug can be renamed in Series settings, e.g. "issue"
+            $taxonomy = advgbGetSeriesTaxonomy();
             $term_ids = [];
-            if (
-                isset($query->query_vars['tax_query'][0]['terms'])
-                && count($query->query_vars['tax_query'][0]['terms'])
-            ) {
-                // We get the terms titles. The same stored in block's taxonomies->series attribute
+            $tax_query = isset($query->query_vars['tax_query']) ? (array) $query->query_vars['tax_query'] : [];
+            foreach ($tax_query as $clause) {
+                if (! is_array($clause) || ! isset($clause['taxonomy']) || $clause['taxonomy'] !== $taxonomy || empty($clause['terms'])) {
+                    continue;
+                }
+                // The terms are the ones stored in the block's taxonomies attribute (names by default)
                 // @TODO - Store and use term ids instead as attributes
-                foreach ($query->query_vars['tax_query'][0]['terms'] as $term) {
+                $field = isset($clause['field']) ? $clause['field'] : 'term_id';
+                foreach ((array) $clause['terms'] as $term) {
                     // Get the term object and then use the id to get the meta_key
-                    $term_obj = get_term_by('name', $term, 'series');
+                    $term_obj = get_term_by($field, $term, $taxonomy);
                     if ($term_obj) {
                         $term_ids[] = (int) $term_obj->term_id;
                     }
                 }
             }
 
-            // Series 2.11.4+ meta_key now uses _series_part_${id}
-            if (advgbSeriesUsesPerSeriesMetaKey($term_ids)) {
+            if (empty($term_ids)) {
+                // No series selected: nothing to sort on, as before
+                if (! (function_exists('publishpress_multi_series_supported') && publishpress_multi_series_supported())) {
+                    // Series Pro 2.11.3- and Series Free 2.11.2-
+                    $query->set('meta_key', '_series_part');
+                }
+            } elseif (advgbSeriesUsesPerSeriesMetaKey($term_ids)) {
+                // Series 2.11.4+ meta_key now uses _series_part_${id}
                 $metakeys = [];
                 foreach ($term_ids as $term_id) {
                     $metakeys[] = '_series_part_' . $term_id;
@@ -1488,6 +1502,23 @@ function advgbSeriesOrderSort()
             return $query;
         });
     }
+}
+
+/**
+ * Get the slug of the series taxonomy. It can be renamed in Series settings.
+ *
+ * @return string
+ */
+function advgbGetSeriesTaxonomy()
+{
+    if (function_exists('ppseries_get_series_slug')) {
+        $slug = ppseries_get_series_slug();
+        if (! empty($slug)) {
+            return $slug;
+        }
+    }
+
+    return 'series';
 }
 
 /**
