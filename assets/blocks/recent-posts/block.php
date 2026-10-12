@@ -1459,7 +1459,7 @@ function advgbSeriesOrderSort()
             if (is_admin() || ! isset($query->query_vars['orderby']) || $query->query_vars['orderby'] !== 'series_order') {
                 return $query;
             }
-            $query->set('orderby', 'meta_value');
+            $query->set('orderby', 'meta_value_num');
 
             // The series taxonomy slug can be renamed in Series settings, e.g. "issue"
             $taxonomy = advgbGetSeriesTaxonomy();
