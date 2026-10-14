@@ -26,7 +26,8 @@ $google_api_key_saved = $this->getOptionSetting('advgb_settings', 'google_api_ke
                 </label>
                 <p class="description">
                     <a target="_blank"
-                       href="https://developers.google.com/maps/documentation/javascript/get-api-key">
+                       href="https://developers.google.com/maps/documentation/javascript/get-api-key"
+                       aria-label="<?php esc_attr_e('How to create a Google API Key', 'advanced-gutenberg'); ?>">
                         <?php
                         esc_html_e(
                             'How to create a Google API Key',
