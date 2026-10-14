@@ -1,4 +1,4 @@
-/* global wp, navigator */
+/* global wp, navigator, document, MutationObserver */
 (function () {
     if (! wp || ! wp.element || ! wp.data || ! wp.hooks || ! wp.blockEditor || ! wp.compose) {
         return;
@@ -7,10 +7,6 @@
     // Setting from PHP (wp_localize_script). Default on if absent.
     var settings         = window.advgbPostNotes || {};
     var showBlockToolbar = settings.blockToolbar === undefined ? true : !! settings.blockToolbar;
-
-    if (! showBlockToolbar) {
-        return;
-    }
 
     var el = wp.element.createElement;
 
@@ -87,37 +83,107 @@
     }
 
     // Top-level "Add note" button on every block's toolbar
-    var BlockControls = wp.blockEditor.BlockControls;
-    var ToolbarGroup  = wp.components.ToolbarGroup;
-    var ToolbarButton = wp.components.ToolbarButton;
-    var createHOC     = wp.compose.createHigherOrderComponent;
+    if (showBlockToolbar) {
+        var BlockControls = wp.blockEditor.BlockControls;
+        var ToolbarGroup  = wp.components.ToolbarGroup;
+        var ToolbarButton = wp.components.ToolbarButton;
+        var createHOC     = wp.compose.createHigherOrderComponent;
 
-    var withNoteToolbarButton = createHOC(function (BlockEdit) {
-        return function (props) {
-            return el(
-                wp.element.Fragment,
-                null,
-                el(BlockEdit, props),
-                props.isSelected && el(
-                    BlockControls,
-                    { group: 'other' },
-                    el(
-                        ToolbarGroup,
-                        null,
-                        el(ToolbarButton, {
-                            icon:    el(NoteIcon, null),
-                            label:   'Add note',
-                            onClick: function () { triggerCoreAddNote(props.clientId); },
-                        })
+        var withNoteToolbarButton = createHOC(function (BlockEdit) {
+            return function (props) {
+                return el(
+                    wp.element.Fragment,
+                    null,
+                    el(BlockEdit, props),
+                    props.isSelected && el(
+                        BlockControls,
+                        { group: 'other' },
+                        el(
+                            ToolbarGroup,
+                            null,
+                            el(ToolbarButton, {
+                                icon:    el(NoteIcon, null),
+                                label:   'Add note',
+                                onClick: function () { triggerCoreAddNote(props.clientId); },
+                            })
+                        )
                     )
-                )
-            );
-        };
-    }, 'withNoteToolbarButton');
+                );
+            };
+        }, 'withNoteToolbarButton');
 
-    wp.hooks.addFilter(
-        'editor.BlockEdit',
-        'advgb/post-notes-toolbar-button',
-        withNoteToolbarButton
-    );
+        wp.hooks.addFilter(
+            'editor.BlockEdit',
+            'advgb/post-notes-toolbar-button',
+            withNoteToolbarButton
+        );
+    }
+
+    /**
+     * Open-notes counter on core's "All notes" toolbar icon.
+     *
+     * The count is computed server-side and passed in via wp_localize_script
+     * (advgbPostNotes.openNotesCount) — no REST request needed here. This JS
+     * only finds core's button and overlays a badge. Core re-renders its
+     * header on state changes, so a light interval re-applies the badge if
+     * React wipes it.
+     */
+    (function () {
+        var count = parseInt(settings.openNotesCount, 10) || 0;
+        if (! count) {
+            return;
+        }
+
+        var styleInjected = false;
+
+        function findNotesButton() {
+            var candidates = document.querySelectorAll(
+                '.interface-pinned-items button, '
+                + '.editor-header__settings button, '
+                + '.edit-post-header__settings button'
+            );
+            for (var i = 0; i < candidates.length; i++) {
+                var text = (
+                    (candidates[i].getAttribute('aria-label') || '')
+                    + ' ' + (candidates[i].getAttribute('title') || '')
+                ).toLowerCase();
+                if (text.indexOf('note') !== -1) {
+                    return candidates[i];
+                }
+            }
+
+            return null;
+        }
+
+        function applyBadge() {
+            var button = findNotesButton();
+            if (! button || button.querySelector('.advgb-notes-badge')) {
+                return;
+            }
+
+            if (! styleInjected) {
+                styleInjected = true;
+                var style = document.createElement('style');
+                style.textContent =
+                    '.advgb-notes-badge{position:absolute;top:-2px;right:-2px;min-width:15px;'
+                    + 'height:15px;padding:0 3px;border-radius:999px;background:#d63638;'
+                    + 'color:#fff;font-size:10px;font-weight:600;line-height:15px;'
+                    + 'text-align:center;pointer-events:none;z-index:1;}';
+                document.head.appendChild(style);
+            }
+
+            if (! button.style.position) {
+                button.style.position = 'relative';
+            }
+            var badge = document.createElement('span');
+            badge.className   = 'advgb-notes-badge';
+            badge.textContent = count > 99 ? '99+' : String(count);
+            badge.setAttribute('aria-hidden', 'true');
+            button.appendChild(badge);
+        }
+
+        // The header renders asynchronously (and re-renders); keep re-applying.
+        applyBadge();
+        setInterval(applyBadge, 1000);
+    })();
 })();
