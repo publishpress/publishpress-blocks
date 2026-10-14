@@ -178,7 +178,10 @@ function advgbRenderBlockRecentPosts($attributes)
             if ($postThumbID) {
                 $postThumb = wp_get_attachment_image($postThumbID, 'large');
                 if (get_the_post_thumbnail_caption($post->ID) && $attributes['displayFeaturedImageCaption']) {
-                    $postThumbCaption = sprintf('<span class="advgb-post-caption">%1$s</span>', get_the_post_thumbnail_caption($post->ID));
+                    $postThumbCaption = sprintf(
+                        '<span class="advgb-post-caption">%1$s</span>',
+                        wp_kses_post(get_the_post_thumbnail_caption($post->ID))
+                    );
                 } else {
                     $postThumbCaption = '';
                 }
