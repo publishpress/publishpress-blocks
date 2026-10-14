@@ -1113,6 +1113,7 @@ class AdvancedGutenbergBlockStyles
         switch ($field['type']) {
             case 'color':
                 $html .= '<input type="text" class="minicolors style-input"
+                    aria-label="' . esc_attr($field['label']) . '"
                     data-css-property="' . esc_attr($property) . '"
                     data-field-config="' . esc_attr(json_encode($field_config)) . '"';
 
@@ -1124,6 +1125,7 @@ class AdvancedGutenbergBlockStyles
 
             case 'text':
                 $html .= '<input type="text" class="style-input"
+                    aria-label="' . esc_attr($field['label']) . '"
                     data-css-property="' . esc_attr($property) . '"
                     data-field-config="' . esc_attr(json_encode($field_config)) . '"';
 
@@ -1143,6 +1145,7 @@ class AdvancedGutenbergBlockStyles
                     $attrs .= ' step="' . esc_attr($field['step']) . '"';
 
                 $html .= '<input type="number" class="style-input"
+                    aria-label="' . esc_attr($field['label']) . '"
                     data-css-property="' . esc_attr($property) . '"
                     data-field-config="' . esc_attr(json_encode($field_config)) . '"';
 

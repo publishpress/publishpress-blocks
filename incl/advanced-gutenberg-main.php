@@ -4500,6 +4500,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             <div class="advgb-search-wrapper">
                                 <input type="text"
                                        class="blocks-search-input advgb-search-input"
+                                       aria-label="<?php esc_attr_e('Search blocks', 'advanced-gutenberg'); ?>"
                                        placeholder="<?php
                                         esc_attr_e('Search blocks', 'advanced-gutenberg') ?>"
                                 >

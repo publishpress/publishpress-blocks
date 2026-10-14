@@ -195,8 +195,9 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                 style="<?php echo in_array($position, $needs_position_value) ? '' : 'display:none;'; ?>">
                 <th class="<?php echo esc_attr($pro_class); ?>"><label for="advgb_position_value"><?php _e('Position Number', 'advanced-gutenberg'); ?></label></th>
                 <td class="advgb-promo-overlay-area">
-                    <input class="<?php echo esc_attr($pro_class); ?>" type="number" name="<?php echo $this->proActive ? 'advgb_position_value' : ''; ?>" id="advgb_position_value"
-                        value="<?php echo esc_attr($position_value); ?>" class="small-text">
+                    <input class="<?php echo esc_attr(trim($pro_class . ' small-text')); ?>" type="number" name="<?php echo $this->proActive ? 'advgb_position_value' : ''; ?>" id="advgb_position_value"
+                        aria-label="<?php esc_attr_e('Position Number', 'advanced-gutenberg'); ?>"
+                        value="<?php echo esc_attr($position_value); ?>">
                     <p class="<?php echo esc_attr($pro_class); ?> description">
                         <?php _e('Enter the number (e.g., 3 for "after 3rd heading").', 'advanced-gutenberg'); ?>
                     </p>
@@ -463,7 +464,7 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                             <div class="advgb-or-separator">
                                 <span><?php _e('OR', 'advanced-gutenberg'); ?></span>
                             </div>
-                            <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" placeholder="<?php esc_attr_e('Enter comma-separated list of post IDs to include (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $post_ids)); ?>">
+                            <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" aria-label="<?php esc_attr_e('Target post IDs', 'advanced-gutenberg'); ?>" placeholder="<?php esc_attr_e('Enter comma-separated list of post IDs to include (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $post_ids)); ?>">
                     </div>
                     <?php if (!$this->proActive) : ?>
                         <a class="advgb-pro-link" href="<?php echo esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK); ?>" target="_blank">
@@ -500,7 +501,7 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                             <div class="advgb-or-separator">
                                 <span><?php _e('OR', 'advanced-gutenberg'); ?></span>
                             </div>
-                            <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" placeholder="<?php esc_attr_e('Enter comma-separated post IDs to exclude (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $exclude_post_ids)); ?>">
+                            <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" aria-label="<?php esc_attr_e('Excluded post IDs', 'advanced-gutenberg'); ?>" placeholder="<?php esc_attr_e('Enter comma-separated post IDs to exclude (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $exclude_post_ids)); ?>">
                     </div>
 
                     <?php if (!$this->proActive) : ?>
