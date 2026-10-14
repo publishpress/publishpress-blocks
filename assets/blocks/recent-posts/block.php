@@ -1636,7 +1636,7 @@ function advgbGetPostIdsForTitles($titles, $post_type)
         $placeholders = implode(',', array_fill(0, count($titles), '%s'));
         $params = $titles;
         $params[] = $post_type;
-        $query = $wpdb->prepare("SELECT DISTINCT ID FROM {$wpdb->posts} WHERE post_title IN ($placeholders) AND post_type = '%s'", $params);
+        $query = $wpdb->prepare("SELECT DISTINCT ID FROM {$wpdb->posts} WHERE post_title IN ($placeholders) AND post_type = %s", $params);
         return $wpdb->get_col($query);
     }
     return array();
