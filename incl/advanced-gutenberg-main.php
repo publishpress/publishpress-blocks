@@ -1632,7 +1632,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
 			$saved = update_option( 'advgb_contacts_saved', $contacts_saved, false );
 			if ( $saved ) {
 				$saved_settings = get_option( 'advgb_email_sender' );
-				$website_title  = get_option( 'blogname' );
+				$website_title  = is_multisite()
+					? get_blog_option( get_current_blog_id(), 'blogname' )
+					: get_bloginfo( 'name', 'raw' );
 				$admin_email    = get_option( 'admin_email' );
 				$sender_name    = isset( $saved_settings['contact_form_sender_name'] ) && $saved_settings['contact_form_sender_name'] ? $saved_settings['contact_form_sender_name'] : $website_title;
 				$sender_email   = isset( $saved_settings['contact_form_sender_email'] ) && $saved_settings['contact_form_sender_email'] ? $saved_settings['contact_form_sender_email'] : $admin_email;
