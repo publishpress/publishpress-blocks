@@ -200,7 +200,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                                         <div class="advgb-tab-body advgb-tab-content sub-tab-content" data-tab-content="<?php echo esc_attr($tab); ?>" style="<?php echo esc_attr($active_style); ?>">
                                             <div class="style-controls">
                                                 <?php foreach ($tab_config['fields'] as $property => $field) : ?>
-                                                    <?php echo AdvancedGutenbergBlockStyles::generate_control_group($field, $property); ?>
+                                                    <?php echo wp_kses(AdvancedGutenbergBlockStyles::generate_control_group($field, $property), AdvancedGutenbergBlockStyles::allowed_control_html()); ?>
                                                 <?php endforeach; ?>
                                             </div>
                                         </div>

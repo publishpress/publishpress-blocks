@@ -182,7 +182,16 @@ function advgb_note_author_avatar($name, $email = '', $size = 32)
         esc_attr($bg_color),
         (int) $font_size,
         esc_html($initials),
-        $img_tag
+            wp_kses($img_tag, [
+                'img' => [
+                    'src'     => true,
+                    'width'   => true,
+                    'height'  => true,
+                    'alt'     => true,
+                    'style'   => true,
+                    'onerror' => true,
+                ],
+            ])
     );
 }
 

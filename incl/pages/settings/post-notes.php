@@ -10,7 +10,7 @@ $post_notes_block_toolbar = $this->getOptionSetting('advgb_settings', 'post_note
     <table class="form-table">
         <tr>
             <th scope="row">
-                <?php _e('Block toolbar icon', 'advanced-gutenberg') ?>
+                <?php esc_html_e('Block toolbar icon', 'advanced-gutenberg') ?>
             </th>
             <td>
                 <label>
@@ -20,7 +20,7 @@ $post_notes_block_toolbar = $this->getOptionSetting('advgb_settings', 'post_note
                            value="1"
                         <?php echo esc_attr($post_notes_block_toolbar) ?>
                     />
-                    <?php _e(
+                    <?php esc_html_e(
                         'Show an "Add note" icon in the block toolbar (next to Bold, Italic and Link). It opens the WordPress Notes feature for the selected block.',
                         'advanced-gutenberg'
                     ) ?>
@@ -34,7 +34,7 @@ $post_notes_block_toolbar = $this->getOptionSetting('advgb_settings', 'post_note
                 class="button button-primary"
                 name="save_settings_post_notes"
         >
-            <?php esc_html_e('Save Post Notes Settings', 'advanced-gutenberg') ?>
+            <?php esc_htmlesc_html_e('Save Post Notes Settings', 'advanced-gutenberg') ?>
         </button>
     </div>
 </form>

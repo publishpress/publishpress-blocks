@@ -191,7 +191,7 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
             <?php foreach ($advgb_blocks as $block) : ?>
                 <?php $iconColor = '';
                 if (isset($block['iconColor'])) :
-                    $iconColor = 'style="color:' . esc_attr($block['iconColor']) . '"';
+                    $iconColor = sanitize_hex_color($block['iconColor']);
                 endif;
 
                 // Use new block title
@@ -208,7 +208,7 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                 }
                 ?>
             <li class="block-config-item advgb-settings-option">
-                <span class="block-icon <?php echo esc_attr($blur_class); ?>" <?php echo $iconColor ?>>
+                                                        <span class="block-icon <?php echo esc_attr($blur_class); ?>" <?php echo $iconColor ? 'style="color:' . esc_attr($iconColor) . '"' : ''; ?>>
                     <?php echo html_entity_decode(html_entity_decode(stripslashes($block['icon']))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>
                 <span class="block-title  <?php echo esc_attr($blur_class); ?>"><?php echo esc_html(__($block['title'], 'advanced-gutenberg')); ?></span>
