@@ -5635,7 +5635,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $html = '';
             foreach ($fieldset as $category) {
                 $html .= '<div class="block-config-category">';
-                $html .= '<h3 class="block-config-category-title">' . esc_html($category['label']) . '</h3>';
+                $html .= '<h2 class="block-config-category-title">' . esc_html($category['label']) . '</h2>';
                 $html .= '<table class="form-table">';
 
                 foreach ($category['settings'] as $setting) {
