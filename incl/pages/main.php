@@ -22,7 +22,6 @@ defined('ABSPATH') || die;
             <div class="pp-column-left">
                 <div>
                     <?php
-                    $isPro = defined('ADVANCED_GUTENBERG_PRO_LOADED') ? true : false;
                     $features = [
                         [
                             'name' => 'enable_block_access',
@@ -102,16 +101,6 @@ defined('ABSPATH') || die;
                             ),
                             'default' => 1,
                             'access' => true
-                        ],
-                        [
-                            'name' => 'enable_core_blocks_features',
-                            'title' => __('Core Blocks Features', 'advanced-gutenberg'),
-                            'description' => __(
-                                'Add Google Fonts support to core blocks including paragraphs and headings.',
-                                'advanced-gutenberg'
-                            ),
-                            'default' => 1,
-                            'access' => $isPro // Feature available on pro only. In free we display a placeholder.
                         ]
                     ];
 

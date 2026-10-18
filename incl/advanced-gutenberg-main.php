@@ -512,9 +512,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             'advgb_pro_ad_js',
                             'advgbProAdI18n',
                             [
-                                'promoLink' => ADVANCED_GUTENBERG_UPGRADE_LINK,
-                                'upgradeText'   => __( 'Upgrade to Pro', 'advanced-gutenberg' ),
-                                'proText'   => __( 'Pro', 'advanced-gutenberg' )
+                                'promoLink'         => ADVANCED_GUTENBERG_UPGRADE_LINK,
+                                'upgradeText'       => __( 'Upgrade to Pro', 'advanced-gutenberg' ),
+                                'proText'           => __( 'Pro', 'advanced-gutenberg' ),
+                                'fontStylesEnabled' => Utilities::settingIsEnabled('enable_core_blocks_features')
                             ]
                         );
 
@@ -3672,8 +3673,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 update_option('advgb_legacy_blocks', $legacy_state, false);
                 update_option('advgb_legacy_settings_migrated', 1, false);
 
-                // Legacy features: gallery lightbox (moved here from the Images tab)
-                $advgb_settings = get_option('advgb_settings');
+                // Legacy features
+                $advgb_settings                                = get_option('advgb_settings');
+                $advgb_settings                                = is_array($advgb_settings) ? $advgb_settings : [];
+                $advgb_settings['enable_core_blocks_features'] = isset($_POST['enable_core_blocks_features']) ? 1 : 0;
                 $advgb_settings['gallery_lightbox']         = isset($_POST['gallery_lightbox']) ? 1 : 0;
                 $advgb_settings['gallery_lightbox_caption'] = (int) $_POST['gallery_lightbox_caption'];
                 update_option('advgb_settings', $advgb_settings);
