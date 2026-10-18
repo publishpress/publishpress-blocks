@@ -1763,31 +1763,55 @@ import {
         }
 
         renderFeatureGrid() {
+            const controls = [
+                {
+                    icon: 'clock',
+                    title: __('Schedule', 'advanced-gutenberg'),
+                    description: __('Show blocks during a specific date and time range.', 'advanced-gutenberg')
+                },
+                {
+                    icon: 'admin-users',
+                    title: __('User roles', 'advanced-gutenberg'),
+                    description: __('Show blocks to selected user roles or logged-out visitors.', 'advanced-gutenberg')
+                },
+                {
+                    icon: 'smartphone',
+                    title: __('Device type', 'advanced-gutenberg'),
+                    description: __('Target desktop, tablet, or mobile devices.', 'advanced-gutenberg')
+                },
+                {
+                    icon: 'editor-expand',
+                    title: __('Device width', 'advanced-gutenberg'),
+                    description: __('Set minimum and maximum browser widths.', 'advanced-gutenberg')
+                },
+                {
+                    icon: 'category',
+                    title: __('Term archives', 'advanced-gutenberg'),
+                    description: __('Target category, tag, and taxonomy archive pages.', 'advanced-gutenberg')
+                },
+                {
+                    icon: 'admin-page',
+                    title: __('Pages', 'advanced-gutenberg'),
+                    description: __('Target individual pages and other singular content.', 'advanced-gutenberg')
+                },
+                {
+                    icon: 'desktop',
+                    title: __('Browser & device', 'advanced-gutenberg'),
+                    description: __('Target specific browsers and device platforms.', 'advanced-gutenberg')
+                }
+            ];
+
             return (
                 <div className="advgb-preset-features-grid">
-                    <div className="advgb-preset-feature-card">
-                        <div className="advgb-preset-feature-icon">
-                            <span className="dashicons dashicons-visibility"></span>
+                    {controls.map((control) => (
+                        <div className="advgb-preset-feature-card" key={control.icon}>
+                            <div className="advgb-preset-feature-icon">
+                                <span className={`dashicons dashicons-${control.icon}`}></span>
+                            </div>
+                            <h4>{control.title}</h4>
+                            <p>{control.description}</p>
                         </div>
-                        <h4>{__('Conditional Visibility', 'advanced-gutenberg')}</h4>
-                        <p>{__('Control when blocks appear based on user roles, devices, schedules, and more', 'advanced-gutenberg')}</p>
-                    </div>
-
-                    <div className="advgb-preset-feature-card">
-                        <div className="advgb-preset-feature-icon">
-                            <span className="dashicons dashicons-admin-users"></span>
-                        </div>
-                        <h4>{__('User Targeting', 'advanced-gutenberg')}</h4>
-                        <p>{__('Show or hide content to specific user roles, logged-in status, or capabilities', 'advanced-gutenberg')}</p>
-                    </div>
-
-                    <div className="advgb-preset-feature-card">
-                        <div className="advgb-preset-feature-icon">
-                            <span className="dashicons dashicons-clock"></span>
-                        </div>
-                        <h4>{__('Scheduling', 'advanced-gutenberg')}</h4>
-                        <p>{__('Set time-based rules to display content only during specific periods', 'advanced-gutenberg')}</p>
-                    </div>
+                    ))}
                 </div>
             );
         }
