@@ -7,6 +7,7 @@ $legacy_state = AdvancedGutenbergMain::getLegacyBlocksState();
 
 $gallery_lightbox_checked = $this->getOptionSetting('advgb_settings', 'gallery_lightbox', 'checkbox', 0);
 $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_lightbox_caption', 'text', '1');
+$font_styles_checked      = $this->getOptionSetting('advgb_settings', 'enable_core_blocks_features', 'checkbox', 0);
 ?>
 <form method="post">
     <?php
@@ -52,6 +53,22 @@ $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_l
     </p>
 
     <table class="form-table">
+        <tr>
+            <th scope="row">
+                <?php esc_html_e('Font styles', 'advanced-gutenberg') ?>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox"
+                           name="enable_core_blocks_features"
+                           id="enable_core_blocks_features"
+                           value="1"
+                        <?php echo esc_attr($font_styles_checked) ?>
+                    />
+                    <?php esc_html_e('Enable font settings for supported blocks', 'advanced-gutenberg') ?>
+                </label>
+            </td>
+        </tr>
         <tr>
             <th scope="row">
                 <?php esc_html_e('Gallery lightbox', 'advanced-gutenberg') ?>

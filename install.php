@@ -54,7 +54,7 @@ if ($saved_settings === false) {
         'enable_custom_styles'        => 1,
         'enable_advgb_blocks'         => 1,
         'enable_pp_branding'          => 1,
-        'enable_core_blocks_features' => 1,
+        'enable_core_blocks_features' => 0, // Legacy feature: off by default on new sites
         'block_controls'              => 1,
         'block_extend'                => 0,
         'reusable_blocks'             => 1
