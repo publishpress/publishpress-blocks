@@ -25,6 +25,16 @@ defined('ABSPATH') || die;
                     $isPro = defined('ADVANCED_GUTENBERG_PRO_LOADED') ? true : false;
                     $features = [
                         [
+                            'name' => 'block_controls',
+                            'title' => __('Block Controls', 'advanced-gutenberg'),
+                            'description' => __(
+                                'This feature adds display controls for blocks. You can schedule when blocks are shown, and add user role restrictions.',
+                                'advanced-gutenberg'
+                            ),
+                            'default' => 1,
+                            'access' => true
+                        ],
+                        [
                             'name' => 'enable_block_access',
                             'title' => __('Block Permissions', 'advanced-gutenberg'),
                             'description' => __(
@@ -39,16 +49,6 @@ defined('ABSPATH') || die;
                             'title' => __('Block Styles', 'advanced-gutenberg'),
                             'description' => __(
                                 'You can add your own CSS styles for your blocks. Anyone editing posts can quickly add the styles to blocks.',
-                                'advanced-gutenberg'
-                            ),
-                            'default' => 1,
-                            'access' => true
-                        ],
-                        [
-                            'name' => 'block_controls',
-                            'title' => __('Block Controls', 'advanced-gutenberg'),
-                            'description' => __(
-                                'This feature adds display controls for blocks. You can schedule when blocks are shown, and add user role restrictions.',
                                 'advanced-gutenberg'
                             ),
                             'default' => 1,
@@ -84,20 +84,20 @@ defined('ABSPATH') || die;
                             'access' => true
                         ],
                         [
-                            'name' => 'enable_post_notes',
-                            'title' => __('Post Notes', 'advanced-gutenberg'),
+                            'name' => 'enable_advgb_blocks',
+                            'title' => __('Extra Blocks', 'advanced-gutenberg'),
                             'description' => __(
-                                'Adds an "Add Note" button to the block editor toolbar and a Post Notes admin page to review all notes across your posts (requires WordPress 6.9+).',
+                                'Enable extra blocks including content displays, sliders, buttons, icons, tabs, accordions, and more.',
                                 'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => true
                         ],
                         [
-                            'name' => 'enable_advgb_blocks',
-                            'title' => __('Extra Blocks', 'advanced-gutenberg'),
+                            'name' => 'enable_post_notes',
+                            'title' => __('Post Notes', 'advanced-gutenberg'),
                             'description' => __(
-                                'Enable extra blocks including content displays, sliders, buttons, icons, tabs, accordions, and more.',
+                                'Adds an "Add Note" button to the block editor toolbar and a Post Notes admin page to review all notes across your posts (requires WordPress 6.9+).',
                                 'advanced-gutenberg'
                             ),
                             'default' => 1,
