@@ -4041,6 +4041,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                 // Save feature by role
                 $block_feature_by_role                                  = get_option($option);
+                $block_feature_by_role                                  = is_array($block_feature_by_role) ? $block_feature_by_role : [];
                 $block_feature_by_role[ $user_role ]['active_blocks']   = isset($active_blocks) ? $active_blocks : '';
                 $block_feature_by_role[ $user_role ]['inactive_blocks'] = isset($inactive_blocks) ? $inactive_blocks : '';
 
