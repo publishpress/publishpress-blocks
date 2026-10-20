@@ -252,9 +252,15 @@ ul.wp-block-advgb-list .block-editor-block-list__layout > div {
 
     button {
 
-      &:focus {
+      &:focus:not(:focus-visible) {
         box-shadow: none !important;
         outline: none !important;
+      }
+
+      &:focus-visible {
+        box-shadow: none !important;
+        outline: 2px solid #2271b1 !important;
+        outline-offset: 2px;
       }
 
       &.is-link {
@@ -291,9 +297,15 @@ ul.wp-block-advgb-list .block-editor-block-list__layout > div {
 
   button {
 
-    &:focus {
+    &:focus:not(:focus-visible) {
       box-shadow: none !important;
       outline: none !important;
+    }
+
+    &:focus-visible {
+      box-shadow: none !important;
+      outline: 2px solid #2271b1 !important;
+      outline-offset: 2px;
     }
 
     &.advgb-advcalendar-remove-icon {
@@ -361,5 +373,23 @@ ul.wp-block-advgb-list .block-editor-block-list__layout > div {
     height: 22px;
     width: 24px;
     text-align: center;
+  }
+}
+
+/* Icon list popup: icons are native buttons inside the styled span */
+.advgb-icon-items-wrapper .advgb-icon-item .advgb-icon-item-button {
+  display: block;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
   }
 }

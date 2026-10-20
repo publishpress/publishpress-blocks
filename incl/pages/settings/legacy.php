@@ -12,7 +12,7 @@ $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_l
     <?php
     wp_nonce_field('advgb_settings_legacy_nonce', 'advgb_settings_legacy_nonce_field') ?>
 
-    <h3><?php esc_html_e('Legacy Blocks', 'advanced-gutenberg') ?></h3>
+    <h2><?php esc_html_e('Legacy Blocks', 'advanced-gutenberg') ?></h2>
     <p class="description" style="margin: 12px 0;">
         <?php esc_html_e(
             'These older blocks are turned off by default on new sites. Enable any you want to use in the editor.',
@@ -43,7 +43,7 @@ $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_l
         <?php endforeach ?>
     </table>
 
-    <h3><?php esc_html_e('Legacy Features', 'advanced-gutenberg') ?></h3>
+    <h2><?php esc_html_e('Legacy Features', 'advanced-gutenberg') ?></h2>
     <p class="description" style="margin: 12px 0;">
         <?php esc_html_e(
             'Older features, turned off by default on new sites.',
@@ -70,10 +70,11 @@ $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_l
         </tr>
         <tr>
             <th scope="row">
+                <label for="gallery_lightbox_caption">
                 <?php esc_html_e('Image caption', 'advanced-gutenberg') ?>
+                </label>
             </th>
             <td>
-                <label>
                     <select name="gallery_lightbox_caption" id="gallery_lightbox_caption">
                         <option value="0"<?php echo ($gallery_lightbox_caption === '0' || $gallery_lightbox_caption === 0) ? ' selected' : '' ?>>
                             <?php esc_html_e('Disabled', 'advanced-gutenberg'); ?>
@@ -85,7 +86,6 @@ $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_l
                             <?php esc_html_e('Overlay', 'advanced-gutenberg'); ?>
                         </option>
                     </select>
-                </label>
                 <p class="description">
                     <?php esc_html_e('Display caption text on images loaded as lightbox in galleries.', 'advanced-gutenberg') ?>
                 </p>

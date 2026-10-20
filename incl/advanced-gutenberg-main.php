@@ -2019,9 +2019,15 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         'wp-block-library',
                         'wp-editor',
                         'wp-edit-post',
-                        'wp-plugins'
+                        'wp-plugins',
+                        'wp-a11y'
                     ),
                     ADVANCED_GUTENBERG_VERSION
+                );
+                wp_set_script_translations(
+                    'advgb_main_js',
+                    'advanced-gutenberg',
+                    plugin_dir_path(ADVANCED_GUTENBERG_PLUGIN) . 'languages'
                 );
                 wp_register_script(
                     'advgb_update_list',
@@ -2675,12 +2681,12 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 foreach ($features as $feature) : ?>
                     <div class="advgb-feature-box<?php
                     echo( ! $feature['access'] ? ' advgb-feature-box--disabled' : '' ); ?>">
-                        <h3>
+                        <h2>
                             <?php
                             echo $feature['title'];
                             echo ! $feature['access'] ? ' <span>Pro</span>' : '';
                             ?>
-                        </h3>
+                        </h2>
                         <div class="advgb-feature-description">
                             <?php
                             echo $feature['description'] ?>
@@ -5262,15 +5268,15 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 return '';
             }
 
-            $html = '<ul class="nav-tab-wrapper">';
+            $html = '<nav aria-label="' . esc_attr__('Settings sections', 'advanced-gutenberg') . '"><ul class="nav-tab-wrapper">';
             foreach ($tabs as $tab) {
                 $html .= '<li class="nav-tab' . ( $tab['slug'] === $active ? ' nav-tab-active' : '' ) . '">
-                    <a href="' . admin_url('admin.php?page=' . $page . '&tab=' . $tab['slug']) . '">
+                    <a href="' . admin_url('admin.php?page=' . $page . '&tab=' . $tab['slug']) . '"' . ( $tab['slug'] === $active ? ' aria-current="page"' : '' ) . '>
                         ' . esc_html($tab['title']) . '
                     </a>
                 </li>';
             }
-            $html .= '</ul>';
+            $html .= '</ul></nav>';
 
             return $html;
         }
@@ -5961,6 +5967,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             ),
                             'captcha_empty_warning' => __('Captcha must be checked!', 'advanced-gutenberg'),
                             'login_failed_notice'   => __('Username or password is incorrect!', 'advanced-gutenberg'),
+                            'server_error'          => __('Something went wrong. Please try again later.', 'advanced-gutenberg'),
                         ]
                     );
                     $this->loadRecaptchaApi();
@@ -6102,6 +6109,17 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         [],
                         ADVANCED_GUTENBERG_VERSION
                     );
+                    wp_localize_script(
+                        'advgb_gmap_js',
+                        'advgbMapL10n',
+                        [
+                            'map'                 => __('Map', 'advanced-gutenberg'),
+                            /* translators: %s: map marker title */
+                            'map_named'           => __('Map: %s', 'advanced-gutenberg'),
+                            'view_on_google_maps' => __('View on Google Maps', 'advanced-gutenberg'),
+                            'new_tab'             => __('(opens in a new tab)', 'advanced-gutenberg'),
+                        ]
+                    );
                     $this->loadGoogleMapApi();
 
                     break;
@@ -6241,7 +6259,13 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         'advgbContactForm_js',
                         'advgbContactForm',
                         [
-                            'ajax_url' => admin_url('admin-ajax.php')
+                            'ajax_url'        => admin_url('admin-ajax.php'),
+                            'fill_all_fields' => __('You need to fill all fields!', 'advanced-gutenberg'),
+                            /* translators: %s: form field name */
+                            'field_required'  => __('%s is required.', 'advanced-gutenberg'),
+                            'sending'         => __('Sending...', 'advanced-gutenberg'),
+                            'success'         => __('Message sent with success!', 'advanced-gutenberg'),
+                            'server_error'    => __('Something went wrong. Please try again later.', 'advanced-gutenberg'),
                         ]
                     );
                     $this->loadRecaptchaApi();
@@ -6263,7 +6287,14 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         'advgbNewsletter_js',
                         'advgbNewsletter',
                         [
-                            'ajax_url' => admin_url('admin-ajax.php')
+                            'ajax_url'        => admin_url('admin-ajax.php'),
+                            'fill_all_fields' => __('You need to fill all fields!', 'advanced-gutenberg'),
+                            /* translators: %s: form field name */
+                            'field_required'  => __('%s is required.', 'advanced-gutenberg'),
+                            'invalid_email'   => __('Use a valid email address!', 'advanced-gutenberg'),
+                            'sending'         => __('Sending...', 'advanced-gutenberg'),
+                            'success'         => __('Submitted with success!', 'advanced-gutenberg'),
+                            'server_error'    => __('Something went wrong. Please try again later.', 'advanced-gutenberg'),
                         ]
                     );
                     $this->loadRecaptchaApi();
@@ -6483,7 +6514,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $block_class    = esc_html($blockAttrs['id']);
             $font_size      = isset($blockAttrs['textSize']) ? esc_html(intval($blockAttrs['textSize'])) : 18;
             $color          = isset($blockAttrs['textColor']) ? esc_html($blockAttrs['textColor']) : '#fff';
-            $bg_color       = isset($blockAttrs['bgColor']) ? esc_html($blockAttrs['bgColor']) : '#2196f3';
+            // #1565c0 keeps the default white text above 4.5:1 contrast (attribute default stays #2196f3)
+            $bg_color       = isset($blockAttrs['bgColor']) ? esc_html($blockAttrs['bgColor']) : '#1565c0';
             $mg_top         = isset($blockAttrs['marginTop']) ? esc_html(intval($blockAttrs['marginTop'])) : 0;
             $mg_right       = isset($blockAttrs['marginRight']) ? esc_html(intval($blockAttrs['marginRight'])) : 0;
             $mg_bottom      = isset($blockAttrs['marginBottom']) ? esc_html(intval($blockAttrs['marginBottom'])) : 0;
