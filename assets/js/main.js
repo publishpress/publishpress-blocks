@@ -122,6 +122,13 @@
                 + '</span>'
             );
             $( '.' + uniqueClass ).css( 'bottom', instances * 45 ).fadeIn(1000).delay(10000).fadeOut(1000, function() { $(this).remove() });
+
+            // Announce the result to screen readers
+            if ( window.wp && wp.a11y && typeof wp.a11y.speak === 'function' ) {
+                wp.a11y.speak( message.trim(), type === 'success' ? 'polite' : 'assertive' );
+            } else {
+                $( '.' + uniqueClass ).attr( 'role', type === 'success' ? 'status' : 'alert' );
+            }
         }, 500);
     }
 
@@ -326,18 +333,9 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         allCategories.forEach(function (category) {
             var categoryBlock = $('.category-block[data-category="'+ category.slug +'"]');
             if (categoryBlock.length > 0) {
-                categoryBlock.find('h3.category-name').text(category.title);
+                categoryBlock.find('.category-name .advgb-category-title').text(category.title);
             } else {
-                var categoryHTML = '';
-                categoryHTML += '<div class="category-block clearfix" data-category='+ category.slug +'>';
-                categoryHTML +=     '<h3 class="category-name">';
-                categoryHTML +=         '<span>'+ category.title +'</span>';
-                categoryHTML +=         '<i class="mi"></i>';
-                categoryHTML +=     '</h3>';
-                categoryHTML +=     '<ul class="blocks-list"></ul>';
-                categoryHTML += '</div>';
-
-                $('.blocks-section').append(categoryHTML);
+                $('.blocks-section').append(advgbCategoryBlockHTML(category));
             }
         });
 
@@ -422,8 +420,16 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             } else {
                 blockHTML +=    '<div class="advgb-switch-button">';
                 blockHTML +=        '<label class="switch">';
-                blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'" '+checked+' ' + ( force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'onclick="return false;"' : '' ) + '/>';
+                var isForced = force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name);
+                blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'" '+checked+' ' + ( isForced ? 'onclick="return false;" aria-disabled="true" aria-describedby="'+ block.name +'-forced-desc"' : '' ) + '/>';
                 blockHTML +=            '<span class="slider"></span>';
+                if (isForced) {
+                    blockHTML +=        '<span class="screen-reader-text" id="'+ block.name +'-forced-desc">'
+                                        + ( force_deactivate_blocks.indexOf(block.name) > -1
+                                            ? wp.i18n.__( 'Always disabled', 'advanced-gutenberg' )
+                                            : wp.i18n.__( 'Always enabled', 'advanced-gutenberg' ) )
+                                        + '</span>';
+                }
                 blockHTML +=        '</label>';
                 blockHTML +=    '</div>';
             }
@@ -438,13 +444,15 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         $('#blocks_list').val(JSON.stringify(list_blocks_names));
 
         // Toggle blocks list in category when click category title
-        $('.category-block .category-name').unbind('click').click(function () {
+        $('.category-block .category-name .advgb-category-toggle').unbind('click').click(function () {
             var categoryWrapper = $(this).closest('.category-block');
 
             if (categoryWrapper.hasClass('collapsed')) {
                 categoryWrapper.removeClass('collapsed');
+                $(this).attr('aria-expanded', 'true');
             } else {
                 categoryWrapper.addClass('collapsed');
+                $(this).attr('aria-expanded', 'false');
             }
         });
 
@@ -473,10 +481,8 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             });
         });
 
-        // On change user role dropdown
-        $('#user_role').on( 'change', function(){
-            window.location = 'admin.php?page=' + page + '&user_role=' + $(this).val();
-        });
+        // User role dropdown: navigate only when the "Switch" button is activated (no context change on select)
+        advgbUserRoleSwitcher( page );
 
         // Check/Uncheck all
         $('#toggle_all_blocks').click(function () {
@@ -620,18 +626,9 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
         allCategories.forEach(function (category) {
             var categoryBlock = $('.category-block[data-category="'+ category.slug +'"]');
             if (categoryBlock.length > 0) {
-                categoryBlock.find('h3.category-name').text(category.title);
+                categoryBlock.find('.category-name .advgb-category-title').text(category.title);
             } else {
-                var categoryHTML = '';
-                categoryHTML += '<div class="category-block clearfix" data-category='+ category.slug +'>';
-                categoryHTML +=     '<h3 class="category-name">';
-                categoryHTML +=         '<span>'+ category.title +'</span>';
-                categoryHTML +=         '<i class="mi"></i>';
-                categoryHTML +=     '</h3>';
-                categoryHTML +=     '<ul class="blocks-list"></ul>';
-                categoryHTML += '</div>';
-
-                $('.blocks-section').append(categoryHTML);
+                $('.blocks-section').append(advgbCategoryBlockHTML(category));
             }
         });
 
@@ -704,8 +701,16 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
             } else {
                 blockHTML +=    '<div class="advgb-switch-button">';
                 blockHTML +=        '<label class="switch">';
-                blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'" '+checked+' ' + ( force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'onclick="return false;"' : '' ) + '/>';
+                var isForced = force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name);
+                blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'" '+checked+' ' + ( isForced ? 'onclick="return false;" aria-disabled="true" aria-describedby="'+ block.name +'-forced-desc"' : '' ) + '/>';
                 blockHTML +=            '<span class="slider"></span>';
+                if (isForced) {
+                    blockHTML +=        '<span class="screen-reader-text" id="'+ block.name +'-forced-desc">'
+                                        + ( force_deactivate_blocks.indexOf(block.name) > -1
+                                            ? wp.i18n.__( 'Always disabled', 'advanced-gutenberg' )
+                                            : wp.i18n.__( 'Always enabled', 'advanced-gutenberg' ) )
+                                        + '</span>';
+                }
                 blockHTML +=        '</label>';
                 blockHTML +=    '</div>';
             }
@@ -719,13 +724,15 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
         $('#blocks_list').val(JSON.stringify(list_blocks_names));
 
         // Toggle blocks list in category when click category title
-        $('.category-block .category-name').unbind('click').click(function () {
+        $('.category-block .category-name .advgb-category-toggle').unbind('click').click(function () {
             var categoryWrapper = $(this).closest('.category-block');
 
             if (categoryWrapper.hasClass('collapsed')) {
                 categoryWrapper.removeClass('collapsed');
+                $(this).attr('aria-expanded', 'true');
             } else {
                 categoryWrapper.addClass('collapsed');
+                $(this).attr('aria-expanded', 'false');
             }
         });
 
@@ -776,4 +783,71 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
 
         $('.advgb-block-feature-loading-msg').hide();
     }
+}
+
+/**
+ * Build the category wrapper markup for Block Permissions / Block Controls lists.
+ * The heading contains a real button (aria-expanded / aria-controls) to collapse the list.
+ *
+ * @param {object} category Category object with slug and title
+ *
+ * @return {string}
+ */
+function advgbCategoryBlockHTML( category ) {
+    var listId = 'advgb-category-blocks-' + String( category.slug ).replace( /[^a-zA-Z0-9_-]/g, '-' );
+    var categoryHTML = '';
+    categoryHTML += '<div class="category-block clearfix" data-category="'+ category.slug +'">';
+    categoryHTML +=     '<h2 class="category-name">';
+    categoryHTML +=         '<button type="button" class="advgb-category-toggle" aria-expanded="true" aria-controls="'+ listId +'">';
+    categoryHTML +=             '<span class="advgb-category-title">'+ category.title +'</span>';
+    categoryHTML +=             '<i class="mi" aria-hidden="true"></i>';
+    categoryHTML +=         '</button>';
+    categoryHTML +=     '</h2>';
+    categoryHTML +=     '<ul class="blocks-list" id="'+ listId +'"></ul>';
+    categoryHTML += '</div>';
+
+    return categoryHTML;
+}
+
+/**
+ * Add an accessible label and a "Switch" button to the #user_role select.
+ * The page reloads only when the button is activated, not on select change.
+ *
+ * @param {string} page The feature page - e.g. 'advgb_block_access'
+ *
+ * @return {void}
+ */
+function advgbUserRoleSwitcher( page ) {
+    var $ = jQuery;
+    var select = $('#user_role');
+
+    if ( ! select.length || select.data('advgbSwitcher') ) {
+        return;
+    }
+    select.data('advgbSwitcher', true);
+
+    // The list shown is the loaded role's, so always save it under that role,
+    // even if another role was picked without pressing Switch.
+    var loadedRole = select.val();
+    select.closest('form').on('submit', function () {
+        select.val( loadedRole );
+    });
+
+    if ( ! $('label[for="user_role"]').length ) {
+        $('<label for="user_role" class="screen-reader-text"></label>')
+            .text( wp.i18n.__( 'User role', 'advanced-gutenberg' ) )
+            .insertBefore( select );
+    }
+
+    var button = $('#advgb_user_role_switch');
+    if ( ! button.length ) {
+        button = $('<button type="button" id="advgb_user_role_switch" class="button advgb-user-role-switch"></button>')
+            .text( wp.i18n.__( 'Switch', 'advanced-gutenberg' ) )
+            .insertAfter( select );
+    }
+
+    button.on( 'click', function( e ) {
+        e.preventDefault();
+        window.location = 'admin.php?page=' + encodeURIComponent( page ) + '&user_role=' + encodeURIComponent( select.val() );
+    });
 }

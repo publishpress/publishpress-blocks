@@ -26,8 +26,129 @@ import {
         RadioControl,
         DateTimePicker
     } = wpComponents;
-    const { Component, Fragment } = wpElement;
+    const { Component, Fragment, createRef } = wpElement;
     const { useSelect, useDispatch } = wpData;
+
+    let advgbConfirmIdCounter = 0;
+
+    /**
+     * Inline confirmation shown in the existing tooltip box.
+     * Keyboard accessible: trigger exposes aria-expanded/aria-controls, focus moves into the
+     * confirmation (Cancel), Esc or Cancel closes it and returns focus to the trigger.
+     */
+    class AdvgbConfirmInline extends Component {
+        constructor(props) {
+            super(props);
+            advgbConfirmIdCounter++;
+            this.id = `advgb-confirm-${advgbConfirmIdCounter}`;
+            this.state = { open: false };
+            this.wrapperRef = createRef();
+            this.cancelRef = createRef();
+            this.open = this.open.bind(this);
+            this.close = this.close.bind(this);
+            this.onKeyDown = this.onKeyDown.bind(this);
+            this.onDocumentMouseDown = this.onDocumentMouseDown.bind(this);
+        }
+
+        componentWillUnmount() {
+            document.removeEventListener('mousedown', this.onDocumentMouseDown);
+        }
+
+        getTrigger() {
+            return this.wrapperRef.current
+                ? this.wrapperRef.current.querySelector(`[aria-controls="${this.id}"]`)
+                : null;
+        }
+
+        open() {
+            this.setState({ open: true }, () => {
+                document.addEventListener('mousedown', this.onDocumentMouseDown);
+                if (this.cancelRef.current) {
+                    this.cancelRef.current.focus();
+                }
+            });
+        }
+
+        close(returnFocus = true) {
+            document.removeEventListener('mousedown', this.onDocumentMouseDown);
+            this.setState({ open: false }, () => {
+                const trigger = this.getTrigger();
+                if (returnFocus && trigger) {
+                    trigger.focus();
+                }
+            });
+        }
+
+        onDocumentMouseDown(e) {
+            if (this.wrapperRef.current && !this.wrapperRef.current.contains(e.target)) {
+                this.close(false);
+            }
+        }
+
+        onKeyDown(e) {
+            if (this.state.open && (e.key === 'Escape' || e.key === 'Esc')) {
+                // Do not let Esc close a parent Modal
+                e.stopPropagation();
+                e.preventDefault();
+                this.close(true);
+            }
+        }
+
+        render() {
+            const { className = '', placement = 'top', renderTrigger, question, confirmText, confirmLabel, onConfirm } = this.props;
+            const { open } = this.state;
+            const questionId = `${this.id}-question`;
+
+            return (
+                <div
+                    ref={this.wrapperRef}
+                    className={`ppb-tooltips-library advgb-confirm-inline ${className} ${open ? 'is-active' : ''}`}
+                    data-toggle="ppbtooltip"
+                    data-placement={placement}
+                    onKeyDown={this.onKeyDown}
+                >
+                    {renderTrigger({
+                        'aria-expanded': open,
+                        'aria-controls': this.id,
+                        onClick: (e) => {
+                            e.preventDefault();
+                            open ? this.close(false) : this.open();
+                        }
+                    })}
+                    <div className="tooltip-text" id={this.id} role="group" aria-labelledby={questionId}>
+                        {open && (
+                            <p>
+                                <span id={questionId}>{question}</span>
+                                <br />
+                                <Button
+                                    isLink
+                                    isSmall
+                                    isDestructive
+                                    label={confirmLabel}
+                                    onClick={() => {
+                                        this.close(false);
+                                        onConfirm();
+                                    }}
+                                >
+                                    <strong>{confirmText}</strong>
+                                </Button>
+                                <span aria-hidden="true"> | </span>
+                                <Button
+                                    isLink
+                                    isSmall
+                                    ref={this.cancelRef}
+                                    onClick={() => this.close(true)}
+                                >
+                                    {__('No, Cancel.', 'advanced-gutenberg')}
+                                </Button>
+                            </p>
+                        )}
+                        <i></i>
+                    </div>
+                </div>
+            );
+        }
+    }
 
 
 
@@ -153,6 +274,7 @@ import {
             };
 
             this.messageContainerRef = React.createRef();
+            this.messageHeadingRef = React.createRef();
 
             this.handleModalClose = this.handleModalClose.bind(this);
             this.createNewPreset = this.createNewPreset.bind(this);
@@ -513,19 +635,37 @@ import {
         }
 
         scrollToMessage() {
-            console.log('now?')
             setTimeout(() => {
-                console.log('wn?')
-                console.log(this.messageContainerRef);
-                console.log(this.messageContainerRef.current);
                 if (this.messageContainerRef.current) {
                     this.messageContainerRef.current.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    console.log('scroll')
+                }
+
+                // Move focus to the result heading so keyboard/screen reader users land on the outcome
+                if (
+                    ['saved', 'deleted', 'cancelled', 'installed'].includes(this.state.lastAction)
+                    && this.messageHeadingRef.current
+                ) {
+                    this.messageHeadingRef.current.focus();
                 }
             }, 100);
+        }
+
+        getStatusMessage(lastAction) {
+            switch (lastAction) {
+                case 'saved':
+                    return __('Preset saved successfully!', 'advanced-gutenberg');
+                case 'deleted':
+                    return __('Preset deleted.', 'advanced-gutenberg');
+                case 'cancelled':
+                    return __('Edit cancelled.', 'advanced-gutenberg');
+                case 'installed':
+                    return __('Preset samples created successfully!', 'advanced-gutenberg');
+                default:
+                    return '';
+            }
         }
 
         toggleControlSet(setIndex) {
@@ -743,7 +883,12 @@ import {
                                     <Button
                                         isSmall
                                         icon="edit"
-                                        label={__('Edit', 'advanced-gutenberg')}
+                                        label={sprintf(
+                                            /* translators: %s: preset title */
+                                            __('Edit: %s', 'advanced-gutenberg'),
+                                            preset.title
+                                        )}
+                                        aria-current={isActive ? 'true' : undefined}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             this.editPreset(preset);
@@ -808,48 +953,31 @@ import {
 
                     <div className="advgb-preset-actions">
                         {currentPreset.id && (
-                            <div className="ppb-tooltips-library click advgb-delete-preset-tooltip" data-toggle="ppbtooltip" data-placement="top">
-                                <button className="advgb-delete-preset-btn button button-secondary advgb-destructive-button"
-                                    disabled={deleting || saving}
-                                >
-                                    {deleting ? (
-                                        <>
-                                            <Spinner />
-                                            {__('Deleting...', 'advanced-gutenberg')}
-                                        </>
-                                    ) : (
-                                        __('Delete Preset', 'advanced-gutenberg')
-                                    )}
-                                </button>
-                                <div className="tooltip-text">
-                                    <p>
-                                        {__('Are you sure you want to delete preset?', 'advanced-gutenberg')}
-                                        <br />
-                                        <Button
-                                            isLink
-                                            isSmall
-                                            isDestructive
-                                            label={__('Delete Preset', 'advanced-gutenberg')}
-                                            onClick={(e) => {
-                                                this.deletePreset(currentPreset.id);
-                                            }}
-                                        >
-                                            <strong>
-                                                {__('Yes, Delete Preset.', 'advanced-gutenberg')}
-                                            </strong>
-                                        </Button>
-                                        |
-                                        <Button
-                                            isLink
-                                            isSmall
-                                            label={__('No, Cancel', 'advanced-gutenberg')}
-                                        >
-                                            {__('No, Cancel.', 'advanced-gutenberg')}
-                                        </Button>
-                                    </p>
-                                    <i></i>
-                                </div>
-                            </div>
+                            <AdvgbConfirmInline
+                                className="advgb-delete-preset-tooltip"
+                                placement="top"
+                                question={__('Are you sure you want to delete preset?', 'advanced-gutenberg')}
+                                confirmText={__('Yes, Delete Preset.', 'advanced-gutenberg')}
+                                confirmLabel={__('Delete Preset', 'advanced-gutenberg')}
+                                onConfirm={() => this.deletePreset(currentPreset.id)}
+                                renderTrigger={(triggerProps) => (
+                                    <button
+                                        type="button"
+                                        className="advgb-delete-preset-btn button button-secondary advgb-destructive-button"
+                                        disabled={deleting || saving}
+                                        {...triggerProps}
+                                    >
+                                        {deleting ? (
+                                            <>
+                                                <Spinner />
+                                                {__('Deleting...', 'advanced-gutenberg')}
+                                            </>
+                                        ) : (
+                                            __('Delete Preset', 'advanced-gutenberg')
+                                        )}
+                                    </button>
+                                )}
+                            />
                         )}
                         <button
                          onClick={() => this.savePreset(this.state.currentPreset)}
@@ -881,20 +1009,29 @@ import {
             return (
                 <div className="advgb-control-set" key={controlSet.id || setIndex}>
                     <div className="advgb-control-set-header">
-                        <div
+                        <button
+                            type="button"
                             className="advgb-set-info advgb-preset-clickable-area"
                             onClick={() => this.toggleControlSet(setIndex)}
+                            aria-expanded={isExpanded}
+                            aria-controls={`advgb-control-set-rules-${setIndex}`}
                         >
-                            <div className="advgb-set-title-row">
-                                <span className={`dashicons dashicons-arrow-${isExpanded ? 'down' : 'right'}`}></span>
-                                <div className="title-row-text">
-                                    <h4>{__('Control Set', 'advanced-gutenberg')} {setIndex + 1}</h4>
-                                    <p>{__('Show the block if any rule applies. Rules are evaluated with AND logic.', 'advanced-gutenberg')}</p>
-                                </div>
-                            </div>
-                        </div>
+                            <span className="advgb-set-title-row">
+                                <span className={`dashicons dashicons-arrow-${isExpanded ? 'down' : 'right'}`} aria-hidden="true"></span>
+                                <span className="title-row-text">
+                                    <span className="advgb-set-title">{__('Control Set', 'advanced-gutenberg')} {setIndex + 1}</span>
+                                    <span className="advgb-set-description">{__('Show the block if any rule applies. Rules are evaluated with AND logic.', 'advanced-gutenberg')}</span>
+                                </span>
+                            </span>
+                        </button>
                         <div className="advgb-set-actions">
                             <SelectControl
+                                label={sprintf(
+                                    /* translators: %d: control set number */
+                                    __('Add Rule to Control Set %d', 'advanced-gutenberg'),
+                                    setIndex + 1
+                                )}
+                                hideLabelFromVision
                                 value=""
                                 options={[
                                     { value: '', label: __('Add Rule', 'advanced-gutenberg') },
@@ -907,46 +1044,32 @@ import {
                                 }}
                                 className="advgb-add-rule-select"
                             />
-                            <div className="ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="left">
-                                <Button
-                                    isLink
-                                    isSmall
-                                    isDestructive
-                                    icon="trash"
-                                    label={__('Delete Set', 'advanced-gutenberg')}
-                                />
-                                <div className="tooltip-text">
-                                    <p>
-                                        {__('Are you sure you want to delete set?', 'advanced-gutenberg')}
-                                        <br />
-                                        <Button
-                                            isLink
-                                            isSmall
-                                            isDestructive
-                                            label={__('Delete Set', 'advanced-gutenberg')}
-                                            onClick={() => this.removeControlSet(setIndex)}
-                                        >
-                                            <strong>
-                                                {__('Yes, Delete Set.', 'advanced-gutenberg')}
-                                            </strong>
-                                        </Button>
-                                        |
-                                        <Button
-                                            isLink
-                                            isSmall
-                                            label={__('No, Cancel', 'advanced-gutenberg')}
-                                        >
-                                            {__('No, Cancel.', 'advanced-gutenberg')}
-                                        </Button>
-                                    </p>
-                                    <i></i>
-                                </div>
-                            </div>
+                            <AdvgbConfirmInline
+                                placement="left"
+                                question={__('Are you sure you want to delete set?', 'advanced-gutenberg')}
+                                confirmText={__('Yes, Delete Set.', 'advanced-gutenberg')}
+                                confirmLabel={__('Delete Set', 'advanced-gutenberg')}
+                                onConfirm={() => this.removeControlSet(setIndex)}
+                                renderTrigger={(triggerProps) => (
+                                    <Button
+                                        isLink
+                                        isSmall
+                                        isDestructive
+                                        icon="trash"
+                                        label={sprintf(
+                                            /* translators: %d: control set number */
+                                            __('Delete Control Set %d', 'advanced-gutenberg'),
+                                            setIndex + 1
+                                        )}
+                                        {...triggerProps}
+                                    />
+                                )}
+                            />
                         </div>
                     </div>
 
                     {isExpanded && (
-                        <div className="advgb-control-set-rules">
+                        <div className="advgb-control-set-rules" id={`advgb-control-set-rules-${setIndex}`}>
                             {(controlSet.rules || []).map((rule, ruleIndex) => (
                                 <div key={rule.id || ruleIndex} className="advgb-rule-container">
                                     {ruleIndex > 0 && (
@@ -975,55 +1098,44 @@ import {
             return (
                 <div className="advgb-control-rule">
                     <div className="advgb-rule-header">
-                        <div
+                        <button
+                            type="button"
                             className="advgb-rule-type advgb-preset-clickable-area"
                             onClick={() => this.toggleRule(setIndex, ruleIndex)}
+                            aria-expanded={isExpanded}
+                            aria-controls={`advgb-rule-content-${setIndex}-${ruleIndex}`}
                         >
-                            <span className={`dashicons dashicons-arrow-${isExpanded ? 'down' : 'right'}`}></span>
-                            <span className="advgb-rule-type-icon">📋</span>
+                            <span className={`dashicons dashicons-arrow-${isExpanded ? 'down' : 'right'}`} aria-hidden="true"></span>
+                            <span className="advgb-rule-type-icon" aria-hidden="true">📋</span>
                             <span className="advgb-rule-type-label">{this.getRuleTypeLabel(rule.type)}</span>
-                        </div>
+                        </button>
                         <div className="advgb-rule-actions">
-                            <div className="ppb-tooltips-library click" data-toggle="ppbtooltip" data-placement="left">
-                                <Button
-                                    isLink
-                                    isSmall
-                                    isDestructive
-                                    icon="trash"
-                                    label={__('Remove Rule', 'advanced-gutenberg')}
-                                />
-                                <div className="tooltip-text">
-                                    <p>
-                                        {__('Are you sure you want to remove rule?', 'advanced-gutenberg')}
-                                        <br />
-                                        <Button
-                                            isLink
-                                            isSmall
-                                            isDestructive
-                                            label={__('Remove Rule', 'advanced-gutenberg')}
-                                            onClick={() => this.removeRuleFromSet(setIndex, ruleIndex)}
-                                        >
-                                            <strong>
-                                                {__('Yes, Remove Rule.', 'advanced-gutenberg')}
-                                            </strong>
-                                        </Button>
-                                        |
-                                        <Button
-                                            isLink
-                                            isSmall
-                                            label={__('No, Cancel', 'advanced-gutenberg')}
-                                        >
-                                            {__('No, Cancel.', 'advanced-gutenberg')}
-                                        </Button>
-                                    </p>
-                                    <i></i>
-                                </div>
-                            </div>
+                            <AdvgbConfirmInline
+                                placement="left"
+                                question={__('Are you sure you want to remove rule?', 'advanced-gutenberg')}
+                                confirmText={__('Yes, Remove Rule.', 'advanced-gutenberg')}
+                                confirmLabel={__('Remove Rule', 'advanced-gutenberg')}
+                                onConfirm={() => this.removeRuleFromSet(setIndex, ruleIndex)}
+                                renderTrigger={(triggerProps) => (
+                                    <Button
+                                        isLink
+                                        isSmall
+                                        isDestructive
+                                        icon="trash"
+                                        label={sprintf(
+                                            /* translators: %s: rule type */
+                                            __('Remove Rule: %s', 'advanced-gutenberg'),
+                                            this.getRuleTypeLabel(rule.type)
+                                        )}
+                                        {...triggerProps}
+                                    />
+                                )}
+                            />
                         </div>
                     </div>
 
                     {isExpanded && (
-                        <div className="advgb-rule-content">
+                        <div className="advgb-rule-content" id={`advgb-rule-content-${setIndex}-${ruleIndex}`}>
                             {this.renderRuleConfiguration(rule, setIndex, ruleIndex)}
                         </div>
                     )}
@@ -1711,10 +1823,10 @@ import {
                 <>
                     {icon && (
                         <div className="advgb-guidance-icon">
-                            <span className={`dashicons dashicons-${icon}`}></span>
+                            <span className={`dashicons dashicons-${icon}`} aria-hidden="true"></span>
                         </div>
                     )}
-                    <h3>{title}</h3>
+                    <h3 ref={this.messageHeadingRef} tabIndex="-1">{title}</h3>
                     <p>{description}</p>
 
                     {showStats && this.renderPresetStats()}
@@ -1819,6 +1931,9 @@ import {
 
             const content = (
                 <>
+                    <div className="screen-reader-text" role="status" aria-live="polite">
+                        {this.getStatusMessage(lastAction)}
+                    </div>
                     <div className="advgb-preset-sidebar-header" ref={this.messageContainerRef}>
                         {!hasActiveForm && (
                             <>

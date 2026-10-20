@@ -60,11 +60,23 @@ var _wp$i18n = wp.i18n,
   __ = _wp$i18n.__,
   _x = _wp$i18n._x;
 var applyFilters = wp.hooks.applyFilters;
+
+// Unique ids to associate visible labels with their controls
+var advgbDateTimeIdCounter = 0;
+var advgbDateTimeId = function advgbDateTimeId(prefix) {
+  advgbDateTimeIdCounter++;
+  return "".concat(prefix, "-").concat(advgbDateTimeIdCounter);
+};
 function AdvDateTimeControl(props) {
   var _useState = useState(false),
     _useState2 = _slicedToArray(_useState, 2),
     popupState = _useState2[0],
     setPopupState = _useState2[1];
+  var _useState3 = useState(function () {
+      return advgbDateTimeId('advgb-advcalendar-label');
+    }),
+    _useState4 = _slicedToArray(_useState3, 1),
+    labelId = _useState4[0];
   var togglePopup = function togglePopup() {
     setPopupState(!popupState);
   };
@@ -77,16 +89,22 @@ function AdvDateTimeControl(props) {
     placement = props.placement,
     offset = props.offset;
   return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "advgb-advcalendar-control"
-  }, /*#__PURE__*/React.createElement("label", null, dateLabel), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Button, {
+    className: "advgb-advcalendar-control",
+    role: "group",
+    "aria-labelledby": labelId
+  }, /*#__PURE__*/React.createElement("label", {
+    id: labelId
+  }, dateLabel), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Button, {
     isLink: true,
     icon: "calendar",
-    onClick: togglePopup
+    onClick: togglePopup,
+    "aria-expanded": popupState
   }, /*#__PURE__*/React.createElement(Tooltip, {
     text: __('Change date', 'advanced-gutenberg')
   }, /*#__PURE__*/React.createElement("span", null, date ? moment(date).format("MMMM DD YYYY, h:mm a") : buttonLabel))), date && /*#__PURE__*/React.createElement(Button, {
     icon: "no-alt",
     className: "advgb-advcalendar-remove-icon",
+    label: __('Clear date', 'advanced-gutenberg'),
     onClick: function onClick() {
       return onDateClear();
     }
@@ -96,11 +114,12 @@ function AdvDateTimeControl(props) {
     resize: false,
     placement: placement,
     offset: offset
-  }, /*#__PURE__*/React.createElement("label", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "advgb-advcalendar-popover-label"
   }, dateLabel, /*#__PURE__*/React.createElement(Button, {
     icon: "no-alt",
     className: "advgb-advcalendar-remove-icon",
+    label: __('Close', 'advanced-gutenberg'),
     onClick: togglePopup
   })), /*#__PURE__*/React.createElement(DateTimePicker, {
     currentDate: date,
@@ -116,25 +135,32 @@ AdvDateTimeControl.defaultProps = {
 function AdvDaysControl(props) {
   var allDays = [{
     slug: 0,
-    label: _x('S', 'Sunday first letter', 'advanced-gutenberg')
+    label: _x('S', 'Sunday first letter', 'advanced-gutenberg'),
+    name: __('Sunday', 'advanced-gutenberg')
   }, {
     slug: 1,
-    label: __('M', 'advanced-gutenberg')
+    label: __('M', 'advanced-gutenberg'),
+    name: __('Monday', 'advanced-gutenberg')
   }, {
     slug: 2,
-    label: _x('T', 'Tuesday first letter', 'advanced-gutenberg')
+    label: _x('T', 'Tuesday first letter', 'advanced-gutenberg'),
+    name: __('Tuesday', 'advanced-gutenberg')
   }, {
     slug: 3,
-    label: __('W', 'advanced-gutenberg')
+    label: __('W', 'advanced-gutenberg'),
+    name: __('Wednesday', 'advanced-gutenberg')
   }, {
     slug: 4,
-    label: _x('T', 'Thursday first letter', 'advanced-gutenberg')
+    label: _x('T', 'Thursday first letter', 'advanced-gutenberg'),
+    name: __('Thursday', 'advanced-gutenberg')
   }, {
     slug: 5,
-    label: __('F', 'advanced-gutenberg')
+    label: __('F', 'advanced-gutenberg'),
+    name: __('Friday', 'advanced-gutenberg')
   }, {
     slug: 6,
-    label: _x('S', 'Saturday first letter', 'advanced-gutenberg')
+    label: _x('S', 'Saturday first letter', 'advanced-gutenberg'),
+    name: __('Saturday', 'advanced-gutenberg')
   }];
   var label = props.label,
     _props$days = props.days,
@@ -142,10 +168,10 @@ function AdvDaysControl(props) {
     onChangeDays = props.onChangeDays;
 
   // Use a single state variable to store the selected days
-  var _useState3 = useState(Array.isArray(days) ? days : []),
-    _useState4 = _slicedToArray(_useState3, 2),
-    selectedDays = _useState4[0],
-    setSelectedDays = _useState4[1];
+  var _useState5 = useState(Array.isArray(days) ? days : []),
+    _useState6 = _slicedToArray(_useState5, 2),
+    selectedDays = _useState6[0],
+    setSelectedDays = _useState6[1];
 
   /**
   * Check if the day is selected or not
@@ -201,13 +227,29 @@ function AdvDaysControl(props) {
       onChangeDays(updatedDays);
     }
   }
-  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "advgb-checkbox-wrapper"
-  }, /*#__PURE__*/React.createElement("label", null, label), /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("fieldset", {
+    className: "advgb-checkbox-wrapper",
+    style: {
+      border: 0,
+      padding: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      marginTop: 0,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("legend", {
+    style: {
+      padding: 0,
+      marginBottom: 8,
+      display: 'block'
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
     className: "advgb-checkbox-inline"
   }, allDays.map(function (day) {
     return /*#__PURE__*/React.createElement(CheckboxControl, {
+      key: day.slug,
       label: day.label,
+      "aria-label": day.name,
       checked: isDaySelected(day.slug),
       onChange: function onChange() {
         return onChangeDay(day.slug);
@@ -228,6 +270,7 @@ var AdvTimeClass = /*#__PURE__*/function (_Component) {
       meridian: 'am',
       onInit: true
     };
+    _this.labelId = advgbDateTimeId('advgb-advtime-label');
     return _this;
   }
   _inherits(AdvTimeClass, _Component);
@@ -381,25 +424,36 @@ var AdvTimeClass = /*#__PURE__*/function (_Component) {
         }
       };
       return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-        className: "advgb-advtime-control"
-      }, /*#__PURE__*/React.createElement("label", null, this.props.label), /*#__PURE__*/React.createElement("div", {
+        className: "advgb-advtime-control",
+        role: "group",
+        "aria-labelledby": this.labelId
+      }, /*#__PURE__*/React.createElement("label", {
+        id: this.labelId
+      }, this.props.label), /*#__PURE__*/React.createElement("div", {
         className: "advgb-advtime-hours-minutes"
       }, /*#__PURE__*/React.createElement("input", {
         type: "text",
         value: hours ? this.appendZero(hour_convert__WEBPACK_IMPORTED_MODULE_0___default().to12Hour(parseInt(hours)).hour) : '',
         onChange: handleChangeHours,
         onKeyDown: handleKeyDownHours,
-        placeholder: "--"
-      }), /*#__PURE__*/React.createElement("span", null, ":"), /*#__PURE__*/React.createElement("input", {
+        placeholder: "--",
+        "aria-label": __('Hours', 'advanced-gutenberg')
+      }), /*#__PURE__*/React.createElement("span", {
+        "aria-hidden": "true"
+      }, ":"), /*#__PURE__*/React.createElement("input", {
         type: "text",
         value: minutes ? minutes : '',
         onChange: handleChangeMinutes,
         onKeyDown: handleKeyDownMinutes,
-        placeholder: "--"
+        placeholder: "--",
+        "aria-label": __('Minutes', 'advanced-gutenberg')
       })), /*#__PURE__*/React.createElement(ButtonGroup, {
-        className: "advgb-advtime-meridian"
+        className: "advgb-advtime-meridian",
+        role: "group",
+        "aria-label": __('AM or PM', 'advanced-gutenberg')
       }, /*#__PURE__*/React.createElement(Button, {
         variant: meridian === null || meridian === 'am' ? 'primary' : 'secondary',
+        "aria-pressed": meridian === null || meridian === 'am',
         onClick: function onClick() {
           _this2.setState({
             meridian: 'am'
@@ -408,6 +462,7 @@ var AdvTimeClass = /*#__PURE__*/function (_Component) {
         disabled: hours && minutes ? false : true
       }, __('AM', 'advanced-gutenberg')), /*#__PURE__*/React.createElement(Button, {
         variant: meridian === 'pm' ? 'primary' : 'secondary',
+        "aria-pressed": meridian === 'pm',
         onClick: function onClick() {
           _this2.setState({
             meridian: 'pm'
@@ -417,6 +472,7 @@ var AdvTimeClass = /*#__PURE__*/function (_Component) {
       }, __('PM', 'advanced-gutenberg'))), hours && minutes && /*#__PURE__*/React.createElement(Button, {
         className: "advgb-advtime-remove-icon",
         icon: "no-alt",
+        label: __('Clear time', 'advanced-gutenberg'),
         onClick: function onClick() {
           _this2.props.onTimeClear();
           _this2.setState({
@@ -453,7 +509,11 @@ function AdvTimezoneControl(props) {
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "advgb-blur"
-  }, label, /*#__PURE__*/React.createElement(SelectControl, {
+  }, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, label), /*#__PURE__*/React.createElement(SelectControl, {
+    label: label,
+    hideLabelFromVision: true,
     value: defaultTimezone,
     options: [{
       label: defaultTimezone,
@@ -687,6 +747,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_0_adv_components_datetime_jsx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../blocks/0-adv-components/datetime.jsx */ "./assets/blocks/0-adv-components/datetime.jsx");
 /* harmony import */ var _blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../blocks/0-adv-components/utils.jsx */ "./assets/blocks/0-adv-components/utils.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -742,9 +803,149 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     RadioControl = wpComponents.RadioControl,
     DateTimePicker = wpComponents.DateTimePicker;
   var Component = wpElement.Component,
-    Fragment = wpElement.Fragment;
+    Fragment = wpElement.Fragment,
+    createRef = wpElement.createRef;
   var useSelect = wpData.useSelect,
     useDispatch = wpData.useDispatch;
+  var advgbConfirmIdCounter = 0;
+
+  /**
+   * Inline confirmation shown in the existing tooltip box.
+   * Keyboard accessible: trigger exposes aria-expanded/aria-controls, focus moves into the
+   * confirmation (Cancel), Esc or Cancel closes it and returns focus to the trigger.
+   */
+  var AdvgbConfirmInline = /*#__PURE__*/function (_Component) {
+    function AdvgbConfirmInline(props) {
+      var _this;
+      _classCallCheck(this, AdvgbConfirmInline);
+      _this = _callSuper(this, AdvgbConfirmInline, [props]);
+      advgbConfirmIdCounter++;
+      _this.id = "advgb-confirm-".concat(advgbConfirmIdCounter);
+      _this.state = {
+        open: false
+      };
+      _this.wrapperRef = createRef();
+      _this.cancelRef = createRef();
+      _this.open = _this.open.bind(_this);
+      _this.close = _this.close.bind(_this);
+      _this.onKeyDown = _this.onKeyDown.bind(_this);
+      _this.onDocumentMouseDown = _this.onDocumentMouseDown.bind(_this);
+      return _this;
+    }
+    _inherits(AdvgbConfirmInline, _Component);
+    return _createClass(AdvgbConfirmInline, [{
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        document.removeEventListener('mousedown', this.onDocumentMouseDown);
+      }
+    }, {
+      key: "getTrigger",
+      value: function getTrigger() {
+        return this.wrapperRef.current ? this.wrapperRef.current.querySelector("[aria-controls=\"".concat(this.id, "\"]")) : null;
+      }
+    }, {
+      key: "open",
+      value: function open() {
+        var _this2 = this;
+        this.setState({
+          open: true
+        }, function () {
+          document.addEventListener('mousedown', _this2.onDocumentMouseDown);
+          if (_this2.cancelRef.current) {
+            _this2.cancelRef.current.focus();
+          }
+        });
+      }
+    }, {
+      key: "close",
+      value: function close() {
+        var _this3 = this;
+        var returnFocus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+        document.removeEventListener('mousedown', this.onDocumentMouseDown);
+        this.setState({
+          open: false
+        }, function () {
+          var trigger = _this3.getTrigger();
+          if (returnFocus && trigger) {
+            trigger.focus();
+          }
+        });
+      }
+    }, {
+      key: "onDocumentMouseDown",
+      value: function onDocumentMouseDown(e) {
+        if (this.wrapperRef.current && !this.wrapperRef.current.contains(e.target)) {
+          this.close(false);
+        }
+      }
+    }, {
+      key: "onKeyDown",
+      value: function onKeyDown(e) {
+        if (this.state.open && (e.key === 'Escape' || e.key === 'Esc')) {
+          // Do not let Esc close a parent Modal
+          e.stopPropagation();
+          e.preventDefault();
+          this.close(true);
+        }
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var _this4 = this;
+        var _this$props = this.props,
+          _this$props$className = _this$props.className,
+          className = _this$props$className === void 0 ? '' : _this$props$className,
+          _this$props$placement = _this$props.placement,
+          placement = _this$props$placement === void 0 ? 'top' : _this$props$placement,
+          renderTrigger = _this$props.renderTrigger,
+          question = _this$props.question,
+          confirmText = _this$props.confirmText,
+          confirmLabel = _this$props.confirmLabel,
+          onConfirm = _this$props.onConfirm;
+        var open = this.state.open;
+        var questionId = "".concat(this.id, "-question");
+        return /*#__PURE__*/React.createElement("div", {
+          ref: this.wrapperRef,
+          className: "ppb-tooltips-library advgb-confirm-inline ".concat(className, " ").concat(open ? 'is-active' : ''),
+          "data-toggle": "ppbtooltip",
+          "data-placement": placement,
+          onKeyDown: this.onKeyDown
+        }, renderTrigger({
+          'aria-expanded': open,
+          'aria-controls': this.id,
+          onClick: function onClick(e) {
+            e.preventDefault();
+            open ? _this4.close(false) : _this4.open();
+          }
+        }), /*#__PURE__*/React.createElement("div", {
+          className: "tooltip-text",
+          id: this.id,
+          role: "group",
+          "aria-labelledby": questionId
+        }, open && /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("span", {
+          id: questionId
+        }, question), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button, {
+          isLink: true,
+          isSmall: true,
+          isDestructive: true,
+          label: confirmLabel,
+          onClick: function onClick() {
+            _this4.close(false);
+            onConfirm();
+          }
+        }, /*#__PURE__*/React.createElement("strong", null, confirmText)), /*#__PURE__*/React.createElement("span", {
+          "aria-hidden": "true"
+        }, " | "), /*#__PURE__*/React.createElement(Button, {
+          isLink: true,
+          isSmall: true,
+          ref: this.cancelRef,
+          onClick: function onClick() {
+            return _this4.close(true);
+          }
+        }, __('No, Cancel.', 'advanced-gutenberg'))), /*#__PURE__*/React.createElement("i", null)));
+      }
+    }]);
+  }(Component);
   var ScheduleControl = function ScheduleControl(_ref) {
     var index = _ref.index,
       schedule = _ref.schedule,
@@ -850,14 +1051,14 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }
     }));
   };
-  var PresetManager = /*#__PURE__*/function (_Component) {
+  var PresetManager = /*#__PURE__*/function (_Component2) {
     function PresetManager(props) {
-      var _this;
+      var _this5;
       _classCallCheck(this, PresetManager);
-      _this = _callSuper(this, PresetManager, [props]);
-      _this.state = {
+      _this5 = _callSuper(this, PresetManager, [props]);
+      _this5.state = {
         presets: [],
-        currentPreset: _this.getDefaultPreset(),
+        currentPreset: _this5.getDefaultPreset(),
         editingPreset: null,
         showModal: false,
         modalMode: 'create',
@@ -869,20 +1070,21 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         deletingPresetId: null,
         lastAction: null // 'created', 'cancelled', 'deleted', 'saved', 'loaded'
       };
-      _this.messageContainerRef = React.createRef();
-      _this.handleModalClose = _this.handleModalClose.bind(_this);
-      _this.createNewPreset = _this.createNewPreset.bind(_this);
-      _this.editPreset = _this.editPreset.bind(_this);
-      _this.savePreset = _this.savePreset.bind(_this);
-      _this.deletePreset = _this.deletePreset.bind(_this);
-      _this.addControlSet = _this.addControlSet.bind(_this);
-      _this.removeControlSet = _this.removeControlSet.bind(_this);
-      _this.addRuleToSet = _this.addRuleToSet.bind(_this);
-      _this.removeRuleFromSet = _this.removeRuleFromSet.bind(_this);
-      _this.updateRuleData = _this.updateRuleData.bind(_this);
-      return _this;
+      _this5.messageContainerRef = React.createRef();
+      _this5.messageHeadingRef = React.createRef();
+      _this5.handleModalClose = _this5.handleModalClose.bind(_this5);
+      _this5.createNewPreset = _this5.createNewPreset.bind(_this5);
+      _this5.editPreset = _this5.editPreset.bind(_this5);
+      _this5.savePreset = _this5.savePreset.bind(_this5);
+      _this5.deletePreset = _this5.deletePreset.bind(_this5);
+      _this5.addControlSet = _this5.addControlSet.bind(_this5);
+      _this5.removeControlSet = _this5.removeControlSet.bind(_this5);
+      _this5.addRuleToSet = _this5.addRuleToSet.bind(_this5);
+      _this5.removeRuleFromSet = _this5.removeRuleFromSet.bind(_this5);
+      _this5.updateRuleData = _this5.updateRuleData.bind(_this5);
+      return _this5;
     }
-    _inherits(PresetManager, _Component);
+    _inherits(PresetManager, _Component2);
     return _createClass(PresetManager, [{
       key: "componentDidMount",
       value: function componentDidMount() {
@@ -902,19 +1104,19 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "setupDataSync",
       value: function setupDataSync() {
-        var _this2 = this;
+        var _this6 = this;
         // Sync with global data changes
         if (window.AdvGBPresetData && window.AdvGBPresetData.subscribe) {
           this.dataUnsubscribe = window.AdvGBPresetData.subscribe(function (presets) {
-            _this2.setState({
+            _this6.setState({
               presets: Array.isArray(presets) ? presets : [],
               // Clear editing state if the current preset was deleted
-              editingPreset: _this2.state.editingPreset && presets.find(function (p) {
-                return p.id === _this2.state.editingPreset.id;
-              }) ? _this2.state.editingPreset : null,
-              currentPreset: _this2.state.currentPreset && presets.find(function (p) {
-                return p.id === _this2.state.currentPreset.id;
-              }) ? _this2.state.currentPreset : null
+              editingPreset: _this6.state.editingPreset && presets.find(function (p) {
+                return p.id === _this6.state.editingPreset.id;
+              }) ? _this6.state.editingPreset : null,
+              currentPreset: _this6.state.currentPreset && presets.find(function (p) {
+                return p.id === _this6.state.currentPreset.id;
+              }) ? _this6.state.currentPreset : null
             });
           });
         }
@@ -1115,7 +1317,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       key: "savePreset",
       value: function () {
         var _savePreset = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(presetData) {
-          var _this3 = this;
+          var _this7 = this;
           var response, newPreset, updatedPresets;
           return _regeneratorRuntime().wrap(function _callee4$(_context4) {
             while (1) switch (_context4.prev = _context4.next) {
@@ -1156,7 +1358,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
                     lastAction: 'saved'
                   }, function () {
                     // Scroll to top after state update
-                    _this3.scrollToMessage();
+                    _this7.scrollToMessage();
                   });
                 } else {
                   this.setState({
@@ -1164,7 +1366,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
                     showModal: false,
                     lastAction: 'saved'
                   }, function () {
-                    _this3.scrollToMessage();
+                    _this7.scrollToMessage();
                   });
                 }
                 return _context4.abrupt("return", response);
@@ -1179,7 +1381,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
                   saving: false,
                   lastAction: 'error'
                 }, function () {
-                  _this3.scrollToMessage();
+                  _this7.scrollToMessage();
                 });
                 throw _context4.t0;
               case 17:
@@ -1197,7 +1399,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       key: "deletePreset",
       value: function () {
         var _deletePreset = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5(presetId) {
-          var _this4 = this;
+          var _this8 = this;
           var response;
           return _regeneratorRuntime().wrap(function _callee5$(_context5) {
             while (1) switch (_context5.prev = _context5.next) {
@@ -1234,7 +1436,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
                   editingPreset: null,
                   lastAction: 'deleted'
                 }, function () {
-                  _this4.scrollToMessage();
+                  _this8.scrollToMessage();
                 });
                 _context5.next = 11;
                 return this.loadPresets();
@@ -1249,7 +1451,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
                   deletingPresetId: null,
                   error: _context5.t0.message
                 }, function () {
-                  _this4.scrollToMessage();
+                  _this8.scrollToMessage();
                 });
               case 16:
               case "end":
@@ -1265,7 +1467,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "createNewPreset",
       value: function createNewPreset() {
-        var _this5 = this;
+        var _this9 = this;
         this.setState({
           currentPreset: this.getDefaultPreset(false),
           editingPreset: null,
@@ -1273,13 +1475,13 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           showModal: true,
           lastAction: 'creating'
         }, function () {
-          _this5.scrollToMessage();
+          _this9.scrollToMessage();
         });
       }
     }, {
       key: "editPreset",
       value: function editPreset(preset) {
-        var _this6 = this;
+        var _this0 = this;
         this.setState({
           currentPreset: _objectSpread({}, preset),
           modalMode: 'edit',
@@ -1287,26 +1489,42 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           showModal: true,
           lastAction: 'editing'
         }, function () {
-          _this6.scrollToMessage();
+          _this0.scrollToMessage();
         });
       }
     }, {
       key: "scrollToMessage",
       value: function scrollToMessage() {
-        var _this7 = this;
-        console.log('now?');
+        var _this1 = this;
         setTimeout(function () {
-          console.log('wn?');
-          console.log(_this7.messageContainerRef);
-          console.log(_this7.messageContainerRef.current);
-          if (_this7.messageContainerRef.current) {
-            _this7.messageContainerRef.current.scrollIntoView({
+          if (_this1.messageContainerRef.current) {
+            _this1.messageContainerRef.current.scrollIntoView({
               behavior: 'smooth',
               block: 'start'
             });
-            console.log('scroll');
+          }
+
+          // Move focus to the result heading so keyboard/screen reader users land on the outcome
+          if (['saved', 'deleted', 'cancelled', 'installed'].includes(_this1.state.lastAction) && _this1.messageHeadingRef.current) {
+            _this1.messageHeadingRef.current.focus();
           }
         }, 100);
+      }
+    }, {
+      key: "getStatusMessage",
+      value: function getStatusMessage(lastAction) {
+        switch (lastAction) {
+          case 'saved':
+            return __('Preset saved successfully!', 'advanced-gutenberg');
+          case 'deleted':
+            return __('Preset deleted.', 'advanced-gutenberg');
+          case 'cancelled':
+            return __('Edit cancelled.', 'advanced-gutenberg');
+          case 'installed':
+            return __('Preset samples created successfully!', 'advanced-gutenberg');
+          default:
+            return '';
+        }
       }
     }, {
       key: "toggleControlSet",
@@ -1556,7 +1774,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "renderPresetList",
       value: function renderPresetList() {
-        var _this8 = this;
+        var _this10 = this;
         var _this$state = this.state,
           presets = _this$state.presets,
           editingPreset = _this$state.editingPreset;
@@ -1571,7 +1789,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             key: preset.id,
             className: itemClasses,
             onClick: function onClick() {
-              return _this8.editPreset(preset);
+              return _this10.editPreset(preset);
             }
           }, /*#__PURE__*/React.createElement("div", {
             className: "advgb-preset-content"
@@ -1583,10 +1801,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           }, /*#__PURE__*/React.createElement(Button, {
             isSmall: true,
             icon: "edit",
-            label: __('Edit', 'advanced-gutenberg'),
+            label: sprintf(/* translators: %s: preset title */
+            __('Edit: %s', 'advanced-gutenberg'), preset.title),
+            "aria-current": isActive ? 'true' : undefined,
             onClick: function onClick(e) {
               e.stopPropagation();
-              _this8.editPreset(preset);
+              _this10.editPreset(preset);
             }
           })));
         }));
@@ -1594,7 +1814,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "renderPresetForm",
       value: function renderPresetForm() {
-        var _this9 = this;
+        var _this11 = this;
         var _this$state2 = this.state,
           currentPreset = _this$state2.currentPreset,
           saving = _this$state2.saving,
@@ -1610,7 +1830,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           label: __('Preset Title', 'advanced-gutenberg'),
           value: currentPreset.title || '',
           onChange: function onChange(title) {
-            return _this9.setState({
+            return _this11.setState({
               currentPreset: _objectSpread(_objectSpread({}, currentPreset), {}, {
                 title: title
               })
@@ -1637,33 +1857,28 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             className: "advgb-set-separator"
           }, /*#__PURE__*/React.createElement("span", {
             className: "advgb-separator-text"
-          }, __('OR', 'advanced-gutenberg'))), _this9.renderControlSet(controlSet, index));
+          }, __('OR', 'advanced-gutenberg'))), _this11.renderControlSet(controlSet, index));
         }))), /*#__PURE__*/React.createElement("div", {
           className: "advgb-preset-actions"
-        }, currentPreset.id && /*#__PURE__*/React.createElement("div", {
-          className: "ppb-tooltips-library click advgb-delete-preset-tooltip",
-          "data-toggle": "ppbtooltip",
-          "data-placement": "top"
-        }, /*#__PURE__*/React.createElement("button", {
-          className: "advgb-delete-preset-btn button button-secondary advgb-destructive-button",
-          disabled: deleting || saving
-        }, deleting ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Spinner, null), __('Deleting...', 'advanced-gutenberg')) : __('Delete Preset', 'advanced-gutenberg')), /*#__PURE__*/React.createElement("div", {
-          className: "tooltip-text"
-        }, /*#__PURE__*/React.createElement("p", null, __('Are you sure you want to delete preset?', 'advanced-gutenberg'), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button, {
-          isLink: true,
-          isSmall: true,
-          isDestructive: true,
-          label: __('Delete Preset', 'advanced-gutenberg'),
-          onClick: function onClick(e) {
-            _this9.deletePreset(currentPreset.id);
+        }, currentPreset.id && /*#__PURE__*/React.createElement(AdvgbConfirmInline, {
+          className: "advgb-delete-preset-tooltip",
+          placement: "top",
+          question: __('Are you sure you want to delete preset?', 'advanced-gutenberg'),
+          confirmText: __('Yes, Delete Preset.', 'advanced-gutenberg'),
+          confirmLabel: __('Delete Preset', 'advanced-gutenberg'),
+          onConfirm: function onConfirm() {
+            return _this11.deletePreset(currentPreset.id);
+          },
+          renderTrigger: function renderTrigger(triggerProps) {
+            return /*#__PURE__*/React.createElement("button", _extends({
+              type: "button",
+              className: "advgb-delete-preset-btn button button-secondary advgb-destructive-button",
+              disabled: deleting || saving
+            }, triggerProps), deleting ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Spinner, null), __('Deleting...', 'advanced-gutenberg')) : __('Delete Preset', 'advanced-gutenberg'));
           }
-        }, /*#__PURE__*/React.createElement("strong", null, __('Yes, Delete Preset.', 'advanced-gutenberg'))), "|", /*#__PURE__*/React.createElement(Button, {
-          isLink: true,
-          isSmall: true,
-          label: __('No, Cancel', 'advanced-gutenberg')
-        }, __('No, Cancel.', 'advanced-gutenberg'))), /*#__PURE__*/React.createElement("i", null))), /*#__PURE__*/React.createElement("button", {
+        }), /*#__PURE__*/React.createElement("button", {
           onClick: function onClick() {
-            return _this9.savePreset(_this9.state.currentPreset);
+            return _this11.savePreset(_this11.state.currentPreset);
           },
           disabled: saving || !currentPreset.title,
           className: "advgb-save-btn button button-primary"
@@ -1676,27 +1891,38 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "renderControlSet",
       value: function renderControlSet(controlSet, setIndex) {
-        var _this0 = this;
+        var _this12 = this;
         var isExpanded = this.isControlSetExpanded(setIndex);
         return /*#__PURE__*/React.createElement("div", {
           className: "advgb-control-set",
           key: controlSet.id || setIndex
         }, /*#__PURE__*/React.createElement("div", {
           className: "advgb-control-set-header"
-        }, /*#__PURE__*/React.createElement("div", {
+        }, /*#__PURE__*/React.createElement("button", {
+          type: "button",
           className: "advgb-set-info advgb-preset-clickable-area",
           onClick: function onClick() {
-            return _this0.toggleControlSet(setIndex);
-          }
-        }, /*#__PURE__*/React.createElement("div", {
+            return _this12.toggleControlSet(setIndex);
+          },
+          "aria-expanded": isExpanded,
+          "aria-controls": "advgb-control-set-rules-".concat(setIndex)
+        }, /*#__PURE__*/React.createElement("span", {
           className: "advgb-set-title-row"
         }, /*#__PURE__*/React.createElement("span", {
-          className: "dashicons dashicons-arrow-".concat(isExpanded ? 'down' : 'right')
-        }), /*#__PURE__*/React.createElement("div", {
+          className: "dashicons dashicons-arrow-".concat(isExpanded ? 'down' : 'right'),
+          "aria-hidden": "true"
+        }), /*#__PURE__*/React.createElement("span", {
           className: "title-row-text"
-        }, /*#__PURE__*/React.createElement("h4", null, __('Control Set', 'advanced-gutenberg'), " ", setIndex + 1), /*#__PURE__*/React.createElement("p", null, __('Show the block if any rule applies. Rules are evaluated with AND logic.', 'advanced-gutenberg'))))), /*#__PURE__*/React.createElement("div", {
+        }, /*#__PURE__*/React.createElement("span", {
+          className: "advgb-set-title"
+        }, __('Control Set', 'advanced-gutenberg'), " ", setIndex + 1), /*#__PURE__*/React.createElement("span", {
+          className: "advgb-set-description"
+        }, __('Show the block if any rule applies. Rules are evaluated with AND logic.', 'advanced-gutenberg'))))), /*#__PURE__*/React.createElement("div", {
           className: "advgb-set-actions"
         }, /*#__PURE__*/React.createElement(SelectControl, {
+          label: sprintf(/* translators: %d: control set number */
+          __('Add Rule to Control Set %d', 'advanced-gutenberg'), setIndex + 1),
+          hideLabelFromVision: true,
           value: "",
           options: [{
             value: '',
@@ -1704,36 +1930,31 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           }].concat(_toConsumableArray(this.getAvailableRuleTypes())),
           onChange: function onChange(ruleType) {
             if (ruleType) {
-              _this0.addRuleToSet(setIndex, ruleType);
+              _this12.addRuleToSet(setIndex, ruleType);
             }
           },
           className: "advgb-add-rule-select"
-        }), /*#__PURE__*/React.createElement("div", {
-          className: "ppb-tooltips-library click",
-          "data-toggle": "ppbtooltip",
-          "data-placement": "left"
-        }, /*#__PURE__*/React.createElement(Button, {
-          isLink: true,
-          isSmall: true,
-          isDestructive: true,
-          icon: "trash",
-          label: __('Delete Set', 'advanced-gutenberg')
-        }), /*#__PURE__*/React.createElement("div", {
-          className: "tooltip-text"
-        }, /*#__PURE__*/React.createElement("p", null, __('Are you sure you want to delete set?', 'advanced-gutenberg'), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button, {
-          isLink: true,
-          isSmall: true,
-          isDestructive: true,
-          label: __('Delete Set', 'advanced-gutenberg'),
-          onClick: function onClick() {
-            return _this0.removeControlSet(setIndex);
+        }), /*#__PURE__*/React.createElement(AdvgbConfirmInline, {
+          placement: "left",
+          question: __('Are you sure you want to delete set?', 'advanced-gutenberg'),
+          confirmText: __('Yes, Delete Set.', 'advanced-gutenberg'),
+          confirmLabel: __('Delete Set', 'advanced-gutenberg'),
+          onConfirm: function onConfirm() {
+            return _this12.removeControlSet(setIndex);
+          },
+          renderTrigger: function renderTrigger(triggerProps) {
+            return /*#__PURE__*/React.createElement(Button, _extends({
+              isLink: true,
+              isSmall: true,
+              isDestructive: true,
+              icon: "trash",
+              label: sprintf(/* translators: %d: control set number */
+              __('Delete Control Set %d', 'advanced-gutenberg'), setIndex + 1)
+            }, triggerProps));
           }
-        }, /*#__PURE__*/React.createElement("strong", null, __('Yes, Delete Set.', 'advanced-gutenberg'))), "|", /*#__PURE__*/React.createElement(Button, {
-          isLink: true,
-          isSmall: true,
-          label: __('No, Cancel', 'advanced-gutenberg')
-        }, __('No, Cancel.', 'advanced-gutenberg'))), /*#__PURE__*/React.createElement("i", null))))), isExpanded && /*#__PURE__*/React.createElement("div", {
-          className: "advgb-control-set-rules"
+        }))), isExpanded && /*#__PURE__*/React.createElement("div", {
+          className: "advgb-control-set-rules",
+          id: "advgb-control-set-rules-".concat(setIndex)
         }, (controlSet.rules || []).map(function (rule, ruleIndex) {
           return /*#__PURE__*/React.createElement("div", {
             key: rule.id || ruleIndex,
@@ -1742,7 +1963,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             className: "advgb-rule-separator"
           }, /*#__PURE__*/React.createElement("span", {
             className: "advgb-separator-text"
-          }, __('AND', 'advanced-gutenberg'))), _this0.renderControlRule(rule, setIndex, ruleIndex));
+          }, __('AND', 'advanced-gutenberg'))), _this12.renderControlRule(rule, setIndex, ruleIndex));
         }), (!controlSet.rules || controlSet.rules.length === 0) && /*#__PURE__*/React.createElement("div", {
           className: "advgb-no-rules"
         }, /*#__PURE__*/React.createElement("p", null, __('No rules added yet. Add rules to define when this block should be visible.', 'advanced-gutenberg')))));
@@ -1750,51 +1971,51 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "renderControlRule",
       value: function renderControlRule(rule, setIndex, ruleIndex) {
-        var _this1 = this;
+        var _this13 = this;
         var isExpanded = this.isRuleExpanded(setIndex, ruleIndex);
         return /*#__PURE__*/React.createElement("div", {
           className: "advgb-control-rule"
         }, /*#__PURE__*/React.createElement("div", {
           className: "advgb-rule-header"
-        }, /*#__PURE__*/React.createElement("div", {
+        }, /*#__PURE__*/React.createElement("button", {
+          type: "button",
           className: "advgb-rule-type advgb-preset-clickable-area",
           onClick: function onClick() {
-            return _this1.toggleRule(setIndex, ruleIndex);
-          }
+            return _this13.toggleRule(setIndex, ruleIndex);
+          },
+          "aria-expanded": isExpanded,
+          "aria-controls": "advgb-rule-content-".concat(setIndex, "-").concat(ruleIndex)
         }, /*#__PURE__*/React.createElement("span", {
-          className: "dashicons dashicons-arrow-".concat(isExpanded ? 'down' : 'right')
+          className: "dashicons dashicons-arrow-".concat(isExpanded ? 'down' : 'right'),
+          "aria-hidden": "true"
         }), /*#__PURE__*/React.createElement("span", {
-          className: "advgb-rule-type-icon"
+          className: "advgb-rule-type-icon",
+          "aria-hidden": "true"
         }, "\uD83D\uDCCB"), /*#__PURE__*/React.createElement("span", {
           className: "advgb-rule-type-label"
         }, this.getRuleTypeLabel(rule.type))), /*#__PURE__*/React.createElement("div", {
           className: "advgb-rule-actions"
-        }, /*#__PURE__*/React.createElement("div", {
-          className: "ppb-tooltips-library click",
-          "data-toggle": "ppbtooltip",
-          "data-placement": "left"
-        }, /*#__PURE__*/React.createElement(Button, {
-          isLink: true,
-          isSmall: true,
-          isDestructive: true,
-          icon: "trash",
-          label: __('Remove Rule', 'advanced-gutenberg')
-        }), /*#__PURE__*/React.createElement("div", {
-          className: "tooltip-text"
-        }, /*#__PURE__*/React.createElement("p", null, __('Are you sure you want to remove rule?', 'advanced-gutenberg'), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button, {
-          isLink: true,
-          isSmall: true,
-          isDestructive: true,
-          label: __('Remove Rule', 'advanced-gutenberg'),
-          onClick: function onClick() {
-            return _this1.removeRuleFromSet(setIndex, ruleIndex);
+        }, /*#__PURE__*/React.createElement(AdvgbConfirmInline, {
+          placement: "left",
+          question: __('Are you sure you want to remove rule?', 'advanced-gutenberg'),
+          confirmText: __('Yes, Remove Rule.', 'advanced-gutenberg'),
+          confirmLabel: __('Remove Rule', 'advanced-gutenberg'),
+          onConfirm: function onConfirm() {
+            return _this13.removeRuleFromSet(setIndex, ruleIndex);
+          },
+          renderTrigger: function renderTrigger(triggerProps) {
+            return /*#__PURE__*/React.createElement(Button, _extends({
+              isLink: true,
+              isSmall: true,
+              isDestructive: true,
+              icon: "trash",
+              label: sprintf(/* translators: %s: rule type */
+              __('Remove Rule: %s', 'advanced-gutenberg'), _this13.getRuleTypeLabel(rule.type))
+            }, triggerProps));
           }
-        }, /*#__PURE__*/React.createElement("strong", null, __('Yes, Remove Rule.', 'advanced-gutenberg'))), "|", /*#__PURE__*/React.createElement(Button, {
-          isLink: true,
-          isSmall: true,
-          label: __('No, Cancel', 'advanced-gutenberg')
-        }, __('No, Cancel.', 'advanced-gutenberg'))), /*#__PURE__*/React.createElement("i", null))))), isExpanded && /*#__PURE__*/React.createElement("div", {
-          className: "advgb-rule-content"
+        }))), isExpanded && /*#__PURE__*/React.createElement("div", {
+          className: "advgb-rule-content",
+          id: "advgb-rule-content-".concat(setIndex, "-").concat(ruleIndex)
         }, this.renderRuleConfiguration(rule, setIndex, ruleIndex)));
       }
     }, {
@@ -1858,7 +2079,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "handleModalClose",
       value: function handleModalClose() {
-        var _this10 = this;
+        var _this14 = this;
         this.setState({
           showModal: false,
           currentPreset: null,
@@ -1866,7 +2087,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           modalMode: 'create',
           lastAction: 'cancelled'
         }, function () {
-          _this10.scrollToMessage();
+          _this14.scrollToMessage();
         });
       }
     }, {
@@ -2015,7 +2236,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "renderScheduleConfig",
       value: function renderScheduleConfig(rule, setIndex, ruleIndex) {
-        var _this11 = this;
+        var _this15 = this;
         var schedules = rule.schedules && rule.schedules.length > 0 ? rule.schedules : [{
           dateFrom: null,
           dateTo: null,
@@ -2033,21 +2254,21 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             onChange: function onChange(key, value) {
               var updatedSchedules = _toConsumableArray(schedules);
               updatedSchedules[scheduleIndex][key] = value;
-              _this11.updateRuleData(setIndex, ruleIndex, 'schedules', updatedSchedules);
+              _this15.updateRuleData(setIndex, ruleIndex, 'schedules', updatedSchedules);
             },
             onRemove: function onRemove() {
               if (schedules.length > 1) {
                 var updatedSchedules = schedules.filter(function (_, idx) {
                   return idx !== scheduleIndex;
                 });
-                _this11.updateRuleData(setIndex, ruleIndex, 'schedules', updatedSchedules);
+                _this15.updateRuleData(setIndex, ruleIndex, 'schedules', updatedSchedules);
               }
             },
             getTimezoneLabel: function getTimezoneLabel() {
-              return _this11.getTimezoneLabel();
+              return _this15.getTimezoneLabel();
             },
             getTimezoneSlug: function getTimezoneSlug() {
-              return _this11.getTimezoneSlug();
+              return _this15.getTimezoneSlug();
             },
             canRemove: schedules.length > 1
           });
@@ -2069,16 +2290,16 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
               days: [],
               timeFrom: null,
               timeTo: null,
-              timezone: _this11.getTimezoneSlug()
+              timezone: _this15.getTimezoneSlug()
             };
-            _this11.updateRuleData(setIndex, ruleIndex, 'schedules', [].concat(_toConsumableArray(schedules), [newSchedule]));
+            _this15.updateRuleData(setIndex, ruleIndex, 'schedules', [].concat(_toConsumableArray(schedules), [newSchedule]));
           }
         }, __('Add Another Schedule', 'advanced-gutenberg'))));
       }
     }, {
       key: "renderUserRoleConfig",
       value: function renderUserRoleConfig(rule, setIndex, ruleIndex) {
-        var _this12 = this;
+        var _this16 = this;
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(SelectControl, {
           label: __('Approach', 'advanced-gutenberg'),
           value: rule.approach || 'public',
@@ -2102,7 +2323,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             label: __('Hide from selected user roles', 'advanced-gutenberg')
           }],
           onChange: function onChange(value) {
-            return _this12.updateRuleData(setIndex, ruleIndex, 'approach', value);
+            return _this16.updateRuleData(setIndex, ruleIndex, 'approach', value);
           }
         }), (rule.approach === 'include' || rule.approach === 'exclude') && /*#__PURE__*/React.createElement(FormTokenField, {
           multiple: true,
@@ -2112,7 +2333,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           maxSuggestions: 10,
           value: (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionTitles)(rule.roles || [], this.getUserRoles()),
           onChange: function onChange(value) {
-            _this12.updateRuleData(setIndex, ruleIndex, 'roles', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this12.getUserRoles()));
+            _this16.updateRuleData(setIndex, ruleIndex, 'roles', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this16.getUserRoles()));
           },
           __experimentalExpandOnFocus: true
         }));
@@ -2120,7 +2341,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "renderDeviceTypeConfig",
       value: function renderDeviceTypeConfig(rule, setIndex, ruleIndex) {
-        var _this13 = this;
+        var _this17 = this;
         var devices = rule.devices || [];
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
           style: {
@@ -2135,7 +2356,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
               var newDevices = devices.includes(deviceType) ? devices.filter(function (d) {
                 return d !== deviceType;
               }) : [].concat(_toConsumableArray(devices), [deviceType]);
-              _this13.updateRuleData(setIndex, ruleIndex, 'devices', newDevices);
+              _this17.updateRuleData(setIndex, ruleIndex, 'devices', newDevices);
             }
           });
         })));
@@ -2143,13 +2364,13 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "renderDeviceWidthConfig",
       value: function renderDeviceWidthConfig(rule, setIndex, ruleIndex) {
-        var _this14 = this;
+        var _this18 = this;
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
           type: "number",
           label: __('Minimum width (px)', 'advanced-gutenberg'),
           value: rule.min_width || '',
           onChange: function onChange(value) {
-            return _this14.updateRuleData(setIndex, ruleIndex, 'min_width', value);
+            return _this18.updateRuleData(setIndex, ruleIndex, 'min_width', value);
           },
           placeholder: __('No minimum', 'advanced-gutenberg')
         }), /*#__PURE__*/React.createElement(TextControl, {
@@ -2157,7 +2378,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           label: __('Maximum width (px)', 'advanced-gutenberg'),
           value: rule.max_width || '',
           onChange: function onChange(value) {
-            return _this14.updateRuleData(setIndex, ruleIndex, 'max_width', value);
+            return _this18.updateRuleData(setIndex, ruleIndex, 'max_width', value);
           },
           placeholder: __('No maximum', 'advanced-gutenberg')
         }));
@@ -2165,7 +2386,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "renderBrowserDeviceConfig",
       value: function renderBrowserDeviceConfig(rule, setIndex, ruleIndex) {
-        var _this15 = this;
+        var _this19 = this;
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(FormTokenField, {
           multiple: true,
           label: __('Select Browsers', 'advanced-gutenberg'),
@@ -2174,7 +2395,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           maxSuggestions: 10,
           value: (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionTitles)(rule.browsers || [], this.getBrowserOptions()),
           onChange: function onChange(value) {
-            _this15.updateRuleData(setIndex, ruleIndex, 'browsers', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this15.getBrowserOptions()));
+            _this19.updateRuleData(setIndex, ruleIndex, 'browsers', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this19.getBrowserOptions()));
           },
           __experimentalExpandOnFocus: true
         }), /*#__PURE__*/React.createElement(SelectControl, {
@@ -2188,14 +2409,14 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             value: 'exclude'
           }],
           onChange: function onChange(value) {
-            return _this15.updateRuleData(setIndex, ruleIndex, 'approach', value);
+            return _this19.updateRuleData(setIndex, ruleIndex, 'approach', value);
           }
         }));
       }
     }, {
       key: "renderOperatingSystemConfig",
       value: function renderOperatingSystemConfig(rule, setIndex, ruleIndex) {
-        var _this16 = this;
+        var _this20 = this;
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(FormTokenField, {
           multiple: true,
           label: __('Select Operating Systems', 'advanced-gutenberg'),
@@ -2204,7 +2425,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           maxSuggestions: 10,
           value: (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionTitles)(rule.systems || [], this.getOperatingSystemOptions()),
           onChange: function onChange(value) {
-            _this16.updateRuleData(setIndex, ruleIndex, 'systems', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this16.getOperatingSystemOptions()));
+            _this20.updateRuleData(setIndex, ruleIndex, 'systems', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this20.getOperatingSystemOptions()));
           },
           __experimentalExpandOnFocus: true
         }), /*#__PURE__*/React.createElement(SelectControl, {
@@ -2218,32 +2439,32 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             value: 'exclude'
           }],
           onChange: function onChange(value) {
-            return _this16.updateRuleData(setIndex, ruleIndex, 'approach', value);
+            return _this20.updateRuleData(setIndex, ruleIndex, 'approach', value);
           }
         }));
       }
     }, {
       key: "renderCookieConfig",
       value: function renderCookieConfig(rule, setIndex, ruleIndex) {
-        var _this17 = this;
+        var _this21 = this;
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
           label: __('Cookie Name', 'advanced-gutenberg'),
           value: rule.name || '',
           onChange: function onChange(value) {
-            return _this17.updateRuleData(setIndex, ruleIndex, 'name', value);
+            return _this21.updateRuleData(setIndex, ruleIndex, 'name', value);
           }
         }), /*#__PURE__*/React.createElement(SelectControl, {
           label: __('Condition', 'advanced-gutenberg'),
           value: rule.condition || '=',
           options: this.getConditionOptions(),
           onChange: function onChange(value) {
-            return _this17.updateRuleData(setIndex, ruleIndex, 'condition', value);
+            return _this21.updateRuleData(setIndex, ruleIndex, 'condition', value);
           }
         }), /*#__PURE__*/React.createElement(TextControl, {
           label: __('Value', 'advanced-gutenberg'),
           value: rule.value || '',
           onChange: function onChange(value) {
-            return _this17.updateRuleData(setIndex, ruleIndex, 'value', value);
+            return _this21.updateRuleData(setIndex, ruleIndex, 'value', value);
           }
         }), /*#__PURE__*/React.createElement(SelectControl, {
           label: __('Approach', 'advanced-gutenberg'),
@@ -2256,32 +2477,32 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             value: 'exclude'
           }],
           onChange: function onChange(value) {
-            return _this17.updateRuleData(setIndex, ruleIndex, 'approach', value);
+            return _this21.updateRuleData(setIndex, ruleIndex, 'approach', value);
           }
         }));
       }
     }, {
       key: "renderUserMetaConfig",
       value: function renderUserMetaConfig(rule, setIndex, ruleIndex) {
-        var _this18 = this;
+        var _this22 = this;
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
           label: __('Meta Key', 'advanced-gutenberg'),
           value: rule.key || '',
           onChange: function onChange(value) {
-            return _this18.updateRuleData(setIndex, ruleIndex, 'key', value);
+            return _this22.updateRuleData(setIndex, ruleIndex, 'key', value);
           }
         }), /*#__PURE__*/React.createElement(SelectControl, {
           label: __('Condition', 'advanced-gutenberg'),
           value: rule.condition || '=',
           options: this.getConditionOptions(),
           onChange: function onChange(value) {
-            return _this18.updateRuleData(setIndex, ruleIndex, 'condition', value);
+            return _this22.updateRuleData(setIndex, ruleIndex, 'condition', value);
           }
         }), /*#__PURE__*/React.createElement(TextControl, {
           label: __('Value', 'advanced-gutenberg'),
           value: rule.value || '',
           onChange: function onChange(value) {
-            return _this18.updateRuleData(setIndex, ruleIndex, 'value', value);
+            return _this22.updateRuleData(setIndex, ruleIndex, 'value', value);
           }
         }), /*#__PURE__*/React.createElement(SelectControl, {
           label: __('Approach', 'advanced-gutenberg'),
@@ -2294,7 +2515,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             value: 'exclude'
           }],
           onChange: function onChange(value) {
-            return _this18.updateRuleData(setIndex, ruleIndex, 'approach', value);
+            return _this22.updateRuleData(setIndex, ruleIndex, 'approach', value);
           }
         }));
       }
@@ -2303,25 +2524,25 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "renderPostMetaConfig",
       value: function renderPostMetaConfig(rule, setIndex, ruleIndex) {
-        var _this19 = this;
+        var _this23 = this;
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
           label: __('Meta Key', 'advanced-gutenberg'),
           value: rule.key || '',
           onChange: function onChange(value) {
-            return _this19.updateRuleData(setIndex, ruleIndex, 'key', value);
+            return _this23.updateRuleData(setIndex, ruleIndex, 'key', value);
           }
         }), /*#__PURE__*/React.createElement(SelectControl, {
           label: __('Condition', 'advanced-gutenberg'),
           value: rule.condition || '=',
           options: this.getConditionOptions(),
           onChange: function onChange(value) {
-            return _this19.updateRuleData(setIndex, ruleIndex, 'condition', value);
+            return _this23.updateRuleData(setIndex, ruleIndex, 'condition', value);
           }
         }), /*#__PURE__*/React.createElement(TextControl, {
           label: __('Value', 'advanced-gutenberg'),
           value: rule.value || '',
           onChange: function onChange(value) {
-            return _this19.updateRuleData(setIndex, ruleIndex, 'value', value);
+            return _this23.updateRuleData(setIndex, ruleIndex, 'value', value);
           }
         }), /*#__PURE__*/React.createElement(SelectControl, {
           label: __('Approach', 'advanced-gutenberg'),
@@ -2334,21 +2555,21 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             value: 'exclude'
           }],
           onChange: function onChange(value) {
-            return _this19.updateRuleData(setIndex, ruleIndex, 'approach', value);
+            return _this23.updateRuleData(setIndex, ruleIndex, 'approach', value);
           }
         }));
       }
     }, {
       key: "renderQueryStringConfig",
       value: function renderQueryStringConfig(rule, setIndex, ruleIndex) {
-        var _this20 = this;
+        var _this24 = this;
         var queriesValue = Array.isArray(rule.queries) ? rule.queries.join('\n') : rule.queries || '';
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(TextareaControl, {
           label: __('Query Parameters', 'advanced-gutenberg'),
           help: __('Enter query parameter names, one per line', 'advanced-gutenberg'),
           value: queriesValue,
           onChange: function onChange(value) {
-            _this20.updateRuleData(setIndex, ruleIndex, 'queries', value);
+            _this24.updateRuleData(setIndex, ruleIndex, 'queries', value);
           },
           placeholder: __('utm_source\nutm_medium\nref', 'advanced-gutenberg')
         }), /*#__PURE__*/React.createElement(SelectControl, {
@@ -2362,7 +2583,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             value: 'any'
           }],
           onChange: function onChange(value) {
-            return _this20.updateRuleData(setIndex, ruleIndex, 'logic', value);
+            return _this24.updateRuleData(setIndex, ruleIndex, 'logic', value);
           }
         }), /*#__PURE__*/React.createElement(SelectControl, {
           label: __('Approach', 'advanced-gutenberg'),
@@ -2375,14 +2596,14 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             value: 'exclude'
           }],
           onChange: function onChange(value) {
-            return _this20.updateRuleData(setIndex, ruleIndex, 'approach', value);
+            return _this24.updateRuleData(setIndex, ruleIndex, 'approach', value);
           }
         }));
       }
     }, {
       key: "renderCapabilitiesConfig",
       value: function renderCapabilitiesConfig(rule, setIndex, ruleIndex) {
-        var _this21 = this;
+        var _this25 = this;
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(FormTokenField, {
           multiple: true,
           label: __('Select Capabilities', 'advanced-gutenberg'),
@@ -2391,7 +2612,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           maxSuggestions: 10,
           value: (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionTitles)(rule.capabilities || [], this.getCapabilitiesOptions()),
           onChange: function onChange(value) {
-            _this21.updateRuleData(setIndex, ruleIndex, 'capabilities', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this21.getCapabilitiesOptions()));
+            _this25.updateRuleData(setIndex, ruleIndex, 'capabilities', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this25.getCapabilitiesOptions()));
           },
           __experimentalExpandOnFocus: true
         }), /*#__PURE__*/React.createElement(SelectControl, {
@@ -2405,14 +2626,14 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             value: 'exclude'
           }],
           onChange: function onChange(value) {
-            return _this21.updateRuleData(setIndex, ruleIndex, 'approach', value);
+            return _this25.updateRuleData(setIndex, ruleIndex, 'approach', value);
           }
         }));
       }
     }, {
       key: "renderArchiveConfig",
       value: function renderArchiveConfig(rule, setIndex, ruleIndex) {
-        var _this22 = this;
+        var _this26 = this;
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(FormTokenField, {
           multiple: true,
           label: __('Select Archive Types', 'advanced-gutenberg'),
@@ -2421,7 +2642,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           maxSuggestions: 10,
           value: (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionTitles)(rule.archives || [], this.getArchiveOptions()),
           onChange: function onChange(value) {
-            _this22.updateRuleData(setIndex, ruleIndex, 'archives', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this22.getArchiveOptions()));
+            _this26.updateRuleData(setIndex, ruleIndex, 'archives', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this26.getArchiveOptions()));
           },
           __experimentalExpandOnFocus: true
         }), /*#__PURE__*/React.createElement(SelectControl, {
@@ -2435,14 +2656,14 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             value: 'exclude'
           }],
           onChange: function onChange(value) {
-            return _this22.updateRuleData(setIndex, ruleIndex, 'approach', value);
+            return _this26.updateRuleData(setIndex, ruleIndex, 'approach', value);
           }
         }));
       }
     }, {
       key: "renderPageConfig",
       value: function renderPageConfig(rule, setIndex, ruleIndex) {
-        var _this23 = this;
+        var _this27 = this;
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(FormTokenField, {
           multiple: true,
           label: __('Select Pages', 'advanced-gutenberg'),
@@ -2451,7 +2672,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           maxSuggestions: 10,
           value: (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionTitles)(rule.pages || [], this.getPageOptions()),
           onChange: function onChange(value) {
-            _this23.updateRuleData(setIndex, ruleIndex, 'pages', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this23.getPageOptions()));
+            _this27.updateRuleData(setIndex, ruleIndex, 'pages', (0,_blocks_0_adv_components_utils_jsx__WEBPACK_IMPORTED_MODULE_1__.getOptionSlugs)(value, _this27.getPageOptions()));
           },
           __experimentalExpandOnFocus: true
         }), /*#__PURE__*/React.createElement(SelectControl, {
@@ -2465,14 +2686,14 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             value: 'exclude'
           }],
           onChange: function onChange(value) {
-            return _this23.updateRuleData(setIndex, ruleIndex, 'approach', value);
+            return _this27.updateRuleData(setIndex, ruleIndex, 'approach', value);
           }
         }));
       }
     }, {
       key: "renderContextualMessage",
       value: function renderContextualMessage(lastAction) {
-        var _this24 = this;
+        var _this28 = this;
         var presets = this.state.presets;
         var title,
           description,
@@ -2527,18 +2748,22 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         return /*#__PURE__*/React.createElement(React.Fragment, null, icon && /*#__PURE__*/React.createElement("div", {
           className: "advgb-guidance-icon"
         }, /*#__PURE__*/React.createElement("span", {
-          className: "dashicons dashicons-".concat(icon)
-        })), /*#__PURE__*/React.createElement("h3", null, title), /*#__PURE__*/React.createElement("p", null, description), showStats && this.renderPresetStats(), showFeatures && this.renderFeatureGrid(), /*#__PURE__*/React.createElement("div", {
+          className: "dashicons dashicons-".concat(icon),
+          "aria-hidden": "true"
+        })), /*#__PURE__*/React.createElement("h3", {
+          ref: this.messageHeadingRef,
+          tabIndex: "-1"
+        }, title), /*#__PURE__*/React.createElement("p", null, description), showStats && this.renderPresetStats(), showFeatures && this.renderFeatureGrid(), /*#__PURE__*/React.createElement("div", {
           className: "advgb-guidance-actions"
         }, /*#__PURE__*/React.createElement("button", {
           className: "button button-primary",
           onClick: function onClick() {
-            return _this24.createNewPreset();
+            return _this28.createNewPreset();
           }
         }, __('Create New Preset', 'advanced-gutenberg')), !hasPresets && /*#__PURE__*/React.createElement("button", {
           className: "button button-secondary",
           onClick: function onClick() {
-            return _this24.createSamplePresets();
+            return _this28.createSamplePresets();
           }
         }, __('Generate Samples', 'advanced-gutenberg'))));
       }
@@ -2598,7 +2823,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "render",
       value: function render() {
-        var _this25 = this;
+        var _this29 = this;
         var _this$state3 = this.state,
           showModal = _this$state3.showModal,
           loading = _this$state3.loading,
@@ -2629,17 +2854,21 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           }, error);
         }
         var content = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+          className: "screen-reader-text",
+          role: "status",
+          "aria-live": "polite"
+        }, this.getStatusMessage(lastAction)), /*#__PURE__*/React.createElement("div", {
           className: "advgb-preset-sidebar-header",
           ref: this.messageContainerRef
         }, !hasActiveForm && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
           className: "button button-secondary",
           onClick: function onClick() {
-            return _this25.createNewPreset();
+            return _this29.createNewPreset();
           }
         }, __('Add New Preset', 'advanced-gutenberg')), !hasPresets && /*#__PURE__*/React.createElement("button", {
           className: "button button-primary",
           onClick: function onClick() {
-            return _this25.createSamplePresets();
+            return _this29.createSamplePresets();
           }
         }, __('Generate Sample Preset', 'advanced-gutenberg')))), /*#__PURE__*/React.createElement("div", {
           className: "advgb-preset-manager ".concat(deleting ? 'deleting' : '')
@@ -2691,12 +2920,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         }, /*#__PURE__*/React.createElement("button", {
           className: "button button-primary",
           onClick: function onClick() {
-            return _this25.createNewPreset();
+            return _this29.createNewPreset();
           }
         }, __('Create Your First Preset', 'advanced-gutenberg')), !hasPresets && /*#__PURE__*/React.createElement("button", {
           className: "button button-secondary",
           onClick: function onClick() {
-            return _this25.createSamplePresets();
+            return _this29.createSamplePresets();
           }
         }, __('Generate Sample Presets', 'advanced-gutenberg')))), hasPresets && !hasActiveForm && /*#__PURE__*/React.createElement("div", {
           className: "advgb-guidance-message",

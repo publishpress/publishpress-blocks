@@ -188,9 +188,12 @@ function advgbRenderBlockRecentPosts($attributes)
                 }
             }
 
+            // The title link below points to the same URL, so hide the redundant image link from assistive tech
+            $postThumbLinkAttrs  = $postThumbCaption === '' ? ' aria-hidden="true" tabindex="-1"' : '';
+
             $postHtml .= '<article class="advgb-recent-post' . ( $outputImage ? '' : ' advgb-recent-post--no-image' ) . '">';
             if ($outputImage && $displayImageVsOrder === 'ignore-order') {
-                $postHtml .= sprintf('<div class="advgb-post-thumbnail"><a href="%1$s">%2$s%3$s</a></div>', get_permalink($post->ID), $postThumb, $postThumbCaption);
+                $postHtml .= sprintf('<div class="advgb-post-thumbnail"><a href="%1$s"%4$s>%2$s%3$s</a></div>', get_permalink($post->ID), $postThumb, $postThumbCaption, $postThumbLinkAttrs);
             } elseif (
                 ($postView === 'frontpage' && $attributes['frontpageStyle'] === 'headline')
                 || ($postView === 'slider' && $attributes['sliderStyle'] === 'headline')
@@ -203,7 +206,7 @@ function advgbRenderBlockRecentPosts($attributes)
 
             $postHtml .= '<div class="advgb-post-wrapper">';
             if ($outputImage && $displayImageVsOrder === 'apply-order') {
-                $postHtml .= sprintf('<div class="advgb-post-thumbnail"><a href="%1$s">%2$s%3$s</a></div>', get_permalink($post->ID), $postThumb, $postThumbCaption);
+                $postHtml .= sprintf('<div class="advgb-post-thumbnail"><a href="%1$s"%4$s>%2$s%3$s</a></div>', get_permalink($post->ID), $postThumb, $postThumbCaption, $postThumbLinkAttrs);
             }
 
             $postHtml .= sprintf('<h2 class="advgb-post-title"><a href="%1$s">%2$s</a></h2>', get_permalink($post->ID), get_the_title($post->ID));

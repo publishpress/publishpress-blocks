@@ -22,15 +22,24 @@
     cursor: pointer;
     color: transparent;
     border: none;
-    outline: none;
     background: transparent !important;
 }
 .slick-prev:hover,
 .slick-next:hover
 {
     color: transparent;
-    outline: none;
     background: transparent;
+}
+.slick-prev:focus-visible,
+.slick-next:focus-visible
+{
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+.slick-prev:focus-visible:before,
+.slick-next:focus-visible:before
+{
+    opacity: 1;
 }
 .slick-prev:hover:before,
 .slick-next:hover:before
@@ -132,13 +141,12 @@
     cursor: pointer;
     color: transparent;
     border: 0;
-    outline: none;
     background: transparent !important;
 }
-.slick-dots li button:hover,
-.slick-dots li button:focus
+.slick-dots li button:focus-visible
 {
-    outline: none;
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
 }
 .slick-dots li button:hover:before,
 .slick-dots li button:focus:before
@@ -157,7 +165,7 @@
     height: 20px;
     content: '\f159';
     text-align: center;
-    opacity: .25;
+    opacity: .55;
     color: black;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -166,4 +174,49 @@
 {
     opacity: .75;
     color: black;
+}
+
+/* Autoplay pause/play toggle (injected by assets/js/frontend-a11y.js) */
+.advgb-slider-pause
+{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 24px;
+    min-height: 24px;
+    margin: 0 0 8px;
+    padding: 4px 10px;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #1e1e1e;
+    background: #fff;
+    border: 1px solid #1e1e1e;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.advgb-slider-pause:hover
+{
+    color: #fff;
+    background: #1e1e1e;
+}
+.advgb-slider-pause:focus-visible
+{
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+.advgb-slider-pause[aria-pressed='true']
+{
+    color: #fff;
+    background: #1e1e1e;
+}
+.advgb-slider-pause-icon:before
+{
+    font-family: 'dashicons';
+    font-size: 16px;
+    line-height: 1;
+    content: '\f523';
+}
+.advgb-slider-pause[aria-pressed='true'] .advgb-slider-pause-icon:before
+{
+    content: '\f522';
 }

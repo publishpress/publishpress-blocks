@@ -222,11 +222,23 @@ var _wp$i18n = wp.i18n,
   __ = _wp$i18n.__,
   _x = _wp$i18n._x;
 var applyFilters = wp.hooks.applyFilters;
+
+// Unique ids to associate visible labels with their controls
+var advgbDateTimeIdCounter = 0;
+var advgbDateTimeId = function advgbDateTimeId(prefix) {
+  advgbDateTimeIdCounter++;
+  return "".concat(prefix, "-").concat(advgbDateTimeIdCounter);
+};
 function AdvDateTimeControl(props) {
   var _useState = useState(false),
     _useState2 = _slicedToArray(_useState, 2),
     popupState = _useState2[0],
     setPopupState = _useState2[1];
+  var _useState3 = useState(function () {
+      return advgbDateTimeId('advgb-advcalendar-label');
+    }),
+    _useState4 = _slicedToArray(_useState3, 1),
+    labelId = _useState4[0];
   var togglePopup = function togglePopup() {
     setPopupState(!popupState);
   };
@@ -239,16 +251,22 @@ function AdvDateTimeControl(props) {
     placement = props.placement,
     offset = props.offset;
   return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "advgb-advcalendar-control"
-  }, /*#__PURE__*/React.createElement("label", null, dateLabel), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Button, {
+    className: "advgb-advcalendar-control",
+    role: "group",
+    "aria-labelledby": labelId
+  }, /*#__PURE__*/React.createElement("label", {
+    id: labelId
+  }, dateLabel), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Button, {
     isLink: true,
     icon: "calendar",
-    onClick: togglePopup
+    onClick: togglePopup,
+    "aria-expanded": popupState
   }, /*#__PURE__*/React.createElement(Tooltip, {
     text: __('Change date', 'advanced-gutenberg')
   }, /*#__PURE__*/React.createElement("span", null, date ? moment(date).format("MMMM DD YYYY, h:mm a") : buttonLabel))), date && /*#__PURE__*/React.createElement(Button, {
     icon: "no-alt",
     className: "advgb-advcalendar-remove-icon",
+    label: __('Clear date', 'advanced-gutenberg'),
     onClick: function onClick() {
       return onDateClear();
     }
@@ -258,11 +276,12 @@ function AdvDateTimeControl(props) {
     resize: false,
     placement: placement,
     offset: offset
-  }, /*#__PURE__*/React.createElement("label", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "advgb-advcalendar-popover-label"
   }, dateLabel, /*#__PURE__*/React.createElement(Button, {
     icon: "no-alt",
     className: "advgb-advcalendar-remove-icon",
+    label: __('Close', 'advanced-gutenberg'),
     onClick: togglePopup
   })), /*#__PURE__*/React.createElement(DateTimePicker, {
     currentDate: date,
@@ -278,25 +297,32 @@ AdvDateTimeControl.defaultProps = {
 function AdvDaysControl(props) {
   var allDays = [{
     slug: 0,
-    label: _x('S', 'Sunday first letter', 'advanced-gutenberg')
+    label: _x('S', 'Sunday first letter', 'advanced-gutenberg'),
+    name: __('Sunday', 'advanced-gutenberg')
   }, {
     slug: 1,
-    label: __('M', 'advanced-gutenberg')
+    label: __('M', 'advanced-gutenberg'),
+    name: __('Monday', 'advanced-gutenberg')
   }, {
     slug: 2,
-    label: _x('T', 'Tuesday first letter', 'advanced-gutenberg')
+    label: _x('T', 'Tuesday first letter', 'advanced-gutenberg'),
+    name: __('Tuesday', 'advanced-gutenberg')
   }, {
     slug: 3,
-    label: __('W', 'advanced-gutenberg')
+    label: __('W', 'advanced-gutenberg'),
+    name: __('Wednesday', 'advanced-gutenberg')
   }, {
     slug: 4,
-    label: _x('T', 'Thursday first letter', 'advanced-gutenberg')
+    label: _x('T', 'Thursday first letter', 'advanced-gutenberg'),
+    name: __('Thursday', 'advanced-gutenberg')
   }, {
     slug: 5,
-    label: __('F', 'advanced-gutenberg')
+    label: __('F', 'advanced-gutenberg'),
+    name: __('Friday', 'advanced-gutenberg')
   }, {
     slug: 6,
-    label: _x('S', 'Saturday first letter', 'advanced-gutenberg')
+    label: _x('S', 'Saturday first letter', 'advanced-gutenberg'),
+    name: __('Saturday', 'advanced-gutenberg')
   }];
   var label = props.label,
     _props$days = props.days,
@@ -304,10 +330,10 @@ function AdvDaysControl(props) {
     onChangeDays = props.onChangeDays;
 
   // Use a single state variable to store the selected days
-  var _useState3 = useState(Array.isArray(days) ? days : []),
-    _useState4 = _slicedToArray(_useState3, 2),
-    selectedDays = _useState4[0],
-    setSelectedDays = _useState4[1];
+  var _useState5 = useState(Array.isArray(days) ? days : []),
+    _useState6 = _slicedToArray(_useState5, 2),
+    selectedDays = _useState6[0],
+    setSelectedDays = _useState6[1];
 
   /**
   * Check if the day is selected or not
@@ -363,13 +389,29 @@ function AdvDaysControl(props) {
       onChangeDays(updatedDays);
     }
   }
-  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "advgb-checkbox-wrapper"
-  }, /*#__PURE__*/React.createElement("label", null, label), /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("fieldset", {
+    className: "advgb-checkbox-wrapper",
+    style: {
+      border: 0,
+      padding: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      marginTop: 0,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("legend", {
+    style: {
+      padding: 0,
+      marginBottom: 8,
+      display: 'block'
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
     className: "advgb-checkbox-inline"
   }, allDays.map(function (day) {
     return /*#__PURE__*/React.createElement(CheckboxControl, {
+      key: day.slug,
       label: day.label,
+      "aria-label": day.name,
       checked: isDaySelected(day.slug),
       onChange: function onChange() {
         return onChangeDay(day.slug);
@@ -390,6 +432,7 @@ var AdvTimeClass = /*#__PURE__*/function (_Component) {
       meridian: 'am',
       onInit: true
     };
+    _this.labelId = advgbDateTimeId('advgb-advtime-label');
     return _this;
   }
   _inherits(AdvTimeClass, _Component);
@@ -543,25 +586,36 @@ var AdvTimeClass = /*#__PURE__*/function (_Component) {
         }
       };
       return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-        className: "advgb-advtime-control"
-      }, /*#__PURE__*/React.createElement("label", null, this.props.label), /*#__PURE__*/React.createElement("div", {
+        className: "advgb-advtime-control",
+        role: "group",
+        "aria-labelledby": this.labelId
+      }, /*#__PURE__*/React.createElement("label", {
+        id: this.labelId
+      }, this.props.label), /*#__PURE__*/React.createElement("div", {
         className: "advgb-advtime-hours-minutes"
       }, /*#__PURE__*/React.createElement("input", {
         type: "text",
         value: hours ? this.appendZero(hour_convert__WEBPACK_IMPORTED_MODULE_0___default().to12Hour(parseInt(hours)).hour) : '',
         onChange: handleChangeHours,
         onKeyDown: handleKeyDownHours,
-        placeholder: "--"
-      }), /*#__PURE__*/React.createElement("span", null, ":"), /*#__PURE__*/React.createElement("input", {
+        placeholder: "--",
+        "aria-label": __('Hours', 'advanced-gutenberg')
+      }), /*#__PURE__*/React.createElement("span", {
+        "aria-hidden": "true"
+      }, ":"), /*#__PURE__*/React.createElement("input", {
         type: "text",
         value: minutes ? minutes : '',
         onChange: handleChangeMinutes,
         onKeyDown: handleKeyDownMinutes,
-        placeholder: "--"
+        placeholder: "--",
+        "aria-label": __('Minutes', 'advanced-gutenberg')
       })), /*#__PURE__*/React.createElement(ButtonGroup, {
-        className: "advgb-advtime-meridian"
+        className: "advgb-advtime-meridian",
+        role: "group",
+        "aria-label": __('AM or PM', 'advanced-gutenberg')
       }, /*#__PURE__*/React.createElement(Button, {
         variant: meridian === null || meridian === 'am' ? 'primary' : 'secondary',
+        "aria-pressed": meridian === null || meridian === 'am',
         onClick: function onClick() {
           _this2.setState({
             meridian: 'am'
@@ -570,6 +624,7 @@ var AdvTimeClass = /*#__PURE__*/function (_Component) {
         disabled: hours && minutes ? false : true
       }, __('AM', 'advanced-gutenberg')), /*#__PURE__*/React.createElement(Button, {
         variant: meridian === 'pm' ? 'primary' : 'secondary',
+        "aria-pressed": meridian === 'pm',
         onClick: function onClick() {
           _this2.setState({
             meridian: 'pm'
@@ -579,6 +634,7 @@ var AdvTimeClass = /*#__PURE__*/function (_Component) {
       }, __('PM', 'advanced-gutenberg'))), hours && minutes && /*#__PURE__*/React.createElement(Button, {
         className: "advgb-advtime-remove-icon",
         icon: "no-alt",
+        label: __('Clear time', 'advanced-gutenberg'),
         onClick: function onClick() {
           _this2.props.onTimeClear();
           _this2.setState({
@@ -615,7 +671,11 @@ function AdvTimezoneControl(props) {
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "advgb-blur"
-  }, label, /*#__PURE__*/React.createElement(SelectControl, {
+  }, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, label), /*#__PURE__*/React.createElement(SelectControl, {
+    label: label,
+    hideLabelFromVision: true,
     value: defaultTimezone,
     options: [{
       label: defaultTimezone,
@@ -671,7 +731,10 @@ function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.
 function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
 function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
-var __ = wp.i18n.__;
+var _wp$i18n = wp.i18n,
+  __ = _wp$i18n.__,
+  _n = _wp$i18n._n,
+  sprintf = _wp$i18n.sprintf;
 var Component = wp.element.Component;
 var _wp$components = wp.components,
   Button = _wp$components.Button,
@@ -692,6 +755,34 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
   }
   _inherits(IconListPopup, _Component);
   return _createClass(IconListPopup, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      var _this2 = this;
+      // Announce the number of matching icons after the search text changes
+      if (prevState.searchedText !== this.state.searchedText) {
+        clearTimeout(this.speakTimeout);
+        this.speakTimeout = setTimeout(function () {
+          var count = _this2.getFilteredIcons().length;
+          if (window.wp && window.wp.a11y && typeof window.wp.a11y.speak === 'function') {
+            window.wp.a11y.speak(sprintf(_n('%d icon found.', '%d icons found.', count, 'advanced-gutenberg'), count));
+          }
+        }, 500);
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      clearTimeout(this.speakTimeout);
+    }
+  }, {
+    key: "getFilteredIcons",
+    value: function getFilteredIcons() {
+      var searchedText = this.state.searchedText;
+      return Object.keys(advgbBlocks.iconList['material']).filter(function (icon) {
+        return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
+      });
+    }
+  }, {
     key: "componentWillMount",
     value: function componentWillMount() {
       var _this$state = this.state,
@@ -711,7 +802,7 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
       var _this$state2 = this.state,
         searchedText = _this$state2.searchedText,
         selectedIcon = _this$state2.selectedIcon,
@@ -729,15 +820,17 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/React.createElement("div", {
         className: "advgb-icon-popup-content",
         ref: function ref(node) {
-          _this2.node = node;
+          _this3.node = node;
         }
       }, /*#__PURE__*/React.createElement("div", {
         className: "popup-body"
       }, /*#__PURE__*/React.createElement(TextControl, {
+        label: __('Search icons', 'advanced-gutenberg'),
+        hideLabelFromVision: true,
         placeholder: __('Search icons', 'advanced-gutenberg'),
         value: searchedText,
         onChange: function onChange(value) {
-          return _this2.setState({
+          return _this3.setState({
             searchedText: value
           });
         }
@@ -762,7 +855,7 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
           value: 'sharp'
         }],
         onChange: function onChange(value) {
-          _this2.setState({
+          _this3.setState({
             selectedIconTheme: value
           });
         }
@@ -772,7 +865,9 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
           maxHeight: 300,
           overflowY: 'auto',
           overflowX: 'hidden'
-        }
+        },
+        role: "group",
+        "aria-label": __('Icons', 'advanced-gutenberg')
       }, Object.keys(advgbBlocks.iconList[iconType]).filter(function (icon) {
         return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
       }).map(function (icon, index) {
@@ -781,16 +876,22 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
           className: "advgb-icon-item",
           key: index
         }, /*#__PURE__*/React.createElement("span", {
+          className: icon === selectedIcon ? 'active' : undefined
+        }, /*#__PURE__*/React.createElement("button", {
+          type: "button",
+          className: "advgb-icon-item-button",
           onClick: function onClick() {
-            _this2.setState({
+            _this3.setState({
               selectedIcon: icon
             });
           },
-          className: icon === selectedIcon && 'active',
-          title: icon
+          title: icon,
+          "aria-label": icon.split('_').join(' '),
+          "aria-pressed": icon === selectedIcon
         }, /*#__PURE__*/React.createElement("i", {
-          className: iconClass
-        }, icon)));
+          className: iconClass,
+          "aria-hidden": "true"
+        }, icon))));
       }))), /*#__PURE__*/React.createElement("div", {
         className: "popup-footer"
       }, /*#__PURE__*/React.createElement(Button, {
@@ -798,9 +899,9 @@ var IconListPopup = /*#__PURE__*/function (_Component) {
         className: applyIconButtonClass,
         isPrimary: true,
         onClick: function onClick() {
-          _this2.props.onSelectIcon(selectedIcon);
-          _this2.props.onSelectIconTheme(selectedIconTheme);
-          _this2.props.closePopup();
+          _this3.props.onSelectIcon(selectedIcon);
+          _this3.props.onSelectIconTheme(selectedIconTheme);
+          _this3.props.closePopup();
         }
       }, __('Apply', 'advanced-gutenberg')))));
     }

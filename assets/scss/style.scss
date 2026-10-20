@@ -135,7 +135,7 @@ body[class*="_page_advgb_"] #wpcontent {
       box-shadow: 0 10px 30px 0 rgba(160, 166, 190, 0.08);
       border: 1px solid #dcdcdc;
 
-      h3 {
+      h2, h3 {
         margin: 0 0 1em;
         line-height: 1.5em;
         padding: 0;
@@ -377,7 +377,15 @@ body[class*="_page_advgb_"] #wpcontent {
         &:active {
           color: $purple-hover;
           box-shadow: none;
+        }
+
+        &:focus:not(:focus-visible) {
           outline: none;
+        }
+
+        &:focus-visible {
+          outline: 2px solid #2271b1;
+          outline-offset: 2px;
         }
       }
     }
@@ -408,7 +416,7 @@ body[class*="_page_advgb_"] #wpcontent {
     }
 
     &--error {
-      color: #d63638;
+      color: #f86368;
     }
   }
 }
@@ -560,7 +568,7 @@ body[class*="_page_advgb_"] #wpcontent {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: #8c8f94;
   -webkit-transition: 0.4s;
   -moz-transition: 0.4s;
   -ms-transition: 0.4s;
@@ -591,7 +599,7 @@ body[class*="_page_advgb_"] #wpcontent {
 }
 
 .advgb-switch-button .switch input:checked+.slider {
-  background-color: #00d084;
+  background-color: #007a4d;
 }
 
 .advgb-switch-button .switch input:checked+.slider:before {
@@ -983,9 +991,17 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked+.slider:before {
 .advgb-pro-link,
 .advgb-pro-link:focus {
   text-decoration: none !important;
-  outline: none !important;
   box-shadow: none !important;
   border: none !important;
+}
+
+.advgb-pro-link:focus:not(:focus-visible) {
+  outline: none !important;
+}
+
+.advgb-pro-link:focus-visible {
+  outline: 2px solid #2271b1 !important;
+  outline-offset: 2px;
 }
 
 .advgb-pro-overlay-wrap {
@@ -1115,8 +1131,26 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked+.slider:before {
   display: none;
 }
 
-.category-block .category-name>* {
+.category-block .category-name>*,
+.category-block .category-name .advgb-category-toggle>* {
   vertical-align: text-top;
+}
+
+/* Category collapse toggle: reset native button styles so it looks like the former heading text */
+.category-block .category-name .advgb-category-toggle {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.category-block .category-name .advgb-category-toggle:focus-visible {
+  outline: 2px solid #2271b1;
+  outline-offset: 2px;
 }
 
 .category-block .category-name i:before {
@@ -1129,7 +1163,7 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked+.slider:before {
 
 .category-block .category-name {
   cursor: pointer;
-  color: #9fa7b5;
+  color: #646970;
   font-size: 18px;
 }
 
@@ -1220,4 +1254,13 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked+.slider:before {
       line-height: 40px;
     }
   }
+}
+
+/* Accessibility helpers */
+.advgb-user-role-switch {
+  margin-left: 6px !important;
+}
+
+.advgb-codemirror-help {
+  margin: 4px 0 8px;
 }

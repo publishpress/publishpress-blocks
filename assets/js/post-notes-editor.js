@@ -106,7 +106,7 @@
                         null,
                         el(ToolbarButton, {
                             icon:    el(NoteIcon, null),
-                            label:   'Add note',
+                            label:   ( wp.i18n && wp.i18n.__ ) ? wp.i18n.__( 'Add note', 'advanced-gutenberg' ) : 'Add note',
                             onClick: function () { triggerCoreAddNote(props.clientId); },
                         })
                     )

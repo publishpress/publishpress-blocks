@@ -54,7 +54,6 @@
 #colorbox.advgb_lightbox #cboxClose,
 #colorbox.advgb_lightbox #cboxSlideshow {
     cursor: pointer;
-    outline: none;
 }
 
 #colorbox.advgb_lightbox .cboxPhoto {
@@ -206,7 +205,8 @@
     opacity: 0.2;
 }
 
-#colorbox.advgb_lightbox #cboxPrevious:hover {
+#colorbox.advgb_lightbox #cboxPrevious:hover,
+#colorbox.advgb_lightbox #cboxPrevious:focus {
     opacity: 1;
 }
 
@@ -223,8 +223,19 @@
     opacity: 0.2;
 }
 
-#colorbox.advgb_lightbox #cboxNext:hover {
+#colorbox.advgb_lightbox #cboxNext:hover,
+#colorbox.advgb_lightbox #cboxNext:focus {
     opacity: 1;
+}
+
+/* visible keyboard focus: white ring with a dark halo works on the overlay and on images */
+#colorbox.advgb_lightbox #cboxPrevious:focus-visible,
+#colorbox.advgb_lightbox #cboxNext:focus-visible,
+#colorbox.advgb_lightbox #cboxSlideshow:focus-visible,
+#colorbox.advgb_lightbox #cboxClose:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #1e1e1e;
 }
 
 #colorbox.advgb_lightbox #cboxClose {

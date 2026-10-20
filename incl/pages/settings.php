@@ -136,7 +136,10 @@ if (in_array($requested_tab, $extra_blocks_subtabs, true)) {
             ];
 
             if (! empty($extra_blocks_subtabs)) {
-                echo '<ul class="nav-tab-wrapper advgb-subtab-wrapper" style="margin-top:15px;">';
+                printf(
+                    '<nav aria-label="%s"><ul class="nav-tab-wrapper advgb-subtab-wrapper" style="margin-top:15px;">',
+                    esc_attr__('Extra Blocks settings', 'advanced-gutenberg')
+                );
                 foreach ($extra_blocks_subtabs as $subtab_slug) {
                     if (! isset($subtabs_titles[$subtab_slug])) {
                         continue;
@@ -145,13 +148,14 @@ if (in_array($requested_tab, $extra_blocks_subtabs, true)) {
                         'admin.php?page=advgb_settings&tab=extra-blocks&subtab=' . $subtab_slug
                     );
                     printf(
-                        '<li class="nav-tab%1$s"><a href="%2$s">%3$s</a></li>',
+                        '<li class="nav-tab%1$s"><a href="%2$s"%4$s>%3$s</a></li>',
                         ($subtab_slug === $current_subtab ? ' nav-tab-active' : ''),
                         esc_url($subtab_url),
-                        esc_html($subtabs_titles[$subtab_slug])
+                        esc_html($subtabs_titles[$subtab_slug]),
+                        ($subtab_slug === $current_subtab ? ' aria-current="page"' : '')
                     );
                 }
-                echo '</ul>';
+                echo '</ul></nav>';
             }
 
             // Load active content (defaults to "general" = Blocks icon color)

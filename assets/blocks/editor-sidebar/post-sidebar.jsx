@@ -82,12 +82,13 @@
                         <div className="advgb-editor-sidebar-note">
                             { __( 'Change your editor width', 'advanced-gutenberg' ) }
                         </div>
-                        <ButtonGroup className="advgb-button-group">
+                        <ButtonGroup className="advgb-button-group" aria-label={ __( 'Editor width', 'advanced-gutenberg' ) } role="group">
                             {EDITOR_WIDTH_SETTINGS.map((setting, index) => (
                                 <Button className="advgb-button"
                                         key={ index }
                                         isSecondary={ setting.value !== editorWidth }
                                         isPrimary={ setting.value === editorWidth }
+                                        aria-pressed={ setting.value === editorWidth }
                                         onClick={ () => this.onUpdateMeta( { advgb_blocks_editor_width: setting.value } ) }
                                 >
                                     { setting.label }
@@ -100,12 +101,13 @@
                             <div className="advgb-editor-sidebar-note">
                                 { __( 'Border to materialize PublishPress Blocks Column block', 'advanced-gutenberg' ) }
                             </div>
-                            <ButtonGroup className="advgb-button-group">
+                            <ButtonGroup className="advgb-button-group" aria-label={ __( 'Columns Visual Guide', 'advanced-gutenberg' ) } role="group">
                                 {VISUAL_GUIDE_SETTINGS.map((setting, index) => (
                                     <Button className="advgb-button"
                                             key={ index }
                                             isSecondary={ setting.value !== columnsVisualGuide }
                                             isPrimary={ setting.value === columnsVisualGuide }
+                                            aria-pressed={ setting.value === columnsVisualGuide }
                                             onClick={ () => this.onUpdateMeta( { advgb_blocks_columns_visual_guide: setting.value } ) }
                                     >
                                         { setting.label }

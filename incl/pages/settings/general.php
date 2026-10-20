@@ -19,11 +19,12 @@ if ($blocks_icon_color === '#5952de') {
         <tr<?php
         echo( ! $this->settingIsEnabled('enable_advgb_blocks') ? ' style="display:none;"' : '' ) ?>>
             <th scope="row">
+                <label for="blocks_icon_color">
                 <?php
                 _e('Blocks icon color', 'advanced-gutenberg') ?>
+                </label>
             </th>
             <td>
-                <label>
                     <input type="text"
                            name="blocks_icon_color"
                            id="blocks_icon_color"
@@ -32,7 +33,6 @@ if ($blocks_icon_color === '#5952de') {
                             echo esc_attr($blocks_icon_color) ?>"
                            style="width:100px"
                     />
-                </label>
                 <p class="description">
                     <?php
                     _e(
