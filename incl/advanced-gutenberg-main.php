@@ -1184,18 +1184,30 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 $block['name']     = isset($block['name']) ? sanitize_text_field($block['name']) : '';
                 $block['title']    = isset($block['title']) ? sanitize_text_field($block['title']) : '';
                 $block['category'] = isset($block['category']) ? sanitize_text_field($block['category']) : '';
+                $block['description'] = isset($block['description']) ? sanitize_text_field($block['description']) : '';
+                foreach (['attributes', 'supports'] as $field) {
+                    $block[$field] = isset($block[$field]) ? map_deep((array) $block[$field], static function ($value) {
+                        return is_string($value) ? sanitize_text_field($value) : $value;
+                    }) : [];
+                }
 
                 return $block;
             }
 
-            if (is_array($_POST['blocksList'])) {
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                $blocksList = array_map('cleanupBlockList', $_POST['blocksList']);
-            } else {
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                $blocksList = json_decode(stripslashes($_POST['blocksList']));
+            if (!isset($_POST['blocksList']) || (!is_array($_POST['blocksList']) && !is_string($_POST['blocksList']))) {
+                wp_send_json('', 400);
+                return false;
             }
 
+            if (is_array($_POST['blocksList'])) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $blocksList = $_POST['blocksList']; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized below.
+            } else {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $blocksList = json_decode(stripslashes($_POST['blocksList']), true);
+            }
+
+            $blocksList = is_array($blocksList) ? array_map('cleanupBlockList', array_filter($blocksList, 'is_array')) : [];
             $savedBlocksList = get_option('advgb_blocks_list');
             if (! is_array($savedBlocksList)) {
                 $savedBlocksList = array();
@@ -1220,7 +1232,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             // Check if we have new blocks installed
             $newBlocks = array_diff($blocksListName, $savedBlocksListName);
-            if (count($newBlocks)) {
+            if (count($newBlocks) || wp_json_encode(array_column($blocksList, 'attributes')) !== wp_json_encode(array_column($savedBlocksList, 'attributes'))) {
                 update_option('advgb_blocks_list', $blocksList, false);
             }
 
@@ -1418,7 +1430,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'enable_custom_styles',
                 'enable_advgb_blocks',
                 'reusable_blocks',
-                'auto_insert_blocks'
+                'auto_insert_blocks',
+                'enable_post_notes'
             ];
 
             // Pro features

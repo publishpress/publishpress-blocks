@@ -275,7 +275,10 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
                 icon: block.icon.src || block.icon,
                 title: block.title,
                 category: block.category,
-                parent: block.parent
+                parent: block.parent,
+                description: block.description || "",
+                attributes: JSON.parse(JSON.stringify(block.attributes || {})),
+                supports: JSON.parse(JSON.stringify(block.supports || {}))
             };
 
             var savedIcon = !!block.icon.src ? block.icon.src : block.icon;
@@ -569,7 +572,10 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
                 icon: block.icon.src || block.icon,
                 title: block.title,
                 category: block.category,
-                parent: block.parent
+                parent: block.parent,
+                description: block.description || "",
+                attributes: JSON.parse(JSON.stringify(block.attributes || {})),
+                supports: JSON.parse(JSON.stringify(block.supports || {}))
             };
 
             var savedIcon = !!block.icon.src ? block.icon.src : block.icon;
