@@ -28,16 +28,16 @@ class Features
             ]), ['minProperties' => 1]),
             'form-email' => array_merge(Registry::object([
                 'contact_form_sender_name' => ['type' => 'string', 'maxLength' => 200],
-                'contact_form_sender_email' => ['type' => 'string', 'format' => 'email'],
+                'contact_form_sender_email' => ['type' => 'string', 'anyOf' => [['type' => 'string', 'enum' => ['']], ['type' => 'string', 'format' => 'email']]],
                 'contact_form_email_title' => ['type' => 'string', 'maxLength' => 300],
-                'contact_form_email_receiver' => ['type' => 'string', 'format' => 'email'],
+                'contact_form_email_receiver' => ['type' => 'string', 'anyOf' => [['type' => 'string', 'enum' => ['']], ['type' => 'string', 'format' => 'email']]],
             ]), ['minProperties' => 1]),
             'recaptcha' => array_merge(Registry::object([
                 'recaptcha_enable' => ['type' => 'boolean'], 'recaptcha_language' => ['type' => 'string', 'maxLength' => 20],
-                'recaptcha_theme' => ['type' => 'string', 'enum' => ['light', 'dark']],
+                'recaptcha_theme' => ['type' => 'string', 'enum' => ['', 'light', 'dark', 'invisible']],
             ]), ['minProperties' => 1]),
             'content-display-thumbnail' => array_merge(Registry::object([
-                'id' => ['type' => 'integer', 'minimum' => 0], 'url' => ['type' => 'string', 'format' => 'uri'],
+                'id' => ['type' => 'integer', 'minimum' => 0], 'url' => ['type' => 'string', 'anyOf' => [['type' => 'string', 'enum' => ['']], ['type' => 'string', 'format' => 'uri']]],
             ]), ['minProperties' => 1]),
         ];
     }
@@ -134,7 +134,7 @@ class Features
             $values = AdvancedGutenbergMain::getLegacyBlocksState();
         } elseif ($feature === 'content-display-thumbnail') {
             $stored = (array) get_option('advgb_settings', []);
-            $values = $stored['rp_default_thumb'] ?? ['id' => 0, 'url' => ''];
+            $values = $stored['rp_default_thumb'] ?? ['id' => 0, 'url' => ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/recent-posts/recent-post-default.png'];
         } else {
             $stored = (array) get_option($feature === 'form-email' ? 'advgb_email_sender' : 'advgb_recaptcha_config', []);
             foreach ($schema['properties'] as $key => $field) {
@@ -155,6 +155,10 @@ class Features
         }
         $feature = $input['feature'];
         $values = $input['settings'];
+        $valid = Registry::validate($values, $current['schema']);
+        if (is_wp_error($valid)) {
+            return $valid;
+        }
         foreach ($values as $key => $value) {
             if (($current['schema']['properties'][$key]['type'] ?? 'boolean') === 'boolean' && !is_bool($value)) {
                 return Registry::error(__('Use true or false for checkbox settings.', 'advanced-gutenberg'));

@@ -115,13 +115,10 @@ class Operations
             'label' => $label,
             'description' => $description,
             'category' => 'publishpress',
-            'input_schema' => [
-                'type' => 'object', 'properties' => $properties ?: new \stdClass(),
-                'required' => $required, 'additionalProperties' => false,
-            ],
+            'input_schema' => Registry::object($properties, $required),
             'output_schema' => self::outputSchema($method),
-            'execute_callback' => [__CLASS__, $method],
-            'permission_callback' => [__CLASS__, $permission],
+            'execute_callback' => Registry::guard([__CLASS__, $method], Registry::object($properties, $required)),
+            'permission_callback' => Registry::guard([__CLASS__, $permission], Registry::object($properties, $required), true),
             'meta' => [
                 'public' => false, 'show_in_rest' => false, 'mcp' => ['public' => false],
                 'annotations' => ['readonly' => !$write, 'destructive' => $write, 'idempotent' => true],
@@ -208,7 +205,7 @@ class Operations
             if ($field['type'] === 'boolean') {
                 $values[$name] = Utilities::settingIsEnabled($name);
             } elseif ($field['type'] === 'integer') {
-                $values[$name] = isset($stored[$name]) ? (int) $stored[$name] : 0;
+                $values[$name] = isset($stored[$name]) ? (int) $stored[$name] : 1;
             } else {
                 $values[$name] = isset($stored[$name]) ? (string) $stored[$name] : '#655997';
             }

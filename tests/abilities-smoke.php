@@ -7,6 +7,9 @@ if (getenv('BLOCKS_MCP_TEST_PRO') === '1') {
     define('ADVANCED_GUTENBERG_PRO_LOADED', true);
 }
 require $argv[1];
+if (!defined('ADVANCED_GUTENBERG_PLUGIN_DIR_URL')) {
+    define('ADVANCED_GUTENBERG_PLUGIN_DIR_URL', plugins_url('publishpress-blocks/'));
+}
 if ($GLOBALS['wpdb']->prefix !== 'mcp_smoke_') {
     exit("Use the isolated mcp_smoke_ database.\n");
 }
@@ -59,6 +62,7 @@ try {
     $settings = $call('get-plugin-settings');
     $check(!is_wp_error($settings) && strpos(wp_json_encode($settings), 'fixture-secret') === false, 'Settings expose no credentials');
     $check(isset($settings['fields']->block_controls), 'Settings include human-readable discovery');
+    require __DIR__ . '/abilities-settings-format-cases.php';
     $changed = $call('update-plugin-settings', ['settings' => ['enable_custom_styles' => false, 'blocks_icon_color' => '#123456']]);
     $check(!is_wp_error($changed) && !$changed['settings']->enable_custom_styles, 'Typed settings update succeeds');
     $check(get_option('advgb_settings')['unrelated'] === 'preserve', 'Unspecified settings are preserved');
@@ -125,6 +129,11 @@ try {
         }
         $tool = \WP\MCP\Domain\Tools\McpTool::fromAbility(wp_get_ability('publishpress-blocks/get-plugin-settings'));
         $check(!is_wp_error($tool->execute([])), 'Custom-server tool executes with native identity');
+        $settingsTool = \WP\MCP\Domain\Tools\McpTool::fromAbility(wp_get_ability('publishpress-blocks/update-feature-settings'));
+        $check(!is_wp_error($settingsTool->execute(['feature' => 'recaptcha', 'settings' => ['recaptcha_theme' => 'invisible'], 'dry_run' => true])), 'Released adapter accepts native feature choices');
+        $check(!is_wp_error($settingsTool->execute(['feature' => 'form-email', 'settings' => ['contact_form_sender_email' => ''], 'dry_run' => true])), 'Released adapter accepts native empty settings');
+        $check(is_wp_error($settingsTool->execute(['feature' => 'recaptcha', 'settings' => ['recaptcha_enable' => 'false']])), 'Released adapter rejects scalar checkbox coercion');
+
     }
     $validInputs = [
         'update-plugin-settings' => ['settings' => ['reusable_blocks' => true]],
