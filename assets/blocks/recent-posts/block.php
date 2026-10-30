@@ -178,7 +178,7 @@ function advgbRenderBlockRecentPosts($attributes)
             if ($postThumbID) {
                 $postThumb = wp_get_attachment_image($postThumbID, 'large');
                 if (get_the_post_thumbnail_caption($post->ID) && $attributes['displayFeaturedImageCaption']) {
-                    $postThumbCaption = sprintf('<span class="advgb-post-caption">%1$s</span>', get_the_post_thumbnail_caption($post->ID));
+                    $postThumbCaption = sprintf('<span class="advgb-post-caption">%1$s</span>', wp_kses_post(get_the_post_thumbnail_caption($post->ID)));
                 } else {
                     $postThumbCaption = '';
                 }
@@ -377,13 +377,13 @@ function advgbRenderBlockRecentPosts($attributes)
 
             $postHtml .= '<div class="advgb-post-content">';
             if (advgbCheckElementDisplay($attributes['displayExcerpt'], $attributes['displayExcerptFor'], $key)) {
-                $introText = $post->post_excerpt;
+                $introText = wp_kses_post($post->post_excerpt);
                 if (isset($attributes['displayExcerpt']) && $attributes['postTextAsExcerpt']) {
                     if (!is_admin()) {
                         $postContent = get_post_field('post_content', $post->ID);
                         $postContent = strip_shortcodes($postContent);
                         $postContent = preg_replace('/<!--(.*?-->)/is', '', $postContent);
-                        $introText   = advgbExtractHtml($postContent, $attributes['postTextExcerptLength']);
+                        $introText   = esc_html(advgbExtractHtml($postContent, $attributes['postTextExcerptLength']));
                     }
                 }
 
