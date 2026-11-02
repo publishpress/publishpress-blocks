@@ -19,7 +19,7 @@ defined('ABSPATH') || die;
         </div>
         <div class="advgb-toggle-wrapper">
             <?php
-            _e('Enable or disable controls for all blocks', 'advanced-gutenberg') ?>
+            esc_html_e('Enable or disable controls for all blocks', 'advanced-gutenberg') ?>
             <div class="advgb-switch-button">
                 <label class="switch">
                     <input type="checkbox"
@@ -61,7 +61,7 @@ defined('ABSPATH') || die;
     <div class="tab-content block-list-tab">
         <div class="advgb-block-feature-loading-msg" style="display: block;">
             <?php
-            _e('Loading...', 'advanced-gutenberg') ?>
+            esc_html_e('Loading...', 'advanced-gutenberg') ?>
         </div>
         <div class="blocks-section">
             <input type="hidden" name="blocks_list" id="blocks_list"/>

@@ -421,6 +421,12 @@
 .advgb-simple-preview {
     margin-bottom: 30px;
 
+    .advgb-preview-container {
+        box-sizing: border-box;
+        display: flow-root;
+        width: 100%;
+    }
+
     .preview-title {
         margin-top: 0;
         margin-bottom: 15px;

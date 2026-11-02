@@ -55,6 +55,11 @@
     box-shadow: none;
 }
 
+.pp-blocks-usage-categories .components-panel__body-title .components-button:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
 .pp-blocks-usage-block-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
