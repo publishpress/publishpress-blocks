@@ -16,7 +16,7 @@ addFilter('editor.BlockEdit', 'advgb/coreBlocks', function (BlockEdit) {
         return (
             <Fragment>
                 <BlockEdit key="block-edit-fonts" {...props} />
-                {props.isSelected && CORE_SUPPORTED_BLOCKS.includes(props.name) &&
+                {advgbProAdI18n.fontStylesEnabled && props.isSelected && CORE_SUPPORTED_BLOCKS.includes(props.name) &&
                     <InspectorControls>
                         <PanelBody title={__('Font Settings', 'advanced-gutenberg')} initialOpen={false} className="advgb-pro-icon">
                             <div className="advgb-promo-overlay-area">

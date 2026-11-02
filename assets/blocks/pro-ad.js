@@ -192,7 +192,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
   return function (props) {
     return /*#__PURE__*/React.createElement(_shared_index_jsx__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(BlockEdit, _extends({
       key: "block-edit-fonts"
-    }, props)), props.isSelected && _shared_index_jsx__WEBPACK_IMPORTED_MODULE_0__.CORE_SUPPORTED_BLOCKS.includes(props.name) && /*#__PURE__*/React.createElement(_shared_index_jsx__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, null, /*#__PURE__*/React.createElement(_shared_index_jsx__WEBPACK_IMPORTED_MODULE_0__.PanelBody, {
+    }, props)), advgbProAdI18n.fontStylesEnabled && props.isSelected && _shared_index_jsx__WEBPACK_IMPORTED_MODULE_0__.CORE_SUPPORTED_BLOCKS.includes(props.name) && /*#__PURE__*/React.createElement(_shared_index_jsx__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, null, /*#__PURE__*/React.createElement(_shared_index_jsx__WEBPACK_IMPORTED_MODULE_0__.PanelBody, {
       title: (0,_shared_index_jsx__WEBPACK_IMPORTED_MODULE_0__.__)('Font Settings', 'advanced-gutenberg'),
       initialOpen: false,
       className: "advgb-pro-icon"
