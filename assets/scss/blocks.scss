@@ -2318,10 +2318,11 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     display: inline-block;
 }
 
-.edit-post-visual-editor .advgb-icon-wrapper i,
-.edit-post-visual-editor .advgb-infobox-wrapper i,
+.advgb-icon-wrapper i,
+.advgb-infobox-icon-container i,
 .advgb-icon-popup i {
-    font-style: unset;
+    font-style: normal;
+    font-synthesis: none;
 }
 
 .advgb-icon-popup i {
