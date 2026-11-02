@@ -1,0 +1,200 @@
+[
+  {
+    "name": "contact-form",
+    "version": 0,
+    "props": {
+      "attributes": {
+        "submitPosition": "right",
+        "changed": false,
+        "isPreview": false
+      },
+      "className": "test-custom-class"
+    },
+    "html": "<div class=\"advgb-contact-form\"><form method=\"POST\"><div class=\"advgb-form-field advgb-form-field-half\"><input type=\"text\" class=\"advgb-form-input advgb-form-input-name\" placeholder=\"Name\" name=\"contact_name\"/></div><div class=\"advgb-form-field advgb-form-field-half\"><input type=\"email\" class=\"advgb-form-input advgb-form-input-email\" placeholder=\"Email address\" name=\"contact_email\"/></div><div class=\"advgb-form-field advgb-form-field-full\"><textarea class=\"advgb-form-input advgb-form-input-msg\" placeholder=\"Message\" name=\"contact_message\"></textarea></div><div class=\"advgb-grecaptcha clearfix position-right\"></div><div class=\"advgb-form-submit-wrapper\" style=\"text-align:right\"><button class=\"advgb-form-submit\" type=\"submit\">Submit</button></div></form></div>"
+  },
+  {
+    "name": "contact-form",
+    "version": 0,
+    "props": {
+      "attributes": {
+        "nameLabel": "Your name",
+        "emailLabel": "Your email",
+        "submitPosition": "right",
+        "changed": false,
+        "isPreview": false,
+        "messageLabel": "Your message",
+        "fnameLabel": "Given name",
+        "lnameLabel": "Family name",
+        "searchPlaceholder": "Find articles",
+        "searchButtonEnabled": true,
+        "searchButtonOnLeft": true,
+        "searchIconOnRight": true,
+        "searchButtonText": "Find",
+        "searchBtnId": "search-test",
+        "formStyle": "alt",
+        "formWidth": 500
+      },
+      "className": "test-custom-class"
+    },
+    "html": "<div class=\"advgb-contact-form\"><form method=\"POST\"><div class=\"advgb-form-field advgb-form-field-half\"><input type=\"text\" class=\"advgb-form-input advgb-form-input-name\" placeholder=\"Your name\" name=\"contact_name\"/></div><div class=\"advgb-form-field advgb-form-field-half\"><input type=\"email\" class=\"advgb-form-input advgb-form-input-email\" placeholder=\"Your email\" name=\"contact_email\"/></div><div class=\"advgb-form-field advgb-form-field-full\"><textarea class=\"advgb-form-input advgb-form-input-msg\" placeholder=\"Message\" name=\"contact_message\"></textarea></div><div class=\"advgb-grecaptcha clearfix position-right\"></div><div class=\"advgb-form-submit-wrapper\" style=\"text-align:right\"><button class=\"advgb-form-submit\" type=\"submit\">Submit</button></div></form></div>"
+  },
+  {
+    "name": "newsletter",
+    "version": 0,
+    "props": {
+      "attributes": {
+        "formStyle": "default",
+        "formWidth": 400,
+        "changed": false,
+        "isPreview": false
+      },
+      "className": "test-custom-class"
+    },
+    "html": "<div class=\"advgb-newsletter clearfix style-default\" style=\"max-width:400px\"><form method=\"POST\" class=\"clearfix\"><div class=\"advgb-form-field\"><input type=\"email\" class=\"advgb-form-input advgb-form-input-email\" placeholder=\"Email address\"/><div class=\"advgb-form-submit-wrapper\"><button class=\"advgb-form-submit\" type=\"submit\">Submit</button></div></div><div class=\"advgb-grecaptcha clearfix\"></div></form></div>"
+  },
+  {
+    "name": "newsletter",
+    "version": 0,
+    "props": {
+      "attributes": {
+        "formStyle": "alt",
+        "formWidth": 500,
+        "fnameLabel": "Given name",
+        "lnameLabel": "Family name",
+        "emailLabel": "Your email",
+        "changed": false,
+        "isPreview": false,
+        "nameLabel": "Your name",
+        "messageLabel": "Your message",
+        "searchPlaceholder": "Find articles",
+        "searchButtonEnabled": true,
+        "searchButtonOnLeft": true,
+        "searchIconOnRight": true,
+        "searchButtonText": "Find",
+        "searchBtnId": "search-test"
+      },
+      "className": "test-custom-class"
+    },
+    "html": "<div class=\"advgb-newsletter clearfix style-alt\" style=\"max-width:500px\"><form method=\"POST\" class=\"clearfix\"><div class=\"advgb-form-field advgb-form-field-full\"><input type=\"text\" class=\"advgb-form-input advgb-form-input-fname\" placeholder=\"Given name\"/></div><div class=\"advgb-form-field advgb-form-field-full\"><input type=\"text\" class=\"advgb-form-input advgb-form-input-lname\" placeholder=\"Family name\"/></div><div class=\"advgb-form-field advgb-form-field-full\"><input type=\"email\" class=\"advgb-form-input advgb-form-input-email\" placeholder=\"Your email\"/></div><div class=\"advgb-form-submit-wrapper\"><button class=\"advgb-form-submit\" type=\"submit\">Submit</button></div><div class=\"advgb-grecaptcha clearfix\"></div></form></div>"
+  },
+  {
+    "name": "search-bar",
+    "version": 0,
+    "props": {
+      "attributes": {
+        "fullWidth": false,
+        "width": 500,
+        "searchIcon": "icon1",
+        "searchButtonEnabled": true,
+        "searchButtonText": "SEARCH",
+        "searchButtonRadius": 0,
+        "searchButtonOnLeft": false,
+        "searchBtnHoverShadowH": 1,
+        "searchBtnHoverShadowV": 1,
+        "searchBtnHoverShadowBlur": 12,
+        "searchBtnHoverShadowSpread": 0,
+        "searchBtnHoverOpacity": 100,
+        "searchBtnHoverTranSpeed": 200,
+        "changed": false,
+        "isPreview": false
+      },
+      "className": "test-custom-class"
+    },
+    "html": "<div class=\"wp-block-advgb-search-bar advgb-search-bar-wrapper test-custom-class\"><form method=\"get\" action=\"https://example.org/\" class=\"advgb-search-bar-form\" role=\"search\"><div class=\"advgb-search-bar-inner\" style=\"width:500px\"><div class=\"advgb-search-bar\" style=\"border-radius:0\"><span class=\"advgb-search-bar-icon\"><svg fill=\"none\" height=\"20\" width=\"20\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><circle fill=\"none\" cx=\"11\" cy=\"11\" r=\"8\"></circle><line x1=\"21\" x2=\"16.65\" y1=\"21\" y2=\"16.65\"></line></svg></span><input type=\"text\" class=\"advgb-search-bar-input\" name=\"s\" placeholder=\"Type to search…\"/></div><div class=\"advgb-search-button-wrapper\"><button type=\"submit\" class=\"advgb-search-bar-button undefined\" style=\"border-radius:0\">SEARCH</button></div></div></form></div>"
+  },
+  {
+    "name": "search-bar",
+    "version": 0,
+    "props": {
+      "attributes": {
+        "fullWidth": false,
+        "width": 500,
+        "searchIcon": "icon1",
+        "searchIconOnRight": true,
+        "searchPlaceholder": "Find articles",
+        "searchButtonEnabled": true,
+        "searchButtonText": "Find",
+        "searchButtonRadius": 0,
+        "searchButtonOnLeft": true,
+        "searchBtnId": "search-test",
+        "searchBtnHoverShadowH": 1,
+        "searchBtnHoverShadowV": 1,
+        "searchBtnHoverShadowBlur": 12,
+        "searchBtnHoverShadowSpread": 0,
+        "searchBtnHoverOpacity": 100,
+        "searchBtnHoverTranSpeed": 200,
+        "changed": false,
+        "isPreview": false,
+        "nameLabel": "Your name",
+        "emailLabel": "Your email",
+        "messageLabel": "Your message",
+        "fnameLabel": "Given name",
+        "lnameLabel": "Family name",
+        "formStyle": "alt",
+        "formWidth": 500
+      },
+      "className": "test-custom-class"
+    },
+    "html": "<div class=\"wp-block-advgb-search-bar advgb-search-bar-wrapper test-custom-class\"><form method=\"get\" action=\"https://example.org/\" class=\"advgb-search-bar-form\" role=\"search\"><div class=\"advgb-search-bar-inner\" style=\"width:500px\"><div class=\"advgb-search-button-wrapper\"><button type=\"submit\" class=\"advgb-search-bar-button search-test\" style=\"border-radius:0\">Find</button></div><div class=\"advgb-search-bar\" style=\"border-radius:0\"><input type=\"text\" class=\"advgb-search-bar-input\" name=\"s\" placeholder=\"Find articles\"/><span class=\"advgb-search-bar-icon\"><svg fill=\"none\" height=\"20\" width=\"20\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><circle fill=\"none\" cx=\"11\" cy=\"11\" r=\"8\"></circle><line x1=\"21\" x2=\"16.65\" y1=\"21\" y2=\"16.65\"></line></svg></span></div></div></form></div>"
+  },
+  {
+    "name": "search-bar",
+    "version": 1,
+    "props": {
+      "attributes": {
+        "fullWidth": false,
+        "width": 500,
+        "searchIcon": "icon1",
+        "searchButtonEnabled": true,
+        "searchButtonText": "SEARCH",
+        "searchButtonRadius": 0,
+        "searchButtonOnLeft": false,
+        "searchBtnHoverShadowH": 1,
+        "searchBtnHoverShadowV": 1,
+        "searchBtnHoverShadowBlur": 12,
+        "searchBtnHoverShadowSpread": 0,
+        "searchBtnHoverOpacity": 100,
+        "searchBtnHoverTranSpeed": 200,
+        "changed": false,
+        "isPreview": false
+      },
+      "className": "test-custom-class"
+    },
+    "html": "<div class=\"advgb-search-bar-wrapper test-custom-class\"><form method=\"get\" action=\"https://example.org/\" class=\"advgb-search-bar-form\" role=\"search\"><div class=\"advgb-search-bar-inner\" style=\"width:500px\"><div class=\"advgb-search-bar\" style=\"border-radius:0\"><span class=\"advgb-search-bar-icon\"><svg fill=\"none\" height=\"20\" width=\"20\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><circle fill=\"none\" cx=\"11\" cy=\"11\" r=\"8\"></circle><line x1=\"21\" x2=\"16.65\" y1=\"21\" y2=\"16.65\"></line></svg></span><input type=\"text\" class=\"advgb-search-bar-input\" name=\"s\" placeholder=\"Type to searchâ€¦\"/></div><div class=\"advgb-search-button-wrapper\"><button type=\"submit\" class=\"advgb-search-bar-button undefined\" style=\"border-radius:0\">SEARCH</button></div></div></form></div>"
+  },
+  {
+    "name": "search-bar",
+    "version": 1,
+    "props": {
+      "attributes": {
+        "fullWidth": false,
+        "width": 500,
+        "searchIcon": "icon1",
+        "searchIconOnRight": true,
+        "searchPlaceholder": "Find articles",
+        "searchButtonEnabled": true,
+        "searchButtonText": "Find",
+        "searchButtonRadius": 0,
+        "searchButtonOnLeft": true,
+        "searchBtnId": "search-test",
+        "searchBtnHoverShadowH": 1,
+        "searchBtnHoverShadowV": 1,
+        "searchBtnHoverShadowBlur": 12,
+        "searchBtnHoverShadowSpread": 0,
+        "searchBtnHoverOpacity": 100,
+        "searchBtnHoverTranSpeed": 200,
+        "changed": false,
+        "isPreview": false,
+        "nameLabel": "Your name",
+        "emailLabel": "Your email",
+        "messageLabel": "Your message",
+        "fnameLabel": "Given name",
+        "lnameLabel": "Family name",
+        "formStyle": "alt",
+        "formWidth": 500
+      },
+      "className": "test-custom-class"
+    },
+    "html": "<div class=\"advgb-search-bar-wrapper test-custom-class\"><form method=\"get\" action=\"https://example.org/\" class=\"advgb-search-bar-form\" role=\"search\"><div class=\"advgb-search-bar-inner\" style=\"width:500px\"><div class=\"advgb-search-button-wrapper\"><button type=\"submit\" class=\"advgb-search-bar-button search-test\" style=\"border-radius:0\">Find</button></div><div class=\"advgb-search-bar\" style=\"border-radius:0\"><input type=\"text\" class=\"advgb-search-bar-input\" name=\"s\" placeholder=\"Find articles\"/><span class=\"advgb-search-bar-icon\"><svg fill=\"none\" height=\"20\" width=\"20\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><circle fill=\"none\" cx=\"11\" cy=\"11\" r=\"8\"></circle><line x1=\"21\" x2=\"16.65\" y1=\"21\" y2=\"16.65\"></line></svg></span></div></div></form></div>"
+  }
+]

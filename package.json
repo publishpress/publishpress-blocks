@@ -1,6 +1,6 @@
 {
   "name": "advanced-gutenberg",
-  "version": "3.7.5",
+  "version": "3.7.6",
   "private": true,
   "dependencies": {
     "po2json": "^0.4.5",

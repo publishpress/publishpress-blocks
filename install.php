@@ -65,15 +65,19 @@ if ($saved_settings === false) {
 // the versioned upgrade routine in init.php, which defaults them ON.
 if ($saved_settings === false && get_option('advgb_legacy_blocks') === false) {
     update_option('advgb_legacy_blocks', array(
-        'container'    => 0,
-        'contact-form' => 0,
-        'login-form'   => 0,
-        'map'          => 0,
-        'newsletter'   => 0,
-        'search-bar'   => 0,
-        'social-links' => 0,
-        'testimonial'  => 0,
-        'woo-products' => 0,
+        'container'     => 0,
+        'contact-form'  => 0,
+        'image'         => 0,
+        'images-slider' => 0,
+        'login-form'    => 0,
+        'map'           => 0,
+        'newsletter'    => 0,
+        'search-bar'    => 0,
+        'social-links'  => 0,
+        'summary'       => 0,
+        'testimonial'   => 0,
+        'video'         => 0,
+        'woo-products'  => 0,
     ), false);
     update_option('advgb_legacy_settings_migrated', 1, false);
 }

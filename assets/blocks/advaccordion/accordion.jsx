@@ -302,13 +302,13 @@
                                  borderWidth: borderWidth + 'px',
                                  borderColor: borderColor,
                                  borderRadius: borderRadius + 'px',
-                             } }
-                        >
+                        } }
+                    >
                         <span className="advgb-accordion-header-icon accordion-state">
-                            <svg className="advgb-icon-closed" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS[headerIcon] }
                             </svg>
-                            <svg className="advgb-icon-opened" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS_OPENED[headerIcon] }
                             </svg>
                         </span>
@@ -484,10 +484,10 @@
                          } }
                     >
                         <span className="advgb-accordion-header-icon accordion-state">
-                            <svg className="advgb-icon-closed" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS[headerIcon] }
                             </svg>
-                            <svg className="advgb-icon-opened" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS_OPENED[headerIcon] }
                             </svg>
                         </span>
@@ -502,11 +502,11 @@
                          style={ {
                              backgroundColor: bodyBgColor,
                              color: bodyTextColor,
-                             borderStyle: borderStyle + ' !important',
-                             borderWidth: borderWidth + 'px !important',
-                             borderColor: borderColor + ' !important',
-                             borderTop: 'none !important',
-                             borderRadius: !!borderRadius ? borderRadius + 'px !important' : undefined,
+                             borderStyle: borderStyle,
+                             borderWidth: borderWidth + 'px',
+                             borderColor: borderColor,
+                             borderTop: 'none',
+                             borderRadius: !!borderRadius ? borderRadius + 'px' : undefined,
                          } }
                     >
                         <InnerBlocks.Content />
@@ -515,7 +515,138 @@
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    header: {
+                        type: 'string',
+                        default: __( 'Header text', 'advanced-gutenberg' ),
+                    },
+                    headerBgColor: {
+                        type: 'string',
+                        default: '#000',
+                    },
+                    headerTextColor: {
+                        type: 'string',
+                        default: '#eee',
+                    },
+                    headerIcon: {
+                        type: 'string',
+                        default: 'plusCircle',
+                    },
+                    headerIconColor: {
+                        type: 'string',
+                        default: '#fff',
+                    },
+                    bodyBgColor: {
+                        type: 'string',
+                    },
+                    bodyTextColor: {
+                        type: 'string',
+                    },
+                    borderStyle: {
+                        type: 'string',
+                        default: 'solid',
+                    },
+                    borderWidth: {
+                        type: 'number',
+                        default: 1,
+                    },
+                    borderColor: {
+                        type: 'string',
+                    },
+                    borderRadius: {
+                        type: 'number',
+                        default: 2,
+                    },
+                    marginBottom: {
+                        type: 'number',
+                        default: 15,
+                    },
+                    collapsedAll: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    expandAll: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    headerTag: {
+                        type: 'string',
+                        default: 'h4',
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    rootBlockId: {
+                        type: 'string',
+                        default: ''
+                    }
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        header,
+                        headerBgColor,
+                        headerTextColor,
+                        headerIcon,
+                        headerIconColor,
+                        bodyBgColor,
+                        bodyTextColor,
+                        borderStyle,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                        marginBottom,
+                        headerTag,
+                    } = attributes;
 
+                    return (
+                        <div className="advgb-accordion-item" style={ { marginBottom } }>
+                            <div className="advgb-accordion-header"
+                                 style={ {
+                                     backgroundColor: headerBgColor,
+                                     color: headerTextColor,
+                                     borderStyle: borderStyle,
+                                     borderWidth: borderWidth + 'px',
+                                     borderColor: borderColor,
+                                     borderRadius: !!borderRadius ? borderRadius + 'px' : undefined,
+                                 } }
+                            >
+                                <span className="advgb-accordion-header-icon accordion-state">
+                                    <svg className="advgb-icon-closed" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        { HEADER_ICONS[headerIcon] }
+                                    </svg>
+                                    <svg className="advgb-icon-opened" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        { HEADER_ICONS_OPENED[headerIcon] }
+                                    </svg>
+                                </span>
+                                <RichText.Content
+                                    tagName={ headerTag }
+                                    className="advgb-accordion-header-title"
+                                    style={ { color: 'inherit' } }
+                                    value={ header }
+                                />
+                            </div>
+                            <div className="advgb-accordion-body"
+                                 style={ {
+                                     backgroundColor: bodyBgColor,
+                                     color: bodyTextColor,
+                                     borderStyle: borderStyle + ' !important',
+                                     borderWidth: borderWidth + 'px !important',
+                                     borderColor: borderColor + ' !important',
+                                     borderTop: 'none !important',
+                                     borderRadius: !!borderRadius ? borderRadius + 'px !important' : undefined,
+                                 } }
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                },
+                supports: {
+                    anchor: true,
+                },
+            },
             {
                 attributes: {
                     header: {

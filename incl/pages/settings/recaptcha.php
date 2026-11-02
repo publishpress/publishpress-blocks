@@ -34,6 +34,7 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
                     <input type="checkbox"
                            name="recaptcha_enable"
                            id="recaptcha_enable"
+                           aria-label="<?php esc_attr_e('Enable reCAPTCHA', 'advanced-gutenberg') ?>"
                            value="1"
                         <?php
                         echo esc_attr($recaptcha_enabled) ?>

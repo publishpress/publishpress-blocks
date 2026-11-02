@@ -1,5 +1,16 @@
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
+The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
+
+[3.7.6] - 09 September, 2026
+
+- Fixed: PublishPress Accordion: "unexpected or invalid content" error after saving draft and reloading editor when user does not have unfiltered_html caps, #1872
+- Fixed: Bug report: Prevent empty block styles from altering layout wrapper detection, #1869
+- Update: Add Screen Options to the Post Notes admin page, #1841
+- Fixed: Active tab Background/Text colours do not apply in the editor (WordPress 7.1), #1862
+- Fixed: Tab Item Block Cannot Be Selected by Clicking It in the Editor, #1860
+- Fixed: PHP 8.3 Fatal TypeError in Recent Posts block: human_time_diff() receives string instead of int, #1858
+- Fixed: Keyboard accessible,#1865 #1864, #1865, #1866, #1867
+- Fixed: Add alt text to the Recent Posts placeholder- #1868, #1868
+- Update: Add Image, Video, Image Slider and Table of Contents blocks to Legacy status, #1891
 
 [3.7.5] - 20 August, 2026
 

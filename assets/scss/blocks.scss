@@ -116,8 +116,11 @@
     display: none;
 }
 
+.advgb-accordion-header[aria-expanded="false"] .advgb-accordion-header-icon.accordion-state svg:first-child,
 .advgb-accordion-header[aria-expanded="false"] .advgb-accordion-header-icon.accordion-state svg.advgb-icon-closed,
+.advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon.accordion-state svg:last-child,
 .advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon.accordion-state svg.advgb-icon-opened,
+#editor [data-type="advgb/accordions"] .advgb-accordion-header .advgb-accordion-header-icon.accordion-state svg:last-child,
 #editor [data-type="advgb/accordions"] .advgb-accordion-header .advgb-accordion-header-icon.accordion-state svg.advgb-icon-opened {
     display: initial;
 }
@@ -972,9 +975,9 @@ ul.advgb-tabs-panel li.advgb-tab a p {
 
 ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active,
 ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active {
-  background-color: #5954d6 !important;
+  background-color: var(--advgb-active-tab-bg, #5954d6) !important;
   border-color: transparent;
-  color: #fff !important;
+  color: var(--advgb-active-tab-color, #fff) !important;
 }
 
 ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active a,
@@ -2315,10 +2318,11 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     display: inline-block;
 }
 
-.edit-post-visual-editor .advgb-icon-wrapper i,
-.edit-post-visual-editor .advgb-infobox-wrapper i,
+.advgb-icon-wrapper i,
+.advgb-infobox-icon-container i,
 .advgb-icon-popup i {
-    font-style: unset;
+    font-style: normal;
+    font-synthesis: none;
 }
 
 .advgb-icon-popup i {

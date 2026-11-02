@@ -277,7 +277,8 @@ body[class*="_page_advgb_"] #wpcontent {
       }
 
       &:focus {
-        outline: none;
+        outline: 2px solid #2271b1;
+        outline-offset: 2px;
       }
 
       &:hover {
@@ -535,7 +536,21 @@ body[class*="_page_advgb_"] #wpcontent {
 }
 
 .advgb-switch-button .switch input {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.advgb-switch-button .switch input:focus+.slider {
+  outline: 2px solid #2271b1;
+  outline-offset: 2px;
 }
 
 .advgb-switch-button .switch .slider {
@@ -624,7 +639,7 @@ body[class*="_page_advgb_"] #wpcontent {
   line-height: 49px;
 }
 
-.setting-actions i {
+.setting-actions button {
   min-width: unset;
   width: 30px;
   height: 30px;
@@ -744,6 +759,17 @@ img.thumb-selected {
   display: inline;
 }
 
+.advgb-customstyles-items:focus-within a.trash,
+.advgb-customstyles-items:focus-within a.copy,
+.advgb-customstyles-items:focus-within a.edit {
+  display: inline;
+}
+
+.advgb-customstyles-items a:focus {
+  outline: 2px solid #2271b1;
+  outline-offset: 2px;
+}
+
 .advgb-customstyles-new {
 
   .dashicons {
@@ -836,6 +862,13 @@ li.block-config-item .block-promo-button {
   margin-right: 10px;
   cursor: pointer;
   color: #888;
+}
+
+li.block-config-item button.block-config-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 span.advgb-field-required {
@@ -1103,10 +1136,6 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked+.slider:before {
 .block-title {
   margin-left: 5px;
   vertical-align: middle;
-}
-
-.block-item input[type='checkbox'] {
-  display: none;
 }
 
 .block-item>* {

@@ -175,7 +175,11 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
     ?>
     <div class="wrap">
         <div class="advgb-search-wrapper" style="padding-bottom: 20px;">
+            <label for="advgb-block-settings-search" class="screen-reader-text">
+                <?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>
+            </label>
             <input type="text"
+                   id="advgb-block-settings-search"
                    class="advgb-search-input blocks-config-search"
                    placeholder="<?php esc_attr_e('Search blocks', 'advanced-gutenberg') ?>"
             >
@@ -226,17 +230,19 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                             <input type="checkbox"
                                    name="advgb_blocks_enabled[<?php echo esc_attr($block['name']); ?>]"
                                    value="1"
+                                   aria-label="<?php echo esc_attr(sprintf(__('Enable %s block', 'advanced-gutenberg'), wp_strip_all_tags(__($block['title'], 'advanced-gutenberg')))); ?>"
                                 <?php checked($advgb_is_block_enabled($block['name'])); ?>
                             />
-                            <span class="slider"></span>
+                            <span class="slider" aria-hidden="true"></span>
                         </span>
                     </label>
                 <?php endif; ?>
                 <?php if ($block['name'] === 'advgb/recent-posts') : ?>
                     <a href="#TB_inline?width=560&height=360&inlineId=advgb-content-display-config"
                        class="thickbox advgb-cd-config-link"
+                       aria-label="<?php esc_attr_e('Configure Recent Posts block', 'advanced-gutenberg') ?>"
                        title="<?php esc_attr_e('Configure', 'advanced-gutenberg') ?>">
-                        <i class="dashicons dashicons-admin-generic block-config-button"></i>
+                        <i class="dashicons dashicons-admin-generic block-config-button" aria-hidden="true"></i>
                     </a>
                 <?php elseif ($isProPromo) : ?>
                     <span class="advgb-pro-small-overlay-text" style="float: right;">
@@ -245,10 +251,12 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                         </a>
                     </span>
                 <?php elseif (!in_array($block['name'], $excluded_blocks_config)) : ?>
-                    <i class="dashicons dashicons-admin-generic block-config-button"
-                    title="<?php esc_attr_e('Edit', 'advanced-gutenberg') ?>"
-                    data-block="<?php echo esc_attr($block['name']); ?>"
-                    ></i>
+                    <button type="button"
+                            class="dashicons dashicons-admin-generic block-config-button"
+                            aria-label="<?php echo esc_attr(sprintf(__('Edit %s block settings', 'advanced-gutenberg'), wp_strip_all_tags(__($block['title'], 'advanced-gutenberg')))); ?>"
+                            title="<?php esc_attr_e('Edit', 'advanced-gutenberg') ?>"
+                            data-block="<?php echo esc_attr($block['name']); ?>"
+                    ></button>
                 <?php endif; ?>
             </li>
             <?php endforeach; ?>
@@ -294,10 +302,18 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                             <div class="setting-actions" id="post_default_thumb_actions">
                                 <img class="thumb-selected"
                                      src="<?php echo esc_url($cd_thumb['url']); ?>"
-                                     alt="thumb"
+                                     alt="<?php esc_attr_e('Default post thumbnail', 'advanced-gutenberg'); ?>"
                                      data-default="<?php echo esc_url($cd_default_thumb); ?>"/>
-                                <i class="dashicons dashicons-edit" id="thumb_edit" title="<?php esc_attr_e('Edit', 'advanced-gutenberg'); ?>"></i>
-                                <i class="dashicons dashicons-no" id="thumb_remove" title="<?php esc_attr_e('Reset to default', 'advanced-gutenberg'); ?>"></i>
+                                <button type="button"
+                                        class="dashicons dashicons-edit"
+                                        id="thumb_edit"
+                                        aria-label="<?php esc_attr_e('Select default thumbnail', 'advanced-gutenberg'); ?>"
+                                        title="<?php esc_attr_e('Edit', 'advanced-gutenberg'); ?>"></button>
+                                <button type="button"
+                                        class="dashicons dashicons-no"
+                                        id="thumb_remove"
+                                        aria-label="<?php esc_attr_e('Reset thumbnail to default', 'advanced-gutenberg'); ?>"
+                                        title="<?php esc_attr_e('Reset to default', 'advanced-gutenberg'); ?>"></button>
                             </div>
                         </div>
                         <p class="description">

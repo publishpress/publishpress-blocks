@@ -16,7 +16,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   AdvTimezoneControl: () => (/* binding */ AdvTimezoneControl),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var hour_convert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hour-convert */ "./node_modules/hour-convert/index.js");
+/* harmony import */ var hour_convert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hour-convert */ "../publishpress-blocks-accessibility/node_modules/hour-convert/index.js");
 /* harmony import */ var hour_convert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(hour_convert__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -560,10 +560,10 @@ var getOptionSlugs = function getOptionSlugs(slugs, options) {
 
 /***/ },
 
-/***/ "./node_modules/hour-convert/index.js"
-/*!********************************************!*\
-  !*** ./node_modules/hour-convert/index.js ***!
-  \********************************************/
+/***/ "../publishpress-blocks-accessibility/node_modules/hour-convert/index.js"
+/*!*******************************************************************************!*\
+  !*** ../publishpress-blocks-accessibility/node_modules/hour-convert/index.js ***!
+  \*******************************************************************************/
 (module) {
 
 
@@ -2573,27 +2573,47 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }, {
       key: "renderFeatureGrid",
       value: function renderFeatureGrid() {
+        var controls = [{
+          icon: 'clock',
+          title: __('Schedule', 'advanced-gutenberg'),
+          description: __('Show blocks during a specific date and time range.', 'advanced-gutenberg')
+        }, {
+          icon: 'admin-users',
+          title: __('User roles', 'advanced-gutenberg'),
+          description: __('Show blocks to selected user roles or logged-out visitors.', 'advanced-gutenberg')
+        }, {
+          icon: 'smartphone',
+          title: __('Device type', 'advanced-gutenberg'),
+          description: __('Target desktop, tablet, or mobile devices.', 'advanced-gutenberg')
+        }, {
+          icon: 'editor-expand',
+          title: __('Device width', 'advanced-gutenberg'),
+          description: __('Set minimum and maximum browser widths.', 'advanced-gutenberg')
+        }, {
+          icon: 'category',
+          title: __('Term archives', 'advanced-gutenberg'),
+          description: __('Target category, tag, and taxonomy archive pages.', 'advanced-gutenberg')
+        }, {
+          icon: 'admin-page',
+          title: __('Pages', 'advanced-gutenberg'),
+          description: __('Target individual pages and other singular content.', 'advanced-gutenberg')
+        }, {
+          icon: 'desktop',
+          title: __('Browser & device', 'advanced-gutenberg'),
+          description: __('Target specific browsers and device platforms.', 'advanced-gutenberg')
+        }];
         return /*#__PURE__*/React.createElement("div", {
           className: "advgb-preset-features-grid"
-        }, /*#__PURE__*/React.createElement("div", {
-          className: "advgb-preset-feature-card"
-        }, /*#__PURE__*/React.createElement("div", {
-          className: "advgb-preset-feature-icon"
-        }, /*#__PURE__*/React.createElement("span", {
-          className: "dashicons dashicons-visibility"
-        })), /*#__PURE__*/React.createElement("h4", null, __('Conditional Visibility', 'advanced-gutenberg')), /*#__PURE__*/React.createElement("p", null, __('Control when blocks appear based on user roles, devices, schedules, and more', 'advanced-gutenberg'))), /*#__PURE__*/React.createElement("div", {
-          className: "advgb-preset-feature-card"
-        }, /*#__PURE__*/React.createElement("div", {
-          className: "advgb-preset-feature-icon"
-        }, /*#__PURE__*/React.createElement("span", {
-          className: "dashicons dashicons-admin-users"
-        })), /*#__PURE__*/React.createElement("h4", null, __('User Targeting', 'advanced-gutenberg')), /*#__PURE__*/React.createElement("p", null, __('Show or hide content to specific user roles, logged-in status, or capabilities', 'advanced-gutenberg'))), /*#__PURE__*/React.createElement("div", {
-          className: "advgb-preset-feature-card"
-        }, /*#__PURE__*/React.createElement("div", {
-          className: "advgb-preset-feature-icon"
-        }, /*#__PURE__*/React.createElement("span", {
-          className: "dashicons dashicons-clock"
-        })), /*#__PURE__*/React.createElement("h4", null, __('Scheduling', 'advanced-gutenberg')), /*#__PURE__*/React.createElement("p", null, __('Set time-based rules to display content only during specific periods', 'advanced-gutenberg'))));
+        }, controls.map(function (control) {
+          return /*#__PURE__*/React.createElement("div", {
+            className: "advgb-preset-feature-card",
+            key: control.icon
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "advgb-preset-feature-icon"
+          }, /*#__PURE__*/React.createElement("span", {
+            className: "dashicons dashicons-".concat(control.icon)
+          })), /*#__PURE__*/React.createElement("h4", null, control.title), /*#__PURE__*/React.createElement("p", null, control.description));
+        }));
       }
     }, {
       key: "render",

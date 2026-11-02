@@ -953,10 +953,11 @@
                                             type="checkbox"
                                             name="toggle_empty_blocks"
                                             id="toggle_empty_blocks"
+                                            aria-label={__('Show Empty Blocks', 'advanced-gutenberg')}
                                             checked={showEmptyBlocks}
                                             onChange={(e) => handleToggleChange(e.target.checked)}
                                         />
-                                        <span className="slider"></span>
+                                        <span className="slider" aria-hidden="true"></span>
                                     </label>
                                 </div>
                             </div>

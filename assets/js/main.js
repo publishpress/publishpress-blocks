@@ -13,18 +13,16 @@
     });
 
     // Toggle to save a single feature at the time
-    $('.advgb-feature-setting .slider').bind( 'click', function(e) {
+    $('.advgb-feature-setting input[type="checkbox"]').bind( 'change', function() {
         try {
-            e.preventDefault();
+            var checkbox = $(this);
 
-            // Don't execute in placeholder switch
-            if( $(this).hasClass('slider--disabled') ) {
+            // Ignore unavailable features and changes while a save is pending.
+            if( checkbox.prop('disabled') ) {
                 return false;
             }
 
-            var checkbox    = $(this).parent().find('input');
-            var isChecked   = checkbox.is(':checked') ? 1 : 0;
-            var newState    = isChecked == 1 ? 0 : 1; // Since is a toggle, we revert the state
+            var newState    = checkbox.is(':checked') ? 1 : 0;
             var feature     = checkbox.data('feature');
             var slider      = checkbox.parent().find('.slider');
             $.ajax({
@@ -37,6 +35,7 @@
                     nonce: advgb_main_dashboard.nonce
                 },
                 beforeSend: function(){
+                  checkbox.prop('disabled', true);
                   slider.css('opacity', 0.5);
                 },
                 success: function(){
@@ -95,8 +94,13 @@
                     statusMsgNotification = advgbTimerStatus();
                 },
                 error: function(jqXHR, textStatus, errorThrown){
+                    checkbox.prop('checked', !newState);
                     console.error(jqXHR.responseText);
                     statusMsgNotification = advgbTimerStatus( 'error' );
+                },
+                complete: function(){
+                    checkbox.prop('disabled', false);
+                    slider.css('opacity', 1);
                 }
             });
         } catch(e) {
@@ -159,6 +163,36 @@ function advgbGetCookie(cname) {
 }
 
 /**
+ * Keep the Block Permissions category layout aligned with the editor inserter.
+ *
+ * @param {array}  categories The registered block categories.
+ * @param {string} page       The current feature page.
+ *
+ * @return {array} The ordered block categories.
+ */
+function advgbOrderBlocksFeatureCategories( categories, page ) {
+    if ( page !== 'advgb_block_access' && page !== 'advgb_block_controls' ) {
+        return categories;
+    }
+
+    var visibleCategories = categories.filter(function (category) {
+        return category.slug !== 'unsupported';
+    });
+
+    var advgbCategories = visibleCategories.filter(function (category) {
+        return category.slug === 'advgb-category';
+    });
+
+    if (advgbCategories.length === 0) {
+        return visibleCategories;
+    }
+
+    return visibleCategories.filter(function (category) {
+        return category.slug !== 'advgb-category';
+    }).concat(advgbCategories);
+}
+
+/**
  * Output categories and blocks inside a form and add filters functionality
  *
  * @param {array}   inactive_blocks The inactive blocks - e.g. advgbCUserRole.access.inactive_blocks
@@ -174,7 +208,7 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
 
         var $ = jQuery;
         var allBlocks = wp.blocks.getBlockTypes();
-        var allCategories = wp.blocks.getCategories();
+        var allCategories = advgbOrderBlocksFeatureCategories(wp.blocks.getCategories(), page);
         var listBlocks = [];
         var nonce = '';
         var promo_blocks = advgbMainI18n.promoBlocks;
@@ -280,11 +314,6 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             promo_blocks.forEach(function (block) {
                 listBlocks.push(block);
             });
-            listBlocks.sort(function (a, b) {
-                if (a.title < b.title) return -1;
-                if (a.title > b.title) return 1;
-                return 0;
-            });
         }
 
         if (typeof updateListNonce !== 'undefined') {
@@ -333,7 +362,12 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         listBlocks.forEach(function (block) {
 
             // Exclude block
-            if( exclude_blocks.length > 0 && exclude_blocks.indexOf(block.name) >= 0 ) {
+            if(
+                ( exclude_blocks.length > 0 && exclude_blocks.indexOf(block.name) >= 0 )
+                || block.category === 'unsupported'
+                || block.name === 'core/missing'
+                || block.title === 'Unsupported'
+            ) {
                 return;
             }
 
@@ -486,7 +520,7 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
 
         var $ = jQuery;
         var allBlocks = wp.blocks.getBlockTypes();
-        var allCategories = wp.blocks.getCategories();
+        var allCategories = advgbOrderBlocksFeatureCategories(wp.blocks.getCategories(), page);
         var listBlocks = [];
         var nonce = '';
         var promo_blocks = advgbMainI18n.promoBlocks;
@@ -574,11 +608,6 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
             promo_blocks.forEach(function (block) {
                 listBlocks.push(block);
             });
-            listBlocks.sort(function (a, b) {
-                if (a.title < b.title) return -1;
-                if (a.title > b.title) return 1;
-                return 0;
-            });
         }
 
         if (typeof updateListNonce !== 'undefined') {
@@ -614,7 +643,12 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
         listBlocks.forEach(function (block) {
 
             // Exclude block
-            if( exclude_blocks.length > 0 && exclude_blocks.indexOf(block.name) >= 0 ) {
+            if(
+                ( exclude_blocks.length > 0 && exclude_blocks.indexOf(block.name) >= 0 )
+                || block.category === 'unsupported'
+                || block.name === 'core/missing'
+                || block.title === 'Unsupported'
+            ) {
                 return;
             }
 

@@ -7,13 +7,13 @@
   \*********************************************************************/
 () {
 
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -83,7 +83,10 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
 
   // Class edit components cannot call useBlockProps(), so wrap them with a function component.
   // This restores editor selection data attributes and toolbar click handling for API v3 blocks.
-  if (settings.apiVersion === 3 && typeof settings.edit === 'function' && !settings.__advgbUsesBlockProps) {
+  // In WordPress 7.1, withSelect() returns a memo() component object, not a function,
+  // so edits built with compose(withSelect, ...) must be wrapped too.
+  var isEditComponent = typeof settings.edit === 'function' || settings.edit !== null && _typeof(settings.edit) === 'object' && !!settings.edit.$$typeof;
+  if (settings.apiVersion === 3 && isEditComponent && !settings.__advgbUsesBlockProps) {
     var Edit = settings.edit;
     var getEditWrapperProps = settings.getEditWrapperProps;
     settings.edit = function AdvgbBlockEditWithProps(props) {
@@ -1870,14 +1873,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         }, /*#__PURE__*/React.createElement("span", {
           className: "advgb-accordion-header-icon accordion-state"
         }, /*#__PURE__*/React.createElement("svg", {
-          className: "advgb-icon-closed",
           fill: headerIconColor,
           xmlns: "http://www.w3.org/2000/svg",
           width: "24",
           height: "24",
           viewBox: "0 0 24 24"
         }, HEADER_ICONS[headerIcon]), /*#__PURE__*/React.createElement("svg", {
-          className: "advgb-icon-opened",
           fill: headerIconColor,
           xmlns: "http://www.w3.org/2000/svg",
           width: "24",
@@ -2068,14 +2069,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }, /*#__PURE__*/React.createElement("span", {
         className: "advgb-accordion-header-icon accordion-state"
       }, /*#__PURE__*/React.createElement("svg", {
-        className: "advgb-icon-closed",
         fill: headerIconColor,
         xmlns: "http://www.w3.org/2000/svg",
         width: "24",
         height: "24",
         viewBox: "0 0 24 24"
       }, HEADER_ICONS[headerIcon]), /*#__PURE__*/React.createElement("svg", {
-        className: "advgb-icon-opened",
         fill: headerIconColor,
         xmlns: "http://www.w3.org/2000/svg",
         width: "24",
@@ -2093,15 +2092,152 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         style: {
           backgroundColor: bodyBgColor,
           color: bodyTextColor,
-          borderStyle: borderStyle + ' !important',
-          borderWidth: borderWidth + 'px !important',
-          borderColor: borderColor + ' !important',
-          borderTop: 'none !important',
-          borderRadius: !!borderRadius ? borderRadius + 'px !important' : undefined
+          borderStyle: borderStyle,
+          borderWidth: borderWidth + 'px',
+          borderColor: borderColor,
+          borderTop: 'none',
+          borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
         }
       }, /*#__PURE__*/React.createElement(InnerBlocks.Content, null)));
     },
     deprecated: [{
+      attributes: {
+        header: {
+          type: 'string',
+          default: __('Header text', 'advanced-gutenberg')
+        },
+        headerBgColor: {
+          type: 'string',
+          default: '#000'
+        },
+        headerTextColor: {
+          type: 'string',
+          default: '#eee'
+        },
+        headerIcon: {
+          type: 'string',
+          default: 'plusCircle'
+        },
+        headerIconColor: {
+          type: 'string',
+          default: '#fff'
+        },
+        bodyBgColor: {
+          type: 'string'
+        },
+        bodyTextColor: {
+          type: 'string'
+        },
+        borderStyle: {
+          type: 'string',
+          default: 'solid'
+        },
+        borderWidth: {
+          type: 'number',
+          default: 1
+        },
+        borderColor: {
+          type: 'string'
+        },
+        borderRadius: {
+          type: 'number',
+          default: 2
+        },
+        marginBottom: {
+          type: 'number',
+          default: 15
+        },
+        collapsedAll: {
+          type: 'boolean',
+          default: false
+        },
+        expandAll: {
+          type: 'boolean',
+          default: false
+        },
+        headerTag: {
+          type: 'string',
+          default: 'h4'
+        },
+        changed: {
+          type: 'boolean',
+          default: false
+        },
+        rootBlockId: {
+          type: 'string',
+          default: ''
+        }
+      },
+      save: function save(_ref5) {
+        var attributes = _ref5.attributes;
+        var header = attributes.header,
+          headerBgColor = attributes.headerBgColor,
+          headerTextColor = attributes.headerTextColor,
+          headerIcon = attributes.headerIcon,
+          headerIconColor = attributes.headerIconColor,
+          bodyBgColor = attributes.bodyBgColor,
+          bodyTextColor = attributes.bodyTextColor,
+          borderStyle = attributes.borderStyle,
+          borderWidth = attributes.borderWidth,
+          borderColor = attributes.borderColor,
+          borderRadius = attributes.borderRadius,
+          marginBottom = attributes.marginBottom,
+          headerTag = attributes.headerTag;
+        return /*#__PURE__*/React.createElement("div", {
+          className: "advgb-accordion-item",
+          style: {
+            marginBottom: marginBottom
+          }
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-accordion-header",
+          style: {
+            backgroundColor: headerBgColor,
+            color: headerTextColor,
+            borderStyle: borderStyle,
+            borderWidth: borderWidth + 'px',
+            borderColor: borderColor,
+            borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
+          }
+        }, /*#__PURE__*/React.createElement("span", {
+          className: "advgb-accordion-header-icon accordion-state"
+        }, /*#__PURE__*/React.createElement("svg", {
+          className: "advgb-icon-closed",
+          fill: headerIconColor,
+          xmlns: "http://www.w3.org/2000/svg",
+          width: "24",
+          height: "24",
+          viewBox: "0 0 24 24"
+        }, HEADER_ICONS[headerIcon]), /*#__PURE__*/React.createElement("svg", {
+          className: "advgb-icon-opened",
+          fill: headerIconColor,
+          xmlns: "http://www.w3.org/2000/svg",
+          width: "24",
+          height: "24",
+          viewBox: "0 0 24 24"
+        }, HEADER_ICONS_OPENED[headerIcon])), /*#__PURE__*/React.createElement(RichText.Content, {
+          tagName: headerTag,
+          className: "advgb-accordion-header-title",
+          style: {
+            color: 'inherit'
+          },
+          value: header
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-accordion-body",
+          style: {
+            backgroundColor: bodyBgColor,
+            color: bodyTextColor,
+            borderStyle: borderStyle + ' !important',
+            borderWidth: borderWidth + 'px !important',
+            borderColor: borderColor + ' !important',
+            borderTop: 'none !important',
+            borderRadius: !!borderRadius ? borderRadius + 'px !important' : undefined
+          }
+        }, /*#__PURE__*/React.createElement(InnerBlocks.Content, null)));
+      },
+      supports: {
+        anchor: true
+      }
+    }, {
       attributes: {
         header: {
           type: 'string',
@@ -2165,8 +2301,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           default: ''
         }
       },
-      save: function save(_ref5) {
-        var attributes = _ref5.attributes;
+      save: function save(_ref6) {
+        var attributes = _ref6.attributes;
         var header = attributes.header,
           headerBgColor = attributes.headerBgColor,
           headerTextColor = attributes.headerTextColor,
@@ -2286,8 +2422,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           default: ''
         }
       },
-      save: function save(_ref6) {
-        var attributes = _ref6.attributes;
+      save: function save(_ref7) {
+        var attributes = _ref7.attributes;
         var header = attributes.header,
           headerBgColor = attributes.headerBgColor,
           headerTextColor = attributes.headerTextColor,
@@ -2404,8 +2540,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           default: ''
         }
       },
-      save: function save(_ref7) {
-        var attributes = _ref7.attributes;
+      save: function save(_ref8) {
+        var attributes = _ref8.attributes;
         var header = attributes.header,
           headerBgColor = attributes.headerBgColor,
           headerTextColor = attributes.headerTextColor,
@@ -9321,7 +9457,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           activeTabBgColor = attributes.activeTabBgColor,
           activeTabTextColor = attributes.activeTabTextColor,
           isPreview = attributes.isPreview;
-        var blockClass = ["advgb-tabs-wrapper", "advgb-tab-".concat(tabsStyleD, "-desktop"), "advgb-tab-".concat(tabsStyleT, "-tablet"), "advgb-tab-".concat(tabsStyleM, "-mobile")].filter(Boolean).join(' ');
+        var blockClass = ["advgb-tabs-wrapper", ['wide', 'full'].includes(attributes.align) && "align".concat(attributes.align), "advgb-tab-".concat(tabsStyleD, "-desktop"), "advgb-tab-".concat(tabsStyleT, "-tablet"), "advgb-tab-".concat(tabsStyleM, "-mobile")].filter(Boolean).join(' ');
         var deviceLetter = 'D';
         if (viewport === 'tablet') deviceLetter = 'T';
         if (viewport === 'mobile') deviceLetter = 'M';
@@ -9525,7 +9661,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             key: index,
             className: "advgb-tab ".concat(tabActive === index ? 'advgb-tab-active' : ''),
             style: {
-              backgroundColor: headerBgColor,
+              backgroundColor: tabActive === index && activeTabBgColor ? activeTabBgColor : headerBgColor,
+              '--advgb-active-tab-bg': activeTabBgColor || undefined,
+              '--advgb-active-tab-color': activeTabTextColor || undefined,
               borderStyle: borderStyle,
               borderWidth: borderWidth + 'px',
               borderColor: borderColor,
@@ -9534,10 +9672,13 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           }, /*#__PURE__*/React.createElement("a", {
             id: tabAnchors[index],
             style: {
-              color: headerTextColor
+              color: tabActive === index && activeTabTextColor ? activeTabTextColor : headerTextColor
             },
-            onClick: function onClick() {
+            onClick: function onClick(event) {
+              // Headers live in the parent, but represent individual Tab Item blocks.
+              event.stopPropagation();
               _this2.props.updateTabActive(index);
+              _this2.props.selectTab(index);
             }
           }, /*#__PURE__*/React.createElement(RichText, {
             tagName: "p",
@@ -9636,7 +9777,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           template: [['advgb/tab'], ['advgb/tab'], ['advgb/tab']],
           templateLock: false,
           allowedBlocks: ['advgb/tab']
-        }))), !!pid && /*#__PURE__*/React.createElement("style", null, activeTabBgColor && "#block-".concat(clientId, " li.advgb-tab.advgb-tab-active, #block-").concat(clientId, " li.advgb-tab.ui-tabs-active {\n                                background-color: ").concat(activeTabBgColor, " !important;\n                            }"), activeTabTextColor && "#block-".concat(clientId, " li.advgb-tab.advgb-tab-active a, #block-").concat(clientId, " li.advgb-tab.ui-tabs-active button.advgb-tab-button,\n                        #block-").concat(clientId, " li.advgb-tab.advgb-tab-active a, #block-").concat(clientId, " li.advgb-tab.ui-tabs-active a {\n                                color: ").concat(activeTabTextColor, " !important;\n                            }")));
+        }))));
       }
     }]);
   }(Component);
@@ -9755,7 +9896,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }
     },
     supports: {
-      anchor: true
+      anchor: true,
+      align: ['wide', 'full']
     },
     edit: compose(withSelect(function (select, ownProps) {
       var clientId = ownProps.clientId;
@@ -9769,8 +9911,16 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         innerBlocks = _ref16.innerBlocks;
       var select = _ref17.select;
       var _dispatch2 = dispatch('core/block-editor'),
-        updateBlockAttributes = _dispatch2.updateBlockAttributes;
+        updateBlockAttributes = _dispatch2.updateBlockAttributes,
+        selectBlock = _dispatch2.selectBlock;
       return {
+        selectTab: function selectTab(index) {
+          var childBlocks = select('core/block-editor').getBlockOrder(clientId);
+          if (childBlocks[index]) {
+            // Preserve the caret when clicking an editable tab title.
+            selectBlock(childBlocks[index], null);
+          }
+        },
         resetOrder: function resetOrder() {
           times(innerBlocks.length, function (n) {
             updateBlockAttributes(innerBlocks[n].clientId, {
@@ -9809,7 +9959,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         borderRadius = attributes.borderRadius,
         pid = attributes.pid,
         uniqueID = attributes.uniqueID;
-      var blockClass = ["advgb-tabs-wrapper", "advgb-tab-".concat(tabsStyleD, "-desktop"), "advgb-tab-".concat(tabsStyleT, "-tablet"), "advgb-tab-".concat(tabsStyleM, "-mobile"), pid].filter(Boolean).join(' ');
+      var blockClass = ["advgb-tabs-wrapper", ['wide', 'full'].includes(attributes.align) && "align".concat(attributes.align), "advgb-tab-".concat(tabsStyleD, "-desktop"), "advgb-tab-".concat(tabsStyleT, "-tablet"), "advgb-tab-".concat(tabsStyleM, "-mobile"), pid].filter(Boolean).join(' ');
       return /*#__PURE__*/React.createElement("div", {
         className: blockClass,
         "data-tab-active": tabActiveFrontend
@@ -13745,6 +13895,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: nameLabel ? nameLabel : 'Name',
+          "aria-label": nameLabel ? nameLabel : 'Name',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -13759,6 +13910,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: emailLabel ? emailLabel : 'Email address',
+          "aria-label": emailLabel ? emailLabel : 'Email address',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -13772,6 +13924,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           className: "advgb-form-input",
           disabled: true,
           value: msgLabel ? msgLabel : 'Message',
+          "aria-label": msgLabel ? msgLabel : 'Message',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -13899,6 +14052,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-form-input advgb-form-input-name",
         placeholder: nameLabel ? nameLabel : 'Name',
+        "aria-label": nameLabel ? nameLabel : 'Name',
         name: "contact_name",
         style: {
           backgroundColor: bgColor,
@@ -13913,6 +14067,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "email",
         className: "advgb-form-input advgb-form-input-email",
         placeholder: emailLabel ? emailLabel : 'Email address',
+        "aria-label": emailLabel ? emailLabel : 'Email address',
         name: "contact_email",
         style: {
           backgroundColor: bgColor,
@@ -13926,6 +14081,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }, /*#__PURE__*/React.createElement("textarea", {
         className: "advgb-form-input advgb-form-input-msg",
         placeholder: msgLabel ? msgLabel : 'Message',
+        "aria-label": msgLabel ? msgLabel : 'Message',
         name: "contact_message",
         style: {
           backgroundColor: bgColor,
@@ -13953,7 +14109,150 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           borderRadius: submitRadius
         }
       }, submitLabel ? submitLabel : 'Submit'))));
-    }
+    },
+    deprecated: [{
+      attributes: {
+        nameLabel: {
+          type: 'string'
+        },
+        emailLabel: {
+          type: 'string'
+        },
+        msgLabel: {
+          type: 'string'
+        },
+        submitLabel: {
+          type: 'string'
+        },
+        successLabel: {
+          type: 'string'
+        },
+        alertLabel: {
+          type: 'string'
+        },
+        bgColor: {
+          type: 'string'
+        },
+        textColor: {
+          type: 'string'
+        },
+        borderStyle: {
+          type: 'string'
+        },
+        borderColor: {
+          type: 'string'
+        },
+        borderRadius: {
+          type: 'number'
+        },
+        submitColor: {
+          type: 'string'
+        },
+        submitBgColor: {
+          type: 'string'
+        },
+        submitRadius: {
+          type: 'number'
+        },
+        submitPosition: {
+          type: 'string',
+          default: 'right'
+        },
+        changed: {
+          type: 'boolean',
+          default: false
+        },
+        isPreview: {
+          type: 'boolean',
+          default: false
+        }
+      },
+      supports: {
+        anchor: true
+      },
+      save: function save(_ref2) {
+        var attributes = _ref2.attributes;
+        var nameLabel = attributes.nameLabel,
+          emailLabel = attributes.emailLabel,
+          msgLabel = attributes.msgLabel,
+          submitLabel = attributes.submitLabel,
+          successLabel = attributes.successLabel,
+          alertLabel = attributes.alertLabel,
+          bgColor = attributes.bgColor,
+          textColor = attributes.textColor,
+          borderColor = attributes.borderColor,
+          borderStyle = attributes.borderStyle,
+          borderRadius = attributes.borderRadius,
+          submitColor = attributes.submitColor,
+          submitBgColor = attributes.submitBgColor,
+          submitRadius = attributes.submitRadius,
+          submitPosition = attributes.submitPosition;
+        return /*#__PURE__*/React.createElement("div", {
+          className: "advgb-contact-form"
+        }, /*#__PURE__*/React.createElement("form", {
+          method: "POST"
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-half"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "text",
+          className: "advgb-form-input advgb-form-input-name",
+          placeholder: nameLabel ? nameLabel : 'Name',
+          name: "contact_name",
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-half"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "email",
+          className: "advgb-form-input advgb-form-input-email",
+          placeholder: emailLabel ? emailLabel : 'Email address',
+          name: "contact_email",
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-full"
+        }, /*#__PURE__*/React.createElement("textarea", {
+          className: "advgb-form-input advgb-form-input-msg",
+          placeholder: msgLabel ? msgLabel : 'Message',
+          name: "contact_message",
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-grecaptcha clearfix position-".concat(submitPosition)
+        }), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-submit-wrapper",
+          style: {
+            textAlign: submitPosition
+          }
+        }, /*#__PURE__*/React.createElement("button", {
+          className: "advgb-form-submit",
+          type: "submit",
+          "data-success": successLabel ? successLabel : undefined,
+          "data-alert": alertLabel ? alertLabel : undefined,
+          style: {
+            borderColor: submitColor,
+            color: submitColor,
+            backgroundColor: submitBgColor,
+            borderRadius: submitRadius
+          }
+        }, submitLabel ? submitLabel : 'Submit'))));
+      }
+    }]
   });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
@@ -20661,6 +20960,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: emailLabel ? emailLabel : 'Email address',
+          "aria-label": emailLabel ? emailLabel : 'Email address',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20686,6 +20986,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
+          "aria-label": fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20700,6 +21001,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
+          "aria-label": lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20714,6 +21016,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: emailLabel ? emailLabel : 'Email address',
+          "aria-label": emailLabel ? emailLabel : 'Email address',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20847,6 +21150,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "email",
         className: "advgb-form-input advgb-form-input-email",
         placeholder: emailLabel ? emailLabel : 'Email address',
+        "aria-label": emailLabel ? emailLabel : 'Email address',
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20873,6 +21177,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-form-input advgb-form-input-fname",
         placeholder: fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
+        "aria-label": fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20886,6 +21191,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-form-input advgb-form-input-lname",
         placeholder: lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
+        "aria-label": lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20899,6 +21205,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "email",
         className: "advgb-form-input advgb-form-input-email",
         placeholder: emailLabel ? emailLabel : 'Email address',
+        "aria-label": emailLabel ? emailLabel : 'Email address',
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20922,7 +21229,180 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }, submitLabel ? submitLabel : 'Submit'))), /*#__PURE__*/React.createElement("div", {
         className: "advgb-grecaptcha clearfix"
       })));
-    }
+    },
+    deprecated: [{
+      attributes: {
+        formStyle: {
+          type: 'string',
+          default: 'default'
+        },
+        formWidth: {
+          type: 'number',
+          default: 400
+        },
+        fnameLabel: {
+          type: 'string'
+        },
+        lnameLabel: {
+          type: 'string'
+        },
+        emailLabel: {
+          type: 'string'
+        },
+        submitLabel: {
+          type: 'string'
+        },
+        successLabel: {
+          type: 'string'
+        },
+        alertLabel: {
+          type: 'string'
+        },
+        bgColor: {
+          type: 'string'
+        },
+        textColor: {
+          type: 'string'
+        },
+        borderStyle: {
+          type: 'string'
+        },
+        borderColor: {
+          type: 'string'
+        },
+        borderRadius: {
+          type: 'number'
+        },
+        submitColor: {
+          type: 'string'
+        },
+        submitBgColor: {
+          type: 'string'
+        },
+        submitRadius: {
+          type: 'number'
+        },
+        changed: {
+          type: 'boolean',
+          default: false
+        },
+        isPreview: {
+          type: 'boolean',
+          default: false
+        }
+      },
+      supports: {
+        anchor: true
+      },
+      save: function save(_ref2) {
+        var attributes = _ref2.attributes;
+        var formStyle = attributes.formStyle,
+          formWidth = attributes.formWidth,
+          fnameLabel = attributes.fnameLabel,
+          lnameLabel = attributes.lnameLabel,
+          emailLabel = attributes.emailLabel,
+          submitLabel = attributes.submitLabel,
+          successLabel = attributes.successLabel,
+          alertLabel = attributes.alertLabel,
+          bgColor = attributes.bgColor,
+          textColor = attributes.textColor,
+          borderColor = attributes.borderColor,
+          borderStyle = attributes.borderStyle,
+          borderRadius = attributes.borderRadius,
+          submitColor = attributes.submitColor,
+          submitBgColor = attributes.submitBgColor,
+          submitRadius = attributes.submitRadius;
+        return /*#__PURE__*/React.createElement("div", {
+          className: "advgb-newsletter clearfix style-".concat(formStyle),
+          style: {
+            maxWidth: formWidth
+          }
+        }, /*#__PURE__*/React.createElement("form", {
+          method: "POST",
+          className: "clearfix"
+        }, formStyle === 'default' && /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "email",
+          className: "advgb-form-input advgb-form-input-email",
+          placeholder: emailLabel ? emailLabel : 'Email address',
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        }), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-submit-wrapper"
+        }, /*#__PURE__*/React.createElement("button", {
+          className: "advgb-form-submit",
+          type: "submit",
+          "data-success": successLabel ? successLabel : undefined,
+          "data-alert": alertLabel ? alertLabel : undefined,
+          style: {
+            borderColor: submitColor,
+            color: submitColor,
+            backgroundColor: submitBgColor,
+            borderRadius: submitRadius
+          }
+        }, submitLabel ? submitLabel : 'Submit'))), formStyle === 'alt' && /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-full"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "text",
+          className: "advgb-form-input advgb-form-input-fname",
+          placeholder: fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-full"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "text",
+          className: "advgb-form-input advgb-form-input-lname",
+          placeholder: lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-full"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "email",
+          className: "advgb-form-input advgb-form-input-email",
+          placeholder: emailLabel ? emailLabel : 'Email address',
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-submit-wrapper"
+        }, /*#__PURE__*/React.createElement("button", {
+          className: "advgb-form-submit",
+          type: "submit",
+          "data-success": successLabel ? successLabel : undefined,
+          "data-alert": alertLabel ? alertLabel : undefined,
+          style: {
+            borderColor: submitColor,
+            color: submitColor,
+            backgroundColor: submitBgColor,
+            borderRadius: submitRadius
+          }
+        }, submitLabel ? submitLabel : 'Submit'))), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-grecaptcha clearfix"
+        })));
+      }
+    }]
   });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
@@ -24624,7 +25104,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           type: "text",
           disabled: true,
           className: "advgb-search-bar-input",
-          value: searchPlaceholder ? searchPlaceholder : 'Type to search…'
+          value: searchPlaceholder ? searchPlaceholder : 'Type to search…',
+          "aria-label": searchPlaceholder ? searchPlaceholder : 'Search'
         }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton), /*#__PURE__*/React.createElement("style", null, ".".concat(searchBtnId, ":hover {\n                                color: ").concat(searchBtnHoverColor, " !important;\n                                background-color: ").concat(searchBtnHoverBgColor, " !important;\n                                box-shadow: ").concat(searchBtnHoverShadowH, "px ").concat(searchBtnHoverShadowV, "px ").concat(searchBtnHoverShadowBlur, "px ").concat(searchBtnHoverShadowSpread, "px ").concat(searchBtnHoverShadow, ";\n                                transition: all ").concat(searchBtnHoverTranSpeed, "s ease;\n                                opacity: ").concat(searchBtnHoverOpacity / 100, "\n                            }"))));
       }
     }]);
@@ -24808,11 +25289,103 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-search-bar-input",
         name: "s",
-        placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…'
+        placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…',
+        "aria-label": searchPlaceholder ? searchPlaceholder : 'Search'
       }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
     },
     deprecated: [{
-      attributes: blockAttrs,
+      attributes: {
+        fullWidth: {
+          type: 'boolean',
+          default: false
+        },
+        width: {
+          type: 'number',
+          default: 500
+        },
+        textColor: {
+          type: 'string'
+        },
+        backgroundColor: {
+          type: 'string'
+        },
+        searchIcon: {
+          type: 'string',
+          default: 'icon1'
+        },
+        searchIconOnRight: {
+          type: 'boolean'
+        },
+        searchPlaceholder: {
+          type: 'string'
+        },
+        searchButtonEnabled: {
+          type: 'boolean',
+          default: true
+        },
+        searchButtonText: {
+          type: 'string',
+          default: 'SEARCH'
+        },
+        searchButtonTextColor: {
+          type: 'string'
+        },
+        searchButtonBgColor: {
+          type: 'string'
+        },
+        searchButtonRadius: {
+          type: 'number',
+          default: 0
+        },
+        searchButtonOnLeft: {
+          type: 'boolean',
+          default: false
+        },
+        searchBtnId: {
+          type: 'string'
+        },
+        searchBtnHoverColor: {
+          type: 'string'
+        },
+        searchBtnHoverBgColor: {
+          type: 'string'
+        },
+        searchBtnHoverShadow: {
+          type: 'string'
+        },
+        searchBtnHoverShadowH: {
+          type: 'number',
+          default: 1
+        },
+        searchBtnHoverShadowV: {
+          type: 'number',
+          default: 1
+        },
+        searchBtnHoverShadowBlur: {
+          type: 'number',
+          default: 12
+        },
+        searchBtnHoverShadowSpread: {
+          type: 'number',
+          default: 0
+        },
+        searchBtnHoverOpacity: {
+          type: 'number',
+          default: 100
+        },
+        searchBtnHoverTranSpeed: {
+          type: 'number',
+          default: 200
+        },
+        changed: {
+          type: 'boolean',
+          default: false
+        },
+        isPreview: {
+          type: 'boolean',
+          default: false
+        }
+      },
       supports: {
         align: true,
         anchor: true
@@ -24820,6 +25393,73 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       save: function save(_ref2) {
         var attributes = _ref2.attributes,
           className = _ref2.className;
+        var fullWidth = attributes.fullWidth,
+          width = attributes.width,
+          textColor = attributes.textColor,
+          backgroundColor = attributes.backgroundColor,
+          searchIcon = attributes.searchIcon,
+          searchIconOnRight = attributes.searchIconOnRight,
+          searchPlaceholder = attributes.searchPlaceholder,
+          searchButtonEnabled = attributes.searchButtonEnabled,
+          searchButtonText = attributes.searchButtonText,
+          searchButtonTextColor = attributes.searchButtonTextColor,
+          searchButtonBgColor = attributes.searchButtonBgColor,
+          searchButtonRadius = attributes.searchButtonRadius,
+          searchButtonOnLeft = attributes.searchButtonOnLeft,
+          searchBtnId = attributes.searchBtnId;
+        var blockClassName = ['wp-block-advgb-search-bar', 'advgb-search-bar-wrapper', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
+        var searchBarIcon = /*#__PURE__*/React.createElement("span", {
+          className: "advgb-search-bar-icon"
+        }, searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon);
+        var searchBarButton = !searchButtonEnabled ? '' : /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-button-wrapper"
+        }, /*#__PURE__*/React.createElement("button", {
+          type: "submit",
+          className: "advgb-search-bar-button ".concat(searchBtnId),
+          style: {
+            color: searchButtonTextColor,
+            borderColor: searchButtonTextColor,
+            backgroundColor: searchButtonBgColor,
+            borderRadius: searchButtonRadius
+          }
+        }, searchButtonText));
+        return /*#__PURE__*/React.createElement("div", {
+          className: blockClassName
+        }, /*#__PURE__*/React.createElement("form", {
+          method: "get",
+          action: advgbBlocks.home_url,
+          className: "advgb-search-bar-form",
+          role: "search"
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-bar-inner",
+          style: {
+            width: fullWidth ? '100%' : width
+          }
+        }, searchButtonOnLeft && searchBarButton, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-bar",
+          style: {
+            backgroundColor: backgroundColor,
+            color: textColor,
+            borderRadius: searchButtonRadius
+          }
+        }, !searchIconOnRight && searchBarIcon, /*#__PURE__*/React.createElement("input", {
+          type: "text",
+          className: "advgb-search-bar-input",
+          name: "s",
+          placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…'
+        }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
+      }
+    }, {
+      attributes: blockAttrs,
+      supports: {
+        align: true,
+        anchor: true
+      },
+      save: function save(_ref3) {
+        var attributes = _ref3.attributes,
+          className = _ref3.className;
         var fullWidth = attributes.fullWidth,
           width = attributes.width,
           textColor = attributes.textColor,

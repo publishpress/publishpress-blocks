@@ -939,12 +939,14 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       type: "checkbox",
       name: "toggle_empty_blocks",
       id: "toggle_empty_blocks",
+      "aria-label": __('Show Empty Blocks', 'advanced-gutenberg'),
       checked: showEmptyBlocks,
       onChange: function onChange(e) {
         return handleToggleChange(e.target.checked);
       }
     }), /*#__PURE__*/React.createElement("span", {
-      className: "slider"
+      className: "slider",
+      "aria-hidden": "true"
     }))))))), loadingAll && /*#__PURE__*/React.createElement("div", {
       className: "scan-progress-container"
     }, /*#__PURE__*/React.createElement("div", {

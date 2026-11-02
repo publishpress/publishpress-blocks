@@ -43,6 +43,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
             global $wp_version;
 
             add_action('init', array( $this, 'registerPostMeta' ));
+            /* Must be registered unconditionally (not inside a load-{page} hook): core
+             * saves the Screen Options "per page" value during admin_init, which runs
+             * before load-{page} fires. */
+            add_filter('set_screen_option_advgb_post_notes_per_page', array( $this, 'setPostNotesScreenOption' ), 10, 3);
             add_action('init', array( $this, 'registerCustomStyleFrontendFilter' ));
             add_action('admin_init', array( $this, 'registerStylesScripts' ));
             add_action('admin_init', array( $this, 'addEditorFrameStyles' ));
@@ -214,6 +218,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'viewbox'             => true,
                 'xmlns'               => true,
                 'fill'                => true,
+                'class'               => true,
                 'styles'              => true,
                 'preserveAspectRatio' => true,
             );
@@ -228,6 +233,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'd'            => true,
                 'fill'         => true,
                 'fill-opacity' => true,
+            );
+            $tags['polygon'] = array(
+                'points' => true,
+                'fill'   => true,
             );
 
             return $tags;
@@ -2306,14 +2315,18 @@ if (! class_exists('AdvancedGutenbergMain')) {
         {
             return [
                 'container'    => __('Container', 'advanced-gutenberg'),
-                'contact-form' => __('Contact Form', 'advanced-gutenberg'),
-                'login-form'   => __('Login and Register', 'advanced-gutenberg'),
-                'map'          => __('Map', 'advanced-gutenberg'),
-                'newsletter'   => __('Newsletter', 'advanced-gutenberg'),
-                'search-bar'   => __('Search Bar', 'advanced-gutenberg'),
-                'social-links' => __('Social Links', 'advanced-gutenberg'),
-                'testimonial'  => __('Testimonial', 'advanced-gutenberg'),
-                'woo-products' => __('Woo Products', 'advanced-gutenberg'),
+                'contact-form'  => __('Contact Form', 'advanced-gutenberg'),
+                'image'         => __('Image', 'advanced-gutenberg'),
+                'images-slider' => __('Images Slider', 'advanced-gutenberg'),
+                'login-form'    => __('Login and Register', 'advanced-gutenberg'),
+                'map'           => __('Map', 'advanced-gutenberg'),
+                'newsletter'    => __('Newsletter', 'advanced-gutenberg'),
+                'search-bar'    => __('Search Bar', 'advanced-gutenberg'),
+                'social-links'  => __('Social Links', 'advanced-gutenberg'),
+                'summary'       => __('Table of Contents', 'advanced-gutenberg'),
+                'testimonial'   => __('Testimonial', 'advanced-gutenberg'),
+                'video'         => __('Video', 'advanced-gutenberg'),
+                'woo-products'  => __('Woo Products', 'advanced-gutenberg'),
             ];
         }
 
@@ -2361,6 +2374,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 || self::legacyBlocksOptionDisablesAllKnownBlocks($legacy_blocks)
             ) {
                 update_option('advgb_legacy_blocks', self::defaultLegacyBlocksState(true), false);
+            } elseif (is_array($legacy_blocks)) {
+                self::fillMissingLegacyBlocksState(true);
             }
 
             $updated_settings = false;
@@ -2376,6 +2391,33 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             if ($updated_settings) {
                 update_option('advgb_settings', $saved_settings, false);
+            }
+        }
+
+        /**
+         * Add newly introduced legacy block keys without changing saved choices.
+         *
+         * @param bool $enabled Whether missing legacy blocks should be enabled.
+         *
+         * @return void
+         */
+        public static function fillMissingLegacyBlocksState($enabled)
+        {
+            $legacy_blocks = get_option('advgb_legacy_blocks');
+            if (! is_array($legacy_blocks)) {
+                return;
+            }
+
+            $updated = false;
+            foreach (array_keys(self::legacyBlocksMap()) as $slug) {
+                if (! array_key_exists($slug, $legacy_blocks)) {
+                    $legacy_blocks[$slug] = $enabled ? 1 : 0;
+                    $updated              = true;
+                }
+            }
+
+            if ($updated) {
+                update_option('advgb_legacy_blocks', $legacy_blocks, false);
             }
         }
 
@@ -2461,18 +2503,18 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     'enabled'  => true
                 ],
                 [
+                    'slug'     => 'advgb_block_controls',
+                    'title'    => esc_html__('Block Controls', 'advanced-gutenberg'),
+                    'callback' => 'loadBlockControlsPage',
+                    'order'    => 2,
+                    'enabled'  => Utilities::settingIsEnabled('block_controls')
+                ],
+                [
                     'slug'     => 'advgb_block_access',
                     'title'    => esc_html__('Block Permissions', 'advanced-gutenberg'),
                     'callback' => 'loadBlockAccessPage',
-                    'order'    => 2,
-                    'enabled'  => Utilities::settingIsEnabled('enable_block_access')
-                ],
-                [
-                    'slug'     => 'advgb_block_settings',
-                    'title'    => esc_html__('Extra Blocks', 'advanced-gutenberg'),
-                    'callback' => 'loadBlockSettingsPage',
                     'order'    => 3,
-                    'enabled'  => Utilities::settingIsEnabled('enable_advgb_blocks')
+                    'enabled'  => Utilities::settingIsEnabled('enable_block_access')
                 ],
                 [
                     'slug'     => 'advgb_custom_styles',
@@ -2480,13 +2522,6 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     'callback' => 'loadCustomStylesPage',
                     'order'    => 4,
                     'enabled'  => Utilities::settingIsEnabled('enable_custom_styles')
-                ],
-                [
-                    'slug'     => 'advgb_block_controls',
-                    'title'    => esc_html__('Block Controls', 'advanced-gutenberg'),
-                    'callback' => 'loadBlockControlsPage',
-                    'order'    => 5,
-                    'enabled'  => Utilities::settingIsEnabled('block_controls')
                 ],
                 [
                     'slug'     => 'advgb_block_usage',
@@ -2504,17 +2539,24 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     'enabled'  => Utilities::settingIsEnabled('reusable_blocks')
                 ],
                 [
-                'slug'     => 'edit.php?post_type=advgb_insert_block',
-                'title'    => esc_html__( 'Auto Insert Blocks', 'advanced-gutenberg' ),
-                'callback' => '',
-                'order'    => 8,
-                'enabled'  => Utilities::settingIsEnabled( 'auto_insert_blocks' )
+                    'slug'     => 'edit.php?post_type=advgb_insert_block',
+                    'title'    => esc_html__( 'Auto Insert Blocks', 'advanced-gutenberg' ),
+                    'callback' => '',
+                    'order'    => 8,
+                    'enabled'  => Utilities::settingIsEnabled( 'auto_insert_blocks' )
+                ],
+                [
+                    'slug'     => 'advgb_block_settings',
+                    'title'    => esc_html__('Extra Blocks', 'advanced-gutenberg'),
+                    'callback' => 'loadBlockSettingsPage',
+                    'order'    => 9,
+                    'enabled'  => Utilities::settingIsEnabled('enable_advgb_blocks')
                 ],
                 [
                     'slug'       => 'advgb_post_notes',
                     'title'      => esc_html__('Post Notes', 'advanced-gutenberg'),
                     'callback'   => 'loadPostNotesPage',
-                    'order'      => 9,
+                    'order'      => 10,
                     'enabled'    => Utilities::settingIsEnabled('enable_post_notes'),
                     'capability' => 'edit_posts',
                 ],
@@ -2522,7 +2564,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     'slug'     => 'advgb_settings',
                     'title'    => esc_html__('Settings', 'advanced-gutenberg'),
                     'callback' => 'loadSettingsPage',
-                    'order'    => 10,
+                    'order'    => 11,
                     'enabled'  => true
                 ]
             ];
@@ -2579,6 +2621,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     ) {
                         // e.g. 'load-blocks_page_advgb_block_access'
                         add_action('load-' . $hook, [ $this, $function_name ]);
+                    }
+
+                    // Screen Options (per-page + column visibility) for Post Notes
+                    if (! empty($hook) && $page['slug'] === 'advgb_post_notes') {
+                        add_action('load-' . $hook, [ $this, 'addPostNotesScreenOptions' ]);
                     }
                 }
 
@@ -2642,6 +2689,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             <div class="advgb-switch-button">
                                 <label class="switch">
                                     <input type="checkbox"
+                                           aria-label="<?php echo esc_attr(wp_strip_all_tags($feature['title'])); ?>"
                                            name=""
                                            value="1"
                                     <?php
@@ -2854,6 +2902,59 @@ if (! class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Register the "Screen Options" tab content for the Post Notes page:
+         * a "Notes per page" number field and column show/hide checkboxes.
+         * Must run on load-{page}, before admin-header.php renders the tab.
+         *
+         * @return void
+         */
+        public function addPostNotesScreenOptions()
+        {
+            add_screen_option('per_page', [
+                'label'   => __('Notes per page', 'advanced-gutenberg'),
+                'default' => 20,
+                'option'  => 'advgb_post_notes_per_page',
+            ]);
+
+            $screen = get_current_screen();
+            if (! $screen) {
+                return;
+            }
+
+            add_filter('manage_' . $screen->id . '_columns', function () {
+                return [
+                    // '_title' is the core-recognized key for a mandatory, non-hideable column
+                    '_title'    => __('Post', 'advanced-gutenberg'),
+                    'post_type' => __('Post Type', 'advanced-gutenberg'),
+                    'note'      => __('Note', 'advanced-gutenberg'),
+                    'author'    => __('Author', 'advanced-gutenberg'),
+                    'date'      => __('Date', 'advanced-gutenberg'),
+                    'status'    => __('Status', 'advanced-gutenberg'),
+                ];
+            });
+        }
+
+        /**
+         * Validate/save the "Notes per page" Screen Option value.
+         *
+         * @param mixed  $status Screen option value to save, or false to skip.
+         * @param string $option Screen option name being saved.
+         * @param mixed  $value  Value submitted by the user.
+         *
+         * @return mixed
+         */
+        public function setPostNotesScreenOption($status, $option, $value)
+        {
+            if ($option === 'advgb_post_notes_per_page') {
+                $value = (int) $value;
+
+                return ($value > 0) ? min(999, $value) : $status;
+            }
+
+            return $status;
+        }
+
+        /**
          * Block controls page
          *
          * @return void
@@ -3045,6 +3146,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'advgbCustomStyles',
                 [
                     'isProActive' => Utilities::isProActive(),
+                    'copyLabel' => esc_attr__('Copy', 'advanced-gutenberg'),
+                    'deleteLabel' => esc_attr__('Delete', 'advanced-gutenberg'),
                 ]
             );
 
@@ -3938,6 +4041,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
                 // Save feature by role
                 $block_feature_by_role                                  = get_option($option);
+                $block_feature_by_role                                  = is_array($block_feature_by_role) ? $block_feature_by_role : [];
                 $block_feature_by_role[ $user_role ]['active_blocks']   = isset($active_blocks) ? $active_blocks : '';
                 $block_feature_by_role[ $user_role ]['inactive_blocks'] = isset($inactive_blocks) ? $inactive_blocks : '';
 
@@ -3953,6 +4057,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         wp_get_referer()
                     )
                 );
+                exit;
             } else {
                 // Redirect with error message / Nothing was saved
                 wp_safe_redirect(
@@ -3964,6 +4069,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         wp_get_referer()
                     )
                 );
+                exit;
             }
         }
 
@@ -4035,6 +4141,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         wp_get_referer()
                     )
                 );
+                exit;
             } else {
                 // Redirect with error message / Nothing was saved
                 wp_safe_redirect(
@@ -4046,6 +4153,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         wp_get_referer()
                     )
                 );
+                exit;
             }
         }
 
@@ -4410,7 +4518,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                                 ?>
                                 <div class="advgb-switch-button">
                                     <label class="switch">
-                                        <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
+                                        <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks"
+                                               aria-label="<?php echo esc_attr(sprintf(
+                                                   __('Enable or disable all blocks for %s', 'advanced-gutenberg'),
+                                                   $current_user_role_name
+                                               )); ?>">
                                         <span class="slider"></span>
                                     </label>
                                 </div>
@@ -5179,6 +5291,12 @@ if (! class_exists('AdvancedGutenbergMain')) {
         {
             // Search for needed blocks then add styles to it
             $style = $this->addBlocksStyles($block);
+
+            // Empty fragments change WordPress layout wrapper detection without adding output.
+            // Keep asset loading above for core/gallery and nested PublishPress blocks.
+            if ($style === '') {
+                return $block;
+            }
 
             /* Content Display block doesn't render styles
              * as the rest of blocks as first level block (not as a child),
