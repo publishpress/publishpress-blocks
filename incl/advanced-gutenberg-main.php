@@ -1164,9 +1164,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 wp_send_json('', 400);
             }
 
+            $nonce = sanitize_text_field(wp_unslash($_POST['nonce']));
             if (
-                ! wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_update_blocks_list')
-                 && ! wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_nonce')
+                ! wp_verify_nonce($nonce, 'advgb_update_blocks_list')
+                 && ! wp_verify_nonce($nonce, 'advgb_nonce')
             ) {
                 wp_send_json('', 400);
             }
@@ -1180,7 +1181,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
              */
             function cleanupBlockList(array $block)
             {
-                $block['icon']     = isset($block['icon']) ? htmlentities(stripslashes($block['icon']), ENT_QUOTES) : '';
+                $block['icon']     = isset($block['icon']) ? htmlentities($block['icon'], ENT_QUOTES) : '';
                 $block['name']     = isset($block['name']) ? sanitize_text_field($block['name']) : '';
                 $block['title']    = isset($block['title']) ? sanitize_text_field($block['title']) : '';
                 $block['category'] = isset($block['category']) ? sanitize_text_field($block['category']) : '';
@@ -1189,11 +1190,13 @@ if (! class_exists('AdvancedGutenbergMain')) {
             }
 
             if (is_array($_POST['blocksList'])) {
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                $blocksList = array_map('cleanupBlockList', $_POST['blocksList']);
+                $blocksList = array_map('cleanupBlockList', wp_unslash($_POST['blocksList']));
             } else {
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                $blocksList = json_decode(stripslashes($_POST['blocksList']));
+                $blocksList = json_decode(wp_unslash($_POST['blocksList']));
+            }
+
+            if (! is_array($blocksList)) {
+                wp_send_json('', 400);
             }
 
             $savedBlocksList = get_option('advgb_blocks_list');
@@ -4017,7 +4020,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             // Verify nonce
             if (
                 ! wp_verify_nonce(
-                    sanitize_key($_POST[ 'advgb_block_' . $feature . '_nonce_field' ]),
+                    sanitize_key(wp_unslash($_POST[ 'advgb_block_' . $feature . '_nonce_field' ])),
                     'advgb_nonce'
                 )
             ) {
@@ -4028,7 +4031,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            $user_role = !empty($_POST['user_role']) ? sanitize_text_field($_POST['user_role']) : '';
+            $user_role = !empty($_POST['user_role']) ? sanitize_text_field(wp_unslash($_POST['user_role'])) : '';
 
             if (
                 isset($_POST['blocks_list'])
@@ -4040,9 +4043,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 // @TODO - Check if user role exists - https://gist.github.com/hlashbrooke/8f901da7c6f0d107add7
                 $blocks_list     = array_map(
                     'sanitize_text_field',
-                    json_decode(stripslashes($_POST['blocks_list'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                    json_decode(wp_unslash($_POST['blocks_list'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 );
-                $active_blocks   = array_map('sanitize_text_field', $_POST['active_blocks']);
+                $active_blocks   = array_map('sanitize_text_field', wp_unslash($_POST['active_blocks']));
                 $inactive_blocks = array_values(array_diff($blocks_list, $active_blocks));
 
                 // Save feature by role
@@ -4096,7 +4099,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             // Verify nonce
             if (
                 ! wp_verify_nonce(
-                    sanitize_key($_POST[ 'advgb_block_' . $feature . '_nonce_field' ]),
+                    sanitize_key(wp_unslash($_POST[ 'advgb_block_' . $feature . '_nonce_field' ])),
                     'advgb_nonce'
                 )
             ) {
@@ -4107,7 +4110,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            $user_role = !empty($_POST['user_role']) ? sanitize_text_field($_POST['user_role']) : '';
+            $user_role = !empty($_POST['user_role']) ? sanitize_text_field(wp_unslash($_POST['user_role'])) : '';
 
             if (
                 isset($_POST['blocks_list'])
@@ -4118,9 +4121,9 @@ if (! class_exists('AdvancedGutenbergMain')) {
             ) {
                 $blocks_list     = array_map(
                     'sanitize_text_field',
-                    json_decode(stripslashes($_POST['blocks_list'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                    json_decode(wp_unslash($_POST['blocks_list'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 );
-                $active_blocks   = isset( $_POST['active_blocks'] ) ? array_map('sanitize_text_field', $_POST['active_blocks']) : [];
+                $active_blocks   = isset( $_POST['active_blocks'] ) ? array_map('sanitize_text_field', wp_unslash($_POST['active_blocks'])) : [];
                 $inactive_blocks = array_values(array_diff($blocks_list, $active_blocks));
 
                 $all_roles = wp_roles()->roles;

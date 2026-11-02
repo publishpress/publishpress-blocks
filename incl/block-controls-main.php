@@ -1102,7 +1102,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             if (isset($_POST['save_controls'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 if (
                     !wp_verify_nonce(
-                        sanitize_key($_POST['advgb_controls_settings_nonce_field']),
+                        sanitize_key(wp_unslash($_POST['advgb_controls_settings_nonce_field'])),
                         'advgb_controls_settings_nonce'
                     )
                 ) {
@@ -1135,7 +1135,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                         str_replace(
                             '/wp-admin/',
                             '',
-                            sanitize_url($_POST['_wp_http_referer']) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                            sanitize_url(wp_unslash($_POST['_wp_http_referer'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                         )
                     )
                 );
@@ -1144,7 +1144,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             elseif (isset($_POST['save_blocks'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 if (
                     !wp_verify_nonce(
-                        sanitize_key($_POST['advgb_controls_block_nonce_field']),
+                        sanitize_key(wp_unslash($_POST['advgb_controls_block_nonce_field'])),
                         'advgb_controls_block_nonce'
                     )
                 ) {
@@ -1158,9 +1158,9 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                 ) {
                     $blocks_list = array_map(
                         'sanitize_text_field',
-                        json_decode(stripslashes($_POST['blocks_list'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                        json_decode(wp_unslash($_POST['blocks_list'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                     );
-                    $active_blocks = array_map('sanitize_text_field', $_POST['active_blocks']);
+                    $active_blocks = array_map('sanitize_text_field', wp_unslash($_POST['active_blocks']));
                     $inactive_blocks = array_values(array_diff($blocks_list, $active_blocks));
 
                     // Save block controls
@@ -1181,7 +1181,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                             str_replace(
                                 '/wp-admin/',
                                 '',
-                                sanitize_url($_POST['_wp_http_referer']) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                                sanitize_url(wp_unslash($_POST['_wp_http_referer'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                             )
                         )
                     );
@@ -1196,7 +1196,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                             str_replace(
                                 '/wp-admin/',
                                 '',
-                                sanitize_url($_POST['_wp_http_referer']) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                                sanitize_url(wp_unslash($_POST['_wp_http_referer'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                             )
                         )
                     );
