@@ -7,7 +7,7 @@ $legacy_state = AdvancedGutenbergMain::getLegacyBlocksState();
 
 $gallery_lightbox_checked = $this->getOptionSetting('advgb_settings', 'gallery_lightbox', 'checkbox', 0);
 $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_lightbox_caption', 'text', '1');
-$font_styles_checked      = $this->getOptionSetting('advgb_settings', 'enable_core_blocks_features', 'checkbox', 0);
+$font_styles_checked      = $this->getOptionSetting('advgb_settings', 'enable_core_blocks_features', 'checkbox', 1); // Matches settingIsEnabled(): a missing key means enabled
 ?>
 <form method="post">
     <?php
