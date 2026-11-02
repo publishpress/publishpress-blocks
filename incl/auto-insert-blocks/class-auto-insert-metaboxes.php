@@ -195,8 +195,9 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                 style="<?php echo in_array($position, $needs_position_value) ? '' : 'display:none;'; ?>">
                 <th class="<?php echo esc_attr($pro_class); ?>"><label for="advgb_position_value"><?php esc_html_e('Position Number', 'advanced-gutenberg'); ?></label></th>
                 <td class="advgb-promo-overlay-area">
-                    <input class="<?php echo esc_attr($pro_class); ?>" type="number" name="<?php echo $this->proActive ? 'advgb_position_value' : ''; ?>" id="advgb_position_value"
-                        value="<?php echo esc_attr($position_value); ?>" class="small-text">
+                    <input class="<?php echo esc_attr(trim($pro_class . ' small-text')); ?>" type="number" name="<?php echo $this->proActive ? 'advgb_position_value' : ''; ?>" id="advgb_position_value"
+                        aria-label="<?php esc_attr_e('Position Number', 'advanced-gutenberg'); ?>"
+                        value="<?php echo esc_attr($position_value); ?>">
                     <p class="<?php echo esc_attr($pro_class); ?> description">
                         <?php esc_html_e('Enter the number (e.g., 3 for "after 3rd heading").', 'advanced-gutenberg'); ?>
                     </p>
@@ -210,7 +211,7 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                 </td>
             </tr>
             <tr id="excluded-blocks-row" style="<?php echo in_array($position, $needs_excluded_blocks) ? '' : 'display:none;'; ?>">
-                <th class="<?php echo esc_attr($pro_class); ?>"><label><?php esc_html_e('Exclude from counting', 'advanced-gutenberg'); ?></label></th>
+                <th class="<?php echo esc_attr($pro_class); ?>"><span><?php esc_html_e('Exclude from counting', 'advanced-gutenberg'); ?></span></th>
                 <td class="<?php echo esc_attr($pro_class); ?>">
                     <?php
                     $core_blocks = array(
@@ -223,19 +224,24 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                         'core/spacer' => __('Spacer', 'advanced-gutenberg'),
                     );
 
+                    ?>
+                    <fieldset>
+                    <legend class="screen-reader-text"><?php esc_html_e('Exclude from counting', 'advanced-gutenberg'); ?></legend>
+                    <?php
                     foreach ($core_blocks as $block_name => $block_label): ?>
                         <label>
                             <input type="checkbox" name="<?php echo $this->proActive ? 'advgb_excluded_blocks[]' : ''; ?>" value="<?php echo esc_attr($block_name); ?>" <?php checked(in_array($block_name, $excluded_blocks)); ?> />
                             <?php echo esc_html($block_label); ?>
                         </label><br>
                     <?php endforeach; ?>
+                    </fieldset>
                     <p class="description">
                         <?php esc_html_e('Selected blocks will not be counted when determining position.', 'advanced-gutenberg'); ?>
                     </p>
                 </td>
             </tr>
             <tr id="specific-blocks-row" style="<?php echo in_array($position, $needs_specific_block) ? '' : 'display:none;'; ?>">
-                <th class="<?php echo esc_attr($pro_class); ?>"><label><?php esc_html_e('Search Block', 'advanced-gutenberg'); ?></label></th>
+                <th class="<?php echo esc_attr($pro_class); ?>"><label for="advgb_insert_block_select"><?php esc_html_e('Search Block', 'advanced-gutenberg'); ?></label></th>
                 <td class="<?php echo esc_attr($pro_class); ?>">
                     <p class="description">
                         <?php esc_html_e('Search and select blocks after this reusable block should be inserted.', 'advanced-gutenberg'); ?>
@@ -253,7 +259,7 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                                 <?php }
                             } ?>
                         </div>
-                        <select class="advg-insert-block-select2"
+                        <select class="advg-insert-block-select2" id="advgb_insert_block_select"
                             data-placeholder="<?php echo esc_attr__('Search blocks...', 'advanced-gutenberg'); ?>"
                             multiple="multiple"
                             style="width: 100%;">
@@ -316,9 +322,10 @@ class AdvancedGutenbergAutoInsertMetaboxes {
         ?>
         <table class="form-table">
             <tr>
-                <th><label><?php esc_html_e('Post Types', 'advanced-gutenberg'); ?> <span class="required">*</span></label></th>
+                <th><span><?php esc_html_e('Post Types', 'advanced-gutenberg'); ?> <span class="required">*</span></span></th>
                 <td>
-                    <div id="post-types-selection">
+                    <fieldset id="post-types-selection">
+                        <legend class="screen-reader-text"><?php esc_html_e('Post Types', 'advanced-gutenberg'); ?> (<?php esc_html_e('required', 'advanced-gutenberg'); ?>)</legend>
                         <?php
                         $available_post_types = get_post_types(array('public' => true), 'objects');
                         foreach ($available_post_types as $post_type):
@@ -339,12 +346,12 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                                 <?php endif; ?>
                             <br>
                         <?php endforeach; ?>
-                    </div>
+                    </fieldset>
                 </td>
             </tr>
 
             <tr>
-                <th><label><?php esc_html_e('Taxonomies', 'advanced-gutenberg'); ?></label></th>
+                <th><span><?php esc_html_e('Taxonomies', 'advanced-gutenberg'); ?></span></th>
                 <td>
                     <div id="taxonomies-selection">
                         <p class="description">
@@ -356,13 +363,13 @@ class AdvancedGutenbergAutoInsertMetaboxes {
             </tr>
 
             <tr>
-                <th class="<?php echo esc_attr($pro_class); ?>"><label><?php esc_html_e('Authors', 'advanced-gutenberg'); ?></label></th>
+                <th class="<?php echo esc_attr($pro_class); ?>"><label for="advgb_authors_select"><?php esc_html_e('Authors', 'advanced-gutenberg'); ?></label></th>
                 <td class="advgb-promo-overlay-area">
                     <p class="<?php echo esc_attr($pro_class); ?> description">
                         <?php esc_html_e('Only target posts from specific authors.', 'advanced-gutenberg'); ?>
                     </p>
                     <div class="user-group <?php echo esc_attr($pro_class); ?>">
-                        <select name="advgb_authors[]" class="advg-insert-author-select2"
+                        <select name="advgb_authors[]" class="advg-insert-author-select2" id="advgb_authors_select"
                             data-placeholder="<?php echo esc_attr__('Search author...', 'advanced-gutenberg'); ?>"
                             multiple="multiple"
                             style="width: 100%;">
@@ -396,12 +403,13 @@ class AdvancedGutenbergAutoInsertMetaboxes {
             </tr>
 
             <tr class="post-created-in-months">
-                <th class="<?php echo esc_attr($pro_class); ?>"><label><?php esc_html_e('Post Created in Months', 'advanced-gutenberg'); ?></label></th>
+                <th class="<?php echo esc_attr($pro_class); ?>"><span><?php esc_html_e('Post Created in Months', 'advanced-gutenberg'); ?></span></th>
                 <td>
                     <p class="<?php echo esc_attr($pro_class); ?> description">
                         <?php esc_html_e('Target posts created in specific months of the year.', 'advanced-gutenberg'); ?>
                     </p>
-                    <div class="<?php echo esc_attr($pro_class); ?> checkbox-group">
+                    <fieldset class="<?php echo esc_attr($pro_class); ?> checkbox-group">
+                        <legend class="screen-reader-text"><?php esc_html_e('Post Created in Months', 'advanced-gutenberg'); ?></legend>
                         <?php
                         $months = [
                             1 => __('January', 'advanced-gutenberg'),
@@ -423,7 +431,7 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                                 <?php echo esc_html($month_name); ?>
                             </label>
                         <?php endforeach; ?>
-                    </div>
+                    </fieldset>
                 </td>
             </tr>
 
@@ -439,12 +447,12 @@ class AdvancedGutenbergAutoInsertMetaboxes {
             </tr>
 
             <tr>
-                <th class="<?php echo esc_attr($pro_class); ?>"><label><?php esc_html_e('Target Posts', 'advanced-gutenberg'); ?></label></th>
+                <th class="<?php echo esc_attr($pro_class); ?>"><label for="advgb_include_posts_select"><?php esc_html_e('Target Posts', 'advanced-gutenberg'); ?></label></th>
                 <td class="advgb-promo-overlay-area">
                     <div class="post-search-wrap <?php echo esc_attr($pro_class); ?>">
                             <p class="description"><?php esc_html_e('Search and select posts or enter their IDs to limit this rules to specific posts.', 'advanced-gutenberg'); ?></p>
                             <div class="post-ids-search-container">
-                                <select class="advg-insert-post-select2 include-posts"
+                                <select class="advg-insert-post-select2 include-posts" id="advgb_include_posts_select"
                                     data-placeholder="<?php echo esc_attr__('Search posts...', 'advanced-gutenberg'); ?>"
                                     multiple="multiple"
                                     style="width: 100%;">
@@ -463,7 +471,7 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                             <div class="advgb-or-separator">
                                 <span><?php esc_html_e('OR', 'advanced-gutenberg'); ?></span>
                             </div>
-                            <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" placeholder="<?php esc_attr_e('Enter comma-separated list of post IDs to include (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $post_ids)); ?>">
+                            <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" aria-label="<?php esc_attr_e('Target post IDs', 'advanced-gutenberg'); ?>" placeholder="<?php esc_attr_e('Enter comma-separated list of post IDs to include (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $post_ids)); ?>">
                     </div>
                     <?php if (!$this->proActive) : ?>
                         <a class="advgb-pro-link" href="<?php echo esc_url(ADVANCED_GUTENBERG_UPGRADE_LINK); ?>" target="_blank">
@@ -476,12 +484,12 @@ class AdvancedGutenbergAutoInsertMetaboxes {
             </tr>
 
             <tr>
-                <th class="<?php echo esc_attr($pro_class); ?>"><label><?php esc_html_e('Exclude Posts', 'advanced-gutenberg'); ?></label></th>
+                <th class="<?php echo esc_attr($pro_class); ?>"><label for="advgb_exclude_posts_select"><?php esc_html_e('Exclude Posts', 'advanced-gutenberg'); ?></label></th>
                 <td class="advgb-promo-overlay-area">
                     <div class="post-search-wrap <?php echo esc_attr($pro_class); ?>">
                             <p class="description"><?php esc_html_e('Search and select posts or enter their IDs to exclude them from auto insert.', 'advanced-gutenberg'); ?></p>
                             <div class="post-ids-search-container">
-                                <select class="advg-insert-post-select2 exclude-posts"
+                                <select class="advg-insert-post-select2 exclude-posts" id="advgb_exclude_posts_select"
                                     data-placeholder="<?php echo esc_attr__('Search posts...', 'advanced-gutenberg'); ?>"
                                     multiple="multiple"
                                     style="width: 100%;">
@@ -500,7 +508,7 @@ class AdvancedGutenbergAutoInsertMetaboxes {
                             <div class="advgb-or-separator">
                                 <span><?php esc_html_e('OR', 'advanced-gutenberg'); ?></span>
                             </div>
-                            <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" placeholder="<?php esc_attr_e('Enter comma-separated post IDs to exclude (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $exclude_post_ids)); ?>">
+                            <input style="width: 100%;" type="text" class="regular-text post-ids-manual-input" aria-label="<?php esc_attr_e('Excluded post IDs', 'advanced-gutenberg'); ?>" placeholder="<?php esc_attr_e('Enter comma-separated post IDs to exclude (e.g., 123,456,789).', 'advanced-gutenberg'); ?>" value="<?php echo esc_attr(implode(',', $exclude_post_ids)); ?>">
                     </div>
 
                     <?php if (!$this->proActive) : ?>
@@ -610,9 +618,10 @@ class AdvancedGutenbergAutoInsertMetaboxes {
             $additional_class = ! $this->proActive && ! in_array($tax_name, ['category', 'post_tag']) ? $pro_class : '';
             ?>
             <div class="advgb-promo-overlay-area taxonomy-group <?php echo esc_attr($post_type_classes); ?>" style="<?php echo esc_attr($display_style); ?>">
-                <h4 class="<?php echo esc_attr($additional_class); ?>"><?php echo esc_html($tax_data['label']); ?></h4>
+                <h4 class="<?php echo esc_attr($additional_class); ?>"><label for="advgb_taxonomy_select_<?php echo esc_attr($tax_name); ?>"><?php echo esc_html($tax_data['label']); ?></label></h4>
                 <div class="<?php echo esc_attr($additional_class); ?>">
                     <select name="advgb_taxonomies[<?php echo esc_attr($tax_name); ?>][]" class="advg-insert-taxonomy-select2"
+                        id="advgb_taxonomy_select_<?php echo esc_attr($tax_name); ?>"
                         data-taxonomy="<?php echo esc_attr($tax_name); ?>"
                         data-placeholder="<?php echo esc_attr__('Search terms...', 'advanced-gutenberg'); ?>"
                         multiple="multiple"

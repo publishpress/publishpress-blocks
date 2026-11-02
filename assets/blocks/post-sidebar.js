@@ -115,13 +115,16 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         }, /*#__PURE__*/React.createElement("div", {
           className: "advgb-editor-sidebar-note"
         }, __('Change your editor width', 'advanced-gutenberg')), /*#__PURE__*/React.createElement(ButtonGroup, {
-          className: "advgb-button-group"
+          className: "advgb-button-group",
+          "aria-label": __('Editor width', 'advanced-gutenberg'),
+          role: "group"
         }, EDITOR_WIDTH_SETTINGS.map(function (setting, index) {
           return /*#__PURE__*/React.createElement(Button, {
             className: "advgb-button",
             key: index,
             isSecondary: setting.value !== editorWidth,
             isPrimary: setting.value === editorWidth,
+            "aria-pressed": setting.value === editorWidth,
             onClick: function onClick() {
               return _this.onUpdateMeta({
                 advgb_blocks_editor_width: setting.value
@@ -134,13 +137,16 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         }, /*#__PURE__*/React.createElement("div", {
           className: "advgb-editor-sidebar-note"
         }, __('Border to materialize PublishPress Blocks Column block', 'advanced-gutenberg')), /*#__PURE__*/React.createElement(ButtonGroup, {
-          className: "advgb-button-group"
+          className: "advgb-button-group",
+          "aria-label": __('Columns Visual Guide', 'advanced-gutenberg'),
+          role: "group"
         }, VISUAL_GUIDE_SETTINGS.map(function (setting, index) {
           return /*#__PURE__*/React.createElement(Button, {
             className: "advgb-button",
             key: index,
             isSecondary: setting.value !== columnsVisualGuide,
             isPrimary: setting.value === columnsVisualGuide,
+            "aria-pressed": setting.value === columnsVisualGuide,
             onClick: function onClick() {
               return _this.onUpdateMeta({
                 advgb_blocks_columns_visual_guide: setting.value

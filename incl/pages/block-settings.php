@@ -212,12 +212,18 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                     <?php echo html_entity_decode(html_entity_decode(stripslashes($block['icon']))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>
                 <span class="block-title  <?php echo esc_attr($blur_class); ?>"><?php echo esc_html(__($block['title'], 'advanced-gutenberg')); ?></span>
-                <?php if (isset($block_descriptions[$block['name']])) : ?>
+                <?php if (isset($block_descriptions[$block['name']])) :
+                    $advgb_tooltip_id = 'advgb-block-tooltip-' . sanitize_html_class(str_replace('/', '-', $block['name'])); ?>
                     <span class="ppb-tooltips-library advgb-block-tooltip"
                           data-toggle="ppbtooltip"
                           data-placement="top">
-                        <i class="dashicons dashicons-info-outline" aria-hidden="true"></i>
-                        <span class="tooltip-text">
+                        <button type="button"
+                                class="advgb-block-tooltip-trigger"
+                                aria-label="<?php echo esc_attr(sprintf(__('About the %s block', 'advanced-gutenberg'), wp_strip_all_tags(__($block['title'], 'advanced-gutenberg')))); ?>"
+                                aria-describedby="<?php echo esc_attr($advgb_tooltip_id); ?>">
+                            <i class="dashicons dashicons-info-outline" aria-hidden="true"></i>
+                        </button>
+                        <span class="tooltip-text" role="tooltip" id="<?php echo esc_attr($advgb_tooltip_id); ?>">
                             <?php echo esc_html($block_descriptions[$block['name']]); ?>
                         </span>
                     </span>
@@ -337,6 +343,17 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
 
 <script>
 jQuery(function ($) {
+    // Info tooltips: Esc hides the open tooltip; it can show again on next hover/focus.
+    $(document).on('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            $(document.querySelectorAll('.advgb-block-tooltip:hover, .advgb-block-tooltip:focus-within'))
+                .addClass('advgb-tooltip-dismissed');
+        }
+    });
+    $(document).on('mouseleave focusout', '.advgb-block-tooltip', function () {
+        $(this).removeClass('advgb-tooltip-dismissed');
+    });
+
     var frame;
     $(document).on('click', '#thumb_edit', function (e) {
         e.preventDefault();
@@ -371,15 +388,34 @@ jQuery(function ($) {
     margin-left: 6px;
     line-height: 30px;
 }
+.advgb-block-tooltip .advgb-block-tooltip-trigger {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    cursor: pointer;
+    vertical-align: top;
+}
+.advgb-block-tooltip .advgb-block-tooltip-trigger:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+.advgb-block-tooltip.advgb-tooltip-dismissed .tooltip-text {
+    display: none !important;
+}
 .advgb-block-tooltip .dashicons-info-outline {
-    color: #9fabba;
+    color: #646970;
     font-size: 18px;
     width: 18px;
     height: 18px;
     line-height: 30px;
     transition: color .2s ease;
 }
-.advgb-block-tooltip:hover .dashicons-info-outline {
+.advgb-block-tooltip:hover .dashicons-info-outline,
+.advgb-block-tooltip:focus-within .dashicons-info-outline {
     color: #655997;
 }
 .advgb-block-tooltip .tooltip-text {
@@ -395,7 +431,13 @@ jQuery(function ($) {
     float: right;
     text-decoration: none;
     box-shadow: none;
+}
+.advgb-cd-config-link:focus:not(:focus-visible) {
     outline: none;
+}
+.advgb-cd-config-link:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
 }
 .advgb-cd-config-link .block-config-button {
     float: none;
