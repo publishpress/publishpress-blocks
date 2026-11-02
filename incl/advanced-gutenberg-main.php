@@ -2683,13 +2683,13 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     echo( ! $feature['access'] ? ' advgb-feature-box--disabled' : '' ); ?>">
                         <h2>
                             <?php
-                            echo $feature['title'];
-                            echo ! $feature['access'] ? ' <span>Pro</span>' : '';
+                            echo esc_html($feature['title']);
+                            echo ! $feature['access'] ? ' <span>' . esc_html__('Pro', 'advanced-gutenberg') . '</span>' : '';
                             ?>
                         </h2>
                         <div class="advgb-feature-description">
                             <?php
-                            echo $feature['description'] ?>
+                            echo esc_html($feature['description']) ?>
                         </div>
                         <div class="advgb-feature-setting">
                             <div class="advgb-switch-button">
@@ -2700,12 +2700,12 @@ if (! class_exists('AdvancedGutenbergMain')) {
                                            value="1"
                                     <?php
                                     if ($feature['access']) {
-                                        echo $this->getOptionSetting(
+                                        echo esc_attr($this->getOptionSetting(
                                             'advgb_settings',
                                             $feature['name'],
                                             'checkbox',
                                             $feature['default']
-                                        ) . ' data-feature="' . $feature['name'];
+                                        )) . ' data-feature="' . esc_attr($feature['name']);
                                     } else {
                                         echo ' disabled';
                                     }
@@ -2820,7 +2820,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
                             'advanced-gutenberg'
                         ),
-                        '<a href="' . admin_url('admin.php?page=advgb_main') . '">',
+                        '<a href="' . esc_url(admin_url('admin.php?page=advgb_main')) . '">',
                         '</a>'
                     )
                 );
@@ -2868,7 +2868,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
                             'advanced-gutenberg'
                         ),
-                        '<a href="' . admin_url('admin.php?page=advgb_main') . '">',
+                        '<a href="' . esc_url(admin_url('admin.php?page=advgb_main')) . '">',
                         '</a>'
                     )
                 );
@@ -2981,7 +2981,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
                             'advanced-gutenberg'
                         ),
-                        '<a href="' . admin_url('admin.php?page=advgb_main') . '">',
+                        '<a href="' . esc_url(admin_url('admin.php?page=advgb_main')) . '">',
                         '</a>'
                     )
                 );
@@ -3017,7 +3017,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
                             'advanced-gutenberg'
                         ),
-                        '<a href="' . admin_url('admin.php?page=advgb_main') . '">',
+                        '<a href="' . esc_url(admin_url('admin.php?page=advgb_main')) . '">',
                         '</a>'
                     )
                 );
@@ -3134,7 +3134,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
                             'advanced-gutenberg'
                         ),
-                        '<a href="' . admin_url('admin.php?page=advgb_main') . '">',
+                        '<a href="' . esc_url(admin_url('admin.php?page=advgb_main')) . '">',
                         '</a>'
                     )
                 );
@@ -3764,7 +3764,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $css = $this->getCustomStylesContentCss();
 
             if (!empty($css)) {
-                echo '<style type="text/css">' . AdvancedGutenbergBlockStyles::sanitize_css($css) . '</style>';
+                echo '<style type="text/css">' . wp_strip_all_tags(AdvancedGutenbergBlockStyles::sanitize_css($css)) . '</style>';
             }
         }
 
@@ -3853,7 +3853,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $custom_styles = $this->getAdminEditorCustomStyles();
 
             if (!empty($custom_styles)) {
-                echo '<style type="text/css">' . AdvancedGutenbergBlockStyles::sanitize_css($custom_styles) . '</style>';
+                echo '<style type="text/css">' . wp_strip_all_tags(AdvancedGutenbergBlockStyles::sanitize_css($custom_styles)) . '</style>';
             }
         }
 
@@ -4408,7 +4408,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     <div id="message" class="updated fade">
                         <p>
                             <?php
-                            printf(__('%s saved successfully!', 'advanced-gutenberg'), $label); ?>
+                            printf(esc_html__('%s saved successfully!', 'advanced-gutenberg'), esc_html($label)); ?>
                         </p>
                     </div>
                     <?php
@@ -4418,8 +4418,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         <p>
                             <?php
                             printf(
-                                __('%s can\'t be saved. Please try again.', 'advanced-gutenberg'),
-                                $label
+                                esc_html__('%s can\'t be saved. Please try again.', 'advanced-gutenberg'),
+                                esc_html($label)
                             );
                             ?>
                         </p>
@@ -4432,7 +4432,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 <header>
                     <h1 class="wp-heading-inline">
                         <?php
-                        echo $label; ?>
+                        echo esc_html($label); ?>
                     </h1>
                 </header>
                 <?php
@@ -4455,7 +4455,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                                 <?php
                             } ?>
                             <input type="hidden" name="advgb_feature" id="advgb_feature" value="<?php
-                            echo $feature ?>"/>
+                            echo esc_attr($feature) ?>"/>
                             <?php
                             global $wp_roles;
                             $roles_list = $wp_roles->get_names();
@@ -4478,7 +4478,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                                     </span>
                                 </span>
                                 <button type="submit" name="advgb_block_<?php
-                                        echo $feature ?>_save" class="button button-primary save-profile-button">
+                                        echo esc_attr($feature) ?>_save" class="button button-primary save-profile-button">
                                     <?php
                                     printf(
                                         esc_html__('Save %s Block Permissions', 'advanced-gutenberg'),
@@ -4487,7 +4487,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                                     ?>
                                 </button>
                                 <button type="submit" name="advgb_block_<?php
-                                        echo $feature ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
+                                        echo esc_attr($feature) ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
                                     <?php esc_html_e( 'Save Permission for all Roles', 'advanced-gutenberg' ); ?>
                                 </button>
                             </div>
@@ -4540,7 +4540,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         <div class="tab-content block-list-tab">
                             <div class="advgb-block-feature-loading-msg" style="display: block;">
                                 <?php
-                                _e('Loading...', 'advanced-gutenberg') ?>
+                                esc_html_e('Loading...', 'advanced-gutenberg') ?>
                             </div>
                             <div class="blocks-section">
                                 <input type="hidden" name="blocks_list" id="blocks_list"/>
@@ -4550,7 +4550,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                         <!-- Save button -->
                         <div class="advgb-form-buttons-bottom">
                             <button type="submit" name="advgb_block_<?php
-                                    echo $feature ?>_save" class="button button-primary save-profile-button">
+                                    echo esc_attr($feature) ?>_save" class="button button-primary save-profile-button">
                                 <?php
                                     printf(
                                         esc_html__('Save %s Block Permissions', 'advanced-gutenberg'),
@@ -4559,7 +4559,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                                     ?>
                             </button>
                             <button type="submit" name="advgb_block_<?php
-                                    echo $feature ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
+                                    echo esc_attr($feature) ?>_save_all_roles" class="button button-secondary save-profile-button" style="margin-left: 10px;">
                                 <?php esc_html_e( 'Save Permission for all Roles', 'advanced-gutenberg' ); ?>
                             </button>
                             <span class="advgb-enable-one-block-msg" style="display: none;">
@@ -5199,8 +5199,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     '.publishpress-admin .nav-tab-wrapper { display: none !important; }'
                 );
                 printf(
-                    __('Page not found. Go to %sDashboard%s', 'advanced-gutenberg'),
-                    '<a href="' . admin_url('admin.php?page=advgb_main') . '">',
+                    wp_kses_post(__('Page not found. Go to %sDashboard%s', 'advanced-gutenberg')),
+                    '<a href="' . esc_url(admin_url('admin.php?page=advgb_main')) . '">',
                     '</a>'
                 );
             }

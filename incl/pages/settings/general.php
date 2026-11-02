@@ -21,7 +21,7 @@ if ($blocks_icon_color === '#5952de') {
             <th scope="row">
                 <label for="blocks_icon_color">
                 <?php
-                _e('Blocks icon color', 'advanced-gutenberg') ?>
+                esc_html_e('Blocks icon color', 'advanced-gutenberg') ?>
                 </label>
             </th>
             <td>
@@ -35,7 +35,7 @@ if ($blocks_icon_color === '#5952de') {
                     />
                 <p class="description">
                     <?php
-                    _e(
+                    esc_html_e(
                         'Apply in admin to blocks from PublishPress Blocks plugin.',
                         'advanced-gutenberg'
                     )

@@ -28,7 +28,7 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
             <th scope="row">
                 <label for="recaptcha_enable">
                 <?php
-                _e('Enable reCAPTCHA', 'advanced-gutenberg') ?>
+                esc_html_e('Enable reCAPTCHA', 'advanced-gutenberg') ?>
                 </label>
             </th>
             <td>
@@ -45,9 +45,9 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
             <th scope="row">
                 <label for="recaptcha_site_key">
                 <?php
-                _e('Site key', 'advanced-gutenberg') ?>
+                esc_html_e('Site key', 'advanced-gutenberg') ?>
                 (<?php
-                _e('required', 'advanced-gutenberg') ?>)
+                esc_html_e('required', 'advanced-gutenberg') ?>)
                 </label>
             </th>
             <td>
@@ -64,9 +64,9 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
             <th scope="row">
                 <label for="recaptcha_secret_key">
                 <?php
-                _e('Secret key', 'advanced-gutenberg') ?>
+                esc_html_e('Secret key', 'advanced-gutenberg') ?>
                 (<?php
-                _e('required', 'advanced-gutenberg') ?>)
+                esc_html_e('required', 'advanced-gutenberg') ?>)
                 </label>
             </th>
             <td>
@@ -83,7 +83,7 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
             <th scope="row">
                 <label for="recaptcha_language">
                 <?php
-                _e('Language', 'advanced-gutenberg') ?>
+                esc_html_e('Language', 'advanced-gutenberg') ?>
                 </label>
             </th>
             <td>
@@ -99,7 +99,7 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
                 <p class="description">
                     <a target="_blank" href="https://developers.google.com/recaptcha/docs/language" aria-label="<?php esc_attr_e('Language codes list', 'advanced-gutenberg'); ?>">
                         <?php
-                        _e('Language codes list', 'advanced-gutenberg') ?>
+                        esc_html_e('Language codes list', 'advanced-gutenberg') ?>
                     </a>
                 </p>
             </td>
@@ -108,7 +108,7 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
             <th scope="row">
                 <label for="recaptcha_theme">
                 <?php
-                _e('Theme', 'advanced-gutenberg') ?>
+                esc_html_e('Theme', 'advanced-gutenberg') ?>
                 </label>
             </th>
             <td>
@@ -131,7 +131,7 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
                     </select>
                 <p class="description">
                     <?php
-                    _e(
+                    esc_html_e(
                         'We strongly recommend not using Invisible reCAPTCHA if you have more than 1 Newsletter or Contact forms block in a page.',
                         'advanced-gutenberg'
                     )
