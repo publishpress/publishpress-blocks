@@ -160,7 +160,7 @@ function advgb_note_author_avatar($name, $email = '', $size = 32)
         if ($avatar_url) {
             $img_tag = sprintf(
                 '<img src="%s" width="%d" height="%d" alt="" '
-                    . 'style="position:absolute;inset:0;width:100%%;height:100%%;'
+                    . 'style="position:absolute;top:0;left:0;width:100%%;height:100%%;'
                     . 'border-radius:50%%;object-fit:cover;" '
                     . 'onerror="this.style.display=\'none\'">',
                 esc_url($avatar_url),
@@ -182,7 +182,16 @@ function advgb_note_author_avatar($name, $email = '', $size = 32)
         esc_attr($bg_color),
         (int) $font_size,
         esc_html($initials),
-        $img_tag
+        wp_kses($img_tag, [
+            'img' => [
+                'src'     => true,
+                'width'   => true,
+                'height'  => true,
+                'alt'     => true,
+                'style'   => true,
+                'onerror' => true,
+            ],
+        ])
     );
 }
 

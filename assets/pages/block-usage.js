@@ -455,7 +455,14 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       }, postTypeLabel)), /*#__PURE__*/React.createElement(Button, {
         size: "small",
         icon: isExpanded ? 'arrow-up-alt2' : 'arrow-down-alt2',
-        className: "pp-blocks-usage-expand-button"
+        className: "pp-blocks-usage-expand-button",
+        label: sprintf(/* translators: %s: post title */
+        __('Show blocks in %s', 'advanced-gutenberg'), post.post_title),
+        "aria-expanded": isExpanded,
+        onClick: function onClick(e) {
+          e.stopPropagation();
+          setExpandedPost(isExpanded ? null : post.post_id);
+        }
       })), isExpanded && /*#__PURE__*/React.createElement("div", {
         className: "pp-blocks-usage-post-content"
       }, /*#__PURE__*/React.createElement("div", {
@@ -951,10 +958,14 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       className: "scan-progress-container"
     }, /*#__PURE__*/React.createElement("div", {
       className: "scan-progress"
-    }, /*#__PURE__*/React.createElement("p", null, scanProgress.status), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("p", {
+      role: "status",
+      "aria-live": "polite"
+    }, scanProgress.status), /*#__PURE__*/React.createElement("div", {
       className: "progress-wrap"
     }, /*#__PURE__*/React.createElement(ProgressBar, {
-      value: scanProgress.total > 0 ? scanProgress.current / scanProgress.total * 100 : 0
+      value: scanProgress.total > 0 ? scanProgress.current / scanProgress.total * 100 : 0,
+      "aria-label": __('Scan progress', 'advanced-gutenberg')
     })))), data.lastScanDate && /*#__PURE__*/React.createElement("div", {
       className: "pp-blocks-usage-last-scan"
     }, /*#__PURE__*/React.createElement("span", null, __('Last scan:', 'advanced-gutenberg'), " ", new Date(data.lastScanDate).toLocaleString()), /*#__PURE__*/React.createElement("div", {
@@ -1051,6 +1062,9 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         }, /*#__PURE__*/React.createElement(Button, {
           variant: "secondary",
           size: "small",
+          "aria-label": sprintf(/* translators: %s: block name */
+          __('Details: %s', 'advanced-gutenberg'), bt.title),
+          "aria-pressed": !!(selected && selected.name === bt.name),
           onClick: function onClick(e) {
             e.stopPropagation();
             handleDetailsClick(bt);

@@ -79,7 +79,12 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
 
     // Class edit components cannot call useBlockProps(), so wrap them with a function component.
     // This restores editor selection data attributes and toolbar click handling for API v3 blocks.
-    if (settings.apiVersion === 3 && typeof settings.edit === 'function' && !settings.__advgbUsesBlockProps) {
+    // In WordPress 7.1, withSelect() returns a memo() component object, not a function,
+    // so edits built with compose(withSelect, ...) must be wrapped too.
+    const isEditComponent = typeof settings.edit === 'function'
+        || (settings.edit !== null && typeof settings.edit === 'object' && !!settings.edit.$$typeof);
+
+    if (settings.apiVersion === 3 && isEditComponent && !settings.__advgbUsesBlockProps) {
         const Edit = settings.edit;
         const getEditWrapperProps = settings.getEditWrapperProps;
 

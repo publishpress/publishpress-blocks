@@ -1,4 +1,4 @@
-const { __ } = wp.i18n;
+const { __, _n, sprintf } = wp.i18n;
 const { Component } = wp.element;
 const { Button, Modal, SelectControl, TextControl } = wp.components;
 
@@ -11,6 +11,34 @@ class IconListPopup extends Component {
             selectedIcon: '',
             selectedIconTheme: 'outlined',
         }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        // Announce the number of matching icons after the search text changes
+        if (prevState.searchedText !== this.state.searchedText) {
+            clearTimeout(this.speakTimeout);
+            this.speakTimeout = setTimeout(() => {
+                const count = this.getFilteredIcons().length;
+                if (window.wp && window.wp.a11y && typeof window.wp.a11y.speak === 'function') {
+                    window.wp.a11y.speak(
+                        sprintf(
+                            _n('%d icon found.', '%d icons found.', count, 'advanced-gutenberg'),
+                            count
+                        )
+                    );
+                }
+            }, 500);
+        }
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.speakTimeout);
+    }
+
+    getFilteredIcons() {
+        const searchedText = this.state.searchedText;
+        return Object.keys(advgbBlocks.iconList['material'])
+            .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1);
     }
 
     componentWillMount() {
@@ -56,6 +84,8 @@ class IconListPopup extends Component {
                 >
                     <div className="popup-body">
                         <TextControl
+                            label={ __( 'Search icons', 'advanced-gutenberg' ) }
+                            hideLabelFromVision
                             placeholder={ __( 'Search icons', 'advanced-gutenberg' ) }
                             value={ searchedText }
                             onChange={ (value) => this.setState( { searchedText: value } ) }
@@ -77,7 +107,12 @@ class IconListPopup extends Component {
                                 });
                             } }
                         />
-                        <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflowY: 'auto', overflowX: 'hidden'} }>
+                        <div
+                            className="advgb-icon-items-wrapper button-icons-list"
+                            style={ {maxHeight: 300, overflowY: 'auto', overflowX: 'hidden'} }
+                            role="group"
+                            aria-label={ __( 'Icons', 'advanced-gutenberg' ) }
+                        >
 
                             {Object.keys(advgbBlocks.iconList[iconType])
                                 .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)
@@ -91,15 +126,22 @@ class IconListPopup extends Component {
                                     return (
                                         <div className="advgb-icon-item" key={ index }>
                                             <span
-                                                onClick={ () => {
-                                                    this.setState({
-                                                        selectedIcon: icon
-                                                    })
-                                                } }
-                                                className={ icon === selectedIcon && 'active' }
-                                                title={ icon }
+                                                className={ icon === selectedIcon ? 'active' : undefined }
                                             >
-                                                <i className={ iconClass }>{icon}</i>
+                                                <button
+                                                    type="button"
+                                                    className="advgb-icon-item-button"
+                                                    onClick={ () => {
+                                                        this.setState({
+                                                            selectedIcon: icon
+                                                        })
+                                                    } }
+                                                    title={ icon }
+                                                    aria-label={ icon.split('_').join(' ') }
+                                                    aria-pressed={ icon === selectedIcon }
+                                                >
+                                                    <i className={ iconClass } aria-hidden="true">{icon}</i>
+                                                </button>
                                             </span>
                                         </div>
                                     )

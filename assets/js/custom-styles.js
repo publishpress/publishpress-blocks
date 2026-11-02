@@ -50,6 +50,8 @@ class AdvGbCustomStyles {
     setActiveTab() {
         this.$('.advgb-main-tabs .advgb-tab').removeClass('active');
         this.$(`.advgb-main-tabs .advgb-tab[data-tab="${this.activeTab}"]`).addClass('active');
+        this.syncTabsState(this.$('.advgb-main-tabs .advgb-tabs-panel'));
+        this.syncTabsState(this.$('.advgb-sub-tabs .advgb-tabs-panel'));
 
         this.$('.advgb-tab-content.main-tab-content').hide();
         this.$(`[data-tab-content="${this.activeTab}"]`).show();
@@ -138,6 +140,19 @@ class AdvGbCustomStyles {
 
             self.$(this).addClass('active');
             self.$(`[data-tab-content="${tabId}"]`).show();
+            self.syncTabsState(tabWrap);
+        });
+    }
+
+    // Expose the active tab to assistive technology (aria-current on the active link)
+    syncTabsState($panels) {
+        $panels.find('.advgb-tab').each((index, tab) => {
+            const $link = this.$(tab).children('a');
+            if (this.$(tab).hasClass('active')) {
+                $link.attr('aria-current', 'true');
+            } else {
+                $link.removeAttr('aria-current');
+            }
         });
     }
 
@@ -199,8 +214,26 @@ class AdvGbCustomStyles {
             this.editor = CodeMirror.fromTextArea(cssArea, {
                 mode: 'css',
                 lineNumbers: true,
-                extraKeys: { "Ctrl-Space": "autocomplete" }
+                extraKeys: {
+                    "Ctrl-Space": "autocomplete",
+                    // Keyboard trap escape: Esc leaves the editor so Tab can move on
+                    "Esc": (cm) => {
+                        cm.getInputField().blur();
+                    }
+                }
             });
+
+            // Give the CodeMirror input an accessible name and help text
+            const inputField = this.editor.getInputField();
+            const cssLabel = document.querySelector('label[for="advgb-customstyles-css"]');
+            if (inputField) {
+                if (cssLabel) {
+                    inputField.setAttribute('aria-label', cssLabel.textContent.trim());
+                }
+                if (document.getElementById('advgb-customstyles-css-help')) {
+                    inputField.setAttribute('aria-describedby', 'advgb-customstyles-css-help');
+                }
+            }
 
             this.setupEditorEvents();
         }
