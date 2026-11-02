@@ -146,7 +146,7 @@ class Abilities
     {
         return [
             'type'                 => 'object',
-            'properties'           => new stdClass(),
+            'properties'           => [], // An array: core's validator indexes properties as an array, so stdClass fatals when arguments are sent
             'additionalProperties' => false,
         ];
     }

@@ -1,7 +1,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-[3.77.0] - [Unreleased]
+[Unreleased]
 
 - Feature: Add MCP actions for Blocks settings, role permissions, visibility presets, custom styles, Auto Insert, post blocks, reusable blocks, Post Notes and form submission exports, with feature discovery, settings previews, bulk role updates and native permission checks.
 

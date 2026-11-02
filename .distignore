@@ -27,6 +27,8 @@
 .rsync-filters-pro-build
 .travis.yml
 .vscode
+/.agents
+/docs
 .wordpress-org
 /assets/jsx
 /assets_wp

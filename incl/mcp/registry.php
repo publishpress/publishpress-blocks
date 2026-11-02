@@ -42,7 +42,7 @@ class Registry
         ]);
     }
 
-    /** Validate types before callbacks can read identifiers or mutate settings. @since 3.77.0 */
+    /** Validate types before callbacks can read identifiers or mutate settings. @since 3.7.7 */
     public static function guard(callable $callback, array $schema, bool $permission = false): callable
     {
         return static function ($values = []) use ($callback, $schema, $permission) {
@@ -100,7 +100,7 @@ class Registry
         return rest_validate_value_from_schema($value, $schema, 'input');
     }
 
-    /** Reject scalar coercion and malformed nested lists before permission or write callbacks. @since 3.77.0 */
+    /** Reject scalar coercion and malformed nested lists before permission or write callbacks. @since 3.7.7 */
     public static function matchesType($value, array $schema, int $depth = 0): bool
     {
         if ($depth > 40) {
