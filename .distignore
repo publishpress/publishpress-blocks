@@ -29,6 +29,13 @@
 .vscode
 .wordpress-org
 /assets/jsx
+/assets/blocks/blocks.js
+/assets/blocks/blocks.js.LICENSE.txt
+/assets/blocks/blocks.js.map
+/assets/blocks/frontend.js
+/assets/blocks/frontend.js.LICENSE.txt
+/assets/blocks/frontend.js.map
+/assets/js/codemirror/lib/codemirror.js
 /assets_wp
 /bundled/**
 /dev-workspace
