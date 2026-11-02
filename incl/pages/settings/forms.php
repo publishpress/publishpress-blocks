@@ -119,7 +119,7 @@ $contact_form_email_receiver = $this->getOptionSetting(
                 name="save_email_config"
         >
             <?php
-            esc_htmlesc_html_e('Save Form Settings', 'advanced-gutenberg') ?>
+            esc_html_e('Save Form Settings', 'advanced-gutenberg') ?>
         </button>
     </div>
 </form>

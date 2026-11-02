@@ -8,13 +8,13 @@ defined('ABSPATH') || die;
         wp_nonce_field('advgb_controls_block_nonce', 'advgb_controls_block_nonce_field'); ?>
         <div class="advgb-search-wrapper">
             <label for="advgb-block-search" class="screen-reader-text">
-                <?php esc_htmlesc_html_e('Search blocks', 'advanced-gutenberg') ?>
+                <?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>
             </label>
             <input type="text"
                    id="advgb-block-search"
                    class="blocks-search-input advgb-search-input"
                    placeholder="<?php
-                    esc_attresc_html_e('Search blocks', 'advanced-gutenberg') ?>"
+                    esc_attr_e('Search blocks', 'advanced-gutenberg') ?>"
             >
         </div>
         <div class="advgb-toggle-wrapper">
@@ -25,7 +25,7 @@ defined('ABSPATH') || die;
                     <input type="checkbox"
                            name="toggle_all_blocks"
                            id="toggle_all_blocks"
-                           aria-label="<?php esc_attresc_html_e('Enable or disable controls for all blocks', 'advanced-gutenberg') ?>"
+                           aria-label="<?php esc_attr_e('Enable or disable controls for all blocks', 'advanced-gutenberg') ?>"
                     >
                     <span class="slider" aria-hidden="true"></span>
                 </label>
@@ -36,7 +36,7 @@ defined('ABSPATH') || die;
                 <span>
                     <span>
                         <?php
-                        esc_attresc_html_e(
+                        esc_attr_e(
                             'To save this configuration, enable at least one block.',
                             'advanced-gutenberg'
                         )
@@ -51,7 +51,7 @@ defined('ABSPATH') || die;
             >
                 <span>
                     <?php
-                    esc_htmlesc_html_e('Save Blocks', 'advanced-gutenberg') ?>
+                    esc_html_e('Save Blocks', 'advanced-gutenberg') ?>
                 </span>
             </button>
         </div>
@@ -76,7 +76,7 @@ defined('ABSPATH') || die;
         >
             <span>
                 <?php
-                esc_htmlesc_html_e('Save Blocks', 'advanced-gutenberg') ?>
+                esc_html_e('Save Blocks', 'advanced-gutenberg') ?>
             </span>
         </button>
         <span class="advgb-enable-one-block-msg" style="display: none;">
@@ -84,7 +84,7 @@ defined('ABSPATH') || die;
                 <span class="dashicons dashicons-warning"></span>
                 <span>
                     <?php
-                    esc_attresc_html_e(
+                    esc_attr_e(
                         'To save this configuration, enable at least one block.',
                         'advanced-gutenberg'
                     )

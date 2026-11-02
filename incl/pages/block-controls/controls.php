@@ -350,7 +350,7 @@ $capabilities_control = PublishPress\Blocks\Controls::getControlValue('capabilit
                 name="save_controls"
         >
             <?php
-            esc_htmlesc_html_e('Save Controls', 'advanced-gutenberg') ?>
+            esc_html_e('Save Controls', 'advanced-gutenberg') ?>
         </button>
     </div>
 </form>

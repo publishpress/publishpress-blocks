@@ -35,7 +35,7 @@ $newsletter_count  = $newsletter_saved ? count($newsletter_saved) : 0;
                     >
                         <span class="dashicons dashicons-download"></span>
                         <?php
-                        esc_htmlesc_html_e('CSV', 'advanced-gutenberg'); ?>
+                        esc_html_e('CSV', 'advanced-gutenberg'); ?>
                     </button>
                     <button type="submit"
                             class="button advgb-export-download"
@@ -46,7 +46,7 @@ $newsletter_count  = $newsletter_saved ? count($newsletter_saved) : 0;
                     >
                         <span class="dashicons dashicons-download"></span>
                         <?php
-                        esc_htmlesc_html_e('JSON', 'advanced-gutenberg'); ?>
+                        esc_html_e('JSON', 'advanced-gutenberg'); ?>
                     </button>
                 </label>
             </td>
@@ -75,7 +75,7 @@ $newsletter_count  = $newsletter_saved ? count($newsletter_saved) : 0;
                     >
                         <span class="dashicons dashicons-download"></span>
                         <?php
-                        esc_htmlesc_html_e('CSV', 'advanced-gutenberg'); ?>
+                        esc_html_e('CSV', 'advanced-gutenberg'); ?>
                     </button>
                     <button type="submit"
                             class="button advgb-export-download"
@@ -86,7 +86,7 @@ $newsletter_count  = $newsletter_saved ? count($newsletter_saved) : 0;
                     >
                         <span class="dashicons dashicons-download"></span>
                         <?php
-                        esc_htmlesc_html_e('JSON', 'advanced-gutenberg'); ?>
+                        esc_html_e('JSON', 'advanced-gutenberg'); ?>
                     </button>
                 </label>
             </td>

@@ -51,7 +51,7 @@ if ($blocks_icon_color === '#5952de') {
                 name="save_settings_general"
         >
             <?php
-            esc_htmlesc_html_e('Save Settings', 'advanced-gutenberg') ?>
+            esc_html_e('Save Settings', 'advanced-gutenberg') ?>
         </button>
     </div>
 </form>

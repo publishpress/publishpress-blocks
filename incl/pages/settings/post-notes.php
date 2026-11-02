@@ -34,7 +34,7 @@ $post_notes_block_toolbar = $this->getOptionSetting('advgb_settings', 'post_note
                 class="button button-primary"
                 name="save_settings_post_notes"
         >
-            <?php esc_htmlesc_html_e('Save Post Notes Settings', 'advanced-gutenberg') ?>
+            <?php esc_html_e('Save Post Notes Settings', 'advanced-gutenberg') ?>
         </button>
     </div>
 </form>

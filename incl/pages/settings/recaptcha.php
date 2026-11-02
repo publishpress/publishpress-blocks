@@ -34,7 +34,7 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
                     <input type="checkbox"
                            name="recaptcha_enable"
                            id="recaptcha_enable"
-                           aria-label="<?php esc_attresc_html_e('Enable reCAPTCHA', 'advanced-gutenberg') ?>"
+                           aria-label="<?php esc_attr_e('Enable reCAPTCHA', 'advanced-gutenberg') ?>"
                            value="1"
                         <?php
                         echo esc_attr($recaptcha_enabled) ?>
@@ -91,7 +91,7 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
                            name="recaptcha_language"
                            id="recaptcha_language"
                            placeholder="<?php
-                            esc_attresc_html_e('Auto detect', 'advanced-gutenberg'); ?>"
+                            esc_attr_e('Auto detect', 'advanced-gutenberg'); ?>"
                            value="<?php
                             echo esc_attr($recaptcha_language) ?>"
                            style="width: 50px;"
@@ -116,17 +116,17 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
                         <option value="light" <?php
                         echo $recaptcha_theme === 'light' ? 'selected' : '' ?>>
                             <?php
-                            esc_htmlesc_html_e('Light', 'advanced-gutenberg'); ?>
+                            esc_html_e('Light', 'advanced-gutenberg'); ?>
                         </option>
                         <option value="dark" <?php
                         echo $recaptcha_theme === 'dark' ? 'selected' : '' ?>>
                             <?php
-                            esc_htmlesc_html_e('Dark', 'advanced-gutenberg'); ?>
+                            esc_html_e('Dark', 'advanced-gutenberg'); ?>
                         </option>
                         <option value="invisible" <?php
                         echo $recaptcha_theme === 'invisible' ? 'selected' : '' ?>>
                             <?php
-                            esc_htmlesc_html_e('Invisible', 'advanced-gutenberg'); ?>
+                            esc_html_e('Invisible', 'advanced-gutenberg'); ?>
                         </option>
                     </select>
                 </label>
@@ -149,7 +149,7 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
                 name="save_recaptcha_config"
         >
             <?php
-            esc_htmlesc_html_e('Save reCAPTCHA Settings', 'advanced-gutenberg') ?>
+            esc_html_e('Save reCAPTCHA Settings', 'advanced-gutenberg') ?>
         </button>
     </div>
 

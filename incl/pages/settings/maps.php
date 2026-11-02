@@ -28,7 +28,7 @@ $google_api_key_saved = $this->getOptionSetting('advgb_settings', 'google_api_ke
                     <a target="_blank"
                        href="https://developers.google.com/maps/documentation/javascript/get-api-key">
                         <?php
-                        esc_htmlesc_html_e(
+                        esc_html_e(
                             'How to create a Google API Key',
                             'advanced-gutenberg'
                         )
@@ -51,7 +51,7 @@ $google_api_key_saved = $this->getOptionSetting('advgb_settings', 'google_api_ke
                 name="save_settings_maps"
         >
             <?php
-            esc_htmlesc_html_e('Save Maps Settings', 'advanced-gutenberg') ?>
+            esc_html_e('Save Maps Settings', 'advanced-gutenberg') ?>
         </button>
     </div>
 </form>
