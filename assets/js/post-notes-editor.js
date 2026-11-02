@@ -103,7 +103,7 @@
                             null,
                             el(ToolbarButton, {
                                 icon:    el(NoteIcon, null),
-                                label:   'Add note',
+                                label:   ( wp.i18n && wp.i18n.__ ) ? wp.i18n.__( 'Add note', 'advanced-gutenberg' ) : 'Add note',
                                 onClick: function () { triggerCoreAddNote(props.clientId); },
                             })
                         )
@@ -136,18 +136,29 @@
 
         var styleInjected = false;
 
+        // Core's pinned "All notes" button controls the complementary area
+        // "edit-post/collab-history-sidebar" (aria-controls="edit-post:collab-history-sidebar").
+        // That id is not translated, so this works in every site language.
+        var NOTES_SIDEBAR = 'edit-post:collab-history-sidebar';
+
         function findNotesButton() {
+            var button = document.querySelector(
+                '.interface-pinned-items button[aria-controls="' + NOTES_SIDEBAR + '"], '
+                + '.editor-header__settings button[aria-controls="' + NOTES_SIDEBAR + '"]'
+            );
+            if (button) {
+                return button;
+            }
+
+            // Fallback for editors without that id: match core's translated "All notes" label.
+            var label = ( wp.i18n && wp.i18n.__ ) ? wp.i18n.__( 'All notes' ) : 'All notes';
             var candidates = document.querySelectorAll(
                 '.interface-pinned-items button, '
                 + '.editor-header__settings button, '
                 + '.edit-post-header__settings button'
             );
             for (var i = 0; i < candidates.length; i++) {
-                var text = (
-                    (candidates[i].getAttribute('aria-label') || '')
-                    + ' ' + (candidates[i].getAttribute('title') || '')
-                ).toLowerCase();
-                if (text.indexOf('note') !== -1) {
+                if (candidates[i].getAttribute('aria-label') === label) {
                     return candidates[i];
                 }
             }

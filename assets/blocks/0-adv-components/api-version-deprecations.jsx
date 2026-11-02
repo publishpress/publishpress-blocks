@@ -9,6 +9,33 @@ const getDefaultBlockClassName = (blockName) => {
     return `wp-block-${blockName.replace('/', '-')}`;
 };
 
+// Gutenberg stores wrapper/support values in block comment attributes.
+// Make those attributes explicit for both current and deprecated schemas so legacy parses
+// do not drop values such as Additional CSS Class(es) when a deprecation matches.
+const addSupportAttributes = (attributes = {}, supports = {}) => {
+    const nextAttributes = { ...attributes };
+
+    if (supports.customClassName !== false && !nextAttributes.className) {
+        nextAttributes.className = {
+            type: 'string',
+        };
+    }
+
+    if (supports.anchor && !nextAttributes.anchor) {
+        nextAttributes.anchor = {
+            type: 'string',
+        };
+    }
+
+    if (supports.align && !nextAttributes.align) {
+        nextAttributes.align = {
+            type: 'string',
+        };
+    }
+
+    return nextAttributes;
+};
+
 // API v3 no longer injects wrapper classes into save markup for these legacy saves.
 // Preserve each block's existing root element and add the default and custom classes when missing.
 const addSaveBlockClassNames = (element, blockName, customClassName = '') => {
@@ -52,7 +79,12 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
 
     // Class edit components cannot call useBlockProps(), so wrap them with a function component.
     // This restores editor selection data attributes and toolbar click handling for API v3 blocks.
-    if (settings.apiVersion === 3 && typeof settings.edit === 'function' && !settings.__advgbUsesBlockProps) {
+    // In WordPress 7.1, withSelect() returns a memo() component object, not a function,
+    // so edits built with compose(withSelect, ...) must be wrapped too.
+    const isEditComponent = typeof settings.edit === 'function'
+        || (settings.edit !== null && typeof settings.edit === 'object' && !!settings.edit.$$typeof);
+
+    if (settings.apiVersion === 3 && isEditComponent && !settings.__advgbUsesBlockProps) {
         const Edit = settings.edit;
         const getEditWrapperProps = settings.getEditWrapperProps;
 
@@ -78,11 +110,17 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
         return settings;
     }
 
+    settings.attributes = addSupportAttributes(settings.attributes, settings.supports);
+
     // Keep the pre-wrapper save available so existing post content remains valid after migration.
     const deprecated = Array.isArray(settings.deprecated)
         ? settings.deprecated.map((deprecation) => ({
             ...deprecation,
             apiVersion: deprecation.apiVersion || 1,
+            attributes: addSupportAttributes(
+                deprecation.attributes || settings.attributes,
+                deprecation.supports || settings.supports
+            ),
         }))
         : [];
 

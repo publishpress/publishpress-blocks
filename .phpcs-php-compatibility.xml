@@ -30,4 +30,6 @@
     <exclude-pattern>/.wordpress-org/*</exclude-pattern>
 
     <rule ref="PHPCompatibility"/>
+    <exclude-pattern>/\.web/</exclude-pattern>
+    <exclude-pattern>/\.ddev/</exclude-pattern>
 </ruleset>

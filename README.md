@@ -70,6 +70,8 @@ Please note there are other commands related to CSS compilation that involves sp
 
 Check the commands related to JS minification in composer.json scripts. All of them uses uglifyjs.
 
+`composer build:js` compiles the JSX and then regenerates every `.min.js` file (`composer minify:js`). Production loads the `.min.js` files and the release zip leaves out the large readable ones, so always rebuild after changing JS. `node --test tests/` fails if a `.min.js` file is stale.
+
 #### Creating a zip installer
 
 Inside Docker run `composer build`.

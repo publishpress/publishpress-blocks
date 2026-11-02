@@ -211,6 +211,7 @@
                                 <input type="text" disabled={ true }
                                        className="advgb-form-input"
                                        value={ emailLabel ? emailLabel : 'Email address' }
+                                       aria-label={ emailLabel ? emailLabel : 'Email address' }
                                        style={ {
                                            backgroundColor: bgColor,
                                            color: textColor,
@@ -241,6 +242,7 @@
                                     <input type="text" disabled={ true }
                                            className="advgb-form-input"
                                            value={ fnameLabel ? fnameLabel : __( 'First Name', 'advanced-gutenberg' ) }
+                                           aria-label={ fnameLabel ? fnameLabel : __( 'First Name', 'advanced-gutenberg' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -254,6 +256,7 @@
                                     <input type="text" disabled={ true }
                                            className="advgb-form-input"
                                            value={ lnameLabel ? lnameLabel : __( 'Last Name', 'advanced-gutenberg' ) }
+                                           aria-label={ lnameLabel ? lnameLabel : __( 'Last Name', 'advanced-gutenberg' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -267,6 +270,7 @@
                                     <input type="text" disabled={ true }
                                            className="advgb-form-input"
                                            value={ emailLabel ? emailLabel : 'Email address' }
+                                           aria-label={ emailLabel ? emailLabel : 'Email address' }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -405,6 +409,7 @@
                                 <input type="email"
                                        className="advgb-form-input advgb-form-input-email"
                                        placeholder={ emailLabel ? emailLabel : 'Email address' }
+                                       aria-label={ emailLabel ? emailLabel : 'Email address' }
                                        style={ {
                                            backgroundColor: bgColor,
                                            color: textColor,
@@ -437,6 +442,7 @@
                                     <input type="text"
                                            className="advgb-form-input advgb-form-input-fname"
                                            placeholder={ fnameLabel ? fnameLabel : __( 'First Name', 'advanced-gutenberg' ) }
+                                           aria-label={ fnameLabel ? fnameLabel : __( 'First Name', 'advanced-gutenberg' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -450,6 +456,7 @@
                                     <input type="text"
                                            className="advgb-form-input advgb-form-input-lname"
                                            placeholder={ lnameLabel ? lnameLabel : __( 'Last Name', 'advanced-gutenberg' ) }
+                                           aria-label={ lnameLabel ? lnameLabel : __( 'Last Name', 'advanced-gutenberg' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -463,6 +470,7 @@
                                     <input type="email"
                                            className="advgb-form-input advgb-form-input-email"
                                            placeholder={ emailLabel ? emailLabel : 'Email address' }
+                                           aria-label={ emailLabel ? emailLabel : 'Email address' }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -493,6 +501,190 @@
                     </form>
                 </div>
             );
-        }
+        },
+        deprecated: [
+            {
+                attributes: {
+                    formStyle: {
+                        type: 'string',
+                        default: 'default',
+                    },
+                    formWidth: {
+                        type: 'number',
+                        default: 400,
+                    },
+                    fnameLabel: {
+                        type: 'string',
+                    },
+                    lnameLabel: {
+                        type: 'string',
+                    },
+                    emailLabel: {
+                        type: 'string',
+                    },
+                    submitLabel: {
+                        type: 'string',
+                    },
+                    successLabel: {
+                        type: 'string',
+                    },
+                    alertLabel: {
+                        type: 'string',
+                    },
+                    bgColor: {
+                        type: 'string',
+                    },
+                    textColor: {
+                        type: 'string',
+                    },
+                    borderStyle: {
+                        type: 'string',
+                    },
+                    borderColor: {
+                        type: 'string',
+                    },
+                    borderRadius: {
+                        type: 'number',
+                    },
+                    submitColor: {
+                        type: 'string',
+                    },
+                    submitBgColor: {
+                        type: 'string',
+                    },
+                    submitRadius: {
+                        type: 'number',
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    isPreview: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                },
+                supports: {
+                    anchor: true
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        formStyle,
+                        formWidth,
+                        fnameLabel,
+                        lnameLabel,
+                        emailLabel,
+                        submitLabel,
+                        successLabel,
+                        alertLabel,
+                        bgColor,
+                        textColor,
+                        borderColor,
+                        borderStyle,
+                        borderRadius,
+                        submitColor,
+                        submitBgColor,
+                        submitRadius,
+                    } = attributes;
+
+                    return (
+                        <div className={`advgb-newsletter clearfix style-${formStyle}`} style={ { maxWidth: formWidth } }>
+                            <form method="POST" className="clearfix">
+                                {formStyle === 'default' && (
+                                    <div className="advgb-form-field">
+                                        <input type="email"
+                                               className="advgb-form-input advgb-form-input-email"
+                                               placeholder={ emailLabel ? emailLabel : 'Email address' }
+                                               style={ {
+                                                   backgroundColor: bgColor,
+                                                   color: textColor,
+                                                   borderColor: borderColor,
+                                                   borderStyle: borderStyle,
+                                                   borderRadius: borderRadius,
+                                               } }
+                                        />
+                                        <div className="advgb-form-submit-wrapper">
+                                            <button className="advgb-form-submit"
+                                                    type="submit"
+                                                    data-success={ successLabel ? successLabel : undefined }
+                                                    data-alert={ alertLabel ? alertLabel : undefined }
+                                                    style={ {
+                                                        borderColor: submitColor,
+                                                        color: submitColor,
+                                                        backgroundColor: submitBgColor,
+                                                        borderRadius: submitRadius,
+                                                    } }
+                                            >
+                                                { submitLabel ? submitLabel : 'Submit' }
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) }
+
+                                {formStyle === 'alt' && (
+                                    <Fragment>
+                                        <div className="advgb-form-field advgb-form-field-full">
+                                            <input type="text"
+                                                   className="advgb-form-input advgb-form-input-fname"
+                                                   placeholder={ fnameLabel ? fnameLabel : __( 'First Name', 'advanced-gutenberg' ) }
+                                                   style={ {
+                                                       backgroundColor: bgColor,
+                                                       color: textColor,
+                                                       borderColor: borderColor,
+                                                       borderStyle: borderStyle,
+                                                       borderRadius: borderRadius,
+                                                   } }
+                                            />
+                                        </div>
+                                        <div className="advgb-form-field advgb-form-field-full">
+                                            <input type="text"
+                                                   className="advgb-form-input advgb-form-input-lname"
+                                                   placeholder={ lnameLabel ? lnameLabel : __( 'Last Name', 'advanced-gutenberg' ) }
+                                                   style={ {
+                                                       backgroundColor: bgColor,
+                                                       color: textColor,
+                                                       borderColor: borderColor,
+                                                       borderStyle: borderStyle,
+                                                       borderRadius: borderRadius,
+                                                   } }
+                                            />
+                                        </div>
+                                        <div className="advgb-form-field advgb-form-field-full">
+                                            <input type="email"
+                                                   className="advgb-form-input advgb-form-input-email"
+                                                   placeholder={ emailLabel ? emailLabel : 'Email address' }
+                                                   style={ {
+                                                       backgroundColor: bgColor,
+                                                       color: textColor,
+                                                       borderColor: borderColor,
+                                                       borderStyle: borderStyle,
+                                                       borderRadius: borderRadius,
+                                                   } }
+                                            />
+                                        </div>
+                                        <div className="advgb-form-submit-wrapper">
+                                            <button className="advgb-form-submit"
+                                                    type="submit"
+                                                    data-success={ successLabel ? successLabel : undefined }
+                                                    data-alert={ alertLabel ? alertLabel : undefined }
+                                                    style={ {
+                                                        borderColor: submitColor,
+                                                        color: submitColor,
+                                                        backgroundColor: submitBgColor,
+                                                        borderRadius: submitRadius,
+                                                    } }
+                                            >
+                                                { submitLabel ? submitLabel : 'Submit' }
+                                            </button>
+                                        </div>
+                                    </Fragment>
+                                ) }
+                                <div className="advgb-grecaptcha clearfix"/>
+                            </form>
+                        </div>
+                    );
+                }
+            },
+        ],
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

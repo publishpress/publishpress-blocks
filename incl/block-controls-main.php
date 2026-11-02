@@ -31,12 +31,6 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
 
                 $show_block = true;
 
-                // Cache device type detection for performance
-                static $device_type = null;
-                if ($device_type === null) {
-                    $device_type = self::getDeviceType();
-                }
-
                 foreach ($controls as $key => $item) {
                     if (
                         isset($item['control'])
@@ -55,7 +49,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                             if (!self::checkPresetControls($block_content, $block, $item, $key)) {
                                 $show_block = false;
                             }
-                        } elseif (self::displayBlock($block, $item['control'], $key, $device_type) === false) {
+                        } elseif (self::displayBlock($block, $item['control'], $key) === false) {
                                 // Stop iteration; we reached a control that decides block shouln't be displayed
                                 $show_block = false;
                         }
@@ -1108,7 +1102,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             if (isset($_POST['save_controls'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 if (
                     !wp_verify_nonce(
-                        sanitize_key($_POST['advgb_controls_settings_nonce_field']),
+                        sanitize_key(wp_unslash($_POST['advgb_controls_settings_nonce_field'])),
                         'advgb_controls_settings_nonce'
                     )
                 ) {
@@ -1141,15 +1135,16 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                         str_replace(
                             '/wp-admin/',
                             '',
-                            sanitize_url($_POST['_wp_http_referer']) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                            sanitize_url(wp_unslash($_POST['_wp_http_referer'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                         )
                     )
                 );
+                exit;
             } // Blocks
             elseif (isset($_POST['save_blocks'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 if (
                     !wp_verify_nonce(
-                        sanitize_key($_POST['advgb_controls_block_nonce_field']),
+                        sanitize_key(wp_unslash($_POST['advgb_controls_block_nonce_field'])),
                         'advgb_controls_block_nonce'
                     )
                 ) {
@@ -1163,13 +1158,14 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                 ) {
                     $blocks_list = array_map(
                         'sanitize_text_field',
-                        json_decode(stripslashes($_POST['blocks_list'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                        json_decode(wp_unslash($_POST['blocks_list'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                     );
-                    $active_blocks = array_map('sanitize_text_field', $_POST['active_blocks']);
+                    $active_blocks = array_map('sanitize_text_field', wp_unslash($_POST['active_blocks']));
                     $inactive_blocks = array_values(array_diff($blocks_list, $active_blocks));
 
                     // Save block controls
                     $block_controls = get_option('advgb_block_controls');
+                    $block_controls = is_array($block_controls) ? $block_controls : [];
                     $block_controls['active_blocks'] = isset($active_blocks) ? $active_blocks : '';
                     $block_controls['inactive_blocks'] = isset($inactive_blocks) ? $inactive_blocks : '';
 
@@ -1185,10 +1181,11 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                             str_replace(
                                 '/wp-admin/',
                                 '',
-                                sanitize_url($_POST['_wp_http_referer']) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                                sanitize_url(wp_unslash($_POST['_wp_http_referer'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                             )
                         )
                     );
+                    exit;
                 } else {
                     // Redirect with error message / Nothing was saved
                     wp_safe_redirect(
@@ -1199,10 +1196,11 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                             str_replace(
                                 '/wp-admin/',
                                 '',
-                                sanitize_url($_POST['_wp_http_referer']) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                                sanitize_url(wp_unslash($_POST['_wp_http_referer'])) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                             )
                         )
                     );
+                    exit;
                 }
             } else {
                 // Nothing to do here

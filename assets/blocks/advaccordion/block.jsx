@@ -440,6 +440,13 @@
         }
     };
 
+    const currentBlockAttrs = {
+        ...blockAttrs,
+        anchor: {
+            type: 'string',
+        },
+    };
+
     const deprecatedBlockAttrs = {
         ...blockAttrs,
     };
@@ -456,11 +463,14 @@
         },
         category: 'advgb-category',
         keywords: [ __( 'accordion', 'advanced-gutenberg' ), __( 'advanced accordion', 'advanced-gutenberg' ), __( 'list', 'advanced-gutenberg' ), __( 'faq', 'advanced-gutenberg' ) ],
-        attributes: blockAttrs,
+        attributes: currentBlockAttrs,
         example: {
             attributes: {
                 isPreview: true
             },
+        },
+        supports: {
+            anchor: true,
         },
         edit: compose(
             withDispatch( (dispatch, { clientId }, { select }) => {
@@ -481,7 +491,7 @@
             })
         )(AccordionsEdit),
         save: function ( { attributes } ) {
-            const { collapsedAll, expandAll, id } = attributes;
+            const { anchor, collapsedAll, expandAll, id } = attributes;
 
             const accordionsClassName = [
                 id,
@@ -490,6 +500,7 @@
 
             return (
                 <div
+                    id={ anchor || undefined }
                     className={ accordionsClassName }
                     data-collapsed={ collapsedAll ? collapsedAll : undefined }
                     data-expand-all={ expandAll ? expandAll : undefined }

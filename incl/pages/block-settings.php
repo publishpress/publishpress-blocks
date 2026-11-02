@@ -175,7 +175,11 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
     ?>
     <div class="wrap">
         <div class="advgb-search-wrapper" style="padding-bottom: 20px;">
+            <label for="advgb-block-settings-search" class="screen-reader-text">
+                <?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>
+            </label>
             <input type="text"
+                   id="advgb-block-settings-search"
                    class="advgb-search-input blocks-config-search"
                    placeholder="<?php esc_attr_e('Search blocks', 'advanced-gutenberg') ?>"
             >
@@ -187,7 +191,7 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
             <?php foreach ($advgb_blocks as $block) : ?>
                 <?php $iconColor = '';
                 if (isset($block['iconColor'])) :
-                    $iconColor = 'style="color:' . esc_attr($block['iconColor']) . '"';
+                    $iconColor = (string) $block['iconColor'];
                 endif;
 
                 // Use new block title
@@ -204,16 +208,22 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                 }
                 ?>
             <li class="block-config-item advgb-settings-option">
-                <span class="block-icon <?php echo esc_attr($blur_class); ?>" <?php echo $iconColor ?>>
+                <span class="block-icon <?php echo esc_attr($blur_class); ?>" <?php echo $iconColor ? 'style="color:' . esc_attr($iconColor) . '"' : ''; ?>>
                     <?php echo html_entity_decode(html_entity_decode(stripslashes($block['icon']))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>
                 <span class="block-title  <?php echo esc_attr($blur_class); ?>"><?php echo esc_html(__($block['title'], 'advanced-gutenberg')); ?></span>
-                <?php if (isset($block_descriptions[$block['name']])) : ?>
+                <?php if (isset($block_descriptions[$block['name']])) :
+                    $advgb_tooltip_id = 'advgb-block-tooltip-' . sanitize_html_class(str_replace('/', '-', $block['name'])); ?>
                     <span class="ppb-tooltips-library advgb-block-tooltip"
                           data-toggle="ppbtooltip"
                           data-placement="top">
-                        <i class="dashicons dashicons-info-outline" aria-hidden="true"></i>
-                        <span class="tooltip-text">
+                        <button type="button"
+                                class="advgb-block-tooltip-trigger"
+                                aria-label="<?php echo esc_attr(sprintf(__('About the %s block', 'advanced-gutenberg'), wp_strip_all_tags(__($block['title'], 'advanced-gutenberg')))); ?>"
+                                aria-describedby="<?php echo esc_attr($advgb_tooltip_id); ?>">
+                            <i class="dashicons dashicons-info-outline" aria-hidden="true"></i>
+                        </button>
+                        <span class="tooltip-text" role="tooltip" id="<?php echo esc_attr($advgb_tooltip_id); ?>">
                             <?php echo esc_html($block_descriptions[$block['name']]); ?>
                         </span>
                     </span>
@@ -226,17 +236,19 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                             <input type="checkbox"
                                    name="advgb_blocks_enabled[<?php echo esc_attr($block['name']); ?>]"
                                    value="1"
+                                   aria-label="<?php echo esc_attr(sprintf(__('Enable %s block', 'advanced-gutenberg'), wp_strip_all_tags(__($block['title'], 'advanced-gutenberg')))); ?>"
                                 <?php checked($advgb_is_block_enabled($block['name'])); ?>
                             />
-                            <span class="slider"></span>
+                            <span class="slider" aria-hidden="true"></span>
                         </span>
                     </label>
                 <?php endif; ?>
                 <?php if ($block['name'] === 'advgb/recent-posts') : ?>
                     <a href="#TB_inline?width=560&height=360&inlineId=advgb-content-display-config"
                        class="thickbox advgb-cd-config-link"
+                       aria-label="<?php esc_attr_e('Configure Recent Posts block', 'advanced-gutenberg') ?>"
                        title="<?php esc_attr_e('Configure', 'advanced-gutenberg') ?>">
-                        <i class="dashicons dashicons-admin-generic block-config-button"></i>
+                        <i class="dashicons dashicons-admin-generic block-config-button" aria-hidden="true"></i>
                     </a>
                 <?php elseif ($isProPromo) : ?>
                     <span class="advgb-pro-small-overlay-text" style="float: right;">
@@ -245,10 +257,12 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                         </a>
                     </span>
                 <?php elseif (!in_array($block['name'], $excluded_blocks_config)) : ?>
-                    <i class="dashicons dashicons-admin-generic block-config-button"
-                    title="<?php esc_attr_e('Edit', 'advanced-gutenberg') ?>"
-                    data-block="<?php echo esc_attr($block['name']); ?>"
-                    ></i>
+                    <button type="button"
+                            class="dashicons dashicons-admin-generic block-config-button"
+                            aria-label="<?php echo esc_attr(sprintf(__('Edit %s block settings', 'advanced-gutenberg'), wp_strip_all_tags(__($block['title'], 'advanced-gutenberg')))); ?>"
+                            title="<?php esc_attr_e('Edit', 'advanced-gutenberg') ?>"
+                            data-block="<?php echo esc_attr($block['name']); ?>"
+                    ></button>
                 <?php endif; ?>
             </li>
             <?php endforeach; ?>
@@ -294,10 +308,18 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
                             <div class="setting-actions" id="post_default_thumb_actions">
                                 <img class="thumb-selected"
                                      src="<?php echo esc_url($cd_thumb['url']); ?>"
-                                     alt="thumb"
+                                     alt="<?php esc_attr_e('Default post thumbnail', 'advanced-gutenberg'); ?>"
                                      data-default="<?php echo esc_url($cd_default_thumb); ?>"/>
-                                <i class="dashicons dashicons-edit" id="thumb_edit" title="<?php esc_attr_e('Edit', 'advanced-gutenberg'); ?>"></i>
-                                <i class="dashicons dashicons-no" id="thumb_remove" title="<?php esc_attr_e('Reset to default', 'advanced-gutenberg'); ?>"></i>
+                                <button type="button"
+                                        class="dashicons dashicons-edit"
+                                        id="thumb_edit"
+                                        aria-label="<?php esc_attr_e('Select default thumbnail', 'advanced-gutenberg'); ?>"
+                                        title="<?php esc_attr_e('Edit', 'advanced-gutenberg'); ?>"></button>
+                                <button type="button"
+                                        class="dashicons dashicons-no"
+                                        id="thumb_remove"
+                                        aria-label="<?php esc_attr_e('Reset thumbnail to default', 'advanced-gutenberg'); ?>"
+                                        title="<?php esc_attr_e('Reset to default', 'advanced-gutenberg'); ?>"></button>
                             </div>
                         </div>
                         <p class="description">
@@ -321,6 +343,17 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
 
 <script>
 jQuery(function ($) {
+    // Info tooltips: Esc hides the open tooltip; it can show again on next hover/focus.
+    $(document).on('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            $(document.querySelectorAll('.advgb-block-tooltip:hover, .advgb-block-tooltip:focus-within'))
+                .addClass('advgb-tooltip-dismissed');
+        }
+    });
+    $(document).on('mouseleave focusout', '.advgb-block-tooltip', function () {
+        $(this).removeClass('advgb-tooltip-dismissed');
+    });
+
     var frame;
     $(document).on('click', '#thumb_edit', function (e) {
         e.preventDefault();
@@ -355,15 +388,34 @@ jQuery(function ($) {
     margin-left: 6px;
     line-height: 30px;
 }
+.advgb-block-tooltip .advgb-block-tooltip-trigger {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    cursor: pointer;
+    vertical-align: top;
+}
+.advgb-block-tooltip .advgb-block-tooltip-trigger:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+.advgb-block-tooltip.advgb-tooltip-dismissed .tooltip-text {
+    display: none !important;
+}
 .advgb-block-tooltip .dashicons-info-outline {
-    color: #9fabba;
+    color: #646970;
     font-size: 18px;
     width: 18px;
     height: 18px;
     line-height: 30px;
     transition: color .2s ease;
 }
-.advgb-block-tooltip:hover .dashicons-info-outline {
+.advgb-block-tooltip:hover .dashicons-info-outline,
+.advgb-block-tooltip:focus-within .dashicons-info-outline {
     color: #655997;
 }
 .advgb-block-tooltip .tooltip-text {
@@ -379,7 +431,13 @@ jQuery(function ($) {
     float: right;
     text-decoration: none;
     box-shadow: none;
+}
+.advgb-cd-config-link:focus:not(:focus-visible) {
     outline: none;
+}
+.advgb-cd-config-link:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
 }
 .advgb-cd-config-link .block-config-button {
     float: none;

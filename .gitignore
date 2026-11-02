@@ -12,3 +12,5 @@ dev-workspace-cache/
 .phplint-cache
 .phplint.cache
 version.txt
+.web/
+.ddev/

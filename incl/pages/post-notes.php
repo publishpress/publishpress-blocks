@@ -9,6 +9,7 @@ $per_page = (int) get_user_meta($current_user->ID, 'advgb_post_notes_per_page', 
 if ($per_page < 1) {
     $per_page = 20;
 }
+$per_page = min(999, $per_page);
 
 // Column visibility from Screen Options; '_title' (Post) is always shown
 $advgb_screen  = get_current_screen();
@@ -159,7 +160,7 @@ function advgb_note_author_avatar($name, $email = '', $size = 32)
         if ($avatar_url) {
             $img_tag = sprintf(
                 '<img src="%s" width="%d" height="%d" alt="" '
-                    . 'style="position:absolute;inset:0;width:100%%;height:100%%;'
+                    . 'style="position:absolute;top:0;left:0;width:100%%;height:100%%;'
                     . 'border-radius:50%%;object-fit:cover;" '
                     . 'onerror="this.style.display=\'none\'">',
                 esc_url($avatar_url),
@@ -181,7 +182,16 @@ function advgb_note_author_avatar($name, $email = '', $size = 32)
         esc_attr($bg_color),
         (int) $font_size,
         esc_html($initials),
-        $img_tag
+        wp_kses($img_tag, [
+            'img' => [
+                'src'     => true,
+                'width'   => true,
+                'height'  => true,
+                'alt'     => true,
+                'style'   => true,
+                'onerror' => true,
+            ],
+        ])
     );
 }
 
@@ -229,7 +239,10 @@ if ($filter_search) {
             <div class="tablenav top">
                 <div class="alignleft actions">
 
-                    <select name="post_type_filter">
+                    <label for="advgb-post-notes-post-type" class="screen-reader-text">
+                        <?php esc_html_e('Filter by post type', 'advanced-gutenberg') ?>
+                    </label>
+                    <select id="advgb-post-notes-post-type" name="post_type_filter">
                         <option value=""><?php esc_html_e('All post types', 'advanced-gutenberg') ?></option>
                         <?php foreach ($post_types as $pt) : ?>
                             <option value="<?php echo esc_attr($pt->name) ?>"
@@ -239,7 +252,10 @@ if ($filter_search) {
                         <?php endforeach ?>
                     </select>
 
-                    <select name="note_status">
+                    <label for="advgb-post-notes-status" class="screen-reader-text">
+                        <?php esc_html_e('Filter by note status', 'advanced-gutenberg') ?>
+                    </label>
+                    <select id="advgb-post-notes-status" name="note_status">
                         <option value=""><?php esc_html_e('All statuses', 'advanced-gutenberg') ?></option>
                         <option value="open" <?php selected($filter_status, 'open') ?>>
                             <?php esc_html_e('Open', 'advanced-gutenberg') ?>
@@ -249,7 +265,10 @@ if ($filter_search) {
                         </option>
                     </select>
 
-                    <input type="search"
+                    <label for="advgb-post-notes-search" class="screen-reader-text">
+                        <?php esc_html_e('Search by post title', 'advanced-gutenberg') ?>
+                    </label>
+                    <input id="advgb-post-notes-search" type="search"
                            name="s"
                            value="<?php echo esc_attr($filter_search) ?>"
                            placeholder="<?php esc_attr_e('Search by post title…', 'advanced-gutenberg') ?>"

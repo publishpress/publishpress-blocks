@@ -321,6 +321,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 <input type="text" disabled={true}
                                        className="advgb-search-bar-input"
                                        value={ searchPlaceholder ? searchPlaceholder : 'Type to search…' }
+                                       aria-label={ searchPlaceholder ? searchPlaceholder : 'Search' }
                                 />
                                 {searchIconOnRight && searchBarIcon}
                             </div>
@@ -516,6 +517,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                        className="advgb-search-bar-input"
                                        name="s"
                                        placeholder={ searchPlaceholder ? searchPlaceholder : 'Type to search…' }
+                                       aria-label={ searchPlaceholder ? searchPlaceholder : 'Search' }
                                 />
                                 {searchIconOnRight && searchBarIcon}
                             </div>
@@ -526,6 +528,171 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    fullWidth: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    width: {
+                        type: 'number',
+                        default: 500,
+                    },
+                    textColor: {
+                        type: 'string',
+                    },
+                    backgroundColor: {
+                        type: 'string',
+                    },
+                    searchIcon: {
+                        type: 'string',
+                        default: 'icon1',
+                    },
+                    searchIconOnRight: {
+                        type: 'boolean',
+                    },
+                    searchPlaceholder: {
+                        type: 'string',
+                    },
+                    searchButtonEnabled: {
+                        type: 'boolean',
+                        default: true,
+                    },
+                    searchButtonText: {
+                        type: 'string',
+                        default: 'SEARCH',
+                    },
+                    searchButtonTextColor: {
+                        type: 'string',
+                    },
+                    searchButtonBgColor: {
+                        type: 'string',
+                    },
+                    searchButtonRadius: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    searchButtonOnLeft: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    searchBtnId : {
+                        type: 'string',
+                    },
+                    searchBtnHoverColor: {
+                        type: 'string',
+                    },
+                    searchBtnHoverBgColor: {
+                        type: 'string',
+                    },
+                    searchBtnHoverShadow: {
+                        type: 'string',
+                    },
+                    searchBtnHoverShadowH: {
+                        type: 'number',
+                        default: 1,
+                    },
+                    searchBtnHoverShadowV: {
+                        type: 'number',
+                        default: 1,
+                    },
+                    searchBtnHoverShadowBlur: {
+                        type: 'number',
+                        default: 12,
+                    },
+                    searchBtnHoverShadowSpread: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    searchBtnHoverOpacity: {
+                        type: 'number',
+                        default: 100,
+                    },
+                    searchBtnHoverTranSpeed: {
+                        type: 'number',
+                        default: 200,
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    isPreview: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                },
+                supports: {
+                    align: true,
+                    anchor: true
+                },
+                save: function ( { attributes, className } ) {
+                    const {
+                        fullWidth, width, textColor, backgroundColor, searchIcon, searchIconOnRight,
+                        searchPlaceholder, searchButtonEnabled, searchButtonText, searchButtonTextColor,
+                        searchButtonBgColor, searchButtonRadius, searchButtonOnLeft, searchBtnId,
+                    } = attributes;
+                    const blockClassName = [
+                        'wp-block-advgb-search-bar',
+                        'advgb-search-bar-wrapper',
+                        attributes.className,
+                        className,
+                    ].filter( Boolean ).join( ' ' ).split( ' ' ).filter( (value, index, self) => value && self.indexOf(value) === index ).join( ' ' );
+
+                    const searchBarIcon = (
+                        <span className="advgb-search-bar-icon">
+                            {searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon}
+                        </span>
+                    );
+
+                    const searchBarButton = !searchButtonEnabled ? '' : (
+                        <div className="advgb-search-button-wrapper">
+                            <button
+                                type="submit"
+                                className={`advgb-search-bar-button ${searchBtnId}`}
+                                style={ {
+                                    color: searchButtonTextColor,
+                                    borderColor: searchButtonTextColor,
+                                    backgroundColor: searchButtonBgColor,
+                                    borderRadius: searchButtonRadius,
+                                } }
+                            >
+                                {searchButtonText}
+                            </button>
+                        </div>
+                    );
+
+                    return (
+                        <div className={ blockClassName }>
+                            <form method="get"
+                                  action={advgbBlocks.home_url}
+                                  className="advgb-search-bar-form"
+                                  role="search"
+                            >
+                                <div className="advgb-search-bar-inner" style={ { width: fullWidth ? '100%' : width } }>
+                                    {searchButtonOnLeft && searchBarButton}
+                                    <div className="advgb-search-bar"
+                                         style={ {
+                                             backgroundColor: backgroundColor,
+                                             color: textColor,
+                                             borderRadius: searchButtonRadius,
+                                         } }
+                                    >
+                                        {!searchIconOnRight && searchBarIcon}
+                                        <input type="text"
+                                               className="advgb-search-bar-input"
+                                               name="s"
+                                               placeholder={ searchPlaceholder ? searchPlaceholder : 'Type to search…' }
+                                        />
+                                        {searchIconOnRight && searchBarIcon}
+                                    </div>
+                                    {!searchButtonOnLeft && searchBarButton}
+                                </div>
+                            </form>
+                        </div>
+                    );
+                }
+            },
+
             {
                 attributes: blockAttrs,
                 supports: {

@@ -379,6 +379,7 @@
             } = attributes;
             const blockClass = [
                 `advgb-tabs-wrapper`,
+                ['wide', 'full'].includes(attributes.align) && `align${attributes.align}`,
                 `advgb-tab-${tabsStyleD}-desktop`,
                 `advgb-tab-${tabsStyleT}-tablet`,
                 `advgb-tab-${tabsStyleM}-mobile`,
@@ -536,16 +537,21 @@
                                 <li key={ index }
                                     className={`advgb-tab ${tabActive === index ? 'advgb-tab-active' : ''}`}
                                     style={ {
-                                        backgroundColor: headerBgColor,
+                                        backgroundColor: tabActive === index && activeTabBgColor ? activeTabBgColor : headerBgColor,
+                                        '--advgb-active-tab-bg': activeTabBgColor || undefined,
+                                        '--advgb-active-tab-color': activeTabTextColor || undefined,
                                         borderStyle: borderStyle,
                                         borderWidth: borderWidth + 'px',
                                         borderColor: borderColor,
                                         borderRadius: borderRadius + 'px',
                                     } }
                                 >
-                                    <a id={tabAnchors[index]} style={ { color: headerTextColor } }
-                                       onClick={ () => {
+                                    <a id={tabAnchors[index]} style={ { color: tabActive === index && activeTabTextColor ? activeTabTextColor : headerTextColor } }
+                                       onClick={ ( event ) => {
+                                           // Headers live in the parent, but represent individual Tab Item blocks.
+                                           event.stopPropagation();
                                            this.props.updateTabActive( index );
+                                           this.props.selectTab( index );
                                        } }
                                     >
                                         <RichText
@@ -637,17 +643,7 @@
                             />
                         </div>
                     </div>
-                    {!!pid &&
-                    <style>
-                        {activeTabBgColor && `#block-${clientId} li.advgb-tab.advgb-tab-active, #block-${clientId} li.advgb-tab.ui-tabs-active {
-                                background-color: ${activeTabBgColor} !important;
-                            }`}
-                        {activeTabTextColor && `#block-${clientId} li.advgb-tab.advgb-tab-active a, #block-${clientId} li.advgb-tab.ui-tabs-active button.advgb-tab-button,
-                        #block-${clientId} li.advgb-tab.advgb-tab-active a, #block-${clientId} li.advgb-tab.ui-tabs-active a {
-                                color: ${activeTabTextColor} !important;
-                            }`}
-                    </style>
-                    }
+
                 </Fragment>
             )
         }
@@ -771,7 +767,8 @@
             },
         },
         supports: {
-            anchor: true
+            anchor: true,
+            align: ['wide', 'full'],
         },
         edit: compose(
             withSelect( (select, ownProps ) => {
@@ -783,9 +780,16 @@
                 };
             } ),
             withDispatch( (dispatch, { clientId, innerBlocks }, { select } ) => {
-                const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+                const { updateBlockAttributes, selectBlock } = dispatch( 'core/block-editor' );
 
                 return {
+                    selectTab(index) {
+                        const childBlocks = select('core/block-editor').getBlockOrder(clientId);
+                        if (childBlocks[index]) {
+                            // Preserve the caret when clicking an editable tab title.
+                            selectBlock(childBlocks[index], null);
+                        }
+                    },
                     resetOrder() {
                         times( innerBlocks.length, n => {
                             updateBlockAttributes( innerBlocks[ n ].clientId, {
@@ -830,6 +834,7 @@
 
             const blockClass = [
                 `advgb-tabs-wrapper`,
+                ['wide', 'full'].includes(attributes.align) && `align${attributes.align}`,
                 `advgb-tab-${tabsStyleD}-desktop`,
                 `advgb-tab-${tabsStyleT}-tablet`,
                 `advgb-tab-${tabsStyleM}-mobile`,

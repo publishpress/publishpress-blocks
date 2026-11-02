@@ -1,18 +1,18 @@
 === PublishPress Blocks - Block Controls, Block Visibility, Block Permissions ===
 Contributors: publishpress, stevejburge, htmgarcia, olatechpro
-Tags: gutenberg, gutenberg blocks, block editor, block visibility, block permissions
+Tags: conditional blocks, gutenberg blocks, block editor, block visibility, block permissions
 Requires at least: 5.5
-Tested up to: 7.0
-Stable tag: 3.7.4
+Tested up to: 7.1
+Stable tag: 3.7.6
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-PublishPress Blocks is your complete solution for the WordPress block editor. You can control block permissions, styles, visibility, usage and more.
+PublishPress Blocks is the complete solution for the WordPress block editor. Control block permissions, styles, conditional visibility and usage.
 
 == Description ==
 
-[PublishPress Blocks](https://publishpress.com/blocks/) has everything you need to build professional websites with the WordPress block editor. This plugin has complete set of management tools for blocks. You can control which users can add which blocks to posts. You can manage block visibility, including user roles, date, time, device, screen size, and day of the week. Plus you can set default CSS styles, find all your blocks, manage your reusable blocks, and much more.
+[PublishPress Blocks](https://publishpress.com/blocks/) has everything you need to build professional websites with the WordPress block editor. This plugin has complete set of management tools for blocks. You can control which users can add which blocks to posts. You can manage conditional block visibility, including user roles, date, time, device, screen size, and day of the week. Plus you can set default CSS styles, find all your blocks, manage your reusable blocks, and much more.
 
 ## Powerful block editor features in PublishPress Blocks
 
@@ -20,7 +20,7 @@ PublishPress Blocks is your complete solution for the WordPress block editor. Yo
 - **Extra Blocks**: There are over 20 extra blocks including accordions, tabs, and sliders.
 - **PublishPress Blocks**: The blocks include accordions, galleries, sliders, tabs, maps, tables, recent posts, and more.
 - **Block Styles**: You can add your own CSS styles for your blocks. Anyone editing posts can quickly add the styles to blocks.
-- **Block Controls**: You can control block visibility, including user role, date, time, device, day of the week, and more.
+- **Block Controls**: You can set conditional block visibility, including user role, date, time, device, day of the week, and more.
 - **Block Usage**: You can scan the posts on your website to find where your blocks are used.
 - **Reusable Blocks**: You get easy access to manage and edit all the reusable blocks on your site.
 - **Auto-Insert Blocks**: Automatically insert blocks into any location in your posts.

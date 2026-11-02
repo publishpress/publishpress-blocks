@@ -23,3 +23,5 @@ exclude:
   - .cache
   - assets
   - .wordpress-org
+  - .web
+  - .ddev
