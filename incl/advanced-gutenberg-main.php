@@ -156,10 +156,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             if (
                 $minified_path
-                && file_exists(ADVANCED_GUTENBERG_PLUGIN_DIR_PATH . $minified_path)
+                && file_exists(ADVANCED_GUTENBERG_BASE_PATH . '/' . $minified_path)
                 && (
                     (! defined('SCRIPT_DEBUG') || ! SCRIPT_DEBUG)
-                    || ! file_exists(ADVANCED_GUTENBERG_PLUGIN_DIR_PATH . $path)
+                    || ! file_exists(ADVANCED_GUTENBERG_BASE_PATH . '/' . $path)
                 )
             ) {
                 $path = $minified_path;
