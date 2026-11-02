@@ -23,6 +23,13 @@ if (! class_exists('AdvancedGutenbergMain')) {
         public static $default_roles_access = array( 'administrator', 'editor', 'author', 'contributor', 'subscriber' );
 
         /**
+         * Open notes counts for the posts on the current Posts/Pages list screen
+         *
+         * @var array   Post ID => open notes count
+         */
+        protected $postNotesListCounts = array();
+
+        /**
          * Default active all blocks
          *
          * @var string  All blocks
@@ -47,6 +54,18 @@ if (! class_exists('AdvancedGutenbergMain')) {
              * saves the Screen Options "per page" value during admin_init, which runs
              * before load-{page} fires. */
             add_filter('set_screen_option_advgb_post_notes_per_page', array( $this, 'setPostNotesScreenOption' ), 10, 3);
+
+            // "Notes" column (open notes count) on the Posts/Pages list screens
+            if (is_admin() && Utilities::settingIsEnabled('enable_post_notes')) {
+                add_filter('manage_posts_columns', array( $this, 'addPostNotesColumn' ));
+                add_filter('manage_pages_columns', array( $this, 'addPostNotesColumn' ));
+                add_action('manage_posts_custom_column', array( $this, 'renderPostNotesColumn' ), 10, 2);
+                add_action('manage_pages_custom_column', array( $this, 'renderPostNotesColumn' ), 10, 2);
+                add_action('admin_head-edit.php', array( $this, 'printPostNotesColumnStyles' ));
+                add_filter('manage_edit-post_sortable_columns', array( $this, 'addPostNotesSortableColumn' ));
+                add_filter('manage_edit-page_sortable_columns', array( $this, 'addPostNotesSortableColumn' ));
+                add_filter('posts_clauses', array( $this, 'sortPostsByNotesClauses' ), 10, 2);
+            }
             add_action('init', array( $this, 'registerCustomStyleFrontendFilter' ));
             add_action('admin_init', array( $this, 'registerStylesScripts' ));
             add_action('admin_init', array( $this, 'addEditorFrameStyles' ));
@@ -667,12 +686,28 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 );
 
                 $advgb_settings = get_option('advgb_settings');
+
+                // Count open notes server-side (same query as the Posts screen
+                // column), so the editor badge JS needs no REST request.
+                $advgb_open_notes = 0;
+                $advgb_editor_post = get_post();
+                if ($advgb_editor_post) {
+                    $advgb_open_notes = (int) get_comments([
+                        'post_id' => $advgb_editor_post->ID,
+                        'type'    => 'note',
+                        'status'  => 'hold',
+                        'parent'  => 0,
+                        'count'   => true,
+                    ]);
+                }
+
                 wp_localize_script(
                     'advgb_post_notes_editor',
                     'advgbPostNotes',
                     array(
                         // Default on when the setting has never been saved
-                        'blockToolbar' => ! isset($advgb_settings['post_notes_block_toolbar']) || $advgb_settings['post_notes_block_toolbar'],
+                        'blockToolbar'   => ! isset($advgb_settings['post_notes_block_toolbar']) || $advgb_settings['post_notes_block_toolbar'],
+                        'openNotesCount' => $advgb_open_notes,
                     )
                 );
             }
@@ -2935,6 +2970,260 @@ if (! class_exists('AdvancedGutenbergMain')) {
             self::commonAdminPagesAssets();
 
             require_once plugin_dir_path(dirname(__FILE__)) . 'incl/pages/post-notes.php';
+        }
+
+        /**
+         * Add a "Notes" column to the Posts/Pages list screens, placed after
+         * the built-in comments column when present.
+         *
+         * @param array $columns Existing list table columns.
+         *
+         * @return array
+         */
+        public function addPostNotesColumn($columns)
+        {
+            $new = [];
+            foreach ($columns as $key => $label) {
+                $new[$key] = $label;
+                if ($key === 'comments') {
+                    $new['advgb_notes'] = __('Notes', 'advanced-gutenberg');
+                }
+            }
+            // No comments column on this screen: append before Date, or at the end
+            if (! isset($new['advgb_notes'])) {
+                if (isset($new['date'])) {
+                    $date = $new['date'];
+                    unset($new['date']);
+                    $new['advgb_notes'] = __('Notes', 'advanced-gutenberg');
+                    $new['date']        = $date;
+                } else {
+                    $new['advgb_notes'] = __('Notes', 'advanced-gutenberg');
+                }
+            }
+
+            return $new;
+        }
+
+        /**
+         * Mark the "Notes" column sortable on the Posts/Pages list screens.
+         *
+         * @param array $columns Sortable columns (column key => orderby value).
+         *
+         * @return array
+         */
+        public function addPostNotesSortableColumn($columns)
+        {
+            // 'desc' as third arg would set initial direction; keep WP default (asc)
+            $columns['advgb_notes'] = 'advgb_notes';
+
+            return $columns;
+        }
+
+        /**
+         * Order the Posts/Pages list by open-notes count when the Notes column
+         * header is clicked. The count is computed live (not stored as meta),
+         * so sorting needs a LEFT JOIN on the comments table.
+         *
+         * @param array     $clauses SQL clauses for the query.
+         * @param \WP_Query $query   Current query.
+         *
+         * @return array
+         */
+        public function sortPostsByNotesClauses($clauses, $query)
+        {
+            if (! is_admin() || ! $query->is_main_query()) {
+                return $clauses;
+            }
+
+            if ($query->get('orderby') !== 'advgb_notes') {
+                return $clauses;
+            }
+
+            global $wpdb;
+
+            // Open notes: type "note", status hold (comment_approved '0'), top-level
+            $clauses['join'] .= " LEFT JOIN {$wpdb->comments} advgb_note_count"
+                . " ON advgb_note_count.comment_post_ID = {$wpdb->posts}.ID"
+                . " AND advgb_note_count.comment_type = 'note'"
+                . " AND advgb_note_count.comment_approved = '0'"
+                . " AND advgb_note_count.comment_parent = 0";
+
+            $clauses['groupby'] = "{$wpdb->posts}.ID";
+
+            $order              = strtoupper($query->get('order')) === 'DESC' ? 'DESC' : 'ASC';
+            $clauses['orderby'] = "COUNT(DISTINCT advgb_note_count.comment_ID) {$order}, {$wpdb->posts}.post_date DESC";
+
+            return $clauses;
+        }
+
+        /**
+         * Print bubble styles for the Notes column. Core's comment-bubble CSS is
+         * scoped to .column-comments in list-tables.css, so the same classes render
+         * unstyled in our column — these rules mirror core's, scoped to ours.
+         *
+         * @return void
+         */
+        public function printPostNotesColumnStyles()
+        {
+            ?>
+            <style>
+            /* Copied verbatim from core list-tables.css (.column-comments rules) */
+            .column-advgb_notes .post-com-count-wrapper {
+                white-space: nowrap;
+                word-wrap: normal;
+            }
+            .column-advgb_notes .post-com-count {
+                display: inline-block;
+                vertical-align: top;
+                text-decoration: none;
+            }
+            .column-advgb_notes .post-com-count-approved {
+                margin-top: 5px;
+            }
+            .column-advgb_notes .comment-count-approved {
+                box-sizing: border-box;
+                display: block;
+                padding: 0 8px;
+                min-width: 24px;
+                height: 2em;
+                border-radius: 5px;
+                background-color: #646970;
+                color: #fff;
+                font-size: 11px;
+                font-weight: 400;
+                line-height: 1.90909090;
+                text-align: center;
+            }
+            .column-advgb_notes .post-com-count-approved:after {
+                content: "";
+                display: block;
+                margin-left: 8px;
+                width: 0;
+                height: 0;
+                border-top: 5px solid #646970;
+                border-right: 5px solid transparent;
+            }
+            .column-advgb_notes a.post-com-count-approved:hover .comment-count-approved,
+            .column-advgb_notes a.post-com-count-approved:focus .comment-count-approved {
+                background: #2271b1;
+            }
+            .column-advgb_notes a.post-com-count-approved:hover:after,
+            .column-advgb_notes a.post-com-count-approved:focus:after {
+                border-top-color: #2271b1;
+            }
+            </style>
+            <?php
+        }
+
+        /**
+         * Open notes count for a post on the Posts/Pages list screen.
+         *
+         * The counts for every post in the current list are loaded with one
+         * grouped query the first time the column renders, instead of one
+         * query per row.
+         *
+         * @param int $post_id Post ID.
+         *
+         * @return int
+         */
+        protected function getListOpenNotesCount($post_id)
+        {
+            global $wp_query, $wpdb;
+
+            $post_id = (int) $post_id;
+
+            if (! isset($this->postNotesListCounts[ $post_id ])) {
+                $ids = [ $post_id ];
+                if ($wp_query instanceof \WP_Query && is_array($wp_query->posts)) {
+                    foreach ($wp_query->posts as $list_post) {
+                        $list_id = is_object($list_post) ? (int) $list_post->ID : (int) $list_post;
+                        if ($list_id && ! isset($this->postNotesListCounts[ $list_id ])) {
+                            $ids[] = $list_id;
+                        }
+                    }
+                }
+                $ids = array_values(array_unique($ids));
+
+                foreach ($ids as $id) {
+                    $this->postNotesListCounts[ $id ] = 0;
+                }
+
+                // Open notes: type "note", status hold (comment_approved '0'), top-level
+                $placeholders = implode(',', array_fill(0, count($ids), '%d'));
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.DirectDatabaseQuery -- The IN list contains only generated %d placeholders; counts are cached for the request.
+                $rows = $wpdb->get_results($wpdb->prepare("SELECT comment_post_ID AS post_id, COUNT(*) AS open_notes FROM {$wpdb->comments} WHERE comment_post_ID IN ($placeholders) AND comment_type = 'note' AND comment_approved = '0' AND comment_parent = 0 GROUP BY comment_post_ID", $ids));
+
+                foreach ((array) $rows as $row) {
+                    $this->postNotesListCounts[ (int) $row->post_id ] = (int) $row->open_notes;
+                }
+            }
+
+            return $this->postNotesListCounts[ $post_id ];
+        }
+
+        /**
+         * Render the "Notes" column: a badge with the count of open (unresolved)
+         * notes on the post, linking to the post editor. Shows a dash when the
+         * post has no open notes.
+         *
+         * @param string $column  Column key being rendered.
+         * @param int    $post_id Current post ID.
+         *
+         * @return void
+         */
+        public function renderPostNotesColumn($column, $post_id)
+        {
+            if ($column !== 'advgb_notes') {
+                return;
+            }
+
+            $open_notes = $this->getListOpenNotesCount($post_id);
+
+            if (! $open_notes) {
+                echo '<span aria-hidden="true">&mdash;</span>';
+                echo '<span class="screen-reader-text">' . esc_html__('No open notes', 'advanced-gutenberg') . '</span>';
+
+                return;
+            }
+
+            $edit_link = get_edit_post_link($post_id);
+            $sr_text   = sprintf(
+                /* translators: %d: number of open notes */
+                esc_html(_n('%d open note', '%d open notes', $open_notes, 'advanced-gutenberg')),
+                (int) $open_notes
+            );
+
+            /* Replicate the default Comments column exactly: core puts the
+             * post-com-count classes on the anchor itself and the count inside
+             * the grey bubble span — reusing that structure verbatim means the
+             * bubble, tail, and hover states all come from core's stylesheet. */
+            $count_label = (int) $open_notes > 99 ? '99+' : (string) (int) $open_notes;
+
+            if ($edit_link) {
+                printf(
+                    '<div class="post-com-count-wrapper">'
+                        . '<a href="%s" title="%s" class="post-com-count post-com-count-approved">'
+                        . '<span class="comment-count-approved" aria-hidden="true">%s</span>'
+                        . '<span class="screen-reader-text">%s</span>'
+                        . '</a>'
+                        . '</div>',
+                    esc_url($edit_link),
+                    esc_attr($sr_text),
+                    esc_html($count_label),
+                    $sr_text // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above
+                );
+            } else {
+                printf(
+                    '<div class="post-com-count-wrapper">'
+                        . '<span class="post-com-count post-com-count-approved">'
+                        . '<span class="comment-count-approved" aria-hidden="true">%s</span>'
+                        . '<span class="screen-reader-text">%s</span>'
+                        . '</span>'
+                        . '</div>',
+                    esc_html($count_label),
+                    $sr_text // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                );
+            }
         }
 
         /**
