@@ -6,7 +6,9 @@ require_once(plugin_dir_path(__FILE__) . '/incl/utilities-main.php');
 require_once(plugin_dir_path(__FILE__) . '/incl/block-settings-main.php');
 require_once(plugin_dir_path(__FILE__) . '/incl/block-controls-main.php');
 require_once(plugin_dir_path(__FILE__) . '/incl/advanced-gutenberg-main.php');
+require_once(plugin_dir_path(__FILE__) . '/incl/class-frontend-accessibility.php');
 new AdvancedGutenbergMain();
+require_once(plugin_dir_path(__FILE__) . '/incl/class-frontend-forms-accessibility.php');
 
 if (! function_exists('advg_language_domain_init')) {
     /**

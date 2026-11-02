@@ -133,6 +133,9 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                             <label for="advgb-customstyles-css">
                                 <?php esc_html_e('Custom CSS', 'advanced-gutenberg') ?>
                             </label>
+                            <p class="description advgb-codemirror-help" id="advgb-customstyles-css-help">
+                                <?php esc_html_e('Press Esc, then Tab, to leave the editor.', 'advanced-gutenberg') ?>
+                            </p>
                             <textarea name="customstyles-css" id="advgb-customstyles-css"></textarea>
                         </div>
                         <div id="css-tips" style="border-top: 1px solid #ccc; margin-top: -25px;">
