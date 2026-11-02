@@ -7,12 +7,18 @@
     border-radius: 4px;
     position: relative;
 
+    > h2,
     h3 {
         margin-top: 0;
         margin-bottom: 15px;
         color: #333;
         border-bottom: 1px solid #ddd;
         padding-bottom: 10px;
+    }
+
+    // Same size as the h3 it replaced (WP admin default h3 size)
+    > h2 {
+        font-size: 1.1em;
     }
 
     .clear-styles {
