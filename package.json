@@ -8,7 +8,6 @@
     "react-dom": "^16.14.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
     "@babel/core": "^7.29.6",
     "@babel/plugin-proposal-function-bind": "^7.0.0",
     "@babel/plugin-transform-object-assign": "^7.0.0",
@@ -20,6 +19,7 @@
     "classnames": "^2.3.1",
     "counterup2": "^1.0.4",
     "elliptic": "^6.6.1",
+    "glob": "^7.2.3",
     "glob-parent": "^5.1.2",
     "hasown": "^2.0.2",
     "hour-convert": "^1.0.1",
