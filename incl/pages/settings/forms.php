@@ -35,7 +35,7 @@ $contact_form_email_receiver = $this->getOptionSetting(
     wp_nonce_field('advgb_email_config_nonce', 'advgb_email_config_nonce_field') ?>
     <p>
         <?php
-        _e(
+        esc_html_e(
             'These email settings apply to messages sent through PublishPress Contact form block.',
             'advanced-gutenberg'
         )
@@ -46,7 +46,7 @@ $contact_form_email_receiver = $this->getOptionSetting(
             <th scope="row">
                 <label for="contact_form_sender_name">
                 <?php
-                _e('Sender name', 'advanced-gutenberg') ?>
+                esc_html_e('Sender name', 'advanced-gutenberg') ?>
                 </label>
             </th>
             <td>
@@ -63,7 +63,7 @@ $contact_form_email_receiver = $this->getOptionSetting(
             <th scope="row">
                 <label for="contact_form_sender_email">
                 <?php
-                _e('Sender email', 'advanced-gutenberg') ?>
+                esc_html_e('Sender email', 'advanced-gutenberg') ?>
                 </label>
             </th>
             <td>
@@ -80,7 +80,7 @@ $contact_form_email_receiver = $this->getOptionSetting(
             <th scope="row">
                 <label for="contact_form_email_title">
                 <?php
-                _e('Email title', 'advanced-gutenberg') ?>
+                esc_html_e('Email title', 'advanced-gutenberg') ?>
                 </label>
             </th>
             <td>
@@ -97,7 +97,7 @@ $contact_form_email_receiver = $this->getOptionSetting(
             <th scope="row">
                 <label for="contact_form_email_receiver">
                 <?php
-                _e('Email receiver', 'advanced-gutenberg') ?>
+                esc_html_e('Email receiver', 'advanced-gutenberg') ?>
                 </label>
             </th>
             <td>

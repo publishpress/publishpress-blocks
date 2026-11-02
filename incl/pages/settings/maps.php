@@ -13,7 +13,7 @@ $google_api_key_saved = $this->getOptionSetting('advgb_settings', 'google_api_ke
             <th scope="row">
                 <label for="google_api_key">
                 <?php
-                _e('Google API key', 'advanced-gutenberg') ?>
+                esc_html_e('Google API key', 'advanced-gutenberg') ?>
                 </label>
             </th>
             <td>
@@ -36,7 +36,7 @@ $google_api_key_saved = $this->getOptionSetting('advgb_settings', 'google_api_ke
                         ?>
                     </a><br/>
                     <?php
-                    _e(
+                    esc_html_e(
                         'A Google API key is required to use the Map block without any warning.',
                         'advanced-gutenberg'
                     );
