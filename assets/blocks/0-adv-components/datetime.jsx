@@ -5,8 +5,16 @@ const { Component, Fragment, useState } = wp.element;
 const { __, _x } = wp.i18n;
 const { applyFilters } = wp.hooks;
 
+// Unique ids to associate visible labels with their controls
+let advgbDateTimeIdCounter = 0;
+const advgbDateTimeId = ( prefix ) => {
+    advgbDateTimeIdCounter++;
+    return `${prefix}-${advgbDateTimeIdCounter}`;
+};
+
 export function AdvDateTimeControl(props) {
     const [popupState, setPopupState] = useState( false );
+    const [labelId] = useState( () => advgbDateTimeId( 'advgb-advcalendar-label' ) );
     const togglePopup = () => {
         setPopupState( ! popupState );
     };
@@ -24,8 +32,8 @@ export function AdvDateTimeControl(props) {
 
     return (
         <Fragment>
-            <div className="advgb-advcalendar-control">
-                <label>
+            <div className="advgb-advcalendar-control" role="group" aria-labelledby={ labelId }>
+                <label id={ labelId }>
                     { dateLabel }
                 </label>
                 <div>
@@ -33,6 +41,7 @@ export function AdvDateTimeControl(props) {
                         isLink
                         icon="calendar"
                         onClick={ togglePopup }
+                        aria-expanded={ popupState }
                     >
                         <Tooltip text={ __( 'Change date', 'advanced-gutenberg' ) }>
                             <span>
@@ -44,6 +53,7 @@ export function AdvDateTimeControl(props) {
         				<Button
         					icon="no-alt"
                             className="advgb-advcalendar-remove-icon"
+                            label={ __( 'Clear date', 'advanced-gutenberg' ) }
         					onClick={ () => onDateClear() }
         				/>
         			}
@@ -57,14 +67,15 @@ export function AdvDateTimeControl(props) {
                     placement={ placement }
                     offset={ offset }
                 >
-                    <label className="advgb-advcalendar-popover-label">
+                    <div className="advgb-advcalendar-popover-label">
                         { dateLabel }
                         <Button
         					icon="no-alt"
                             className="advgb-advcalendar-remove-icon"
+                            label={ __( 'Close', 'advanced-gutenberg' ) }
         					onClick={ togglePopup }
         				/>
-                    </label>
+                    </div>
                     <DateTimePicker
                         currentDate={ date }
                         onChange={ onChangeDate }
@@ -85,13 +96,13 @@ AdvDateTimeControl.defaultProps = {
 
 export function AdvDaysControl(props) {
     const allDays = [
-        { slug: 0, label: _x( 'S', 'Sunday first letter', 'advanced-gutenberg' ) },
-        { slug: 1, label: __( 'M', 'advanced-gutenberg' ) },
-        { slug: 2, label: _x( 'T', 'Tuesday first letter', 'advanced-gutenberg' ) },
-        { slug: 3, label: __( 'W', 'advanced-gutenberg' ) },
-        { slug: 4, label: _x( 'T', 'Thursday first letter', 'advanced-gutenberg' ) },
-        { slug: 5, label: __( 'F', 'advanced-gutenberg' ) },
-        { slug: 6, label: _x( 'S', 'Saturday first letter', 'advanced-gutenberg' ) }
+        { slug: 0, label: _x( 'S', 'Sunday first letter', 'advanced-gutenberg' ), name: __( 'Sunday', 'advanced-gutenberg' ) },
+        { slug: 1, label: __( 'M', 'advanced-gutenberg' ), name: __( 'Monday', 'advanced-gutenberg' ) },
+        { slug: 2, label: _x( 'T', 'Tuesday first letter', 'advanced-gutenberg' ), name: __( 'Tuesday', 'advanced-gutenberg' ) },
+        { slug: 3, label: __( 'W', 'advanced-gutenberg' ), name: __( 'Wednesday', 'advanced-gutenberg' ) },
+        { slug: 4, label: _x( 'T', 'Thursday first letter', 'advanced-gutenberg' ), name: __( 'Thursday', 'advanced-gutenberg' ) },
+        { slug: 5, label: __( 'F', 'advanced-gutenberg' ), name: __( 'Friday', 'advanced-gutenberg' ) },
+        { slug: 6, label: _x( 'S', 'Saturday first letter', 'advanced-gutenberg' ), name: __( 'Saturday', 'advanced-gutenberg' ) }
     ];
 
     const {
@@ -155,20 +166,25 @@ export function AdvDaysControl(props) {
 
     return (
         <Fragment>
-            <div className="advgb-checkbox-wrapper">
-                <label>
+            <fieldset
+                className="advgb-checkbox-wrapper"
+                style={ { border: 0, padding: 0, marginLeft: 0, marginRight: 0, marginTop: 0, minWidth: 0 } }
+            >
+                <legend style={ { padding: 0, marginBottom: 8, display: 'block' } }>
                     { label }
-                </label>
+                </legend>
                 <div className="advgb-checkbox-inline">
                     { allDays.map( day => (
                         <CheckboxControl
+                            key={ day.slug }
                             label={ day.label }
+                            aria-label={ day.name }
                             checked={ isDaySelected( day.slug ) }
                             onChange={ () => onChangeDay( day.slug ) }
                         />
                     ) ) }
                 </div>
-            </div>
+            </fieldset>
         </Fragment>
     )
 }
@@ -185,6 +201,7 @@ class AdvTimeClass extends Component {
             meridian: 'am',
             onInit: true
         };
+        this.labelId = advgbDateTimeId( 'advgb-advtime-label' );
     }
 
     componentWillMount() {
@@ -324,8 +341,8 @@ class AdvTimeClass extends Component {
 
         return (
             <Fragment>
-                <div className="advgb-advtime-control">
-                    <label>
+                <div className="advgb-advtime-control" role="group" aria-labelledby={ this.labelId }>
+                    <label id={ this.labelId }>
                         { this.props.label }
                     </label>
                     <div className="advgb-advtime-hours-minutes">
@@ -340,8 +357,9 @@ class AdvTimeClass extends Component {
                             onChange={ handleChangeHours }
                             onKeyDown={ handleKeyDownHours }
                             placeholder="--"
+                            aria-label={ __( 'Hours', 'advanced-gutenberg' ) }
                         />
-                        <span>:</span>
+                        <span aria-hidden="true">:</span>
                         <input
                             type="text"
                             value={
@@ -350,13 +368,15 @@ class AdvTimeClass extends Component {
                             onChange={ handleChangeMinutes }
                             onKeyDown={ handleKeyDownMinutes }
                             placeholder="--"
+                            aria-label={ __( 'Minutes', 'advanced-gutenberg' ) }
                         />
                     </div>
-                    <ButtonGroup className="advgb-advtime-meridian">
+                    <ButtonGroup className="advgb-advtime-meridian" role="group" aria-label={ __( 'AM or PM', 'advanced-gutenberg' ) }>
                         <Button
                             variant={
                                 meridian === null || meridian === 'am' ? 'primary' : 'secondary'
                             }
+                            aria-pressed={ meridian === null || meridian === 'am' }
                             onClick={ () => {
                                 this.setState( {
                                     meridian: 'am'
@@ -370,6 +390,7 @@ class AdvTimeClass extends Component {
                             variant={
                                 meridian === 'pm' ? 'primary' : 'secondary'
                             }
+                            aria-pressed={ meridian === 'pm' }
                             onClick={ () => {
                                 this.setState( {
                                     meridian: 'pm'
@@ -384,6 +405,7 @@ class AdvTimeClass extends Component {
         				<Button
                             className="advgb-advtime-remove-icon"
         					icon="no-alt"
+                            label={ __( 'Clear time', 'advanced-gutenberg' ) }
                             onClick={
                                 () => {
                                     this.props.onTimeClear();
@@ -428,8 +450,10 @@ export function AdvTimezoneControl(props) {
                         marginBottom: 10
                     }}>
                         <div className="advgb-blur">
-                            { label }
+                            <span aria-hidden="true">{ label }</span>
                             <SelectControl
+                                label={ label }
+                                hideLabelFromVision
                                 value={ defaultTimezone }
                                 options={ [ {
                                         label: defaultTimezone,
