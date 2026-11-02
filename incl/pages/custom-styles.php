@@ -31,9 +31,9 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                         $content = '';
                         foreach ( $custom_styles_saved as $customStyles ) {
                             $content .= '<li class="advgb-customstyles-items" data-id-customstyle="' . esc_attr( (int) $customStyles['id'] ) . '">';
-                            $content .= '<a href="#"><i class="title-icon" aria-hidden="true" style="background-color: ' . esc_attr( $customStyles['identifyColor'] ) . '"></i><span class="advgb-customstyles-items-title">' . esc_html( $customStyles['title'] ) . '</span></a>';
-                            $content .= '<a href="#" class="copy" title="' . esc_attr__( 'Copy', 'advanced-gutenberg' ) . '" aria-label="' . esc_attr__( 'Copy', 'advanced-gutenberg' ) . '"><span class="dashicons dashicons-admin-page" aria-hidden="true"></span></a>';
-                            $content .= '<a href="#" class="trash" title="' . esc_attr__( 'Delete', 'advanced-gutenberg' ) . '" aria-label="' . esc_attr__( 'Delete', 'advanced-gutenberg' ) . '"><span class="dashicons dashicons-no" aria-hidden="true"></span></a>';
+                            $content .= '<a href="#" aria-label="' . esc_attr( $customStyles['title'] ) . '"><i class="title-icon" aria-hidden="true" style="background-color: ' . esc_attr( $customStyles['identifyColor'] ) . '"></i><span class="advgb-customstyles-items-title">' . esc_html( $customStyles['title'] ) . '</span></a>';
+                            $content .= '<a href="#" class="copy" title="' . esc_attr__( 'Copy', 'advanced-gutenberg' ) . '" aria-label="' . esc_attr__( 'Copy', 'advanced-gutenberg' ) . '"><span class="dashicons dashicons-admin-page" aria-hidden="true"></span><span class="screen-reader-text">' . esc_html__( 'Copy', 'advanced-gutenberg' ) . '</span></a>';
+                            $content .= '<a href="#" class="trash" title="' . esc_attr__( 'Delete', 'advanced-gutenberg' ) . '" aria-label="' . esc_attr__( 'Delete', 'advanced-gutenberg' ) . '"><span class="dashicons dashicons-no" aria-hidden="true"></span><span class="screen-reader-text">' . esc_html__( 'Delete', 'advanced-gutenberg' ) . '</span></a>';
                             $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">(' . esc_html( $customStyles['name'] ) . ')</li></ul>';
                             $content .= '</li>';
                         }
@@ -117,10 +117,10 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                 <div class="advgb-main-tabs">
                     <ul class="advgb-tabs-panel">
                         <li class="advgb-tab" data-tab="style-editor">
-                            <a href="#style-editor-tab"><?php esc_html_e('Style Builder', 'advanced-gutenberg'); ?></a>
+                            <a href="#style-editor-tab" aria-label="<?php esc_attr_e('Style Builder', 'advanced-gutenberg'); ?>"><?php esc_html_e('Style Builder', 'advanced-gutenberg'); ?></a>
                         </li>
                         <li class="advgb-tab active" data-tab="custom-css">
-                            <a href="#custom-css-tab"><?php esc_html_e('Custom CSS', 'advanced-gutenberg'); ?></a>
+                            <a href="#custom-css-tab" aria-label="<?php esc_attr_e('Custom CSS', 'advanced-gutenberg'); ?>"><?php esc_html_e('Custom CSS', 'advanced-gutenberg'); ?></a>
                         </li>
                     </ul>
                 </div>
@@ -155,37 +155,37 @@ $custom_styles_saved = get_option('advgb_custom_styles', AdvancedGutenbergBlockS
                             <div class="advgb-tabs-wrapper advgb-sub-tabs advgb-tab-horz-desktop">
                                 <ul class="advgb-tabs-panel">
                                     <li class="advgb-tab active" data-tab="colors">
-                                        <a href="#"><?php esc_html_e('Colors', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Colors', 'advanced-gutenberg'); ?>"><?php esc_html_e('Colors', 'advanced-gutenberg'); ?></a>
                                     </li>
                                     <li class="advgb-tab" data-tab="spacing">
-                                        <a href="#"><?php esc_html_e('Spacing', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Spacing', 'advanced-gutenberg'); ?>"><?php esc_html_e('Spacing', 'advanced-gutenberg'); ?></a>
                                     </li>
                                     <li class="advgb-tab" data-tab="typography">
-                                        <a href="#"><?php esc_html_e('Typography', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Typography', 'advanced-gutenberg'); ?>"><?php esc_html_e('Typography', 'advanced-gutenberg'); ?></a>
                                     </li>
                                     <li class="advgb-tab" data-tab="layout">
-                                        <a href="#"><?php esc_html_e('Layout', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Layout', 'advanced-gutenberg'); ?>"><?php esc_html_e('Layout', 'advanced-gutenberg'); ?></a>
                                     </li>
                                     <li class="advgb-tab" data-tab="border">
-                                        <a href="#"><?php esc_html_e('Border', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Border', 'advanced-gutenberg'); ?>"><?php esc_html_e('Border', 'advanced-gutenberg'); ?></a>
                                     </li>
                                     <li class="advgb-tab" data-tab="text-elements">
-                                        <a href="#"><?php esc_html_e('Text', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Text', 'advanced-gutenberg'); ?>"><?php esc_html_e('Text', 'advanced-gutenberg'); ?></a>
                                     </li>
                                     <li class="advgb-tab" data-tab="heading-elements">
-                                        <a href="#"><?php esc_html_e('Headings', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Headings', 'advanced-gutenberg'); ?>"><?php esc_html_e('Headings', 'advanced-gutenberg'); ?></a>
                                     </li>
                                     <li class="advgb-tab" data-tab="link-elements">
-                                        <a href="#"><?php esc_html_e('Links', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Links', 'advanced-gutenberg'); ?>"><?php esc_html_e('Links', 'advanced-gutenberg'); ?></a>
                                     </li>
                                     <li class="advgb-tab" data-tab="media-elements">
-                                        <a href="#"><?php esc_html_e('Media', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Media', 'advanced-gutenberg'); ?>"><?php esc_html_e('Media', 'advanced-gutenberg'); ?></a>
                                     </li>
                                     <li class="advgb-tab" data-tab="container-elements">
-                                        <a href="#"><?php esc_html_e('Containers', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Containers', 'advanced-gutenberg'); ?>"><?php esc_html_e('Containers', 'advanced-gutenberg'); ?></a>
                                     </li>
                                     <li class="advgb-tab" data-tab="interactive-elements">
-                                        <a href="#"><?php esc_html_e('Interactive', 'advanced-gutenberg'); ?></a>
+                                        <a href="#" aria-label="<?php esc_attr_e('Interactive', 'advanced-gutenberg'); ?>"><?php esc_html_e('Interactive', 'advanced-gutenberg'); ?></a>
                                     </li>
                                 </ul>
 

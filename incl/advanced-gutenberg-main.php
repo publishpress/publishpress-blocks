@@ -3246,7 +3246,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             </ul>
                         </nav>
                         <div class="advgb-pressshack-logo">
-                            <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer">
+                            <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__('Visit PublishPress', 'advanced-gutenberg') . '">
                                 <img src="' . esc_url(ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/images/publishpress-logo.png') . '"
                                  alt="' . esc_attr__('PublishPress Blocks logo', 'advanced-gutenberg') . '">
                             </a>
