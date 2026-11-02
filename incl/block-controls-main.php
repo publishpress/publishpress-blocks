@@ -1139,6 +1139,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                         )
                     )
                 );
+                exit;
             } // Blocks
             elseif (isset($_POST['save_blocks'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 if (
@@ -1164,6 +1165,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
 
                     // Save block controls
                     $block_controls = get_option('advgb_block_controls');
+                    $block_controls = is_array($block_controls) ? $block_controls : [];
                     $block_controls['active_blocks'] = isset($active_blocks) ? $active_blocks : '';
                     $block_controls['inactive_blocks'] = isset($inactive_blocks) ? $inactive_blocks : '';
 
@@ -1183,6 +1185,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                             )
                         )
                     );
+                    exit;
                 } else {
                     // Redirect with error message / Nothing was saved
                     wp_safe_redirect(
@@ -1197,6 +1200,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                             )
                         )
                     );
+                    exit;
                 }
             } else {
                 // Nothing to do here

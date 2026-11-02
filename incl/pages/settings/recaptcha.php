@@ -97,7 +97,7 @@ $recaptcha_theme      = $this->getOptionSetting('advgb_recaptcha_config', 'recap
                            style="width: 50px;"
                     />
                 <p class="description">
-                    <a target="_blank" href="https://developers.google.com/recaptcha/docs/language">
+                    <a target="_blank" href="https://developers.google.com/recaptcha/docs/language" aria-label="<?php esc_attr_e('Language codes list', 'advanced-gutenberg'); ?>">
                         <?php
                         _e('Language codes list', 'advanced-gutenberg') ?>
                     </a>
