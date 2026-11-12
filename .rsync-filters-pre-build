@@ -1,4 +1,5 @@
 - *.code-workspace
+- .agents
 - .babelrc
 - .builder-post-rsync-filters-post
 - .builder-rsync-filters
@@ -28,6 +29,7 @@
 - /bundled/**
 - /dev-workspace
 - /dist
+- /docs
 - /node_modules
 - /package-lock.json
 - /package.json
