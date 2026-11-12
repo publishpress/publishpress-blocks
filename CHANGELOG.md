@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Update: Update the dashboard for the new menu order, #1906
 - Update: Load minified JavaScript files for the editor and frontend, #1921
 - Update: Improve legacy profile migration performance, #1920
+- Fixed: Harden lightbox option handling, #1954
+- Fixed: Respect post passwords in Content Display, #1955
 - Fixed: Apply Block Controls to auto-generated excerpts and feeds, #1951
 - Fixed: Auto Insert Blocks does not follow WPML translations, #1949
 - Fixed: Tabs block can't be selected as a whole in WordPress 7.1 (no block toolbar), #1929
