@@ -1,7 +1,8 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-[3.7.7] - 04 November, 2026
+[3.7.7] - 12 November, 2026
 
+- Added: Abilities API / MCP support for PublishPress Blocks, #1942
 - Feature: Post Notes counters: open notes badge in the editor toolbar and a sortable Notes column on the Posts and Pages screens, #1946
 - Update: Accessibility fixes for VPAT / WCAG 2.2 AA across blocks, admin and editor, #1940
 - Update: Improve accessibility labels, link names and heading levels, #1912, #1913, #1914
