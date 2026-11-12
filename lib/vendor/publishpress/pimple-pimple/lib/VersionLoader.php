@@ -7,16 +7,16 @@
  * WARNING: Do not modify this file directly. Your changes will be overwritten.
  *******************************************************************************/
 
-namespace PublishPress\BundledTranslations;
+namespace PublishPress\PimplePimple;
 
-if (! class_exists('PublishPress\\BundledTranslations\\Versions')) {
+if (! class_exists('PublishPress\\PimplePimple\\VersionLoader', false)) {
     /**
-     * Based on the ActionScheduler_Versions class from Action Scheduler library.
+     * Newest-wins loader for this prefixed library (same idea as ActionScheduler_Versions).
      */
-    class Versions
+    class VersionLoader
     {
         /**
-         * @var Versions
+         * @var VersionLoader
          */
         private static $instance = null;
 
@@ -59,10 +59,10 @@ if (! class_exists('PublishPress\\BundledTranslations\\Versions')) {
         }
 
         /**
-         * @return Versions
+         * @return VersionLoader
          * @codeCoverageIgnore
          */
-        public static function getInstance(): ?Versions
+        public static function getInstance(): ?VersionLoader
         {
             if (empty(self::$instance)) {
                 self::$instance = new self();
@@ -81,4 +81,8 @@ if (! class_exists('PublishPress\\BundledTranslations\\Versions')) {
             call_user_func($self->latestVersionCallback());
         }
     }
+}
+
+if (! class_exists('PublishPress\\PimplePimple\\Versions', false)) {
+    class_alias(VersionLoader::class, 'PublishPress\\PimplePimple\\Versions');
 }
