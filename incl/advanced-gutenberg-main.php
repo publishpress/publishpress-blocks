@@ -43,11 +43,50 @@ if (! class_exists('AdvancedGutenbergMain')) {
         protected static $original_block_editor_settings;
 
         /**
+         * Remove data-cbox-* attributes from post content saved by users without unfiltered_html.
+         * The plugin's lightboxes pass their options from code; these attributes are not used.
+         *
+         * @param string $content Slashed post content
+         *
+         * @return string
+         * @since 3.7.7
+         */
+        public function removeLightboxDataAttributes($content)
+        {
+            if (
+                ! is_string($content)
+                || stripos($content, 'data-cbox-') === false
+                || current_user_can('unfiltered_html')
+                || ! class_exists('WP_HTML_Tag_Processor')
+            ) {
+                return $content;
+            }
+
+            $processor = new \WP_HTML_Tag_Processor(wp_unslash($content));
+            $changed   = false;
+            while ($processor->next_tag()) {
+                $names = $processor->get_attribute_names_with_prefix('data-cbox-');
+                if (empty($names)) {
+                    continue;
+                }
+                foreach ($names as $name) {
+                    $processor->remove_attribute($name);
+                    $changed = true;
+                }
+            }
+
+            return $changed ? wp_slash($processor->get_updated_html()) : $content;
+        }
+
+        /**
          * AdvancedGutenbergMain constructor.
          */
         public function __construct()
         {
             global $wp_version;
+
+            // Lightbox options come from the plugin's scripts, not from attributes in post content
+            add_filter('content_save_pre', array( $this, 'removeLightboxDataAttributes' ), 11);
 
             add_action('init', array( $this, 'registerPostMeta' ));
             /* Must be registered unconditionally (not inside a load-{page} hook): core
