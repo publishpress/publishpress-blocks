@@ -388,13 +388,22 @@ function advgbRenderBlockRecentPosts($attributes)
 
             $postHtml .= '<div class="advgb-post-content">';
             if (advgbCheckElementDisplay($attributes['displayExcerpt'], $attributes['displayExcerptFor'], $key)) {
-                $introText = wp_kses_post($post->post_excerpt);
-                if (isset($attributes['displayExcerpt']) && $attributes['postTextAsExcerpt']) {
-                    if (!is_admin()) {
-                        $postContent = get_post_field('post_content', $post->ID);
-                        $postContent = strip_shortcodes($postContent);
-                        $postContent = preg_replace('/<!--(.*?-->)/is', '', $postContent);
-                        $introText   = esc_html(advgbExtractHtml($postContent, $attributes['postTextExcerptLength']));
+                if (post_password_required($post)) {
+                    // Same text as core's Latest Posts block
+                    $introText = esc_html__('This content is password protected.'); // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- Use core's translation.
+                } else {
+                    $introText = wp_kses_post($post->post_excerpt);
+                    if (isset($attributes['displayExcerpt']) && $attributes['postTextAsExcerpt']) {
+                        if (!is_admin()) {
+                            $postContent = get_post_field('post_content', $post->ID);
+                            // Leave out blocks that Block Controls hides from the current visitor
+                            if (class_exists('\\PublishPress\\Blocks\\Controls')) {
+                                $postContent = \PublishPress\Blocks\Controls::removeHiddenBlocks($postContent);
+                            }
+                            $postContent = strip_shortcodes($postContent);
+                            $postContent = preg_replace('/<!--(.*?-->)/is', '', $postContent);
+                            $introText   = esc_html(advgbExtractHtml($postContent, $attributes['postTextExcerptLength']));
+                        }
                     }
                 }
 
