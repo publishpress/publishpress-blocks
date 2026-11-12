@@ -194,6 +194,9 @@ class Features
                 if (!empty($values['id']) && (get_post_type($values['id']) !== 'attachment' || !current_user_can('edit_post', $values['id']))) {
                     return Registry::error(__('Choose an editable media attachment.', 'advanced-gutenberg'));
                 }
+                if (isset($values['url'])) {
+                    $values['url'] = esc_url_raw($values['url']);
+                }
                 $stored['rp_default_thumb'] = array_merge($stored['rp_default_thumb'] ?? [], $values);
             }
             if (empty($input['dry_run'])) {

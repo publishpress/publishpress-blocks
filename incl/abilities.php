@@ -199,8 +199,15 @@ class Abilities
     public static function canInspectPostBlocks($input = [])
     {
         $postId = isset($input['post_id']) ? absint($input['post_id']) : 0;
+        $post   = $postId ? get_post($postId) : null;
+        if (! $post) {
+            return false;
+        }
 
-        return $postId && current_user_can('edit_post', $postId);
+        // Only post types editable in the block editor through their REST controller
+        $type = get_post_type_object($post->post_type);
+
+        return $type && $type->show_in_rest && current_user_can('edit_post', $postId);
     }
 
     public static function listBlockTypes()

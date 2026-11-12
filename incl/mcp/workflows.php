@@ -139,7 +139,8 @@ class Workflows
                     );
                 }
             }
-            update_option($option, $stored, false);
+            // Keep each option's autoload setting: block permissions are not autoloaded, plugin settings are
+            $permissions ? update_option($option, $stored, false) : update_option($option, $stored);
         }
         return ['results' => $results, 'dry_run' => !empty($input['dry_run'])];
     }

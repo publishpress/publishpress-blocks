@@ -221,23 +221,39 @@ class Content
             return Registry::error(__('This post exceeds the 200 KB block editing limit. Use the WordPress editor.', 'advanced-gutenberg'));
         }
         $result = [];
-        self::inventory(parse_blocks($post->post_content), [], $result);
+        $budget = self::INVENTORY_MAX_BYTES;
+        if (!self::inventory(parse_blocks($post->post_content), [], $result, $budget)) {
+            return Registry::error(__('This post is too deeply nested or too large to list block by block. Use the WordPress editor.', 'advanced-gutenberg'));
+        }
         return ['post_id' => $post->ID, 'hash' => hash('sha256', $post->post_content), 'blocks' => $result,
             'editor_preferences' => (object) ['editor_width' => get_post_meta($post->ID, 'advgb_blocks_editor_width', true),
                 'columns_visual_guide' => get_post_meta($post->ID, 'advgb_blocks_columns_visual_guide', true)]];
     }
 
-    private static function inventory(array $blocks, array $prefix, array &$result)
+    /** Limits for the block inventory: nesting depth and total serialized output. @since 3.7.7 */
+    const INVENTORY_MAX_DEPTH = 30;
+    const INVENTORY_MAX_BYTES = 2000000;
+
+    private static function inventory(array $blocks, array $prefix, array &$result, int &$budget): bool
     {
+        if (count($prefix) >= self::INVENTORY_MAX_DEPTH) {
+            return false;
+        }
         foreach ($blocks as $index => $block) {
             $path = array_merge($prefix, [$index]);
             $type = isset($block['blockName']) ? \WP_Block_Type_Registry::get_instance()->get_registered($block['blockName']) : null;
+            $serialized = serialize_block($block);
+            $budget -= strlen($serialized);
+            if ($budget < 0) {
+                return false;
+            }
             $result[] = ['path' => $path, 'name' => $block['blockName'], 'attributes' => (object) $block['attrs'],
-                'attribute_schema' => $type ? (object) $type->get_attributes() : new \stdClass(), 'serialized_block' => serialize_block($block)];
-            if ($block['innerBlocks']) {
-                self::inventory($block['innerBlocks'], $path, $result);
+                'attribute_schema' => $type ? (object) $type->get_attributes() : new \stdClass(), 'serialized_block' => $serialized];
+            if ($block['innerBlocks'] && !self::inventory($block['innerBlocks'], $path, $result, $budget)) {
+                return false;
             }
         }
+        return true;
     }
 
     public static function edit(array $input)
@@ -473,8 +489,8 @@ class Content
         }
         if (isset($input['id'])) {
             $post = get_post($input['id']);
-            if (!$post || $post->post_type !== 'wp_block') {
-                return Registry::error(__('Reusable block not found.', 'advanced-gutenberg'), 404);
+            if (!$post || $post->post_type !== 'wp_block' || !current_user_can('edit_post', $post->ID)) {
+                return Registry::error(__('Reusable block not found or not editable.', 'advanced-gutenberg'), 403);
             }
             if (isset($input['content']) && (!isset($input['expected_hash']) || hash('sha256', $post->post_content) !== $input['expected_hash'])) {
                 return Registry::error(__('Read get-post-blocks and supply the latest expected_hash.', 'advanced-gutenberg'), 409);

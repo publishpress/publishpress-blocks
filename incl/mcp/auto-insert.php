@@ -154,7 +154,8 @@ class AutoInsert
                 $post[$field] = sanitize_text_field($input[$key]);
             }
         }
-        $id = wp_insert_post(wp_slash($post), true);
+        // Updates merge with the stored rule; only supplied fields change
+        $id = isset($input['id']) ? wp_update_post(wp_slash($post), true) : wp_insert_post(wp_slash($post), true);
         if (is_wp_error($id)) {
             return $id;
         }
@@ -162,6 +163,9 @@ class AutoInsert
         unset($meta['id'], $meta['title'], $meta['status']);
         if (!isset($input['id'])) {
             $meta = array_merge(['position' => 'beginning', 'post_types' => ['post'], 'priority' => 10], $meta);
+        }
+        if (isset($meta['blocks'])) {
+            $meta['blocks'] = array_map('sanitize_text_field', (array) $meta['blocks']);
         }
         foreach ($meta as $key => $value) {
             update_post_meta($id, '_advgb_' . $key, $value);
