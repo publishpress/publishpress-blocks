@@ -7,12 +7,13 @@ $legacy_state = AdvancedGutenbergMain::getLegacyBlocksState();
 
 $gallery_lightbox_checked = $this->getOptionSetting('advgb_settings', 'gallery_lightbox', 'checkbox', 0);
 $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_lightbox_caption', 'text', '1');
+$font_styles_checked      = $this->getOptionSetting('advgb_settings', 'enable_core_blocks_features', 'checkbox', 1); // Matches settingIsEnabled(): a missing key means enabled
 ?>
 <form method="post">
     <?php
     wp_nonce_field('advgb_settings_legacy_nonce', 'advgb_settings_legacy_nonce_field') ?>
 
-    <h3><?php esc_html_e('Legacy Blocks', 'advanced-gutenberg') ?></h3>
+    <h2><?php esc_html_e('Legacy Blocks', 'advanced-gutenberg') ?></h2>
     <p class="description" style="margin: 12px 0;">
         <?php esc_html_e(
             'These older blocks are turned off by default on new sites. Enable any you want to use in the editor.',
@@ -43,7 +44,7 @@ $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_l
         <?php endforeach ?>
     </table>
 
-    <h3><?php esc_html_e('Legacy Features', 'advanced-gutenberg') ?></h3>
+    <h2><?php esc_html_e('Legacy Features', 'advanced-gutenberg') ?></h2>
     <p class="description" style="margin: 12px 0;">
         <?php esc_html_e(
             'Older features, turned off by default on new sites.',
@@ -52,6 +53,22 @@ $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_l
     </p>
 
     <table class="form-table">
+        <tr>
+            <th scope="row">
+                <?php esc_html_e('Font styles', 'advanced-gutenberg') ?>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox"
+                           name="enable_core_blocks_features"
+                           id="enable_core_blocks_features"
+                           value="1"
+                        <?php echo esc_attr($font_styles_checked) ?>
+                    />
+                    <?php esc_html_e('Enable font settings for supported blocks', 'advanced-gutenberg') ?>
+                </label>
+            </td>
+        </tr>
         <tr>
             <th scope="row">
                 <?php esc_html_e('Gallery lightbox', 'advanced-gutenberg') ?>
@@ -70,10 +87,11 @@ $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_l
         </tr>
         <tr>
             <th scope="row">
+                <label for="gallery_lightbox_caption">
                 <?php esc_html_e('Image caption', 'advanced-gutenberg') ?>
+                </label>
             </th>
             <td>
-                <label>
                     <select name="gallery_lightbox_caption" id="gallery_lightbox_caption">
                         <option value="0"<?php echo ($gallery_lightbox_caption === '0' || $gallery_lightbox_caption === 0) ? ' selected' : '' ?>>
                             <?php esc_html_e('Disabled', 'advanced-gutenberg'); ?>
@@ -85,7 +103,6 @@ $gallery_lightbox_caption = $this->getOptionSetting('advgb_settings', 'gallery_l
                             <?php esc_html_e('Overlay', 'advanced-gutenberg'); ?>
                         </option>
                     </select>
-                </label>
                 <p class="description">
                     <?php esc_html_e('Display caption text on images loaded as lightbox in galleries.', 'advanced-gutenberg') ?>
                 </p>
