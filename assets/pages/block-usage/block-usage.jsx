@@ -444,6 +444,16 @@
                                                     size="small"
                                                     icon={isExpanded ? 'arrow-up-alt2' : 'arrow-down-alt2'}
                                                     className="pp-blocks-usage-expand-button"
+                                                    label={sprintf(
+                                                        /* translators: %s: post title */
+                                                        __('Show blocks in %s', 'advanced-gutenberg'),
+                                                        post.post_title
+                                                    )}
+                                                    aria-expanded={isExpanded}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setExpandedPost(isExpanded ? null : post.post_id);
+                                                    }}
                                                 />
                                             </div>
 
@@ -968,9 +978,10 @@
                 {loadingAll && (
                     <div className="scan-progress-container">
                         <div className="scan-progress">
-                            <p>{scanProgress.status}</p>
+                            <p role="status" aria-live="polite">{scanProgress.status}</p>
                             <div className="progress-wrap"><ProgressBar
                                 value={scanProgress.total > 0 ? (scanProgress.current / scanProgress.total) * 100 : 0}
+                                aria-label={__('Scan progress', 'advanced-gutenberg')}
                             /></div>
                         </div>
                     </div>
@@ -1066,10 +1077,20 @@
                                                                 </div>
                                                             )}
                                                             <div className="pp-blocks-usage-tile-actions">
-                                                                <Button variant="secondary" size="small" onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    handleDetailsClick(bt);
-                                                                }}>
+                                                                <Button
+                                                                    variant="secondary"
+                                                                    size="small"
+                                                                    aria-label={sprintf(
+                                                                        /* translators: %s: block name */
+                                                                        __('Details: %s', 'advanced-gutenberg'),
+                                                                        bt.title
+                                                                    )}
+                                                                    aria-pressed={!!(selected && selected.name === bt.name)}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        handleDetailsClick(bt);
+                                                                    }}
+                                                                >
                                                                     {__('Details', 'advanced-gutenberg')}
                                                                 </Button>
                                                             </div>

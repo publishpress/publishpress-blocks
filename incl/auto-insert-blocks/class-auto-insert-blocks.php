@@ -468,9 +468,15 @@ class AdvancedGutenbergAutoInsertBlocks
         $active_rules = [];
         foreach ($rules as $rule) {
             if ($this->shouldApplyRule($rule, $post)) {
+                $block_id = get_post_meta($rule->ID, '_advgb_block_id', true);
+                if (!empty($block_id)) {
+                    $translated = $this->translateObjectIds([$block_id], 'wp_block', $post);
+                    $block_id   = $translated[0];
+                }
+
                 $active_rules[] = array(
                     'id' => $rule->ID,
-                    'block_id' => get_post_meta($rule->ID, '_advgb_block_id', true),
+                    'block_id' => $block_id,
                     'position' => get_post_meta($rule->ID, '_advgb_position', true),
                     'allowed_blocks' => get_post_meta($rule->ID, '_advgb_blocks', true),
                     'excluded_blocks' => get_post_meta($rule->ID, '_advgb_excluded_blocks', true),
@@ -485,7 +491,59 @@ class AdvancedGutenbergAutoInsertBlocks
             return intval($a['priority']) - intval($b['priority']);
         });
 
+        // On multilingual sites, separate rules per language can resolve to the
+        // same translated block: insert each block only once per position.
+        if (has_filter('wpml_object_id')) {
+            $seen = [];
+            $active_rules = array_values(array_filter($active_rules, function ($rule) use (&$seen) {
+                $key = $rule['block_id'] . '|' . $rule['position'] . '|' . maybe_serialize($rule['position_value']);
+                if (isset($seen[$key])) {
+                    return false;
+                }
+                $seen[$key] = true;
+                return true;
+            }));
+        }
+
         return $active_rules;
+    }
+
+    /**
+     * Map object IDs saved in a rule to their translations in the post's language.
+     *
+     * Rules store the IDs picked in the admin (usually default-language posts,
+     * terms and reusable blocks). With a multilingual plugin such as WPML, a
+     * translated post has its own IDs, so we look up the translation through the
+     * wpml_object_id filter. Without such a plugin the filter is not hooked and
+     * the original IDs are returned unchanged.
+     *
+     * @param array   $ids  Object IDs saved in the rule.
+     * @param string  $type Post type or taxonomy of the objects.
+     * @param WP_Post $post Post the rule is checked against.
+     *
+     * @return array
+     */
+    private function translateObjectIds($ids, $type, $post)
+    {
+        $ids = array_map('intval', (array) $ids);
+
+        if (!has_filter('wpml_object_id')) {
+            return $ids;
+        }
+
+        $language = apply_filters(
+            'wpml_element_language_code',
+            null,
+            ['element_id' => $post->ID, 'element_type' => $post->post_type]
+        );
+
+        $translated = [];
+        foreach ($ids as $id) {
+            $translated_id = apply_filters('wpml_object_id', $id, $type, true, $language);
+            $translated[]  = $translated_id ? (int) $translated_id : $id;
+        }
+
+        return $translated;
     }
 
     /**
@@ -496,12 +554,12 @@ class AdvancedGutenbergAutoInsertBlocks
         // Check specific post IDs first
         $post_ids = get_post_meta($rule->ID, '_advgb_post_ids', true);
         if (!empty($post_ids)) {
-            return in_array($post->ID, $post_ids);
+            return in_array($post->ID, $this->translateObjectIds($post_ids, $post->post_type, $post));
         }
 
         // Check excluded post IDs
         $exclude_post_ids = get_post_meta($rule->ID, '_advgb_exclude_post_ids', true);
-        if (!empty($exclude_post_ids) && in_array($post->ID, $exclude_post_ids)) {
+        if (!empty($exclude_post_ids) && in_array($post->ID, $this->translateObjectIds($exclude_post_ids, $post->post_type, $post))) {
             return false;
         }
 
@@ -519,6 +577,7 @@ class AdvancedGutenbergAutoInsertBlocks
             foreach ($allowed_taxonomies as $taxonomy => $term_ids) {
                 if (!empty($term_ids)) {
                     $post_terms = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+                    $term_ids   = $this->translateObjectIds($term_ids, $taxonomy, $post);
                     if (!empty(array_intersect($term_ids, $post_terms))) {
                         $post_matches_taxonomy = true;
                         break;
