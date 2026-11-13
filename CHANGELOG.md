@@ -1,5 +1,9 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[3.7.8] - 13 November, 2026
+
+- Fixed: Editor crash "Cannot read properties of undefined (reading 'attributes')" when opening posts with PublishPress Blocks blocks, #1960
+
 [3.7.7] - 12 November, 2026
 
 - Added: Abilities API / MCP support for PublishPress Blocks, #1942
