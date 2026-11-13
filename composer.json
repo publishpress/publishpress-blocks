@@ -15,6 +15,9 @@
         "preferred-install": {
             "*": "dist"
         },
+        "platform": {
+            "php": "8.3"
+        },
         "allow-plugins": {
             "publishpress/dev-workspace": true,
             "php-http/discovery": true,

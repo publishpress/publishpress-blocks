@@ -1,5 +1,29 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[3.7.7] - 12 November, 2026
+
+- Added: Abilities API / MCP support for PublishPress Blocks, #1942
+- Feature: Post Notes counters: open notes badge in the editor toolbar and a sortable Notes column on the Posts and Pages screens, #1946
+- Update: Accessibility fixes for VPAT / WCAG 2.2 AA across blocks, admin and editor, #1940
+- Update: Improve accessibility labels, link names and heading levels, #1912, #1913, #1914
+- Update: Move Font Styles into Legacy settings, #1903
+- Update: Showcase the block controls more clearly, #1905
+- Update: Update the dashboard for the new menu order, #1906
+- Update: Load minified JavaScript files for the editor and frontend, #1921
+- Update: Improve legacy profile migration performance, #1920
+- Fixed: Harden lightbox option handling, #1954
+- Fixed: Respect post passwords in Content Display, #1955
+- Fixed: Apply Block Controls to auto-generated excerpts and feeds, #1951
+- Fixed: Auto Insert Blocks does not follow WPML translations, #1949
+- Fixed: Tabs block can't be selected as a whole in WordPress 7.1 (no block toolbar), #1929
+- Fixed: Recent Posts block: "Series order" shows no posts on the front end when the multi-series option is not set, #1923
+- Fixed: Info Box / Icon Block — Icon Renders in Italic (Slanted), #1863
+- Fixed: Block Styles previews aren't right for some default styles, #1931
+- Fixed: [PHP 8.5] Avoid automatic conversion of false to array deprecations, #1911
+- Fixed: Escape post excerpts and sanitize featured image captions in the Recent Posts block, #1944
+- Fixed: Security hardening: escape admin output, unslash inputs and exit after redirects, #1917, #1919, #1918
+- Fixed: Spanish translation of the custom style identification color option, #1915
+
 [3.7.6] - 09 September, 2026
 
 - Fixed: PublishPress Accordion: "unexpected or invalid content" error after saving draft and reloading editor when user does not have unfiltered_html caps, #1872

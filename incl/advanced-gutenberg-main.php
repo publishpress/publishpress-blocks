@@ -43,11 +43,50 @@ if (! class_exists('AdvancedGutenbergMain')) {
         protected static $original_block_editor_settings;
 
         /**
+         * Remove data-cbox-* attributes from post content saved by users without unfiltered_html.
+         * The plugin's lightboxes pass their options from code; these attributes are not used.
+         *
+         * @param string $content Slashed post content
+         *
+         * @return string
+         * @since 3.7.7
+         */
+        public function removeLightboxDataAttributes($content)
+        {
+            if (
+                ! is_string($content)
+                || stripos($content, 'data-cbox-') === false
+                || current_user_can('unfiltered_html')
+                || ! class_exists('WP_HTML_Tag_Processor')
+            ) {
+                return $content;
+            }
+
+            $processor = new \WP_HTML_Tag_Processor(wp_unslash($content));
+            $changed   = false;
+            while ($processor->next_tag()) {
+                $names = $processor->get_attribute_names_with_prefix('data-cbox-');
+                if (empty($names)) {
+                    continue;
+                }
+                foreach ($names as $name) {
+                    $processor->remove_attribute($name);
+                    $changed = true;
+                }
+            }
+
+            return $changed ? wp_slash($processor->get_updated_html()) : $content;
+        }
+
+        /**
          * AdvancedGutenbergMain constructor.
          */
         public function __construct()
         {
             global $wp_version;
+
+            // Lightbox options come from the plugin's scripts, not from attributes in post content
+            add_filter('content_save_pre', array( $this, 'removeLightboxDataAttributes' ), 11);
 
             add_action('init', array( $this, 'registerPostMeta' ));
             /* Must be registered unconditionally (not inside a load-{page} hook): core
@@ -1250,20 +1289,35 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 $block['name']     = isset($block['name']) ? sanitize_text_field($block['name']) : '';
                 $block['title']    = isset($block['title']) ? sanitize_text_field($block['title']) : '';
                 $block['category'] = isset($block['category']) ? sanitize_text_field($block['category']) : '';
+                $block['description'] = isset($block['description']) ? sanitize_text_field($block['description']) : '';
+                foreach (['attributes', 'supports'] as $field) {
+                    $block[$field] = isset($block[$field]) ? map_deep((array) $block[$field], static function ($value) {
+                        return is_string($value) ? sanitize_text_field($value) : $value;
+                    }) : [];
+                }
 
                 return $block;
             }
 
+            if (!isset($_POST['blocksList']) || (!is_array($_POST['blocksList']) && !is_string($_POST['blocksList']))) {
+                wp_send_json('', 400);
+                return false;
+            }
+
             if (is_array($_POST['blocksList'])) {
-                $blocksList = array_map('cleanupBlockList', wp_unslash($_POST['blocksList']));
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized by cleanupBlockList() below.
+                $blocksList = wp_unslash($_POST['blocksList']);
             } else {
-                $blocksList = json_decode(wp_unslash($_POST['blocksList']));
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized by cleanupBlockList() below.
+                $blocksList = json_decode(wp_unslash($_POST['blocksList']), true);
             }
 
             if (! is_array($blocksList)) {
                 wp_send_json('', 400);
+                return false;
             }
 
+            $blocksList = array_map('cleanupBlockList', array_filter($blocksList, 'is_array'));
             $savedBlocksList = get_option('advgb_blocks_list');
             if (! is_array($savedBlocksList)) {
                 $savedBlocksList = array();
@@ -1288,7 +1342,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             // Check if we have new blocks installed
             $newBlocks = array_diff($blocksListName, $savedBlocksListName);
-            if (count($newBlocks)) {
+            if (count($newBlocks) || wp_json_encode(array_column($blocksList, 'attributes')) !== wp_json_encode(array_column($savedBlocksList, 'attributes'))) {
                 update_option('advgb_blocks_list', $blocksList, false);
             }
 
@@ -1486,7 +1540,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'enable_custom_styles',
                 'enable_advgb_blocks',
                 'reusable_blocks',
-                'auto_insert_blocks'
+                'auto_insert_blocks',
+                'enable_post_notes'
             ];
 
             // Pro features
