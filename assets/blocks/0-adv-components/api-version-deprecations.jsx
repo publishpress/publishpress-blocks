@@ -138,10 +138,14 @@ addFilter('blocks.registerBlockType', 'advgb/addApiV1Deprecations', function (se
     if (!settings.__advgbUsesSaveBlockClass) {
         const save = settings.save;
 
-        settings.save = function AdvgbBlockSaveWithDefaultClass(props) {
+        // Copy the arguments before reading props: the minified build may reuse the props
+        // parameter for customClassName, and in sloppy mode that rewrites arguments[0].
+        settings.save = function AdvgbBlockSaveWithDefaultClass() {
+            const saveArgs = Array.prototype.slice.call(arguments);
+            const props = saveArgs[0];
             const customClassName = props && props.attributes ? props.attributes.className : '';
 
-            return addSaveBlockClassNames(save.apply(this, arguments), blockName, customClassName);
+            return addSaveBlockClassNames(save.apply(this, saveArgs), blockName, customClassName);
         };
         settings.__advgbUsesSaveBlockClass = true;
     }
