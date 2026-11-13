@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8669da2b18bdd7c1c060c7c566c0678",
+    "content-hash": "10291657f8304f760d6d55b3e28d7a65",
     "packages": [],
     "packages-dev": [
         {
@@ -6052,16 +6052,16 @@
         },
         {
             "name": "publishpress/dev-workspace",
-            "version": "1.8.14",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-dev-workspace.git",
-                "reference": "5df8d5bcc99c634651568eabf5f35f761e2c20f4"
+                "reference": "ef57a10f0ca8dcb69df18ebf7235130a46dea2f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/5df8d5bcc99c634651568eabf5f35f761e2c20f4",
-                "reference": "5df8d5bcc99c634651568eabf5f35f761e2c20f4",
+                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/ef57a10f0ca8dcb69df18ebf7235130a46dea2f6",
+                "reference": "ef57a10f0ca8dcb69df18ebf7235130a46dea2f6",
                 "shasum": ""
             },
             "require": {
@@ -6091,7 +6091,7 @@
                 "phpstan/extension-installer": "^1.3",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^10",
-                "publishpress/publishpress-phpcs-standards": "^1.1",
+                "publishpress/publishpress-phpcs-standards": "^1.2",
                 "publishpress/translations": "^1.4",
                 "spatie/ray": "^1.41",
                 "squizlabs/php_codesniffer": "^3.8",
@@ -6118,22 +6118,22 @@
             "description": "Shared Composer scripts for PublishPress plugins",
             "support": {
                 "issues": "https://github.com/publishpress/library-dev-workspace/issues",
-                "source": "https://github.com/publishpress/library-dev-workspace/tree/1.8.14"
+                "source": "https://github.com/publishpress/library-dev-workspace/tree/2.1.0"
             },
-            "time": "2026-09-03T13:28:08+00:00"
+            "time": "2026-11-12T15:17:35+00:00"
         },
         {
             "name": "publishpress/publishpress-phpcs-standards",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/publishpress-phpcs-standards.git",
-                "reference": "95a6ebe1508071735a0a3daf590b493d6253d7f6"
+                "reference": "739a1b5e2b55a02f817f0b3019f1c2d5e5716d56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/publishpress-phpcs-standards/zipball/95a6ebe1508071735a0a3daf590b493d6253d7f6",
-                "reference": "95a6ebe1508071735a0a3daf590b493d6253d7f6",
+                "url": "https://api.github.com/repos/publishpress/publishpress-phpcs-standards/zipball/739a1b5e2b55a02f817f0b3019f1c2d5e5716d56",
+                "reference": "739a1b5e2b55a02f817f0b3019f1c2d5e5716d56",
                 "shasum": ""
             },
             "require": {
@@ -6145,6 +6145,7 @@
                 "overtrue/phplint": "^2.1",
                 "phpcompatibility/php-compatibility": "*",
                 "phpmd/phpmd": "^2.8",
+                "phpunit/phpunit": "^9.6",
                 "sebastian/phpcpd": "^6.0",
                 "squizlabs/php_codesniffer": "^3.5",
                 "vimeo/psalm": "^4.17"
@@ -6165,9 +6166,9 @@
             "description": "PublishPress PHPCS standards, including vendored WordPress.org Plugin Check rules",
             "support": {
                 "issues": "https://github.com/publishpress/publishpress-phpcs-standards/issues",
-                "source": "https://github.com/publishpress/publishpress-phpcs-standards/tree/1.1.0"
+                "source": "https://github.com/publishpress/publishpress-phpcs-standards/tree/1.2.0"
             },
-            "time": "2026-07-31T15:48:12+00:00"
+            "time": "2026-10-23T18:08:40+00:00"
         },
         {
             "name": "publishpress/translations",
@@ -11358,12 +11359,12 @@
             "version": "v5.7.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/vlucas/phpdotenv.git",
+                "url": "https://github.com/phpdotenv/phpdotenv.git",
                 "reference": "301c07936b16d88628b126b01d082ba153cf4c40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/301c07936b16d88628b126b01d082ba153cf4c40",
+                "url": "https://api.github.com/repos/phpdotenv/phpdotenv/zipball/301c07936b16d88628b126b01d082ba153cf4c40",
                 "reference": "301c07936b16d88628b126b01d082ba153cf4c40",
                 "shasum": ""
             },
@@ -13718,5 +13719,5 @@
         "php": ">=7.2.5"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
