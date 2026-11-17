@@ -467,7 +467,8 @@ class AdvancedGutenbergAutoInsertBlocks
 
         $active_rules = [];
         foreach ($rules as $rule) {
-            if ($this->shouldApplyRule($rule, $post)) {
+            $match = [];
+            if ($this->shouldApplyRule($rule, $post, $match)) {
                 $block_id = get_post_meta($rule->ID, '_advgb_block_id', true);
                 if (!empty($block_id)) {
                     $translated = $this->translateObjectIds([$block_id], 'wp_block', $post);
@@ -481,10 +482,13 @@ class AdvancedGutenbergAutoInsertBlocks
                     'allowed_blocks' => get_post_meta($rule->ID, '_advgb_blocks', true),
                     'excluded_blocks' => get_post_meta($rule->ID, '_advgb_excluded_blocks', true),
                     'position_value' => get_post_meta($rule->ID, '_advgb_position_value', true),
-                    'priority' => get_post_meta($rule->ID, '_advgb_priority', true)
+                    'priority' => get_post_meta($rule->ID, '_advgb_priority', true),
+                    'match' => $match
                 );
             }
         }
+
+        $active_rules = $this->removeRulesReplacedInPostLanguage($active_rules);
 
         // Sort by priority
         usort($active_rules, function ($a, $b) {
@@ -506,6 +510,37 @@ class AdvancedGutenbergAutoInsertBlocks
         }
 
         return $active_rules;
+    }
+
+    /**
+     * Drop rules that only match through a translation when the post's own
+     * language has a rule for the same category or post.
+     *
+     * Sites can use one rule for all languages (the rule follows translations)
+     * or one rule per language. In the second setup, the English rule must not
+     * also run on a Spanish post that already has its own Spanish rule.
+     *
+     * @param array $active_rules Rules that apply to the post.
+     *
+     * @return array
+     */
+    private function removeRulesReplacedInPostLanguage($active_rules)
+    {
+        $direct_targets = [];
+        foreach ($active_rules as $rule) {
+            if (empty($rule['match']['translated']) && !empty($rule['match']['targets'])) {
+                $direct_targets = array_merge($direct_targets, $rule['match']['targets']);
+            }
+        }
+
+        if (empty($direct_targets)) {
+            return $active_rules;
+        }
+
+        return array_values(array_filter($active_rules, function ($rule) use ($direct_targets) {
+            return empty($rule['match']['translated'])
+                || empty(array_intersect($rule['match']['targets'], $direct_targets));
+        }));
     }
 
     /**
@@ -548,13 +583,30 @@ class AdvancedGutenbergAutoInsertBlocks
 
     /**
      * Check if rule should apply to current post
+     *
+     * @param WP_Post $rule  Auto Insert rule.
+     * @param WP_Post $post  Post the rule is checked against.
+     * @param array   $match Filled with how the rule matched: 'targets' lists the
+     *                       post and terms that matched, and 'translated' is true
+     *                       when they only matched through a translation.
+     *
+     * @return bool
      */
-    private function shouldApplyRule($rule, $post)
+    private function shouldApplyRule($rule, $post, &$match = [])
     {
+        $match = ['targets' => [], 'translated' => false];
+
         // Check specific post IDs first
         $post_ids = get_post_meta($rule->ID, '_advgb_post_ids', true);
         if (!empty($post_ids)) {
-            return in_array($post->ID, $this->translateObjectIds($post_ids, $post->post_type, $post));
+            if (!in_array($post->ID, $this->translateObjectIds($post_ids, $post->post_type, $post))) {
+                return false;
+            }
+
+            $match['targets'][]  = 'post:' . $post->ID;
+            $match['translated'] = !in_array($post->ID, array_map('intval', (array) $post_ids), true);
+
+            return true;
         }
 
         // Check excluded post IDs
@@ -573,14 +625,27 @@ class AdvancedGutenbergAutoInsertBlocks
         $allowed_taxonomies = get_post_meta($rule->ID, '_advgb_taxonomies', true);
         if (!empty($allowed_taxonomies)) {
             $post_matches_taxonomy = false;
+            $matches_directly      = false;
 
             foreach ($allowed_taxonomies as $taxonomy => $term_ids) {
                 if (!empty($term_ids)) {
                     $post_terms = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+                    if (is_wp_error($post_terms)) {
+                        continue;
+                    }
+                    $post_terms = array_map('intval', $post_terms);
+                    $saved_ids  = array_map('intval', (array) $term_ids);
                     $term_ids   = $this->translateObjectIds($term_ids, $taxonomy, $post);
-                    if (!empty(array_intersect($term_ids, $post_terms))) {
+                    $matched    = array_intersect($term_ids, $post_terms);
+
+                    if (!empty($matched)) {
                         $post_matches_taxonomy = true;
-                        break;
+                        foreach ($matched as $term_id) {
+                            $match['targets'][] = 'term:' . $taxonomy . ':' . $term_id;
+                        }
+                        if (!empty(array_intersect($saved_ids, $post_terms))) {
+                            $matches_directly = true;
+                        }
                     }
                 }
             }
@@ -588,6 +653,8 @@ class AdvancedGutenbergAutoInsertBlocks
             if (!$post_matches_taxonomy) {
                 return false;
             }
+
+            $match['translated'] = !$matches_directly;
         }
         // Check authors
         $allowed_authors = get_post_meta($rule->ID, '_advgb_authors', true);
