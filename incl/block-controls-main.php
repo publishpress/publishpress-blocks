@@ -1110,6 +1110,16 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
          */
         public static function checkTaxonomies($taxonomies, $terms, $taxQuery)
         {
+            // On multilingual sites, also match the translations of the selected terms
+            foreach ($taxonomies as $item) {
+                if (!empty($item['terms']) && is_array($item['terms'])) {
+                    $terms = array_merge(
+                        $terms,
+                        self::translateTermIds($item['terms'], (string) $item['tax'])
+                    );
+                }
+            }
+
             foreach ($taxonomies as $item) {
                 if ((string) $item['tax'] === $taxQuery->taxonomy && (bool) $item['all']) {
                     // Taxonomy found & all terms
@@ -1123,6 +1133,38 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
             }
 
             return false;
+        }
+
+        /**
+         * Get the translations of term IDs in the current language.
+         *
+         * Blocks save the term IDs picked in the editor. With WPML or Polylang,
+         * a translated term has its own ID, so we look it up through the
+         * wpml_object_id filter that both plugins provide. Without such a
+         * plugin, nothing is returned.
+         *
+         * @param array  $term_ids Term IDs saved in the block
+         * @param string $taxonomy Taxonomy of the terms
+         *
+         * @return array Translated term IDs
+         * @since 3.7.9
+         *
+         */
+        private static function translateTermIds($term_ids, $taxonomy)
+        {
+            if (!has_filter('wpml_object_id')) {
+                return [];
+            }
+
+            $translated = [];
+            foreach ($term_ids as $term_id) {
+                $translated_id = apply_filters('wpml_object_id', intval($term_id), $taxonomy, false);
+                if ($translated_id) {
+                    $translated[] = intval($translated_id);
+                }
+            }
+
+            return $translated;
         }
 
         /**
@@ -1854,6 +1896,12 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
 
                 if (isset($data['ids']) && is_array($data['ids']) && count($data['ids'])) {
                     $args['include'] = array_map('intval', $data['ids']);
+
+                    // Selected terms can be in any language: don't let Polylang
+                    // filter them by the admin language
+                    if (!isset($args['search'])) {
+                        $args['lang'] = '';
+                    }
                 }
 
                 $result = [];

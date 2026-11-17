@@ -1418,7 +1418,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'offset' => $offset,
                 'post_status' => 'any',
                 'orderby' => 'ID',
-                'order' => 'ASC'
+                'order' => 'ASC',
+                // Scan all languages, not only the current admin language:
+                // 'lang' is for Polylang, 'suppress_filters' for WPML
+                'lang' => '',
+                'suppress_filters' => true
             ]);
 
             $usage = [];
