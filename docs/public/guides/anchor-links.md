@@ -2,6 +2,7 @@
 title: "Anchor Links for Blocks"
 order: 9
 doc_category: blocks
+section: Configuration
 ---
 
 # Anchor Links for Blocks

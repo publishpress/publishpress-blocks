@@ -2,6 +2,7 @@
 title: "User Roles Control"
 order: 60
 doc_category: blocks
+section: Block Controls
 ---
 
 # User Roles Control

@@ -2,6 +2,7 @@
 title: "Editor width"
 order: 34
 doc_category: blocks
+section: Configuration
 ---
 
 # Editor width

@@ -2,6 +2,7 @@
 title: "Create and Edit Block Styles"
 order: 55
 doc_category: blocks
+section: Block Styles
 ---
 
 # Create and Edit Block Styles

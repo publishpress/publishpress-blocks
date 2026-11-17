@@ -2,6 +2,7 @@
 title: "Add a Lightbox Display to the Gallery Block"
 order: 40
 doc_category: blocks
+section: Configuration
 ---
 
 # Add a Lightbox Display to the Gallery Block

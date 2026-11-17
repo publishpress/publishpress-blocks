@@ -2,6 +2,7 @@
 title: "Blocks icon color"
 order: 15
 doc_category: blocks
+section: Configuration
 ---
 
 # Blocks icon color

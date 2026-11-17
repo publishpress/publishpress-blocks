@@ -2,6 +2,7 @@
 title: "How to Use Block Controls"
 order: 36
 doc_category: blocks
+section: Block Controls
 ---
 
 # How to Use Block Controls

@@ -2,6 +2,7 @@
 title: "What Happens to Blocks if I Disable PublishPress Blocks?"
 order: 32
 doc_category: blocks
+section: Configuration
 ---
 
 # What Happens to Blocks if I Disable PublishPress Blocks?

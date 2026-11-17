@@ -2,6 +2,7 @@
 title: "How to Use Block Styles"
 order: 27
 doc_category: blocks
+section: Block Styles
 ---
 
 # How to Use Block Styles

@@ -2,6 +2,7 @@
 title: "The Default Block Styles"
 order: 29
 doc_category: blocks
+section: Block Styles
 ---
 
 # The Default Block Styles

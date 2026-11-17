@@ -2,6 +2,7 @@
 title: "Device Type Control"
 order: 31
 doc_category: blocks
+section: Block Controls
 ---
 
 # Device Type Control

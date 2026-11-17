@@ -2,6 +2,7 @@
 title: "Device Width Control"
 order: 30
 doc_category: blocks
+section: Block Controls
 ---
 
 # Device Width Control

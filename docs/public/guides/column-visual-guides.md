@@ -2,6 +2,7 @@
 title: "Columns visual guides"
 order: 19
 doc_category: blocks
+section: Configuration
 ---
 
 # Columns visual guides

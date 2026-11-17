@@ -2,6 +2,7 @@
 title: "User Meta Control"
 order: 59
 doc_category: blocks
+section: Block Controls
 ---
 
 # User Meta Control
