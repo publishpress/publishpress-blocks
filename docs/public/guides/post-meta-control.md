@@ -2,6 +2,7 @@
 title: "Post Meta Control"
 order: 46
 doc_category: blocks
+section: Block Controls
 ---
 
 # Post Meta Control

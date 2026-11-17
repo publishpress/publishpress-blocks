@@ -2,6 +2,7 @@
 title: "How to Use Block Usage"
 order: 12
 doc_category: blocks
+section: Block Usage
 ---
 
 # How to Use Block Usage

@@ -2,6 +2,7 @@
 title: "Presets for Block Controls"
 order: 47
 doc_category: blocks
+section: Block Controls
 ---
 
 # Presets for Block Controls

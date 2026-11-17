@@ -2,6 +2,7 @@
 title: "Term Archives Control"
 order: 57
 doc_category: blocks
+section: Block Controls
 ---
 
 # Term Archives Control

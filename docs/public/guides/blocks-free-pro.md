@@ -2,6 +2,7 @@
 title: "Differences Between Blocks Free and Pro"
 order: 14
 doc_category: blocks
+section: Getting Started
 ---
 
 # Differences Between Blocks Free and Pro

@@ -2,6 +2,7 @@
 title: "PublishPress Blocks Settings"
 order: 21
 doc_category: blocks
+section: Configuration
 ---
 
 # PublishPress Blocks Settings

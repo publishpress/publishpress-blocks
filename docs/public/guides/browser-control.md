@@ -2,6 +2,7 @@
 title: "Browser Control"
 order: 17
 doc_category: blocks
+section: Block Controls
 ---
 
 # Browser Control

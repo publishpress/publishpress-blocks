@@ -2,6 +2,7 @@
 title: "How to Use Reusable Blocks"
 order: 51
 doc_category: blocks
+section: Reusable Blocks
 ---
 
 # How to Use Reusable Blocks

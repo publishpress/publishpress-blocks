@@ -2,6 +2,7 @@
 title: "Schedule Control"
 order: 52
 doc_category: blocks
+section: Block Controls
 ---
 
 # Schedule Control

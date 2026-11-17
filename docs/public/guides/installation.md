@@ -2,6 +2,7 @@
 title: "How to Use PublishPress Blocks"
 order: 39
 doc_category: blocks
+section: Getting Started
 ---
 
 # How to Use PublishPress Blocks

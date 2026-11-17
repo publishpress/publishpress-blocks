@@ -2,6 +2,7 @@
 title: "Capabilities Control"
 order: 18
 doc_category: blocks
+section: Block Controls
 ---
 
 # Capabilities Control

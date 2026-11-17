@@ -2,6 +2,7 @@
 title: "PublishPress Blocks default configuration"
 order: 28
 doc_category: blocks
+section: Configuration
 ---
 
 # PublishPress Blocks default configuration

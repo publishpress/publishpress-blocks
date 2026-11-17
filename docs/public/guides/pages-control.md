@@ -2,6 +2,7 @@
 title: "Pages Control"
 order: 45
 doc_category: blocks
+section: Block Controls
 ---
 
 # Pages Control

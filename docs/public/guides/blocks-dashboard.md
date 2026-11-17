@@ -2,6 +2,7 @@
 title: "Dashboard"
 order: 13
 doc_category: blocks
+section: Configuration
 ---
 
 # Dashboard

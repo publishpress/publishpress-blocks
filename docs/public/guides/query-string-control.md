@@ -2,6 +2,7 @@
 title: "Query String Control"
 order: 49
 doc_category: blocks
+section: Block Controls
 ---
 
 # Query String Control

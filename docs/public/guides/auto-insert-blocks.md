@@ -2,6 +2,7 @@
 title: "How to Use Auto Insert Blocks"
 order: 10
 doc_category: blocks
+section: Auto Insert Blocks
 ---
 
 # How to Use Auto Insert Blocks

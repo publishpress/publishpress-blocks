@@ -2,6 +2,7 @@
 title: "Blocks spacing"
 order: 16
 doc_category: blocks
+section: Configuration
 ---
 
 # Blocks spacing

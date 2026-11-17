@@ -2,6 +2,7 @@
 title: "Block Control Settings"
 order: 11
 doc_category: blocks
+section: Block Controls
 ---
 
 # Block Control Settings

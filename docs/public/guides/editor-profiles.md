@@ -2,6 +2,7 @@
 title: "How to Use Block Permissions"
 order: 33
 doc_category: blocks
+section: Block Permissions
 ---
 
 # How to Use Block Permissions

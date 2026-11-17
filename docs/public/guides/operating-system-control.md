@@ -2,6 +2,7 @@
 title: "Operating System Control"
 order: 44
 doc_category: blocks
+section: Block Controls
 ---
 
 # Operating System Control

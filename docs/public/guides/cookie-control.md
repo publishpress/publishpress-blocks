@@ -2,6 +2,7 @@
 title: "Cookie Control"
 order: 23
 doc_category: blocks
+section: Block Controls
 ---
 
 # Cookie Control
